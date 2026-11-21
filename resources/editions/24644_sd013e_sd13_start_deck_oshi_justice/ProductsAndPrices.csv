@@ -1,0 +1,69 @@
+productId,name,cleanName,imageUrl,categoryId,groupId,url,modifiedOn,imageCount,lowPrice,midPrice,highPrice,marketPrice,directLowPrice,subTypeName,extRarity,extNumber,extColor,extCardType,extOshiSkill,extSPOshiSkill,extLife,extBloomLevel,extHP,extArts1,extBatonPass,extTags,extSpecialRules,extArts2,extKeyword,extDescription,extSubtype
+693816,Start Deck: Oshi Justice,Start Deck Oshi Justice,https://tcgplayer-cdn.tcgplayer.com/product/693816_200w.jpg,87,24644,https://cpt.tcgcsv.com/lxz7,2026-07-24T04:10:34.66,1,23.25,26.45,49.77,26.55,,Normal,,,,,,,,,,,,,,,,,
+693818,Start Deck: Oshi Justice Display,Start Deck Oshi Justice Display,https://tcgplayer-cdn.tcgplayer.com/product/693818_200w.jpg,87,24644,https://cpt.tcgcsv.com/nxz7,2026-07-24T04:10:34.66,1,87.99,195.88,274.98,,,Normal,,,,,,,,,,,,,,,,,
+693820,Start Deck: Oshi Justice Display Case,Start Deck Oshi Justice Display Case,https://tcgplayer-cdn.tcgplayer.com/product/693820_200w.jpg,87,24644,https://cpt.tcgcsv.com/qxz7,2026-07-24T04:10:34.66,1,,,,,,,,,,,,,,,,,,,,,,,
+707390,Elizabeth Rose Bloodflame (OSR),Elizabeth Rose Bloodflame OSR,https://tcgplayer-cdn.tcgplayer.com/product/707390_200w.jpg,87,24644,https://cpt.tcgcsv.com/QZG7,2026-07-24T04:10:34.66,1,2.8,2.95,8.95,2.93,,Foil,Oshi Super Rare,hSD13-001,Red,Oshi holomem,"[holo Power: -3] Harbinger of Order 
+[1/Turn]If 1 of your holomem would take Arts damage from your opponent, you may choose 1 red [Buzz or 2nd] holomem from your stage: The chosen holomem takes that damage instead.","[holo Power: -3] JUST LIKE THAT 
+[1/Game]Place 1 holomem with [#Justice] from your archive on stage. Then, send 1~5 cheers from your archive to that holomem.",5,,,,,,,,,,
+707391,Gigi Murin (OSR),Gigi Murin OSR,https://tcgplayer-cdn.tcgplayer.com/product/707391_200w.jpg,87,24644,https://cpt.tcgcsv.com/RZG7,2026-07-24T04:10:34.66,1,3.05,3.33,8.95,3.31,,Foil,Oshi Super Rare,hSD13-002,Yellow,Oshi holomem,"[holo Power: -1] Boat Goes Binted 
+[1/Turn]Swap your opponent's center holomem and collab holomem.","[holo Power: -3] Free-Spirited Chaser 
+[1/Game]Reveal 2 2nd holomem <Gigi Murin> from your deck, and place them on stage. Then, shuffle the deck. Send 1 cheer from your archive to each of your holomem.",5,,,,,,,,,,
+707392,Elizabeth Rose Bloodflame (C) (hSD13-003),Elizabeth Rose Bloodflame C hSD13 003,https://tcgplayer-cdn.tcgplayer.com/product/707392_200w.jpg,87,24644,https://cpt.tcgcsv.com/SZG7,2026-07-24T04:10:34.66,1,0.29,0.3,0.3,0.43,,Normal,Common,hSD13-003,Red,holomem,,,,Debut,140,[N] Oh! Ho-ho-ho! (30),2,#EN;#Justice;#Singing,[Extra] You may include any number of this holomem in the deck,,,,
+707393,Elizabeth Rose Bloodflame (C) (hSD13-004),Elizabeth Rose Bloodflame C hSD13 004,https://tcgplayer-cdn.tcgplayer.com/product/707393_200w.jpg,87,24644,https://cpt.tcgcsv.com/TZG7,2026-07-24T04:10:34.66,1,0.48,0.75,1.45,0.81,,Normal,Common,hSD13-004,Red,holomem,,,,1st,170,[N] Roses Are Red (40),1,#EN;#Justice;#Singing,,[RNNN] The Fire of My Heart Is Blue (140),,,
+707394,Elizabeth Rose Bloodflame (U) (hSD13-005),Elizabeth Rose Bloodflame U hSD13 005,https://tcgplayer-cdn.tcgplayer.com/product/707394_200w.jpg,87,24644,https://cpt.tcgcsv.com/VZG7,2026-07-24T04:10:34.66,1,0.55,0.77,1.45,0.66,,Normal,Uncommon,hSD13-005,Red,holomem,,,,1st,160,"[RN] Lovely to See You, to See You, Lovely~? (50)",2,#EN;#Justice;#Singing,,,"(Gift) For Justice! -ERB-
+During your opponent's turn, if your holomem with [#Justice] is downed, send the top card of your cheer deck to this holomem. You may only use [Gift] ""For Justice! -ERB-"" once per turn.",,
+707395,Elizabeth Rose Bloodflame (U) (hSD13-006),Elizabeth Rose Bloodflame U hSD13 006,https://tcgplayer-cdn.tcgplayer.com/product/707395_200w.jpg,87,24644,https://cpt.tcgcsv.com/WZG7,2026-07-24T04:10:34.66,1,0.3,0.4,1.45,0.36,,Normal,Uncommon,hSD13-006,Red,buzz holomem,,,,1st,150,[N] Things Worth Protecting (30),1,#EN;#Justice;#Singing,,,"(Bloom Effect) Bring It On!
+Choose 1 holomem with [#Justice] on your stage. During this turn, the chosen holomem gets Arts+20.",,
+707396,Elizabeth Rose Bloodflame (RR),Elizabeth Rose Bloodflame RR,https://tcgplayer-cdn.tcgplayer.com/product/707396_200w.jpg,87,24644,https://cpt.tcgcsv.com/XZG7,2026-07-24T04:10:34.66,1,0.99,1.25,3.95,1.67,,Foil,Double Rare,hSD13-007,Red,holomem,,,,2nd,180,"[RNN] Baneslayer Cadenza (100+)
+ This Arts gets +20 for each cheer attached to this holomem. If this Arts downed your opponent's holomem, send the top card of your cheer deck to this holomem.",3,#EN;#Justice;#Singing,,,"(Gift) Blazing Warcry
+This holomem gets +10 HP for each of this holomem's cheers.",,
+707397,Gigi Murin (C) (hSD13-008),Gigi Murin C hSD13 008,https://tcgplayer-cdn.tcgplayer.com/product/707397_200w.jpg,87,24644,https://cpt.tcgcsv.com/ZZG7,2026-07-24T04:10:34.66,1,1.45,1.45,1.45,0.62,,Normal,Common,hSD13-008,Yellow,holomem,,,,Debut,100,[N] GI MURIN!!!! (20),1,#EN;#Justice,[Extra] You may include any number of this holomem in the deck,,"(Collab Effect) For Justice! -GG-
+Send 1 cheer from your archive to your holomem with [#Justice].",,
+707398,Gigi Murin (C) (hSD13-009),Gigi Murin C hSD13 009,https://tcgplayer-cdn.tcgplayer.com/product/707398_200w.jpg,87,24644,https://cpt.tcgcsv.com/-ZG7,2026-07-24T04:10:34.66,1,1.76,1.94,10.0,1.85,,Normal,Common,hSD13-009,Yellow,holomem,,,,Debut,120,[N] YIPPEEE (20),1,#EN;#Justice,,,"(Collab Effect) Multiplying Pranks!
+If you went second and it is your first turn, reveal 1 1st holomem with [#Justice] from your deck, and place it on stage. Then, shuffle the deck.",,
+707399,Gigi Murin (C) (hSD13-010),Gigi Murin C hSD13 010,https://tcgplayer-cdn.tcgplayer.com/product/707399_200w.jpg,87,24644,https://cpt.tcgcsv.com/_ZG7,2026-07-24T04:10:34.66,1,0.22,0.6,1.45,0.39,,Normal,Common,hSD13-010,Yellow,holomem,,,,1st,180,[Y] Source of Headaches for Those Around Her (40),1,#EN;#Justice,,[YN] Mischievous Gremlin (60),,,
+707400,Gigi Murin (U) (hSD13-011),Gigi Murin U hSD13 011,https://tcgplayer-cdn.tcgplayer.com/product/707400_200w.jpg,87,24644,https://cpt.tcgcsv.com/0-G7,2026-07-24T04:10:34.66,1,1.0,1.23,1.45,0.68,,Normal,Uncommon,hSD13-011,Yellow,holomem,,,,1st,140,"[YN] In Search of What It All Means (40+)
+ This Arts gets +20 if there are no holomem stacked to this holomem.",1,#EN;#Justice,,,"(Bloom Effect)I am Gonathan G.
+You may archive 1 Debut holomem stacked to this holomem: Deal 20 special damage to your opponent's collab holomem.",,
+707401,Gigi Murin (U) (hSD13-012),Gigi Murin U hSD13 012,https://tcgplayer-cdn.tcgplayer.com/product/707401_200w.jpg,87,24644,https://cpt.tcgcsv.com/2-G7,2026-07-24T04:10:34.66,1,0.21,0.43,1.45,0.4,,Normal,Uncommon,hSD13-012,Yellow,holomem,,,,1st,170,[YN] Losing's Not an Option (60),1,#EN;#Justice,,,"(Gift) GG, Easy Win!
+During your opponent's turn, if your back holomem would take special damage from your opponent, you may archive 1 holomem stacked to this holomem: Instead during this turn, all of your back holomem do not take special damage.",,
+707402,Gigi Murin (RR),Gigi Murin RR,https://tcgplayer-cdn.tcgplayer.com/product/707402_200w.jpg,87,24644,https://cpt.tcgcsv.com/3-G7,2026-07-24T04:10:34.66,1,1.0,1.25,3.95,1.41,,Foil,Double Rare,hSD13-013,Yellow,holomem,,,,2nd,210,"[YNNN] Shatter Riot (90+)
+ This Arts gets +90 if there are no holomem stacked to this holomem.",2,#EN;#Justice,,,"(Gift) Resurgent Strength
+[1/Turn]During your main phase, you may archive 1 holomem stacked to your <Gigi Murin>: Send the top card of your cheer deck to this holomem.",,
+707403,Cecilia Immergreen (C),Cecilia Immergreen C,https://tcgplayer-cdn.tcgplayer.com/product/707403_200w.jpg,87,24644,https://cpt.tcgcsv.com/5-G7,2026-07-24T04:10:34.66,1,0.4,0.93,1.45,0.2,,Normal,Common,hSD13-014,Neutral,holomem,,,,spot,160,"[NN] Have Some Tea! (40)
+ Send the top card of your cheer deck to 1 of your holomem with [#Justice].",1,#EN;#Justice;#Language,[Extra] This holomem cannot Bloom,,"(Gift) Melody of Justice
+[Nenter Position·Nollab Position Only] [1/Turn]When your [Debut holomem or Spot holomem] with [#Justice] is placed on stage, draw 1 card.",,
+707404,Raora Panthera (C),Raora Panthera C,https://tcgplayer-cdn.tcgplayer.com/product/707404_200w.jpg,87,24644,https://cpt.tcgcsv.com/6-G7,2026-07-24T04:10:34.66,1,0.02,0.24,0.95,0.09,,Normal,Common,hSD13-015,Neutral,holomem,,,,spot,160,"[N] Have Some Coffee! (30+)
+ If your [center holomem and collab holomem] with [#Justice] each have cheers of different colors attached, this Arts gets +20.",1,#EN;#Justice;#Kemomimi;#Painting,[Extra] This holomem cannot Bloom,,"(Collab Effect) Harmony of Justice
+You may return 1 cheer from your stage to the bottom of the cheer deck. If returned, reveal 1 cheer from your cheer deck, and send it to your holomem. Then, shuffle the cheer deck.",,
+707405,Justice (U),Justice U,https://tcgplayer-cdn.tcgplayer.com/product/707405_200w.jpg,87,24644,https://cpt.tcgcsv.com/7-G7,2026-07-24T04:10:34.66,1,0.1,0.6,3.0,0.82,,Normal,Uncommon,hSD13-016,,Support,,,,,,,,,,,,"LIMITED: Usable only 1 per turn.<br>
+<br>
+This card can only be used if you have 6 or less cards in hand excluding this card.<br>
+<br>
+Look at the top 4 cards of your deck. Reveal any number of holomem with [#Justice] from among them, and add the revealed holomem to hand. Then, return the remaining cards to the bottom of the deck in any order.",Event
+707406,"JUSTICE, JUST LIKE THAT!!!! (U)",JUSTICE JUST LIKE THAT U,https://tcgplayer-cdn.tcgplayer.com/product/707406_200w.jpg,87,24644,https://cpt.tcgcsv.com/8-G7,2026-07-24T04:10:34.66,1,0.25,0.39,2.95,0.79,,Normal,Uncommon,hSD13-017,,Support,,,,,,,,,,,,"LIMITED: Usable only 1 per turn.<br>
+<br>
+This card can only be used if all holomem on your stage are holomem with [#Justice].<br>
+<br>
+Choose 1 holomem on your stage. Return 1~2 stacked holomem from the chosen holomem to hand. During this turn, the chosen holomem gets Arts+20 for each holomem returned by this ability.",Event
+707407,Popo (C),Popo C,https://tcgplayer-cdn.tcgplayer.com/product/707407_200w.jpg,87,24644,https://cpt.tcgcsv.com/9-G7,2026-07-24T04:10:34.66,1,0.47,0.5,1.95,0.53,,Normal,Common,hSD13-018,,Support,,,,,,,,,,,,"The holomem this mascot is attached to gets +20 HP.<br>
+<br>
+• Additional ability if attached to (Gigi Murin)<br>
+If there are no holomem stacked to this holomem, this holomem gets Arts+20.<br>
+<br>
+Only 1 mascot can be attached to each of your holomem.",Mascot
+707408,Harusaki Nodoka (C),Harusaki Nodoka C,https://tcgplayer-cdn.tcgplayer.com/product/707408_200w.jpg,87,24644,https://cpt.tcgcsv.com/b-G7,2026-07-24T04:10:34.66,1,1.24,1.5,2.95,2.25,,Normal,Common,hSD01-016,,Support,,,,,,,,,,,,"LIMITED: Usable only 1 per turn.<br>
+<br>
+Draw 3 cards.",Staff
+707409,Amazing PC (C),Amazing PC C,https://tcgplayer-cdn.tcgplayer.com/product/707409_200w.jpg,87,24644,https://cpt.tcgcsv.com/c-G7,2026-07-24T04:10:34.66,1,1.07,1.75,2.98,2.96,,Normal,Common,hSD01-019,,Support,,,,,,,,,,,,"LIMITED: Usable only 1 per turn.<br>
+<br>
+This card can only be used if you archive 1 cheer from your stage.<br>
+<br>
+Reveal 1 [1st holomem or 2nd holomem] other than Buzz from your deck, and add it to hand. Then, shuffle the deck.",Item
+707410,Normal PC (C),Normal PC C,https://tcgplayer-cdn.tcgplayer.com/product/707410_200w.jpg,87,24644,https://cpt.tcgcsv.com/d-G7,2026-07-24T04:10:34.66,1,1.94,2.7,3.95,2.7,,Normal,Common,hBP01-104,,Support,,,,,,,,,,,,"Reveal 1 Debut holomem from your deck, and place it on stage. Then, shuffle the deck.",Item
+707411,Friendly PC (C) (Alternate Art),Friendly PC C Alternate Art,https://tcgplayer-cdn.tcgplayer.com/product/707411_200w.jpg,87,24644,https://cpt.tcgcsv.com/f-G7,2026-08-19T12:52:58.373,1,2.23,2.29,2.8,2.21,,Normal,Common,hBP05-074,,Support,,,,,,,,,,,,"Reveal 1~2 Debut holomem with [Extra]""You may include any number of this holomem in the deck"" from your deck, and place them on stage. Then, shuffle the deck. If 2 Debut holomem were placed this way, return 1 card from your hand to the bottom of the deck.",Item
+707412,Totsumachi (U),Totsumachi U,https://tcgplayer-cdn.tcgplayer.com/product/707412_200w.jpg,87,24644,https://cpt.tcgcsv.com/g-G7,2026-07-24T04:10:34.66,1,1.99,7.22,10.0,7.22,,Normal,Uncommon,hBP03-088,,Support,,,,,,,,,,,,"LIMITED: Usable only 1 per turn.<br>
+<br>
+This card can only be used if your life is less than your opponent's.<br>
+<br>
+If your opponent has no collab holomem, your opponent moves 1 of their back holomem to the collab position (Moving is not regarded as collab).",Event

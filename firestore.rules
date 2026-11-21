@@ -1,0 +1,240 @@
+rules_version = '2';
+
+service cloud.firestore {
+  match /databases/{database}/documents {
+    // ===============================================================
+    // Assumed Data Model
+    // ===============================================================
+    //
+    // Collection: editions
+    // Document ID: {groupId} (TCGCSV edition/group identifier)
+    // Access: Public read-only catalog metadata; writes disabled for clients
+    //         (populated/updated exclusively via Admin SDK / CLI seeding).
+    //
+    // Collection: metadata
+    // Document ID: {docId} (e.g., audit report, catalog sync metadata)
+    // Access: Public read-only catalog metadata; writes disabled for clients
+    //         (populated/updated exclusively via Admin SDK / CLI seeding).
+    //
+    // Collection: users/{userId}/collection
+    // Document ID: {productId}
+    // Access: Owner-only (request.auth != null && request.auth.uid == userId).
+    // Fields:
+    //   - productId: int (required, > 0, immutable on update)
+    //   - quantity: int (optional if quantityNormal/quantityFoil present, 0..=9999)
+    //   - quantityNormal: int (optional if quantity present, 0..=9999)
+    //   - quantityFoil: int (optional if quantity present, 0..=9999)
+    //   - condition: string (required, one of ['NM', 'LP', 'MP', 'HP', 'DMG'])
+    //   - language: string (required, length <= 16)
+    //   - purchasePrice: number | null (optional/nullable, 0..=1000000)
+    //   - isFavorite: bool (required)
+    //   - isWishlist: bool (required)
+    //   - wishlistTargetQty: int (required, 1..=9999)
+    //   - notes: string (required, length <= 1000)
+    //   - updatedAt: string (required, length <= 64)
+    //
+    // Collection: users/{userId}/decks
+    // Document ID: {deckId}
+    // Access: Owner-only (request.auth != null && request.auth.uid == userId).
+    // Fields:
+    //   - name: string (required, length 1..=120)
+    //   - oshiProductId: int | null (optional/nullable, > 0 when non-null)
+    //   - description: string (required, length <= 1000)
+    //   - cards: list (required, size <= 100)
+    //   - createdAt: string (required, length <= 64, immutable on update)
+    //   - updatedAt: string (required, length <= 64)
+    //
+    // Collection: users/{userId}/settings
+    // Document ID: {settingId} (e.g., 'exchangeRate')
+    // Access: Owner-only (request.auth != null && request.auth.uid == userId).
+    // Fields:
+    //   - rateClpPerUsd: number (required, > 0 && <= 1000000)
+    //   - source: string (required, length <= 120)
+    //   - observedDate: string (required, length <= 64)
+    //   - updatedAt: string (required, length <= 64)
+    //
+    // ===============================================================
+
+    // ===============================================================
+    // Helper Functions
+    // ===============================================================
+
+    function isAuthenticated() {
+      return request.auth != null;
+    }
+
+    function isOwner(userId) {
+      return isAuthenticated() && request.auth.uid == userId;
+    }
+
+    function hasRequiredFields(fields) {
+      return request.resource.data.keys().hasAll(fields);
+    }
+
+    function hasOnlyAllowedFields(fields) {
+      return request.resource.data.keys().hasOnly(fields);
+    }
+
+    function areImmutableFieldsUnchanged(fields) {
+      return !request.resource.data.diff(resource.data).affectedKeys().hasAny(fields);
+    }
+
+    function isBoundedString(val, minLen, maxLen) {
+      return val is string && val.size() >= minLen && val.size() <= maxLen;
+    }
+
+    function isIntInRange(val, minVal, maxVal) {
+      return val is int && val >= minVal && val <= maxVal;
+    }
+
+    function isNumberInRange(val, minVal, maxVal) {
+      return (val is int || val is float) && val >= minVal && val <= maxVal;
+    }
+
+    // ===============================================================
+    // Domain Validators
+    // ===============================================================
+
+    function isValidCollectionItem(data) {
+      let allowedFields = [
+        'productId',
+        'quantity',
+        'quantityNormal',
+        'quantityFoil',
+        'condition',
+        'language',
+        'purchasePrice',
+        'isFavorite',
+        'isWishlist',
+        'wishlistTargetQty',
+        'notes',
+        'updatedAt'
+      ];
+      let requiredFields = [
+        'productId',
+        'condition',
+        'language',
+        'isFavorite',
+        'isWishlist',
+        'wishlistTargetQty',
+        'notes',
+        'updatedAt'
+      ];
+      return hasOnlyAllowedFields(allowedFields) &&
+        hasRequiredFields(requiredFields) &&
+        data.productId is int &&
+        data.productId > 0 &&
+        ('quantity' in data || 'quantityNormal' in data || 'quantityFoil' in data) &&
+        (!('quantity' in data) || isIntInRange(data.quantity, 0, 9999)) &&
+        (!('quantityNormal' in data) || isIntInRange(data.quantityNormal, 0, 9999)) &&
+        (!('quantityFoil' in data) || isIntInRange(data.quantityFoil, 0, 9999)) &&
+        data.condition is string &&
+        data.condition in ['NM', 'LP', 'MP', 'HP', 'DMG'] &&
+        isBoundedString(data.language, 0, 16) &&
+        (!('purchasePrice' in data) ||
+          data.purchasePrice == null ||
+          isNumberInRange(data.purchasePrice, 0, 1000000)) &&
+        data.isFavorite is bool &&
+        data.isWishlist is bool &&
+        isIntInRange(data.wishlistTargetQty, 1, 9999) &&
+        isBoundedString(data.notes, 0, 1000) &&
+        isBoundedString(data.updatedAt, 0, 64);
+    }
+
+    function isValidDeck(data) {
+      let allowedFields = [
+        'name',
+        'oshiProductId',
+        'description',
+        'cards',
+        'createdAt',
+        'updatedAt'
+      ];
+      let requiredFields = [
+        'name',
+        'description',
+        'cards',
+        'createdAt',
+        'updatedAt'
+      ];
+      return hasOnlyAllowedFields(allowedFields) &&
+        hasRequiredFields(requiredFields) &&
+        isBoundedString(data.name, 1, 120) &&
+        (!('oshiProductId' in data) ||
+          data.oshiProductId == null ||
+          (data.oshiProductId is int && data.oshiProductId > 0)) &&
+        isBoundedString(data.description, 0, 1000) &&
+        data.cards is list &&
+        data.cards.size() <= 100 &&
+        isBoundedString(data.createdAt, 0, 64) &&
+        isBoundedString(data.updatedAt, 0, 64);
+    }
+
+    function isValidSetting(data) {
+      let allowedFields = [
+        'rateClpPerUsd',
+        'source',
+        'observedDate',
+        'updatedAt'
+      ];
+      let requiredFields = [
+        'rateClpPerUsd',
+        'source',
+        'observedDate',
+        'updatedAt'
+      ];
+      return hasOnlyAllowedFields(allowedFields) &&
+        hasRequiredFields(requiredFields) &&
+        (data.rateClpPerUsd is int || data.rateClpPerUsd is float) &&
+        data.rateClpPerUsd > 0 &&
+        data.rateClpPerUsd <= 1000000 &&
+        isBoundedString(data.source, 0, 120) &&
+        isBoundedString(data.observedDate, 0, 64) &&
+        isBoundedString(data.updatedAt, 0, 64);
+    }
+
+    // ===============================================================
+    // Collection Rules
+    // ===============================================================
+
+    // Public catalog metadata (populated by Admin SDK / CLI seeding)
+    match /editions/{groupId} {
+      allow read: if true;
+      allow write: if false;
+    }
+
+    match /metadata/{docId} {
+      allow read: if true;
+      allow write: if false;
+    }
+
+    // Per-user private data
+    match /users/{userId} {
+      match /collection/{productId} {
+        allow read, delete: if isOwner(userId);
+        allow create: if isOwner(userId) && isValidCollectionItem(request.resource.data);
+        allow update: if isOwner(userId) &&
+          isValidCollectionItem(request.resource.data) &&
+          areImmutableFieldsUnchanged(['productId']);
+      }
+
+      match /decks/{deckId} {
+        allow read, delete: if isOwner(userId);
+        allow create: if isOwner(userId) && isValidDeck(request.resource.data);
+        allow update: if isOwner(userId) &&
+          isValidDeck(request.resource.data) &&
+          areImmutableFieldsUnchanged(['createdAt']);
+      }
+
+      match /settings/{settingId} {
+        allow read, delete: if isOwner(userId);
+        allow create, update: if isOwner(userId) && isValidSetting(request.resource.data);
+      }
+    }
+
+    // Explicit catch-all deny rule
+    match /{document=**} {
+      allow read, write: if false;
+    }
+  }
+}

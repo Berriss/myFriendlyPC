@@ -1,0 +1,681 @@
+productId,name,cleanName,imageUrl,categoryId,groupId,url,modifiedOn,imageCount,lowPrice,midPrice,highPrice,marketPrice,directLowPrice,subTypeName,extRarity,extNumber,extColor,extCardType,extOshiSkill,extSPOshiSkill,extLife,extBloomLevel,extHP,extArts1,extBatonPass,extTags,extSpecialRules,extKeyword,extArts2,extDescription,extSubtype
+662476,Elite Spark Booster Box,Elite Spark Booster Box,https://tcgplayer-cdn.tcgplayer.com/product/662476_200w.jpg,87,24469,https://cpt.tcgcsv.com/x_j7,2025-12-19T05:10:13.197,1,60.66,68.5,98.0,63.31,,Normal,,,,,,,,,,,,,,,,,
+662477,Elite Spark Booster Pack,Elite Spark Booster Pack,https://tcgplayer-cdn.tcgplayer.com/product/662477_200w.jpg,87,24469,https://cpt.tcgcsv.com/z_j7,2025-12-19T05:10:13.197,1,,,,,,,,,,,,,,,,,,,,,,,
+662480,Elite Spark Booster Case,Elite Spark Booster Case,https://tcgplayer-cdn.tcgplayer.com/product/662480_200w.jpg,87,24469,https://cpt.tcgcsv.com/D_j7,2025-12-19T05:10:13.197,1,979.0,987.51,996.01,796.19,,Normal,,,,,,,,,,,,,,,,,
+669004,Himemori Luna (OSR),Himemori Luna OSR,https://tcgplayer-cdn.tcgplayer.com/product/669004_200w.jpg,87,24469,https://cpt.tcgcsv.com/6Dm7,2025-12-19T20:59:42.533,1,3.75,4.62,12.0,4.5,,Foil,Oshi Super Rare,hBP03-001,White,Oshi holomem,"[holo Power: -2] I Know How to Use a Computew! <br>
+[1/Turn]Reveal 1 item with ""PC"" in its card name from your deck, and add it to hand. Then, shuffle the deck.","[holo Power: -2] Lu-knights, Assemble <br>
+[1/Game]Usable if your center holomem is ""Himemori Luna"":Reveal 1~4 ""Lu-knights"" from your deck, and attach them divided as you choose to your holomem. Then, shuffle the deck.",5,,,,,,,,,,
+669005,Himemori Luna (OUR),Himemori Luna OUR,https://tcgplayer-cdn.tcgplayer.com/product/669005_200w.jpg,87,24469,https://cpt.tcgcsv.com/7Dm7,2025-12-19T21:00:06.243,1,84.91,86.99,99.99,86.75,,Foil,Oshi Ultra Rare,hBP03-001,White,Oshi holomem,"[holo Power: -2] I Know How to Use a Computew! <br>
+[1/Turn]Reveal 1 item with ""PC"" in its card name from your deck, and add it to hand. Then, shuffle the deck.","[holo Power: -2] Lu-knights, Assemble <br>
+[1/Game]Usable if your center holomem is ""Himemori Luna"":Reveal 1~4 ""Lu-knights"" from your deck, and attach them divided as you choose to your holomem. Then, shuffle the deck.",5,,,,,,,,,,
+669006,Shishiro Botan (OSR),Shishiro Botan OSR,https://tcgplayer-cdn.tcgplayer.com/product/669006_200w.jpg,87,24469,https://cpt.tcgcsv.com/8Dm7,2025-12-19T14:12:24.74,1,3.96,5.25,9.99,5.36,,Foil,Oshi Super Rare,hBP03-002,Green,Oshi holomem,"[holo Power: -2] poi<br>
+[1/Turn]Send 1 cheer from your archive to your back holomem ""Shishiro Botan"".","[holo Power: -2] Sniping<br>
+[1/Game]Usable if your center holomem is green:Deal 100 special damage to your opponent's center holomem other than Debut.",5,,,,,,,,,,
+669007,Shishiro Botan (OUR),Shishiro Botan OUR,https://tcgplayer-cdn.tcgplayer.com/product/669007_200w.jpg,87,24469,https://cpt.tcgcsv.com/9Dm7,2025-12-19T14:10:45.83,1,95.0,115.01,150.0,99.75,,Foil,Oshi Ultra Rare,hBP03-002,Green,Oshi holomem,"[holo Power: -2] poi<br>
+[1/Turn]Send 1 cheer from your archive to your back holomem ""Shishiro Botan"".","[holo Power: -2] Sniping<br>
+[1/Game]Usable if your center holomem is green:Deal 100 special damage to your opponent's center holomem other than Debut.",5,,,,,,,,,,
+669008,Shishiro Botan (SEC),Shishiro Botan SEC,https://tcgplayer-cdn.tcgplayer.com/product/669008_200w.jpg,87,24469,https://cpt.tcgcsv.com/bDm7,2025-12-19T14:11:09.63,1,493.98,495.35,649.99,402.5,,Foil,Secret Rare,hBP03-002,Green,Oshi holomem,"[holo Power: -2] poi<br>
+[1/Turn]Send 1 cheer from your archive to your back holomem ""Shishiro Botan"".","[holo Power: -2] Sniping<br>
+[1/Game]Usable if your center holomem is green:Deal 100 special damage to your opponent's center holomem other than Debut.",5,,,,,,,,,,
+669009,Sakura Miko (OSR),Sakura Miko OSR,https://tcgplayer-cdn.tcgplayer.com/product/669009_200w.jpg,87,24469,https://cpt.tcgcsv.com/cDm7,2025-12-19T21:07:00.59,1,12.0,15.0,60.0,14.9,,Foil,Oshi Super Rare,hBP03-003,Red,Oshi holomem,"[holo Power: -2] Are 35P Making a Comeback?! <br>
+[1/Turn]You may roll a die once:If it is 1, 2, 4 or 6, return 1 ""35P"" from your archive to hand. If it is 3 or 5, return 2 ""35P"" from your archive to hand.","[holo Power: -2] The Strength to not Give Up <br>
+[1/Game]Usable if your center holomem is red:Choose any number of cards from your hand and return them to the bottom of the deck in any order. Then, draw cards until your hand has 5 cards.",5,,,,,,,,,,
+669010,Sakura Miko (OUR),Sakura Miko OUR,https://tcgplayer-cdn.tcgplayer.com/product/669010_200w.jpg,87,24469,https://cpt.tcgcsv.com/dDm7,2025-12-19T21:07:18.85,1,125.0,143.13,180.5,190.0,,Foil,Oshi Ultra Rare,hBP03-003,Red,Oshi holomem,"[holo Power: -2] Are 35P Making a Comeback?! <br>
+[1/Turn]You may roll a die once:If it is 1, 2, 4 or 6, return 1 ""35P"" from your archive to hand. If it is 3 or 5, return 2 ""35P"" from your archive to hand.","[holo Power: -2] The Strength to not Give Up <br>
+[1/Game]Usable if your center holomem is red:Choose any number of cards from your hand and return them to the bottom of the deck in any order. Then, draw cards until your hand has 5 cards.",5,,,,,,,,,,
+669011,Sakura Miko (SEC),Sakura Miko SEC,https://tcgplayer-cdn.tcgplayer.com/product/669011_200w.jpg,87,24469,https://cpt.tcgcsv.com/fDm7,2025-12-19T21:09:16.237,1,850.0,875.0,899.99,1099.99,,Foil,Secret Rare,hBP03-003,Red,Oshi holomem,"[holo Power: -2] Are 35P Making a Comeback?!<br>
+[1/Turn]You may roll a die once:If it is 1, 2, 4 or 6, return 1 ""35P"" from your archive to hand. If it is 3 or 5, return 2 ""35P"" from your archive to hand.","[holo Power: -2] The Strength to not Give Up<br>
+[1/Game]Usable if your center holomem is red:Choose any number of cards from your hand and return them to the bottom of the deck in any order. Then, draw cards until your hand has 5 cards.",5,,,,,,,,,,
+669012,FUWAMOCO (OSR),FUWAMOCO OSR,https://tcgplayer-cdn.tcgplayer.com/product/669012_200w.jpg,87,24469,https://cpt.tcgcsv.com/gDm7,2025-12-19T14:35:20.497,1,30.0,38.79,45.0,37.42,,Foil,Oshi Super Rare,hBP03-004,Blue,Oshi holomem,"[holo Power: -3] Moco-chan!<br>
+[1/Turn]Send the top card of your cheer deck to your 1st holomem ""Mococo Abyssgard"".","[holo Power: -2] BAU BAU!<br>
+[1/Game]Choose 1 of your holomem with [#Advent]. During this turn, you may also target your opponent's back holomem with the chosen holomem's Arts.",5,,,,,,,,,,
+669013,FUWAMOCO (OUR),FUWAMOCO OUR,https://tcgplayer-cdn.tcgplayer.com/product/669013_200w.jpg,87,24469,https://cpt.tcgcsv.com/hDm7,2025-12-19T14:35:51.53,1,247.9,250.4,252.9,236.5,,Foil,Oshi Ultra Rare,hBP03-004,Blue,Oshi holomem,"[holo Power: -3] Moco-chan!<br>
+[1/Turn]Send the top card of your cheer deck to your 1st holomem ""Mococo Abyssgard"".","[holo Power: -2] BAU BAU!<br>
+[1/Game]Choose 1 of your holomem with [#Advent]. During this turn, you may also target your opponent's back holomem with the chosen holomem's Arts.",5,,,,,,,,,,
+669014,Tokoyami Towa (OSR),Tokoyami Towa OSR,https://tcgplayer-cdn.tcgplayer.com/product/669014_200w.jpg,87,24469,https://cpt.tcgcsv.com/jDm7,2025-12-19T18:53:54.743,1,8.0,9.49,15.0,8.68,,Foil,Oshi Super Rare,hBP03-005,Purple,Oshi holomem,"[holo Power: -2] Devil's Voice<br>
+[1/Turn]During this turn, your [center holomem and collab holomem] with [#Singing] get Arts+20.","[holo Power: -2] Diabolical Deeds<br>
+[1/Game]During your opponent's turn, usable when your ""Tokoyami Towa"" is downed:Return 2 cheers each from your opponent's center holomem and collab holomem to the bottom of the cheer deck in any order.",5,,,,,,,,,,
+669015,Tokoyami Towa (OUR),Tokoyami Towa OUR,https://tcgplayer-cdn.tcgplayer.com/product/669015_200w.jpg,87,24469,https://cpt.tcgcsv.com/kDm7,2025-12-19T20:57:52.683,1,300.0,373.5,408.0,347.5,,Foil,Oshi Ultra Rare,hBP03-005,Purple,Oshi holomem,"[holo Power: -2] Devil's Voice <br>
+[1/Turn]During this turn, your [center holomem and collab holomem] with [#Singing] get Arts+20.","[holo Power: -2] Diabolical Deeds <br>
+[1/Game]During your opponent's turn, usable when your ""Tokoyami Towa"" is downed:Return 2 cheers each from your opponent's center holomem and collab holomem to the bottom of the cheer deck in any order.",5,,,,,,,,,,
+669016,Tokoyami Towa (SEC),Tokoyami Towa SEC,https://tcgplayer-cdn.tcgplayer.com/product/669016_200w.jpg,87,24469,https://cpt.tcgcsv.com/lDm7,2025-12-19T14:31:54.05,1,1800.0,1800.0,1800.0,,,Foil,Secret Rare,hBP03-005,Purple,Oshi holomem,"[holo Power: -2] Devil's Voice<br>
+[1/Turn]During this turn, your [center holomem and collab holomem] with [#Singing] get Arts+20.","[holo Power: -2] Diabolical Deeds<br>
+[1/Game]During your opponent's turn, usable when your ""Tokoyami Towa"" is downed:Return 2 cheers each from your opponent's center holomem and collab holomem to the bottom of the cheer deck in any order.",5,,,,,,,,,,
+669017,Inugami Korone (OSR),Inugami Korone OSR,https://tcgplayer-cdn.tcgplayer.com/product/669017_200w.jpg,87,24469,https://cpt.tcgcsv.com/mDm7,2026-01-09T15:28:27.43,1,59.69,67.97,95.0,67.93,,Foil,Oshi Super Rare,hBP03-006,Yellow,Oshi holomem,"[holo Power: -2] Infinite Stamina<br>
+[1/Turn]Set 1 of your resting ""Inugami Korone"" to active.","[holo Power: -3] Wow Wow Wow Wow<br>
+[1/Game]Usable when your yellow holomem is downed:Reattach 1 of that holomem's cheers to your other holomem, and return 1 card from among the stacked holomem including that downed holomem to hand.",6,,,,,,,,,,
+669018,Inugami Korone (OUR),Inugami Korone OUR,https://tcgplayer-cdn.tcgplayer.com/product/669018_200w.jpg,87,24469,https://cpt.tcgcsv.com/nDm7,2026-01-07T20:31:59.537,1,,,,,,,Oshi Ultra Rare,hBP03-006,Yellow,Oshi holomem,"[holo Power: -2] Infinite Stamina<br>
+[1/Turn]Set 1 of your resting ""Inugami Korone"" to active.","[holo Power: -3] Wow Wow Wow Wow<br>
+[1/Game]Usable when your yellow holomem is downed:Reattach 1 of that holomem's cheers to your other holomem, and return 1 card from among the stacked holomem including that downed holomem to hand.",6,,,,,,,,,,
+669019,Tsunomaki Watame (OSR),Tsunomaki Watame OSR,https://tcgplayer-cdn.tcgplayer.com/product/669019_200w.jpg,87,24469,https://cpt.tcgcsv.com/pDm7,2025-12-19T14:25:28.077,1,6.0,9.99,34.99,7.49,,Foil,Oshi Super Rare,hBP03-007,Yellow,Oshi holomem,"[holo Power: -2] Welcome to the Member Sheep!<br>
+[1/Turn]Reveal 1 fan from your deck, and add it to hand. Then, shuffle the deck.","[holo Power: -2] Watame isn't at fault, right?<br>
+[1/Game]Send the top 2 cards of your cheer deck to 1 of your ""Tsunomaki Watame"".",5,,,,,,,,,,
+669020,Tsunomaki Watame (OUR),Tsunomaki Watame OUR,https://tcgplayer-cdn.tcgplayer.com/product/669020_200w.jpg,87,24469,https://cpt.tcgcsv.com/qDm7,2025-12-19T14:26:03.383,1,199.99,200.0,200.0,,,Foil,Oshi Ultra Rare,hBP03-007,Yellow,Oshi holomem,"[holo Power: -2] Welcome to the Member Sheep!<br>
+[1/Turn]Reveal 1 fan from your deck, and add it to hand. Then, shuffle the deck.","[holo Power: -2] Watame isn't at fault, right?<br>
+[1/Game]Send the top 2 cards of your cheer deck to 1 of your ""Tsunomaki Watame"".",5,,,,,,,,,,
+669021,Tsunomaki Watame (SEC),Tsunomaki Watame SEC,https://tcgplayer-cdn.tcgplayer.com/product/669021_200w.jpg,87,24469,https://cpt.tcgcsv.com/rDm7,2025-12-19T14:31:20.93,1,,,,,,,Secret Rare,hBP03-007,Yellow,Oshi holomem,"[holo Power: -2] Welcome to the Member Sheep!<br>
+[1/Turn]Reveal 1 fan from your deck, and add it to hand. Then, shuffle the deck.","[holo Power: -2] Watame isn't at fault, right?<br>
+[1/Game]Send the top 2 cards of your cheer deck to 1 of your ""Tsunomaki Watame"".",5,,,,,,,,,,
+669022,Ayunda Risu (OSR),Ayunda Risu OSR,https://tcgplayer-cdn.tcgplayer.com/product/669022_200w.jpg,87,24469,https://cpt.tcgcsv.com/sDm7,2025-12-19T05:10:13.197,1,1.97,2.47,15.99,2.48,,Foil,Oshi Super Rare,hBP03-008,Yellow,Oshi holomem,"[holo Power: -2] hololive ID Family <br>
+[1/Turn]Usable when your holomem with [#ID Gen 1] is downed:Draw 1 card.","[holo Power: -2] Ganbari Risu~! <br>
+[1/Game]During this turn, all <Ayunda Risu> on your stage get Arts+50.",5,,,,,,,,,,
+669023,Ayunda Risu (OUR),Ayunda Risu OUR,https://tcgplayer-cdn.tcgplayer.com/product/669023_200w.jpg,87,24469,https://cpt.tcgcsv.com/tDm7,2025-12-19T05:10:13.197,1,100.0,100.0,100.0,113.06,,Foil,Oshi Ultra Rare,hBP03-008,Yellow,Oshi holomem,"[holo Power: -2] hololive ID Family <br>
+[1/Turn]Usable when your holomem with [#ID Gen 1] is downed:Draw 1 card.","[holo Power: -2] Ganbari Risu~! <br>
+[1/Game]During this turn, all <Ayunda Risu> on your stage get Arts+50.",5,,,,,,,,,,
+669024,Himemori Luna (C) (hBP03-009),Himemori Luna C hBP03 009,https://tcgplayer-cdn.tcgplayer.com/product/669024_200w.jpg,87,24469,https://cpt.tcgcsv.com/vDm7,2025-12-19T20:50:30.487,1,0.08,0.25,1.23,0.16,,Normal,Common,hBP03-009,White,holomem,,,,Debut,90,"[N] Are you there, Everyone? (10)<br>
+If you do not have a holomem with ""Lu-knights"" attached, reveal 1 ""Lu-knights"" from your deck, and attach it to your holomem. Then, shuffle the deck.",1,#JP;#Gen 4;#Baby,[Extra] You may include any number of this holomem in the deck,,,,
+669025,Himemori Luna (S) (hBP03-010),Himemori Luna S hBP03 010,https://tcgplayer-cdn.tcgplayer.com/product/669025_200w.jpg,87,24469,https://cpt.tcgcsv.com/wDm7,2025-12-19T21:01:55.477,1,0.97,1.29,4.0,1.32,,Foil,Special,hBP03-010,White,holomem,,,,Debut,80,[W] Do you Want Candy? (20),2,#JP;#Gen 4;#Baby,,"""Collab Effect"" Princess of Candy Kingdom 
+<br>If your center holomem is ""Himemori Luna"", draw 1 card from your deck.",,,
+669026,Himemori Luna (U) (hBP03-010),Himemori Luna U hBP03 010,https://tcgplayer-cdn.tcgplayer.com/product/669026_200w.jpg,87,24469,https://cpt.tcgcsv.com/xDm7,2025-12-19T21:03:19.433,1,0.08,0.2,1.23,0.14,,Normal,Uncommon,hBP03-010,White,holomem,,,,Debut,80,[W] Do you Want Candy? (20),1,#JP;#Gen 4;#Baby,,"""Collab Effect"" Princess of Candy Kingdom 
+<br>If your center holomem is ""Himemori Luna"", draw 1 card from your deck.",,,
+669027,Himemori Luna (C) (hBP03-011),Himemori Luna C hBP03 011,https://tcgplayer-cdn.tcgplayer.com/product/669027_200w.jpg,87,24469,https://cpt.tcgcsv.com/zDm7,2025-12-19T20:51:26.363,1,0.05,0.23,1.23,0.13,,Normal,Common,hBP03-011,White,holomem,,,,1st,150,[W] Otsu-Luna (40),1,#JP;#Gen 4;#Baby,,,[WN] Good night~ (60),,
+669028,Himemori Luna (S) (hBP03-011),Himemori Luna S hBP03 011,https://tcgplayer-cdn.tcgplayer.com/product/669028_200w.jpg,87,24469,https://cpt.tcgcsv.com/BDm7,2025-12-19T20:53:02.6,1,0.24,0.79,4.99,0.42,,Foil,Special,hBP03-011,White,holomem,,,,1st,150,[W] Otsu-Luna (40),1,#JP;#Gen 4;#Baby,,,[WN] Good night~ (60),,
+669029,Himemori Luna (S) (hBP03-012),Himemori Luna S hBP03 012,https://tcgplayer-cdn.tcgplayer.com/product/669029_200w.jpg,87,24469,https://cpt.tcgcsv.com/CDm7,2025-12-19T21:02:18.04,1,1.0,1.2,3.99,1.03,,Foil,Special,hBP03-012,White,holomem,,,,1st,120,[WN] It's a Promise! (40),2,#JP;#Gen 4;#Baby,,"""Bloom Effect"" Let's Make this the Best Concert Ever! 
+<br>During this turn, 1 of your holomem with a fan attached gets Arts+20.",,,
+669030,Himemori Luna (U) (hBP03-012),Himemori Luna U hBP03 012,https://tcgplayer-cdn.tcgplayer.com/product/669030_200w.jpg,87,24469,https://cpt.tcgcsv.com/DDm7,2025-12-19T21:03:33.21,1,0.03,0.2,1.36,0.13,,Normal,Uncommon,hBP03-012,White,holomem,,,,1st,120,[WN] It's a Promise! (40),1,#JP;#Gen 4;#Baby,,"""Bloom Effect"" Let's Make this the Best Concert Ever! 
+<br>During this turn, 1 of your holomem with a fan attached gets Arts+20.",,,
+669031,Himemori Luna (R),Himemori Luna R,https://tcgplayer-cdn.tcgplayer.com/product/669031_200w.jpg,87,24469,https://cpt.tcgcsv.com/FDm7,2025-12-19T21:00:35.417,1,0.06,0.25,1.5,0.14,,Foil,Rare,hBP03-013,White,holomem,,,,1st,110,"[W] Moon Galaxy (20)<br>
+You may attach 1 ""Lu-knights"" from your archive to your ""Himemori Luna"".",1,#JP;#Gen 4;#Baby,,"""Gift"" A Space Adventuwe with me! 
+<br>[Collab Position Only]Your center holomem <Himemori Luna> with a fan attached gets Arts+20.",,,
+669032,Himemori Luna (SR) (hBP03-013),Himemori Luna SR hBP03 013,https://tcgplayer-cdn.tcgplayer.com/product/669032_200w.jpg,87,24469,https://cpt.tcgcsv.com/GDm7,2025-12-19T20:25:48.727,1,2.38,3.99,9.99,2.5,,Foil,Super Rare,hBP03-013,White,holomem,,,,1st,110,"[W] Moon Galaxy (20)<br>
+You may attach 1 ""Lu-knights"" from your archive to your ""Himemori Luna"".",2,#JP;#Gen 4;#Baby,,"""Gift"" A Space Adventuwe with me! 
+<br>[Collab Position Only]Your center holomem ""Himemori Luna"" with a fan attached gets Arts+20.",,,
+669033,Himemori Luna (RR),Himemori Luna RR,https://tcgplayer-cdn.tcgplayer.com/product/669033_200w.jpg,87,24469,https://cpt.tcgcsv.com/HDm7,2025-12-19T21:01:35.293,1,0.25,0.6,4.0,0.35,,Foil,Double Rare,hBP03-014,White,holomem,,,,2nd,180,"[WWN] Good Work Today (100+) [P+50]<br>
+If ""Lu-knights"" is attached to this holomen, this Arts gets +50.",2,#JP;#Gen 4;#Baby,,"""Bloom Effect"" Follow Luna~ 
+<br>If your Oshi holomem is ""Himemori Luna"", you may attach 1 ""Lu-knights"" from your archive to your ""Himemori Luna"".",,,
+669034,Himemori Luna (SR) (hBP03-014),Himemori Luna SR hBP03 014,https://tcgplayer-cdn.tcgplayer.com/product/669034_200w.jpg,87,24469,https://cpt.tcgcsv.com/JDm7,2025-12-19T21:03:00.103,1,1.0,2.99,10.0,2.22,,Foil,Super Rare,hBP03-014,White,holomem,,,,2nd,180,"[WWN] Good Work Today (100+)<br>
+If ""Lu-knights"" is attached to this holomen, this Arts gets +50.",2,#JP;#Gen 4;#Baby,,"""Bloom Effect"" Follow Luna~ 
+<br>If your Oshi holomem is ""Himemori Luna"", you may attach 1 ""Lu-knights"" from your archive to your ""Himemori Luna"".",,,
+669035,Himemori Luna (UR),Himemori Luna UR,https://tcgplayer-cdn.tcgplayer.com/product/669035_200w.jpg,87,24469,https://cpt.tcgcsv.com/KDm7,2025-12-19T21:04:17.867,1,17.34,20.19,98.3,19.91,,Foil,Ultra Rare,hBP03-014,Yellow,holomem,,,,2nd,180,"[WWN] Good Work Today (100+)<br>
+If ""Lu-knights"" is attached to this holomen, this Arts gets +50.",2,#JP;#Gen 4;#Baby,,"""Bloom Effect"" Follow Luna~ 
+<br>If your Oshi holomem is ""Himemori Luna"", you may attach 1 ""Lu-knights"" from your archive to your ""Himemori Luna"".",,,
+669036,Todoroki Hajime (RR),Todoroki Hajime RR,https://tcgplayer-cdn.tcgplayer.com/product/669036_200w.jpg,87,24469,https://cpt.tcgcsv.com/LDm7,2025-12-19T18:44:34.203,1,0.25,0.73,4.0,0.45,,Foil,Double Rare,hBP03-015,White,holomem,,,,2nd,190,"[WNN] This is the Power of this Badass (110+) [R+50]<br>
+If you have 4 or more back holomem with [#ReGLOSS], this holomem gets Arts+40.",2,#DEV_IS;#ReGLOSS;#Baby,,"""Gift"" Melancholyack 
+<br>[Center Position Only]Your collab holomem with [#ReGLOSS] takes -20 damage.",,,
+669037,Todoroki Hajime (SR) (hBP03-015),Todoroki Hajime SR hBP03 015,https://tcgplayer-cdn.tcgplayer.com/product/669037_200w.jpg,87,24469,https://cpt.tcgcsv.com/MDm7,2025-12-19T18:47:18.19,1,2.0,3.55,8.99,3.55,,Foil,Super Rare,hBP03-015,White,holomem,,,,2nd,190,"[WNN] This is the Power of this Badass (110+)<br>
+If you have 4 or more back holomem with [#ReGLOSS], this holomem gets Arts+40.",2,#DEV_IS;#ReGLOSS;#Baby,,"""Gift"" Melancholyack 
+<br>[Center Position Only]Your collab holomem with [#ReGLOSS] takes -20 damage.",,,
+669038,Todoroki Hajime (UR),Todoroki Hajime UR,https://tcgplayer-cdn.tcgplayer.com/product/669038_200w.jpg,87,24469,https://cpt.tcgcsv.com/NDm7,2025-12-19T18:49:41.23,1,18.0,19.99,49.99,19.6,,Foil,Ultra Rare,hBP03-015,Yellow,holomem,,,,2nd,190,"[WNN] This is the Power of this Badass (110+) [R+50]<br>
+If you have 4 or more back holomem with [#ReGLOSS], this holomem gets Arts+40.",2,#DEV_IS;#ReGLOSS;#Baby,,"""Gift"" Melancholyack 
+<br>[Center Position Only]Your collab holomem with [#ReGLOSS] takes -20 damage.",,,
+669039,Shishiro Botan (C) (hBP03-016),Shishiro Botan C hBP03 016,https://tcgplayer-cdn.tcgplayer.com/product/669039_200w.jpg,87,24469,https://cpt.tcgcsv.com/PDm7,2025-12-19T05:10:13.197,1,0.2,0.64,1.72,0.48,,Normal,Common,hBP03-016,Green,holomem,,,,Debut,100,[N] La-lion (30),1,#JP;#Gen 5;#Kemomimi;#Shooter,[Extra] You may include any number of this holomem in the deck,,,,
+669040,Shishiro Botan (S) (hBP03-017),Shishiro Botan S hBP03 017,https://tcgplayer-cdn.tcgplayer.com/product/669040_200w.jpg,87,24469,https://cpt.tcgcsv.com/QDm7,2025-12-19T14:08:53.26,1,2.52,3.5,8.99,2.59,,Foil,Special,hBP03-017,Green,holomem,,,,Debut,80,[G] Bo. (20),2,#JP;#Gen 5;#Kemomimi;#Shooter,,"""Collab Effect"" Prepare 
+<br>If your Oshi holomem is ""Shishiro Botan"", you may archive the top card of your cheer deck:Restore 10 HP to 1 of your holomem.",,,
+669041,Shishiro Botan (U) (hBP03-017),Shishiro Botan U hBP03 017,https://tcgplayer-cdn.tcgplayer.com/product/669041_200w.jpg,87,24469,https://cpt.tcgcsv.com/RDm7,2025-12-19T14:12:43.88,1,0.09,0.2,1.23,0.13,,Normal,Uncommon,hBP03-017,Green,holomem,,,,Debut,80,[G] Bo. (20),1,#JP;#Gen 5;#Kemomimi;#Shooter,,"""Collab Effect"" Prepare 
+<br>If your Oshi holomem is ""Shishiro Botan"", you may archive the top card of your cheer deck:Restore 10 HP to 1 of your holomem.",,,
+669042,Shishiro Botan (C) (hBP03-018),Shishiro Botan C hBP03 018,https://tcgplayer-cdn.tcgplayer.com/product/669042_200w.jpg,87,24469,https://cpt.tcgcsv.com/SDm7,2025-12-19T14:08:17.013,1,0.03,0.2,1.23,0.11,,Normal,Common,hBP03-018,Green,holomem,,,,1st,160,[G] If Botan became an Idol… (40),1,#JP;#Gen 5;#Kemomimi;#Shooter,,,[GN] I'll definitely make your heart race (60),,
+669043,Shishiro Botan (S) (hBP03-018),Shishiro Botan S hBP03 018,https://tcgplayer-cdn.tcgplayer.com/product/669043_200w.jpg,87,24469,https://cpt.tcgcsv.com/TDm7,2025-12-19T20:51:43.257,1,2.99,4.13,6.0,4.01,,Foil,Special,hBP03-018,Green,holomem,,,,1st,160,[G] If Botan became an Idol… (40),1,#JP;#Gen 5;#Kemomimi;#Shooter,,,[GN] I'll definitely make your heart race (60),,
+669044,Shishiro Botan (S) (hBP03-019),Shishiro Botan S hBP03 019,https://tcgplayer-cdn.tcgplayer.com/product/669044_200w.jpg,87,24469,https://cpt.tcgcsv.com/VDm7,2025-12-19T14:10:15.61,1,0.81,4.8,7.99,0.91,,Foil,Special,hBP03-019,Green,holomem,,,,1st,130,"[N] Slurp (30)<br>
+ Reveal 1 ""Tsunomaki Watame"" from your hand, and you may return it to the bottom of the deck:Restore 20 HP to this holomem.",2,#JP;#Gen 5;#Kemomimi;#Shooter,,"""Bloom Effect"" Singing is Fun 
+<br>You may archive 1 cheer from your back holomem:Deal 30 special damage to your opponent's center holomem or collab holomem. You may only use [Bloom Effect] ""Singing is Fun"" once per turn.",,,
+669045,Shishiro Botan (U) (hBP03-019),Shishiro Botan U hBP03 019,https://tcgplayer-cdn.tcgplayer.com/product/669045_200w.jpg,87,24469,https://cpt.tcgcsv.com/WDm7,2025-12-19T21:10:23.44,1,0.03,0.2,1.23,0.1,,Normal,Uncommon,hBP03-019,Green,holomem,,,,1st,130,"[N] Slurp (30)<br>
+ Reveal 1 ""Tsunomaki Watame"" from your hand, and you may return it to the bottom of the deck:Restore 20 HP to this holomem.",1,#JP;#Gen 5;#Kemomimi;#Shooter,,"""Bloom Effect"" Singing is Fun 
+<br>You may archive 1 cheer from your back holomem:Deal 30 special damage to your opponent's center holomem or collab holomem. You may only use [Bloom Effect] ""Singing is Fun"" once per turn.",,,
+669046,Shishiro Botan (R),Shishiro Botan R,https://tcgplayer-cdn.tcgplayer.com/product/669046_200w.jpg,87,24469,https://cpt.tcgcsv.com/XDm7,2025-12-19T14:09:35.837,1,0.1,0.34,1.54,0.22,,Foil,Rare,hBP03-020,Green,holomem,,,,1st,110,[GN] Arrived in a Shopping Cart (50),1,#JP;#Gen 5;#Kemomimi;#Shooter,,"""Bloom Effect"" SSSSR 
+<br>Send the top card of your cheer deck to your back holomem ""Shishiro Botan"".",,,
+669047,Shishiro Botan (SR) (hBP03-020),Shishiro Botan SR hBP03 020,https://tcgplayer-cdn.tcgplayer.com/product/669047_200w.jpg,87,24469,https://cpt.tcgcsv.com/ZDm7,2025-12-19T14:11:28.197,1,12.0,12.5,12.99,5.27,,Foil,Super Rare,hBP03-020,Green,holomem,,,,1st,110,[GN] Arrived in a Shopping Cart (50),2,#JP;#Gen 5;#Kemomimi;#Shooter,,"""Bloom Effect"" SSSSR 
+<br>Send the top card of your cheer deck to your back holomem ""Shishiro Botan"".",,,
+669048,Shishiro Botan (RR),Shishiro Botan RR,https://tcgplayer-cdn.tcgplayer.com/product/669048_200w.jpg,87,24469,https://cpt.tcgcsv.com/-Dm7,2025-12-19T20:52:38.42,1,0.4,0.75,4.94,0.51,,Foil,Double Rare,hBP03-021,Green,holomem,,,,2nd,190,"[GNN] God-Tier Aim (110) [B+50]<br>
+<br>If your Oshi holomem is <Shishiro Botan>, you may archive 1 cheer from your back holomem:Deal 40 special damage to your opponent's center holomem or collab holomem.",2,#JP;#Gen 5;#Kemomimi;#Shooter,,"""Bloom Effect"" Shishiro Botan will fix it somehow 
+<br>You may send 1 green cheer each from your archive to 1~2 of your back holomem with [#Shooter].",,,
+669049,Shishiro Botan (SR) (hBP03-021),Shishiro Botan SR hBP03 021,https://tcgplayer-cdn.tcgplayer.com/product/669049_200w.jpg,87,24469,https://cpt.tcgcsv.com/_Dm7,2025-12-19T14:11:54.243,1,5.49,6.98,12.0,6.8,,Foil,Super Rare,hBP03-021,Green,holomem,,,,2nd,190,"[GNN] God-Tier Aim (110) [B+50]<br>
+If your Oshi holomem is ""Shishiro Botan"", you may archive 1 cheer from your back holomem:Deal 40 special damage to your opponent's center holomem or collab holomem.",2,#JP;#Gen 5;#Kemomimi;#Shooter,,"""Bloom Effect"" Shishiro Botan will fix it somehow 
+<br>You may send 1 green cheer each from your archive to 1~2 of your back holomem with [#Shooter].",,,
+669050,Shishiro Botan (UR),Shishiro Botan UR,https://tcgplayer-cdn.tcgplayer.com/product/669050_200w.jpg,87,24469,https://cpt.tcgcsv.com/0Fm7,2025-12-19T21:05:59.79,1,31.35,33.34,74.99,32.99,,Foil,Ultra Rare,hBP03-021,Yellow,holomem,,,,2nd,190,"[GNN] God-Tier Aim (110) [B+50]<br>
+If your Oshi holomem is ""Shishiro Botan"", you may archive 1 cheer from your back holomem:Deal 40 special damage to your opponent's center holomem or collab holomem.",2,#JP;#Gen 5;#Kemomimi;#Shooter,,"""Bloom Effect"" Shishiro Botan will fix it somehow 
+<br>You may send 1 green cheer each from your archive to 1~2 of your back holomem with [#Shooter].",,,
+669051,Aki Rosenthal (R),Aki Rosenthal R,https://tcgplayer-cdn.tcgplayer.com/product/669051_200w.jpg,87,24469,https://cpt.tcgcsv.com/2Fm7,2025-12-19T13:56:35.847,1,0.04,0.3,1.48,0.16,,Foil,Rare,hBP03-022,Green,buzz holomem,,,,1st,250,"[GG] Passionate Belly Dancer (50)<br>
+If your Oshi holomem is ""Aki Rosenthal"", restore 10 HP to all of your holomem with a tool attached.",2,#JP;#Gen 1;#Half-Elf;#Alcohol,"[Extra] If this holomem is downed, you get life-2","""Gift"" My Otherworldly Form 
+<br>[Center Position·Collab Position Only]Usable at the beginning of your opponent's performance phase:During this turn, your life cannot be reduced by your opponent's abilities.",,,
+669052,Aki Rosenthal (SR),Aki Rosenthal SR,https://tcgplayer-cdn.tcgplayer.com/product/669052_200w.jpg,87,24469,https://cpt.tcgcsv.com/3Fm7,2025-12-19T13:57:04.777,1,2.49,4.48,8.99,3.44,,Foil,Super Rare,hBP03-022,Green,buzz holomem,,,,1st,250,"[GG] Passionate Belly Dancer (50)<br>
+If your Oshi holomem is ""Aki Rosenthal"", restore 10 HP to all of your holomem with a tool attached.",2,#JP;#Gen 1;#Half-Elf;#Alcohol,"[Extra] If this holomem is downed, you get life-2","""Gift"" My Otherworldly Form 
+<br>[Center Position·Collab Position Only]Usable at the beginning of your opponent's performance phase:During this turn, your life cannot be reduced by your opponent's abilities.",,,
+669053,Usada Pekora (R),Usada Pekora R,https://tcgplayer-cdn.tcgplayer.com/product/669053_200w.jpg,87,24469,https://cpt.tcgcsv.com/5Fm7,2025-12-19T20:38:49.563,1,0.1,0.35,1.23,0.32,,Foil,Rare,hBP03-023,Green,buzz holomem,,,,1st,230,"[GNN] Time to Play Cards Peko (80+)<br>
+If a die was rolled once or more by the ability of your ""Usada Pekora"" this turn, this Arts gets +40.",2,#JP;#Gen 3;#Kemomimi,"[Extra] If this holomem is downed, you get life-2","""Collab Effect"" You Guys 
+<br>You may roll a die once:If it is even, reveal 1 fan from your deck, and add it to hand. Then, shuffle the deck.",,,
+669054,Usada Pekora (SR),Usada Pekora SR,https://tcgplayer-cdn.tcgplayer.com/product/669054_200w.jpg,87,24469,https://cpt.tcgcsv.com/6Fm7,2025-12-19T20:30:44.497,1,8.76,10.63,21.99,11.27,,Foil,Super Rare,hBP03-023,Green,buzz holomem,,,,1st,230,"[GNN] Time to Play Cards Peko (80+)<br>
+If a die was rolled once or more by the ability of your ""Usada Pekora"" this turn, this Arts gets +40.",2,#JP;#Gen 3;#Kemomimi,"[Extra] If this holomem is downed, you get life-2","""Collab Effect"" You Guys 
+<br>You may roll a die once:If it is even, reveal 1 fan from your deck, and add it to hand. Then, shuffle the deck.",,,
+669055,Kazama Iroha (RR) (hBP03-024),Kazama Iroha RR hBP03 024,https://tcgplayer-cdn.tcgplayer.com/product/669055_200w.jpg,87,24469,https://cpt.tcgcsv.com/7Fm7,2025-12-19T21:12:29.11,1,0.23,0.75,3.25,0.41,,Foil,Double Rare,hBP03-024,Green,holomem,,,,2nd,200,"[GNNN] Kazama Attacc (100+) [W+50]<br>
+If 2 or more non-green cheers are attached to this holomem, this Arts gets +50.",2,#JP;#holoX,,"""Bloom Effect"" Kazama Protecc 
+<br>You may send 1 cheer each from your archive to 1 each of your [""Kazama Iroha"" and ""Hoshimachi Suisei""].",,,
+669056,Kazama Iroha (SR),Kazama Iroha SR,https://tcgplayer-cdn.tcgplayer.com/product/669056_200w.jpg,87,24469,https://cpt.tcgcsv.com/8Fm7,2025-12-19T21:12:53.4,1,2.97,4.0,9.99,3.53,,Foil,Super Rare,hBP03-024,Green,holomem,,,,2nd,200,"[GNNN] Kazama Attacc (100+) [W+50]<br>
+If 2 or more non-green cheers are attached to this holomem, this Arts gets +50.",2,#JP;#holoX,,"""Bloom Effect"" Kazama Protecc 
+<br>You may send 1 cheer each from your archive to 1 each of your [""Kazama Iroha"" and ""Hoshimachi Suisei""].",,,
+669057,Kazama Iroha (UR),Kazama Iroha UR,https://tcgplayer-cdn.tcgplayer.com/product/669057_200w.jpg,87,24469,https://cpt.tcgcsv.com/9Fm7,2025-12-19T21:13:27.857,1,23.0,27.35,52.95,32.3,,Foil,Ultra Rare,hBP03-024,Yellow,holomem,,,,2nd,200,"[GNNN] Kazama Attacc (100+) [W+50]<br>
+If 2 or more non-green cheers are attached to this holomem, this Arts gets +50.",2,#JP;#holoX,,"""Bloom Effect"" Kazama Protecc 
+<br>You may send 1 cheer each from your archive to 1 each of your [""Kazama Iroha"" and ""Hoshimachi Suisei""].",,,
+669058,Sakura Miko (C) (hBP03-025),Sakura Miko C hBP03 025,https://tcgplayer-cdn.tcgplayer.com/product/669058_200w.jpg,87,24469,https://cpt.tcgcsv.com/bFm7,2025-12-19T05:10:13.197,1,0.2,0.95,2.47,0.68,,Normal,Common,hBP03-025,Red,holomem,,,,Debut,100,[N] Nya-hello~ (30),1,#JP;#Gen 0;#Baby,[Extra] You may include any number of this holomem in the deck,,,,
+669059,Sakura Miko (S) (hBP03-026),Sakura Miko S hBP03 026,https://tcgplayer-cdn.tcgplayer.com/product/669059_200w.jpg,87,24469,https://cpt.tcgcsv.com/cFm7,2025-12-19T21:08:23.937,1,3.0,3.46,4.99,3.29,,Foil,Special,hBP03-026,Red,holomem,,,,Debut,80,[RN] Cherry Blossom Season (30),2,#JP;#Gen 0;#Baby,,"""Collab Effect"" Our Rendezvous 
+<br>You may roll a die once:If it is 2, 4 or 6, deal 10 special damage to your opponent's center holomem. If it is 3 or 5, draw 1 card from your deck, and deal 10 special damage to your opponent's center holomem.",,,
+669060,Sakura Miko (U) (hBP03-026),Sakura Miko U hBP03 026,https://tcgplayer-cdn.tcgplayer.com/product/669060_200w.jpg,87,24469,https://cpt.tcgcsv.com/dFm7,2025-12-19T14:06:48.623,1,0.04,0.2,1.23,0.11,,Normal,Uncommon,hBP03-026,Red,holomem,,,,Debut,80,[RN] Cherry Blossom Season (30),1,#JP;#Gen 0;#Baby,,"""Collab Effect"" Our Rendezvous
+<br>You may roll a die once:If it is 2, 4 or 6, deal 10 special damage to your opponent's center holomem. If it is 3 or 5, draw 1 card from your deck, and deal 10 special damage to your opponent's center holomem.",,,
+669061,Sakura Miko (C) (hBP03-027),Sakura Miko C hBP03 027,https://tcgplayer-cdn.tcgplayer.com/product/669061_200w.jpg,87,24469,https://cpt.tcgcsv.com/fFm7,2025-12-19T05:10:13.197,1,0.03,0.23,1.23,0.1,,Normal,Common,hBP03-027,Red,holomem,,,,1st,150,[N] Elite Swimsuit (40),,#JP;#Gen 0;#Baby,,,[RN] Punichi (60),,
+669062,Sakura Miko (S) (hBP03-027),Sakura Miko S hBP03 027,https://tcgplayer-cdn.tcgplayer.com/product/669062_200w.jpg,87,24469,https://cpt.tcgcsv.com/gFm7,2025-12-19T05:10:13.197,1,5.5,8.66,10.99,7.7,,Foil,Special,hBP03-027,Red,holomem,,,,1st,150,[N] Elite Swimsuit (40),,#JP;#Gen 0;#Baby,,,[RN] Punichi (60),,
+669063,Sakura Miko (S) (hBP03-028),Sakura Miko S hBP03 028,https://tcgplayer-cdn.tcgplayer.com/product/669063_200w.jpg,87,24469,https://cpt.tcgcsv.com/hFm7,2025-12-19T21:08:45.863,1,4.01,5.43,9.99,5.52,,Foil,Special,hBP03-028,Red,holomem,,,,1st,130,[N] Give me your Support (30),,#JP;#Gen 0;#Baby,,,"[RN] Mikopi! (50)<br>
+You may roll a die once:If it is 2, 4 or 6, deal 20 special damage to your opponent's center holomem. If it is 3 or 5, deal 20 special damage to your opponent's center holomem and collab holomem.",,
+669064,Sakura Miko (U) (hBP03-028),Sakura Miko U hBP03 028,https://tcgplayer-cdn.tcgplayer.com/product/669064_200w.jpg,87,24469,https://cpt.tcgcsv.com/jFm7,2025-12-19T14:06:31.343,1,0.03,0.2,1.23,0.08,,Normal,Uncommon,hBP03-028,Red,holomem,,,,1st,130,[N] Give me your Support (30),,#JP;#Gen 0;#Baby,,,"[RN] Mikopi!(50)<br>
+You may roll a die once:If it is 2, 4 or 6, deal 20 special damage to your opponent's center holomem. If it is 3 or 5, deal 20 special damage to your opponent's center holomem and collab holomem.",,
+669065,Sakura Miko (R),Sakura Miko R,https://tcgplayer-cdn.tcgplayer.com/product/669065_200w.jpg,87,24469,https://cpt.tcgcsv.com/kFm7,2025-12-19T21:07:45.613,1,0.08,0.3,1.23,0.21,,Foil,Rare,hBP03-029,Red,holomem,,,,1st,130,"[RN] Commemorative Photo with 35P (30+)<br>
+If ""35P"" is attached to this holomem, this Arts gets +30.",,#JP;#Gen 0;#Baby,,"""Bloom Effect"" Nye 
+<br>Reveal 1 ""35P"" from your deck, and add it to hand. Then, shuffle the deck.",,,
+669066,Sakura Miko (SR) (hBP03-029),Sakura Miko SR hBP03 029,https://tcgplayer-cdn.tcgplayer.com/product/669066_200w.jpg,87,24469,https://cpt.tcgcsv.com/lFm7,2025-12-19T21:09:44.407,1,6.5,14.23,20.0,13.49,,Foil,Super Rare,hBP03-029,Red,holomem,,,,1st,130,"[RN] Commemorative Photo with 35P (30+)<br>
+If ""35P"" is attached to this holomem, this Arts gets +30.",2,#JP;#Gen 0;#Baby,,"""Bloom Effect"" Nye 
+<br>Reveal 1 ""35P"" from your deck, and add it to hand. Then, shuffle the deck.",,,
+669067,Sakura Miko (RR),Sakura Miko RR,https://tcgplayer-cdn.tcgplayer.com/product/669067_200w.jpg,87,24469,https://cpt.tcgcsv.com/mFm7,2025-12-19T21:08:12.903,1,2.48,3.0,7.5,2.96,,Foil,Double Rare,hBP03-030,Red,holomem,,,,2nd,200,"[RNN] Elite Shrine Maiden (120+) [G+50]<br>
+ This Arts gets +20 for each ""35P"" attached to this holomem.",1,#JP;#Gen 0;#Baby,,"""Gift"" Elite Gamble 
+<br>[Center Position Only][1/Turn]During your main phase, when ""35P"" is attached to this holomem, you may roll a die once:If it is 3 or 5, during this turn, this holomem gets Arts+50.",,,
+669068,Sakura Miko (SR) (hBP03-030),Sakura Miko SR hBP03 030,https://tcgplayer-cdn.tcgplayer.com/product/669068_200w.jpg,87,24469,https://cpt.tcgcsv.com/nFm7,2025-12-19T14:07:54.903,1,5.0,8.33,15.0,7.61,,Foil,Super Rare,hBP03-030,Red,holomem,,,,2nd,200,"[RNN] Elite Shrine Maiden (120+) [G+50]<br>
+This Arts gets +20 for each ""35P"" attached to this holomem.",2,#JP;#Gen 0;#Baby,,"""Gift"" Elite Gamble 
+[Center Position Only][1/Turn]During your main phase, when ""35P"" is attached to this holomem, you may roll a die once:If it is 3 or 5, during this turn, this holomem gets Arts+50.",,,
+669069,Sakura Miko (UR),Sakura Miko UR,https://tcgplayer-cdn.tcgplayer.com/product/669069_200w.jpg,87,24469,https://cpt.tcgcsv.com/pFm7,2025-12-19T14:06:22.677,1,71.73,73.73,100.0,61.35,,Foil,Ultra Rare,hBP03-030,Yellow,holomem,,,,2nd,200,"[RNN] Elite Shrine Maiden (120+) [G+50]<br>
+This Arts gets +20 for each ""35P"" attached to this holomem.",1,#JP;#Gen 0;#Baby,,"""Gift"" Elite Gamble 
+<br>[Center Position Only][1/Turn]During your main phase, when ""35P"" is attached to this holomem, you may roll a die once:If it is 3 or 5, during this turn, this holomem gets Arts+50.",,,
+669070,Akai Haato (C) (hBP03-031),Akai Haato C hBP03 031,https://tcgplayer-cdn.tcgplayer.com/product/669070_200w.jpg,87,24469,https://cpt.tcgcsv.com/qFm7,2025-12-19T05:10:13.197,1,0.03,0.25,1.23,0.19,,Normal,Common,hBP03-031,Red,holomem,,,,Debut,100,[N] Good Morning-Rouge! (30),1,#JP;#Gen 1;#Cooking,[Extra] You may include any number of this holomem in the deck,,,,
+669071,Akai Haato (C) (hBP03-032),Akai Haato C hBP03 032,https://tcgplayer-cdn.tcgplayer.com/product/669071_200w.jpg,87,24469,https://cpt.tcgcsv.com/rFm7,2025-12-19T05:10:13.197,1,0.03,0.2,1.23,0.08,,Normal,Common,hBP03-032,Red,holomem,,,,1st,170,[RN] Good Job-Rouge! (60),,#JP;#Gen 1;#Cooking,,,,,
+669072,Akai Haato (S) (hBP03-032),Akai Haato S hBP03 032,https://tcgplayer-cdn.tcgplayer.com/product/669072_200w.jpg,87,24469,https://cpt.tcgcsv.com/sFm7,2025-12-19T05:10:13.197,1,0.94,1.09,3.99,0.75,,Foil,Special,hBP03-032,Red,holomem,,,,1st,170,[RN] Good Job-Rouge! (60),,#JP;#Gen 1;#Cooking,,,,,
+669073,Akai Haato (S) (hBP03-033),Akai Haato S hBP03 033,https://tcgplayer-cdn.tcgplayer.com/product/669073_200w.jpg,87,24469,https://cpt.tcgcsv.com/tFm7,2025-12-19T13:52:12.783,1,0.94,1.04,4.99,1.21,,Foil,Special,hBP03-033,Red,holomem,,,,1st,120,[N] Haachama-chama~! (40),2,#JP;#Gen 1;#Cooking,,"""Bloom Effect"" Gonna Give it my All! 
+<br>Deal 10 special damage to your opponent's center holomem. If a tool is attached to that opponent's center holomem, deal 30 special damage to your opponent's center holomem instead.",,,
+669074,Akai Haato (U),Akai Haato U,https://tcgplayer-cdn.tcgplayer.com/product/669074_200w.jpg,87,24469,https://cpt.tcgcsv.com/vFm7,2025-12-19T13:55:44.253,1,0.01,0.2,1.23,0.1,,Normal,Uncommon,hBP03-033,Red,holomem,,,,1st,120,[N] Haachama-chama~! (40),1,#JP;#Gen 1;#Cooking,,"""Bloom Effect"" Gonna Give it my All! 
+<br>Deal 10 special damage to your opponent's center holomem. If a tool is attached to that opponent's center holomem, deal 30 special damage to your opponent's center holomem instead.",,,
+669075,Akai Haato (RR),Akai Haato RR,https://tcgplayer-cdn.tcgplayer.com/product/669075_200w.jpg,87,24469,https://cpt.tcgcsv.com/wFm7,2025-12-19T13:50:56.05,1,0.2,0.5,3.0,0.39,,Foil,Double Rare,hBP03-034,Red,buzz holomem,,,,1st,240,"[RN] Red or Rouge (40+)<br>
+You may roll a die once:If it is odd, deal 20 special damage to your opponent's center holomem and collab holomem. If it is even, this Arts gets +40.",2,#JP;#Gen 1;#Cooking,"[Extra] If this holomem is downed, you get life-2","""Bloom Effect"" The other Haato 
+<br>You may return 1 [1st holomem or 2nd holomem] with [#Gen 1] other than Buzz to hand.",,,
+669076,Akai Haato (SR),Akai Haato SR,https://tcgplayer-cdn.tcgplayer.com/product/669076_200w.jpg,87,24469,https://cpt.tcgcsv.com/xFm7,2025-12-19T13:52:43.8,1,3.0,7.0,25.0,3.84,,Foil,Super Rare,hBP03-034,Red,buzz holomem,,,,1st,240,"[RN] Red or Rouge (40+)<br>
+You may roll a die once:If it is odd, deal 20 special damage to your opponent's center holomem and collab holomem. If it is even, this Arts gets +40.",2,#JP;#Gen 1;#Cooking,"[Extra] If this holomem is downed, you get life-2","""Bloom Effect"" The other Haato 
+<br>You may return 1 [1st holomem or 2nd holomem] with [#Gen 1] other than Buzz to hand.",,,
+669077,Akai Haato (UR),Akai Haato UR,https://tcgplayer-cdn.tcgplayer.com/product/669077_200w.jpg,87,24469,https://cpt.tcgcsv.com/zFm7,2025-12-19T13:56:01.017,1,27.0,31.75,49.99,31.99,,Foil,Ultra Rare,hBP03-034,Yellow,buzz holomem,,,,1st,240,"[RN] Red or Rouge (40+)<br>
+You may roll a die once:If it is odd, deal 20 special damage to your opponent's center holomem and collab holomem. If it is even, this Arts gets +40.",2,#JP;#Gen 1;#Cooking,"[Extra] If this holomem is downed, you get life-2","""Bloom Effect"" The other Haato 
+<br>You may return 1 [1st holomem or 2nd holomem] with [#Gen 1] other than Buzz to hand.",,,
+669078,Takane Lui (R),Takane Lui R,https://tcgplayer-cdn.tcgplayer.com/product/669078_200w.jpg,87,24469,https://cpt.tcgcsv.com/BFm7,2025-12-19T20:58:10.75,1,0.03,0.25,1.47,0.21,,Foil,Rare,hBP03-035,Red,buzz holomem,,,,1st,240,"[RN] challenger (50)<br>
+If your Oshi holomem is ""Takane Lui"", you may archive 2 cards from your hand:Draw 3 cards.",2,#JP;#Bird;#Alcohol;#holoX,"[Extra] If this holomem is downed, you get life-2",,,,
+669079,Takane Lui (SR),Takane Lui SR,https://tcgplayer-cdn.tcgplayer.com/product/669079_200w.jpg,87,24469,https://cpt.tcgcsv.com/CFm7,2025-12-19T18:41:55.86,1,2.0,5.15,20.0,3.32,,Foil,Super Rare,hBP03-035,Red,buzz holomem,,,,1st,240,"[RN] challenger (50)<br>
+If your Oshi holomem is ""Takane Lui"", you may archive 2 cards from your hand:Draw 3 cards.",2,#JP;#Bird;#Alcohol;#holoX,"[Extra] If this holomem is downed, you get life-2",,,,
+669080,Takanashi Kiara (R),Takanashi Kiara R,https://tcgplayer-cdn.tcgplayer.com/product/669080_200w.jpg,87,24469,https://cpt.tcgcsv.com/DFm7,2025-12-19T20:58:44.383,1,0.24,0.4,5.0,0.31,,Foil,Rare,hBP03-036,Red,holomem,,,,1st,140,[RN] Wings of Steel (50),1,#EN;#Bird;#Myth,,"""Bloom Effect"" Happy Time 
+<br>Reveal 1~4 ""Takanashi Kiara"" from your deck, and you may archive them. Then, shuffle the deck.",,,
+669081,Takanashi Kiara (SR),Takanashi Kiara SR,https://tcgplayer-cdn.tcgplayer.com/product/669081_200w.jpg,87,24469,https://cpt.tcgcsv.com/FFm7,2025-12-19T20:58:31.103,1,12.7,15.26,36.98,15.41,,Foil,Super Rare,hBP03-036,Red,holomem,,,,1st,140,[RN] Wings of Steel (50),2,#EN;#Bird;#Myth,,"""Bloom Effect"" Happy Time 
+<br>Reveal 1~4 ""Takanashi Kiara"" from your deck, and you may archive them. Then, shuffle the deck.",,,
+669082,Mococo Abyssgard (C) (hBP03-037),Mococo Abyssgard C hBP03 037,https://tcgplayer-cdn.tcgplayer.com/product/669082_200w.jpg,87,24469,https://cpt.tcgcsv.com/GFm7,2025-12-19T13:46:42.137,1,0.49,0.79,3.0,0.76,,Normal,Common,hBP03-037,Red,holomem,,,,Debut,80,"[N] I'm not Fuwawa, I'm Mococo (20)<br>
+If your center holomem is ""Fuwawa Abyssgard"", this Arts requires -1 colorless.",,#EN;#Kemomimi;#Advent,[Extra] You may include any number of this holomem in the deck,,,,
+669083,Mococo Abyssgard (C) (hBP03-038),Mococo Abyssgard C hBP03 038,https://tcgplayer-cdn.tcgplayer.com/product/669083_200w.jpg,87,24469,https://cpt.tcgcsv.com/HFm7,2025-12-19T13:46:23.193,1,0.1,0.25,1.23,0.18,,Normal,Common,hBP03-038,Red,holomem,,,,1st,130,[N] Donut Cooking with Mococo (30),,#EN;#Kemomimi;#Advent,,"""Bloom Effect"" It's playtime! 
+<br>When bloomed from Debut, reveal 1 1st holomem ""Fuwawa Abyssgard"" from your deck, and add it to hand. Then, shuffle the deck.",,,
+669084,Mococo Abyssgard (S),Mococo Abyssgard S,https://tcgplayer-cdn.tcgplayer.com/product/669084_200w.jpg,87,24469,https://cpt.tcgcsv.com/JFm7,2025-12-19T13:47:11.76,1,8.49,9.44,9.99,5.5,,Foil,Special,hBP03-038,Red,holomem,,,,1st,130,[N] Donut Cooking with Mococo (30),2,#EN;#Kemomimi;#Advent,,"""Bloom Effect"" It's playtime! 
+<br>When bloomed from Debut, reveal 1 1st holomem ""Fuwawa Abyssgard"" from your deck, and add it to hand. Then, shuffle the deck.",,,
+669085,Mococo Abyssgard (R),Mococo Abyssgard R,https://tcgplayer-cdn.tcgplayer.com/product/669085_200w.jpg,87,24469,https://cpt.tcgcsv.com/KFm7,2026-03-04T14:49:15.543,1,0.24,0.43,1.23,0.35,,Foil,Rare,hBP03-039,Red,buzz holomem,,,,1st,240,"[RB] The Fluffy One (50+)<br>
+[Collab Position Only]If your center holomem is ""Fuwawa Abyssgard"", this Arts gets +30.
+<br><br>
+<a href=""https://en.hololive-official-cardgame.com/errata/007/"">This card has been officially errata'd.</a>",1,#EN;#Kemomimi;#Advent,"[Extra] If this holomem is downed, you get life-2","""Gift"" The Rowdy Demonic Guard Dog 
+<br>During your reset phase, if your center holomem is ""Fuwawa Abyssgard"", this holomem does not rest even if moved to the back position.",,,
+669086,Mococo Abyssgard (SR),Mococo Abyssgard SR,https://tcgplayer-cdn.tcgplayer.com/product/669086_200w.jpg,87,24469,https://cpt.tcgcsv.com/LFm7,2026-03-04T14:49:00.807,1,14.25,19.5,49.99,15.74,,Foil,Super Rare,hBP03-039,Red,buzz holomem,,,,1st,240,"[RB] The Fluffy One (50+)<br>
+[Collab Position Only]If your center holomem is ""Fuwawa Abyssgard"", this Arts gets +30.
+<br><br>
+<a href=""https://en.hololive-official-cardgame.com/errata/007/"">This card has been officially errata'd.</a>",2,#EN;#Kemomimi;#Advent,"[Extra] If this holomem is downed, you get life-2","""Gift"" The Rowdy Demonic Guard Dog 
+<br>During your reset phase, if your center holomem is ""Fuwawa Abyssgard"", this holomem does not rest even if moved to the back position.",,,
+669087,Fuwawa Abyssgard (C) (hBP03-040),Fuwawa Abyssgard C hBP03 040,https://tcgplayer-cdn.tcgplayer.com/product/669087_200w.jpg,87,24469,https://cpt.tcgcsv.com/MFm7,2025-12-19T05:10:13.197,1,0.45,1.12,2.47,1.13,,Normal,Common,hBP03-040,Blue,holomem,,,,Debut,100,"[N] I'm not a Chihuahua, I'm Fuwawa (30)",1,#EN;#Advent;#Kemomimi,[Extra] You may include any number of this holomem in the deck,,,,
+669088,Fuwawa Abyssgard (C) (hBP03-041),Fuwawa Abyssgard C hBP03 041,https://tcgplayer-cdn.tcgplayer.com/product/669088_200w.jpg,87,24469,https://cpt.tcgcsv.com/NFm7,2026-03-04T14:51:22.393,1,0.03,0.25,1.23,0.19,,Normal,Common,hBP03-041,Blue,holomem,,,,1st,160,"[N] The Peacemaking Demonic Guard Dog (40)
+<br><br>
+<a href=""https://en.hololive-official-cardgame.com/errata/008/"">This card has been officially errata'd.</a>",1,#EN;#Kemomimi;#Advent,,,[BN] The Soft One (60),,
+669089,Fuwawa Abyssgard (S) (hBP03-041),Fuwawa Abyssgard S hBP03 041,https://tcgplayer-cdn.tcgplayer.com/product/669089_200w.jpg,87,24469,https://cpt.tcgcsv.com/PFm7,2026-03-04T14:51:07.997,1,10.0,11.49,12.49,7.83,,Foil,Special,hBP03-041,Blue,holomem,,,,1st,160,"[N] The Peacemaking Demonic Guard Dog (40)
+<br><br>
+<a href=""https://en.hololive-official-cardgame.com/errata/008/"">This card has been officially errata'd.</a>",1,#EN;#Kemomimi;#Advent,,,[BN] The Soft One (60),,
+669090,Fuwawa Abyssgard (S) (hBP03-042),Fuwawa Abyssgard S hBP03 042,https://tcgplayer-cdn.tcgplayer.com/product/669090_200w.jpg,87,24469,https://cpt.tcgcsv.com/QFm7,2025-12-19T20:49:23.397,1,10.2,13.34,20.0,8.02,,Foil,Special,hBP03-042,Blue,holomem,,,,1st,140,[NN] Strolling in the Forest with Fuwawa (50),2,#EN;#Kemomimi;#Advent,,"""Bloom Effect"" Fuwa Floating with the Current 
+If ""Mococo Abyssgard"" is on your stage, deal 20 special damage to 1 of your opponent's center holomem or back holomem. However, your opponent's life does not reduce even if downed.",,,
+669091,Fuwawa Abyssgard (U),Fuwawa Abyssgard U,https://tcgplayer-cdn.tcgplayer.com/product/669091_200w.jpg,87,24469,https://cpt.tcgcsv.com/RFm7,2025-12-19T13:49:03.17,1,0.1,0.25,1.23,0.24,,Normal,Uncommon,hBP03-042,Blue,holomem,,,,1st,140,[NN] Strolling in the Forest with Fuwawa (50),1,#EN;#Kemomimi;#Advent,,"""Bloom Effect"" Fuwa Floating with the Current 
+<br>If ""Mococo Abyssgard"" is on your stage, deal 20 special damage to 1 of your opponent's center holomem or back holomem. However, your opponent's life does not reduce even if downed.",,,
+669092,Fuwawa Abyssgard (RR),Fuwawa Abyssgard RR,https://tcgplayer-cdn.tcgplayer.com/product/669092_200w.jpg,87,24469,https://cpt.tcgcsv.com/SFm7,2025-12-19T20:48:31.873,1,9.99,10.76,15.0,10.73,,Foil,Double Rare,hBP03-043,Blue,holomem,,,,2nd,190,[B] I Love Donuts (60) [P+50],2,#EN;#Kemomimi;#Advent,,,"[BRN] Wanna eat together? (100) [P+50]<br>
+[Center Position Only]If your Oshi holomem is ""FUWAMOCO"", you may reattach 1 cheer from this holomem to your ""Mococo Abyssgard"":Deal 50 special damage to your opponent's center holomem.",,
+669093,Fuwawa Abyssgard (SR),Fuwawa Abyssgard SR,https://tcgplayer-cdn.tcgplayer.com/product/669093_200w.jpg,87,24469,https://cpt.tcgcsv.com/TFm7,2025-12-19T13:48:38.937,1,16.5,19.0,23.0,17.51,,Foil,Super Rare,hBP03-043,Blue,holomem,,,,2nd,190,[B] I Love Donuts (60) [P+50],2,#EN;#Kemomimi;#Advent,,,"[BRN] Wanna eat together? (100) [P+50]<br>
+[Center Position Only]If your Oshi holomem is ""FUWAMOCO"", you may reattach 1 cheer from this holomem to your ""Mococo Abyssgard"":Deal 50 special damage to your opponent's center holomem.",,
+669094,Fuwawa Abyssgard (UR),Fuwawa Abyssgard UR,https://tcgplayer-cdn.tcgplayer.com/product/669094_200w.jpg,87,24469,https://cpt.tcgcsv.com/VFm7,2025-12-19T13:49:54.38,1,102.0,103.48,104.86,108.66,,Foil,Ultra Rare,hBP03-043,Blue,holomem,,,,2nd,190,[B] I Love Donuts (60) [P+50],2,#EN;#Kemomimi;#Advent,,,"[BRN] Wanna eat together? (100) [P+50]<br>
+[Center Position Only]If your Oshi holomem is ""FUWAMOCO"", you may reattach 1 cheer from this holomem to your ""Mococo Abyssgard"":Deal 50 special damage to your opponent's center holomem.",,
+669095,Hoshimachi Suisei (R),Hoshimachi Suisei R,https://tcgplayer-cdn.tcgplayer.com/product/669095_200w.jpg,87,24469,https://cpt.tcgcsv.com/WFm7,2025-12-19T14:03:30.75,1,0.5,0.85,7.94,0.72,,Foil,Rare,hBP03-044,Blue,holomem,,,,1st,150,"[BN] Virtual Ghost (40)<br>
+ If your Oshi holomem is ""Hoshimachi Suisei"", you may reattach 1 blue cheer from this holomem to your back holomem ""Hoshimachi Suisei"".",1,#JP;#Gen 0;#Singing,,"""Bloom Effect"" Planet Stage 
+<br>Look at the top 4 cards of your deck. Reveal 1 ""Hoshimachi Suisei"" from among them, and add it to hand. Then, return the remaining cards to the bottom of the deck in any order.",,,
+669096,Hoshimachi Suisei (SR),Hoshimachi Suisei SR,https://tcgplayer-cdn.tcgplayer.com/product/669096_200w.jpg,87,24469,https://cpt.tcgcsv.com/XFm7,2025-12-19T14:04:27.46,1,21.0,28.71,59.7,26.61,,Foil,Super Rare,hBP03-044,Blue,holomem,,,,1st,150,"[BN] Virtual Ghost (40)<br>
+If your Oshi holomem is ""Hoshimachi Suisei"", you may reattach 1 blue cheer from this holomem to your back holomem ""Hoshimachi Suisei"".",2,#JP;#Gen 0;#Singing,,"""Bloom Effect"" Planet Stage<br> 
+Look at the top 4 cards of your deck. Reveal 1 ""Hoshimachi Suisei"" from among them, and add it to hand. Then, return the remaining cards to the bottom of the deck in any order.",,,
+669097,Kobo Kanaeru (R),Kobo Kanaeru R,https://tcgplayer-cdn.tcgplayer.com/product/669097_200w.jpg,87,24469,https://cpt.tcgcsv.com/ZFm7,2025-12-19T21:13:45.233,1,0.09,0.26,1.23,0.2,,Foil,Rare,hBP03-045,Blue,buzz holomem,,,,1st,230,"[BN] Full of energy! (40+)<br>
+ This Arts gets +10 for each of your opponent's back holomem with reduced HP.",2,#ID;#ID Gen 3,"[Extra] If this holomem is downed, you get life-2","""Bloom Effect"" Blue Rain 
+<br>You may archive 1 cheer from your holomem with [#ID]:Deal 30 special damage divided as you choose as sets of 10 to your opponent's back holomem. However, your opponent's life does not reduce even if downed.",,,
+669098,Kobo Kanaeru (SR),Kobo Kanaeru SR,https://tcgplayer-cdn.tcgplayer.com/product/669098_200w.jpg,87,24469,https://cpt.tcgcsv.com/-Fm7,2025-12-19T21:11:42.367,1,5.99,6.25,8.1,8.04,,Foil,Super Rare,hBP03-045,Blue,buzz holomem,,,,1st,230,"[BN] Full of energy! (40+)<br>
+This Arts gets +10 for each of your opponent's back holomem with reduced HP.",2,#ID;#ID Gen 3,"[Extra] If this holomem is downed, you get life-2","""Bloom Effect"" Blue Rain 
+<br>You may archive 1 cheer from your holomem with [#ID]:Deal 30 special damage divided as you choose as sets of 10 to your opponent's back holomem. However, your opponent's life does not reduce even if downed.",,,
+669099,Hiodoshi Ao (C) (hBP03-046),Hiodoshi Ao C hBP03 046,https://tcgplayer-cdn.tcgplayer.com/product/669099_200w.jpg,87,24469,https://cpt.tcgcsv.com/_Fm7,2025-12-19T05:10:13.197,1,0.07,0.2,1.23,0.13,,Normal,Common,hBP03-046,Blue,holomem,,,,Debut,100,[N] Did you Mistake me for some Cutesy Girl? (10),1,#DEV_IS;#ReGLOSS;#Painting,[Extra] You may include any number of this holomem in the deck,,"[NN] Too bad! It was me, Ao-kun! (40)",,
+669100,Hiodoshi Ao (C) (hBP03-047),Hiodoshi Ao C hBP03 047,https://tcgplayer-cdn.tcgplayer.com/product/669100_200w.jpg,87,24469,https://cpt.tcgcsv.com/0Gm7,2025-12-19T05:10:13.197,1,0.01,0.2,1.23,0.12,,Normal,Common,hBP03-047,Blue,holomem,,,,1st,170,[BN] After the Afternoon Tea Date… (60),1,#DEV_IS;#ReGLOSS;#Painting,,,,,
+669101,Hiodoshi Ao (S) (hBP03-047),Hiodoshi Ao S hBP03 047,https://tcgplayer-cdn.tcgplayer.com/product/669101_200w.jpg,87,24469,https://cpt.tcgcsv.com/2Gm7,2025-12-19T05:10:13.197,1,0.93,0.99,4.99,1.12,,Foil,Special,hBP03-047,Blue,holomem,,,,1st,170,[BN] After the Afternoon Tea Date… (60),1,#DEV_IS;#ReGLOSS;#Painting,,,,,
+669102,Hiodoshi Ao (S) (hBP03-048),Hiodoshi Ao S hBP03 048,https://tcgplayer-cdn.tcgplayer.com/product/669102_200w.jpg,87,24469,https://cpt.tcgcsv.com/3Gm7,2025-12-19T14:01:34.533,1,0.5,0.99,2.5,0.54,,Foil,Special,hBP03-048,Blue,holomem,,,,1st,130,"[N] I'm pretty Cool, right? (30)",1,#Painting;#DEV_IS;#ReGLOSS,,,"[NN] ReGLOSS's resident tomboy (40)<br>
+You may reattach 1 cheer from this holomem to your back holomem with [#ReGLOSS].",,
+669103,Hiodoshi Ao (U),Hiodoshi Ao U,https://tcgplayer-cdn.tcgplayer.com/product/669103_200w.jpg,87,24469,https://cpt.tcgcsv.com/5Gm7,2025-12-19T14:02:07.737,1,0.03,0.2,1.23,0.13,,Normal,Uncommon,hBP03-048,Blue,holomem,,,,1st,130,"[N] I'm pretty Cool, right? (30)",1,#Painting;#DEV_IS;#ReGLOSS,,,"[NN] ReGLOSS's resident tomboy (40)<br>
+You may reattach 1 cheer from this holomem to your back holomem with [#ReGLOSS].",,
+669104,Hiodoshi Ao (R),Hiodoshi Ao R,https://tcgplayer-cdn.tcgplayer.com/product/669104_200w.jpg,87,24469,https://cpt.tcgcsv.com/6Gm7,2025-12-19T14:03:50.643,1,0.1,0.3,1.54,0.19,,Foil,Rare,hBP03-049,Blue,buzz holomem,,,,1st,230,"[BNN] Leave it to the Handsome One! (50)<br>
+Deal 10 special damage for each of your back holomem with [#ReGLOSS] and with different card names to your opponent's center holomem or 1 of their back holomem.",2,#Painting;#DEV_IS;#ReGLOSS,"[Extra] If this holomem is downed, you get life-2","""Bloom Effect"" Such Troublesome Princesses 
+<br>Reveal 1 cheer from your cheer deck with the same color as your center holomem with [#ReGLOSS], and send it to your holomem with [#ReGLOSS]. Then, shuffle the cheer deck.",,,
+669105,Hiodoshi Ao (SR),Hiodoshi Ao SR,https://tcgplayer-cdn.tcgplayer.com/product/669105_200w.jpg,87,24469,https://cpt.tcgcsv.com/7Gm7,2025-12-19T14:01:55.647,1,3.5,4.97,5.0,4.46,,Foil,Super Rare,hBP03-049,Blue,buzz holomem,,,,1st,230,"[BNN] Leave it to the Handsome One! (50)<br>
+ Deal 10 special damage for each of your back holomem with [#ReGLOSS] and with different card names to your opponent's center holomem or 1 of their back holomem.",2,#Painting;#DEV_IS;#ReGLOSS,"[Extra] If this holomem is downed, you get life-2","""Bloom Effect"" Such Troublesome Princesses<br>
+Reveal 1 cheer from your cheer deck with the same color as your center holomem with [#ReGLOSS], and send it to your holomem with [#ReGLOSS]. Then, shuffle the cheer deck.",,,
+669106,FUWAMOCO (R),FUWAMOCO R,https://tcgplayer-cdn.tcgplayer.com/product/669106_200w.jpg,87,24469,https://cpt.tcgcsv.com/8Gm7,2026-03-04T14:52:30.69,1,0.75,1.0,2.5,1.23,,Foil,Rare,hBP03-050,Red;Blue,holomem,,,,1st,150,"[NN] Twin sisters of the Demonic Guard Dogs (40)<br>
+Reveal 1 [red cheer or blue cheer] from your cheer deck, and send it to your holomem with [#Advent]. Then, shuffle the cheer deck.
+<br><br>
+<a href=""https://en.hololive-official-cardgame.com/errata/009/"">This card has been officially errata'd.</a>",1,#EN;#Kemomimi;#Advent,"[Extra] This holomem is also regarded as ""Fuwawa Abyssgard"" ""Mococo Abyssgard""",,"[BR] Together, we're FUWAMOCO! (60)",,
+669107,FUWAMOCO (SR),FUWAMOCO SR,https://tcgplayer-cdn.tcgplayer.com/product/669107_200w.jpg,87,24469,https://cpt.tcgcsv.com/9Gm7,2026-03-04T14:52:43.653,1,45.0,64.98,88.01,62.0,,Foil,Super Rare,hBP03-050,Red;Blue,holomem,,,,1st,150,"[NN] Twin sisters of the Demonic Guard Dogs (40)<br>
+Reveal 1 [red cheer or blue cheer] from your cheer deck, and send it to your holomem with [#Advent]. Then, shuffle the cheer deck.
+<br><br>
+<a href=""https://en.hololive-official-cardgame.com/errata/009/"">This card has been officially errata'd.</a>",1,#EN;#Kemomimi;#Advent,"[Extra] This holomem is also regarded as ""Fuwawa Abyssgard"" ""Mococo Abyssgard""",,"[BR] Together, we're FUWAMOCO! (60)",,
+669108,Tokoyami Towa (C) (hBP03-051),Tokoyami Towa C hBP03 051,https://tcgplayer-cdn.tcgplayer.com/product/669108_200w.jpg,87,24469,https://cpt.tcgcsv.com/bGm7,2025-12-19T05:10:13.197,1,0.2,0.5,1.63,0.33,,Normal,Common,hBP03-051,Purple,holomem,,,,Debut,110,[N] Suppies! (30),1,#JP;#Gen 4;#Singing;#Shooter,[Extra] You may include any number of this holomem in the deck,,,,
+669109,Tokoyami Towa (S) (hBP03-052),Tokoyami Towa S hBP03 052,https://tcgplayer-cdn.tcgplayer.com/product/669109_200w.jpg,87,24469,https://cpt.tcgcsv.com/cGm7,2025-12-19T20:56:53.01,1,1.99,2.4,4.5,2.71,,Foil,Special,hBP03-052,Purple,holomem,,,,Debut,80,"[P] So that's how it is, huh (20)<br>
+Deal 10 special damage to your opponent's center holomem. If your Oshi holomem is ""Tokoyami Towa"", you may archive 1 tool attached to your opponent's [center holomem or collab holomem].",1,#JP;#Gen 4;#Singing;#Shooter,,,,,
+669110,Tokoyami Towa (U) (hBP03-052),Tokoyami Towa U hBP03 052,https://tcgplayer-cdn.tcgplayer.com/product/669110_200w.jpg,87,24469,https://cpt.tcgcsv.com/dGm7,2025-12-19T14:21:39.323,1,0.03,0.22,1.23,0.12,,Normal,Uncommon,hBP03-052,Purple,holomem,,,,Debut,80,"[P] So that's how it is, huh (20)<br>
+Deal 10 special damage to your opponent's center holomem. If your Oshi holomem is ""Tokoyami Towa"", you may archive 1 tool attached to your opponent's [center holomem or collab holomem].",1,#JP;#Gen 4;#Singing;#Shooter,,,,,
+669111,Tokoyami Towa (C) (hBP03-053),Tokoyami Towa C hBP03 053,https://tcgplayer-cdn.tcgplayer.com/product/669111_200w.jpg,87,24469,https://cpt.tcgcsv.com/fGm7,2025-12-19T05:10:13.197,1,0.01,0.2,1.23,0.09,,Normal,Common,hBP03-053,Purple,holomem,,,,1st,170,[N] Toodlies! (30),1,#JP;#Gen 4;#Singing;#Shooter,,,[PN] Kyurin (60),,
+669112,Tokoyami Towa (S) (hBP03-053),Tokoyami Towa S hBP03 053,https://tcgplayer-cdn.tcgplayer.com/product/669112_200w.jpg,87,24469,https://cpt.tcgcsv.com/gGm7,2025-12-19T05:10:13.197,1,2.1,2.74,8.99,2.85,,Foil,Special,hBP03-053,Purple,holomem,,,,1st,170,[N] Toodlies! (30),1,#JP;#Gen 4;#Singing;#Shooter,,,[PN] Kyurin (60),,
+669113,Tokoyami Towa (S) (hBP03-054),Tokoyami Towa S hBP03 054,https://tcgplayer-cdn.tcgplayer.com/product/669113_200w.jpg,87,24469,https://cpt.tcgcsv.com/hGm7,2025-12-19T20:56:26.54,1,4.19,5.5,8.45,5.68,,Foil,Special,hBP03-054,Purple,holomem,,,,1st,140,"[N] I'm gonna make a huge explosion! (30)<br>
+You may archive 4 purple cheer from this holomem:Return 1 cheer from your opponent's stage to the bottom of the cheer deck.",2,#JP;#Gen 4;#Singing;#Shooter,,"""Collab Effect"" A Color Unique to Towa 
+<br>Deal 20 special damage to your opponent's center holomem or collab holomem.",,,
+669114,Tokoyami Towa (U) (hBP03-054),Tokoyami Towa U hBP03 054,https://tcgplayer-cdn.tcgplayer.com/product/669114_200w.jpg,87,24469,https://cpt.tcgcsv.com/jGm7,2025-12-19T14:23:25.513,1,0.09,0.25,1.23,0.13,,Normal,Uncommon,hBP03-054,Purple,holomem,,,,1st,140,"[N] I'm gonna make a huge explosion! (30)<br>
+You may archive 4 purple cheer from this holomem:Return 1 cheer from your opponent's stage to the bottom of the cheer deck.",1,#JP;#Gen 4;#Singing;#Shooter,,"""Collab Effect"" A Color Unique to Towa 
+<br>Deal 20 special damage to your opponent's center holomem or collab holomem.",,,
+669115,Tokoyami Towa (R),Tokoyami Towa R,https://tcgplayer-cdn.tcgplayer.com/product/669115_200w.jpg,87,24469,https://cpt.tcgcsv.com/kGm7,2025-12-19T20:57:31.36,1,0.1,0.25,1.98,0.21,,Foil,Rare,hBP03-055,Purple,holomem,,,,1st,130,[P] You can have a Home Date with Towa (40),1,#JP;#Gen 4;#Singing;#Shooter,,,"[PN] ThankQ (50)<br>
+If you have a back holomem with [#Singing], deal 20 special damage to your opponent's collab holomem.",,
+669116,Tokoyami Towa (SR) (hBP03-055),Tokoyami Towa SR hBP03 055,https://tcgplayer-cdn.tcgplayer.com/product/669116_200w.jpg,87,24469,https://cpt.tcgcsv.com/lGm7,2025-12-19T14:28:36.387,1,4.01,5.0,9.0,4.11,,Foil,Super Rare,hBP03-055,Purple,holomem,,,,1st,130,[P] You can have a Home Date with Towa (40),1,#JP;#Gen 4;#Singing;#Shooter,,,"[PN] ThankQ (50)<br>
+If you have a back holomem with [#Singing], deal 20 special damage to your opponent's collab holomem.",,
+669117,Tokoyami Towa (RR),Tokoyami Towa RR,https://tcgplayer-cdn.tcgplayer.com/product/669117_200w.jpg,87,24469,https://cpt.tcgcsv.com/mGm7,2025-12-19T20:57:12.45,1,0.5,1.04,5.0,1.08,,Foil,Double Rare,hBP03-056,Purple,holomem,,,,2nd,190,"[P] Breaking Out of the Stereotypes (30) [Y+50]<br>
+Deal 30 special damage to your opponent's center holomem or collab holomem.",2,#JP;#Gen 4;#Singing;#Shooter,,,"[PPN] Break your xxx (80) [Y+50]<br>
+Deal 20 special damage for each of your back holomem with [#Singing] to your opponent's center holomem or collab holomem. However, only up to 4 holomem are counted.",,
+669118,Tokoyami Towa (SR) (hBP03-056),Tokoyami Towa SR hBP03 056,https://tcgplayer-cdn.tcgplayer.com/product/669118_200w.jpg,87,24469,https://cpt.tcgcsv.com/nGm7,2025-12-19T14:23:48.23,1,3.99,7.99,10.0,8.18,,Foil,Super Rare,hBP03-056,Purple,holomem,,,,2nd,190,"[P] Breaking Out of the Stereotypes (30) [Y+50]<br>
+Deal 30 special damage to your opponent's center holomem or collab holomem.",2,#JP;#Gen 4;#Singing;#Shooter,,,"[PPN] Break your xxx (80) [Y+50]<br>
+Deal 20 special damage for each of your back holomem with [#Singing] to your opponent's center holomem or collab holomem. However, only up to 4 holomem are counted.",,
+669119,Tokoyami Towa (UR),Tokoyami Towa UR,https://tcgplayer-cdn.tcgplayer.com/product/669119_200w.jpg,87,24469,https://cpt.tcgcsv.com/pGm7,2025-12-19T14:24:18.613,1,50.0,60.0,89.01,66.99,,Foil,Ultra Rare,hBP03-056,Purple,holomem,,,,2nd,190,"[P] Breaking Out of the Stereotypes (30) [Y+50]<br>
+Deal 30 special damage to your opponent's center holomem or collab holomem.",2,#JP;#Gen 4;#Singing;#Shooter,,,"[PPN] Break your ××× (80) [Y+50]<br>
+Deal 20 special damage for each of your back holomem with [#Singing] to your opponent's center holomem or collab holomem. However, only up to 4 holomem are counted.",,
+669120,Robocosan (C) (hBP03-057),Robocosan C hBP03 057,https://tcgplayer-cdn.tcgplayer.com/product/669120_200w.jpg,87,24469,https://cpt.tcgcsv.com/qGm7,2025-12-19T05:10:13.197,1,0.1,0.28,1.23,0.22,,Normal,Common,hBP03-057,Purple,holomem,,,,Debut,100,[N] Hellobo! (30),1,#JP;#Gen 0;#Shooter,[Extra] You may include any number of this holomem in the deck,,,,
+669121,Robocosan (C) (hBP03-058),Robocosan C hBP03 058,https://tcgplayer-cdn.tcgplayer.com/product/669121_200w.jpg,87,24469,https://cpt.tcgcsv.com/rGm7,2025-12-19T05:10:13.197,1,0.06,0.2,1.23,0.16,,Normal,Common,hBP03-058,Purple,holomem,,,,1st,170,[N] Otsu-Robo (30),1,#JP;#Gen 0;#Shooter,,,[PN] Lovey-Dovey Girlfriend (60),,
+669122,Robocosan (S) (hBP03-058),Robocosan S hBP03 058,https://tcgplayer-cdn.tcgplayer.com/product/669122_200w.jpg,87,24469,https://cpt.tcgcsv.com/sGm7,2025-12-19T05:10:13.197,1,0.97,1.5,3.99,1.46,,Foil,Special,hBP03-058,Purple,holomem,,,,1st,170,[N] Otsu-Robo (30),1,#JP;#Gen 0;#Shooter,,,[PN] Lovey-Dovey Girlfriend (60),,
+669123,Robocosan (S) (hBP03-059),Robocosan S hBP03 059,https://tcgplayer-cdn.tcgplayer.com/product/669123_200w.jpg,87,24469,https://cpt.tcgcsv.com/tGm7,2025-12-19T20:56:07.88,1,2.77,3.5,6.0,2.75,,Foil,Special,hBP03-059,Purple,holomem,,,,1st,130,[N] Give me a Smile (40),2,#JP;#Gen 0;#Shooter,,"""Bloom Effect"" If I make a PON then 
+<br>Look at the top 3 cards of your deck. Reveal 1 holomem with [#Gen 0] from among them, and add it to hand. Then, return the remaining cards to the bottom of the deck in any order.",,,
+669124,Robocosan (U),Robocosan U,https://tcgplayer-cdn.tcgplayer.com/product/669124_200w.jpg,87,24469,https://cpt.tcgcsv.com/vGm7,2025-12-19T21:05:04.88,1,0.1,0.25,1.23,0.23,,Normal,Uncommon,hBP03-059,Purple,holomem,,,,1st,130,[N] Give me a Smile (40),1,#JP;#Gen 0;#Shooter,,"""Bloom Effect"" If I make a PON then 
+<br>Look at the top 3 cards of your deck. Reveal 1 holomem with [#Gen 0] from among them, and add it to hand. Then, return the remaining cards to the bottom of the deck in any order.",,,
+669125,Robocosan (R),Robocosan R,https://tcgplayer-cdn.tcgplayer.com/product/669125_200w.jpg,87,24469,https://cpt.tcgcsv.com/wGm7,2025-12-19T18:34:46.22,1,0.14,0.33,1.79,0.24,,Foil,Rare,hBP03-060,Purple,holomem,,,,2nd,200,"[N] Self-Proclaimed ?high-spec? (70+) [G+50]<br>
+ If your opponent's stage has 7 or more cheers, this Arts gets +70.",2,#JP;#Gen 0;#Shooter,,,,,
+669126,Robocosan (SR),Robocosan SR,https://tcgplayer-cdn.tcgplayer.com/product/669126_200w.jpg,87,24469,https://cpt.tcgcsv.com/xGm7,2025-12-19T21:04:48.323,1,3.49,3.88,9.99,4.47,,Foil,Super Rare,hBP03-060,Purple,holomem,,,,2nd,200,"[N] Self-Proclaimed ?high-spec? (70+) [G+50]<br>
+If your opponent's stage has 7 or more cheers, this Arts gets +70.",2,#JP;#Gen 0;#Shooter,,,,,
+669127,Inugami Korone (C) (hBP03-061),Inugami Korone C hBP03 061,https://tcgplayer-cdn.tcgplayer.com/product/669127_200w.jpg,87,24469,https://cpt.tcgcsv.com/zGm7,2025-12-19T05:10:13.197,1,0.97,1.23,3.0,1.25,,Normal,Common,hBP03-061,Yellow,holomem,,,,Debut,120,[N] Ello! (20),1,#JP;#GAMERS;#Kemomimi,[Extra] You may include any number of this holomem in the deck,,[NNN] Fingers! Give me your Fingers! (60),,
+669128,Inugami Korone (S) (hBP03-062),Inugami Korone S hBP03 062,https://tcgplayer-cdn.tcgplayer.com/product/669128_200w.jpg,87,24469,https://cpt.tcgcsv.com/BGm7,2025-12-19T14:14:05.617,1,3.0,4.25,8.0,3.96,,Foil,Special,hBP03-062,Yellow,holomem,,,,Debut,100,"[Y] This is what you ordered, y'know (30)",2,#JP;#Kemomimi;#GAMERS,,"""Collab Effect"" Korone Diner 
+<br>You may archive 1 cheer from this holomem:Reveal 1 Debut holomem with [#GAMERS] from your deck, and add it to hand. Then, shuffle the deck.",,,
+669129,Inugami Korone (U) (hBP03-062),Inugami Korone U hBP03 062,https://tcgplayer-cdn.tcgplayer.com/product/669129_200w.jpg,87,24469,https://cpt.tcgcsv.com/CGm7,2025-12-19T14:18:16.263,1,0.03,0.25,1.23,0.23,,Normal,Uncommon,hBP03-062,Yellow,holomem,,,,Debut,100,"[Y] This is what you ordered, y'know (30)",1,#JP;#Kemomimi;#GAMERS,,"""Collab Effect"" Korone Diner 
+<br>You may archive 1 cheer from this holomem:Reveal 1 Debut holomem with [#GAMERS] from your deck, and add it to hand. Then, shuffle the deck.",,,
+669130,Inugami Korone (C) (hBP03-063),Inugami Korone C hBP03 063,https://tcgplayer-cdn.tcgplayer.com/product/669130_200w.jpg,87,24469,https://cpt.tcgcsv.com/DGm7,2025-12-19T05:10:13.197,1,0.08,0.2,1.23,0.19,,Normal,Common,hBP03-063,Yellow,holomem,,,,1st,200,[Y] Otsu-Koron (30),2,#JP;#GAMERS;#Kemomimi,,,,,
+669131,Inugami Korone (S) (hBP03-063),Inugami Korone S hBP03 063,https://tcgplayer-cdn.tcgplayer.com/product/669131_200w.jpg,87,24469,https://cpt.tcgcsv.com/FGm7,2025-12-19T05:10:13.197,1,6.99,7.99,8.99,7.99,,Foil,Special,hBP03-063,Yellow,holomem,,,,1st,200,[Y] Otsu-Koron (30),2,#JP;#GAMERS;#Kemomimi,,,,,
+669132,Inugami Korone (S) (hBP03-064),Inugami Korone S hBP03 064,https://tcgplayer-cdn.tcgplayer.com/product/669132_200w.jpg,87,24469,https://cpt.tcgcsv.com/GGm7,2025-12-19T14:14:55.303,1,2.46,3.15,7.01,3.37,,Foil,Special,hBP03-064,Yellow,holomem,,,,1st,160,"[YN] BrRRAAAAAAAAH!!!!!!!!!!!!!! (40+)<br>
+This Arts gets +10 for each life reduced from your initial life.",2,#JP;#Kemomimi;#GAMERS,,,[NNN] O-Shay (70),,
+669133,Inugami Korone (U) (hBP03-064),Inugami Korone U hBP03 064,https://tcgplayer-cdn.tcgplayer.com/product/669133_200w.jpg,87,24469,https://cpt.tcgcsv.com/HGm7,2025-12-19T14:19:11.107,1,0.1,0.25,1.23,0.23,,Normal,Uncommon,hBP03-064,Yellow,holomem,,,,1st,160,"[YN] BrRRAAAAAAAAH!!!!!!!!!!!!!! (40+)<br>
+This Arts gets +10 for each life reduced from your initial life.",2,#JP;#Kemomimi;#GAMERS,,,[NNN] O-Shay (70),,
+669134,Inugami Korone (R),Inugami Korone R,https://tcgplayer-cdn.tcgplayer.com/product/669134_200w.jpg,87,24469,https://cpt.tcgcsv.com/JGm7,2025-12-19T14:14:41.217,1,0.2,0.49,1.68,0.43,,Foil,Rare,hBP03-065,Yellow,holomem,,,,1st,150,"[NN] Here ya go~ (30)<br>
+Send the top card of your cheer deck to your holomem with [#GAMERS].",2,#JP;#Kemomimi;#GAMERS,,"""Gift"" Boxing Style 
+<br>[Collab Position Only]During your opponent's main phase, the HP of your center holomem ""Inugami Korone"" cannot be reduced or changed by your opponent's abilities.",,,
+669135,Inugami Korone (SR) (hBP03-065),Inugami Korone SR hBP03 065,https://tcgplayer-cdn.tcgplayer.com/product/669135_200w.jpg,87,24469,https://cpt.tcgcsv.com/KGm7,2025-12-19T14:17:58.523,1,20.28,21.77,25.0,20.78,,Foil,Super Rare,hBP03-065,Yellow,holomem,,,,1st,150,"[NN] Here ya go~ (30)<br>
+Send the top card of your cheer deck to your holomem with [#GAMERS].",2,#JP;#Kemomimi;#GAMERS,,"""Gift"" Boxing Style 
+<br>[Collab Position Only]During your opponent's main phase, the HP of your center holomem ""Inugami Korone"" cannot be reduced or changed by your opponent's abilities.",,,
+669136,Inugami Korone (RR),Inugami Korone RR,https://tcgplayer-cdn.tcgplayer.com/product/669136_200w.jpg,87,24469,https://cpt.tcgcsv.com/LGm7,2025-12-19T14:13:53.197,1,0.99,3.0,8.0,1.66,,Foil,Double Rare,hBP03-066,Yellow,holomem,,,,2nd,210,"[YYN] The Biggest Disaster (120+)<br>
+If the target of this Arts is your opponent's 2nd holomem, you may archive 1 1st holomem stacked to this holomem:This Arts gets +50.",2,#JP;#Kemomimi;#GAMERS,,"""Gift"" Wan-Dafuuul~
+<br>When this holomem is downed, send the top card of your cheer deck to your ""Inugami Korone"".",,,
+669137,Inugami Korone (SR) (hBP03-066),Inugami Korone SR hBP03 066,https://tcgplayer-cdn.tcgplayer.com/product/669137_200w.jpg,87,24469,https://cpt.tcgcsv.com/MGm7,2025-12-19T14:17:36.567,1,8.01,10.93,15.99,11.59,,Foil,Super Rare,hBP03-066,Yellow,holomem,,,,2nd,210,"[YYN] The Biggest Disaster (120+)<br>
+If the target of this Arts is your opponent's 2nd holomem, you may archive 1 1st holomem stacked to this holomem:This Arts gets +50.",2,#JP;#Kemomimi;#GAMERS,,"""Gift"" Wan-Dafuuul~? 
+<br>When this holomem is downed, send the top card of your cheer deck to your ""Inugami Korone"".",,,
+669138,Inugami Korone (UR),Inugami Korone UR,https://tcgplayer-cdn.tcgplayer.com/product/669138_200w.jpg,87,24469,https://cpt.tcgcsv.com/NGm7,2025-12-19T14:20:14.437,1,60.0,63.5,67.45,70.98,,Foil,Ultra Rare,hBP03-066,Yellow,holomem,,,,2nd,210,"[YYN] The Biggest Disaster (120+) [W+50]<br>
+If the target of this Arts is your opponent's 2nd holomem, you may archive 1 1st holomem stacked to this holomem:This Arts gets +50.",2,#JP;#Kemomimi;#GAMERS,,"""Gift"" Wan-Dafuuul~
+<br>When this holomem is downed, send the top card of your cheer deck to your ""Inugami Korone"".",,,
+669139,Tsunomaki Watame (C) (hBP03-067),Tsunomaki Watame C hBP03 067,https://tcgplayer-cdn.tcgplayer.com/product/669139_200w.jpg,87,24469,https://cpt.tcgcsv.com/PGm7,2025-12-19T05:10:13.197,1,0.25,0.5,1.73,0.37,,Normal,Common,hBP03-067,Yellow,holomem,,,,Debut,110,"[N] Hoof, hoof, helloof! (30)",1,#JP;#Gen 4;#Kemomimi;#Singing,[Extra] You may include any number of this holomem in the deck,,,,
+669140,Tsunomaki Watame (S) (hBP03-068),Tsunomaki Watame S hBP03 068,https://tcgplayer-cdn.tcgplayer.com/product/669140_200w.jpg,87,24469,https://cpt.tcgcsv.com/QGm7,2025-12-19T14:27:36.93,1,1.24,1.71,5.99,1.7,,Foil,Special,hBP03-068,Yellow,holomem,,,,Debut,90,"[Y] Watame's Song (20)<br>
+If you have a holomem with <Watamates> attached, you may send 1 cheer from your archive to your yellow holomem.",1,#JP;#Gen 4;#Singing;#Kemomimi,,,,,
+669141,Tsunomaki Watame (U) (hBP03-068),Tsunomaki Watame U hBP03 068,https://tcgplayer-cdn.tcgplayer.com/product/669141_200w.jpg,87,24469,https://cpt.tcgcsv.com/RGm7,2025-12-19T14:29:54.34,1,0.03,0.2,1.23,0.13,,Normal,Uncommon,hBP03-068,Yellow,holomem,,,,Debut,90,"[Y] Watame's Song (20)<br>
+If you have a holomem with ""Watamates"" attached, you may send 1 cheer from your archive to your yellow holomem.",1,#JP;#Gen 4;#Singing;#Kemomimi,,,,,
+669142,Tsunomaki Watame (C) (hBP03-069),Tsunomaki Watame C hBP03 069,https://tcgplayer-cdn.tcgplayer.com/product/669142_200w.jpg,87,24469,https://cpt.tcgcsv.com/SGm7,2025-12-19T05:10:13.197,1,0.03,0.2,1.23,0.13,,Normal,Common,hBP03-069,Yellow,holomem,,,,1st,190,[Y] A Healing Moment (30),2,#JP;#Gen 4;#Kemomimi;#Singing,,,"[NNN] You'll cheer me on, right? (90)",,
+669143,Tsunomaki Watame (S) (hBP03-069),Tsunomaki Watame S hBP03 069,https://tcgplayer-cdn.tcgplayer.com/product/669143_200w.jpg,87,24469,https://cpt.tcgcsv.com/TGm7,2025-12-19T05:10:13.197,1,1.91,2.52,8.0,2.29,,Foil,Special,hBP03-069,Yellow,holomem,,,,1st,190,[Y] A Healing Moment (30),2,#JP;#Gen 4;#Kemomimi;#Singing,,,"[NNN] You'll cheer me on, right? (90)",,
+669144,Tsunomaki Watame (S) (hBP03-070),Tsunomaki Watame S hBP03 070,https://tcgplayer-cdn.tcgplayer.com/product/669144_200w.jpg,87,24469,https://cpt.tcgcsv.com/VGm7,2025-12-19T14:28:22.517,1,2.5,3.44,7.99,3.0,,Foil,Special,hBP03-070,Yellow,holomem,,,,1st,130,"[NN] Watch until the end, Watamates! (30)<br>
+Send the top card of your cheer deck to your back holomem ""Tsunomaki Watame"".",2,#JP;#Gen 4;#Singing;#Kemomimi,,"""Bloom Effect"" I'll sing and dance with all my might! 
+<br>If your stage has 5 or less holomem, reveal 1 Debut holomem ""Tsunomaki Watame"" from your deck, and you may place it on stage. Then, shuffle the deck.",,,
+669145,Tsunomaki Watame (U) (hBP03-070),Tsunomaki Watame U hBP03 070,https://tcgplayer-cdn.tcgplayer.com/product/669145_200w.jpg,87,24469,https://cpt.tcgcsv.com/WGm7,2025-12-19T14:30:59.63,1,0.03,0.2,1.23,0.17,,Normal,Uncommon,hBP03-070,Yellow,holomem,,,,1st,130,"[NN] Watch until the end, Watamates! (30)<br>
+ Send the top card of your cheer deck to your back holomem ""Tsunomaki Watame"".",1,#JP;#Gen 4;#Singing;#Kemomimi,,"""Bloom Effect"" I'll sing and dance with all my might! 
+<br>If your stage has 5 or less holomem, reveal 1 Debut holomem ""Tsunomaki Watame"" from your deck, and you may place it on stage. Then, shuffle the deck.",,,
+669146,Tsunomaki Watame (R),Tsunomaki Watame R,https://tcgplayer-cdn.tcgplayer.com/product/669146_200w.jpg,87,24469,https://cpt.tcgcsv.com/XGm7,2025-12-19T14:27:26.687,1,0.09,0.25,1.53,0.22,,Foil,Rare,hBP03-071,Yellow,holomem,,,,1st,160,"[YN] Tsunomaki Rock Paper Scissors (50)<br>
+You may play rock-paper-scissors with your opponent until there's a winner:If you won, during this turn, this holomem gets [Red Critical+30].",2,#JP;#Gen 4;#Singing;#Kemomimi,,"""Bloom Effect"" Welcome back, Member Sheep~ 
+<br>You may return 1 ""Watamates"" from your archive to hand.",,,
+669147,Tsunomaki Watame (SR) (hBP03-071),Tsunomaki Watame SR hBP03 071,https://tcgplayer-cdn.tcgplayer.com/product/669147_200w.jpg,87,24469,https://cpt.tcgcsv.com/ZGm7,2025-12-19T14:29:38.02,1,3.0,4.99,8.0,3.71,,Foil,Super Rare,hBP03-071,Yellow,holomem,,,,1st,160,"[YN] Tsunomaki Rock Paper Scissors (50)<br>
+You may play rock-paper-scissors with your opponent until there's a winner:If you won, during this turn, this holomem gets [Red Critical+30].",2,#JP;#Gen 4;#Singing;#Kemomimi,,"""Bloom Effect"" Welcome back, Member Sheep~ 
+<br>You may return 1 ""Watamates"" from your archive to hand.",,,
+669148,Tsunomaki Watame (RR),Tsunomaki Watame RR,https://tcgplayer-cdn.tcgplayer.com/product/669148_200w.jpg,87,24469,https://cpt.tcgcsv.com/-Gm7,2025-12-19T14:26:55.613,1,0.5,1.0,4.0,0.85,,Foil,Double Rare,hBP03-072,Yellow,holomem,,,,2nd,200,"[YNN] Watame Night Fever!! (80+)<br>
+[Center Position Only]If 6 or more cheers are attached to this holomem, during this turn, this holomem and your collab holomem get Arts+100.",2,#JP;#Gen 4;#Singing;#Kemomimi,,"""Gift"" We're Gonna Keep on Going! 
+<br>When this holomem is downed, you may reattach 1 cheer from this holomem to your other ""Tsunomaki Watame"".",,,
+669149,Tsunomaki Watame (SR) (hBP03-072),Tsunomaki Watame SR hBP03 072,https://tcgplayer-cdn.tcgplayer.com/product/669149_200w.jpg,87,24469,https://cpt.tcgcsv.com/_Gm7,2025-12-19T14:29:21.253,1,5.0,6.5,9.99,5.77,,Foil,Super Rare,hBP03-072,Yellow,holomem,,,,2nd,200,"[YNN] Watame Night Fever!! (80+)<br>
+[Center Position Only]If 6 or more cheers are attached to this holomem, during this turn, this holomem and your collab holomem get Arts+100.",2,#JP;#Gen 4;#Singing;#Kemomimi,,"""Gift"" We're Gonna Keep on Going! 
+<br>When this holomem is downed, you may reattach 1 cheer from this holomem to your other ""Tsunomaki Watame"".",,,
+669150,Tsunomaki Watame (UR),Tsunomaki Watame UR,https://tcgplayer-cdn.tcgplayer.com/product/669150_200w.jpg,87,24469,https://cpt.tcgcsv.com/0Hm7,2025-12-19T14:30:34.99,1,49.97,53.96,64.99,56.64,,Foil,Ultra Rare,hBP03-072,Yellow,holomem,,,,2nd,200,"[YNN] Watame Night Fever!! (80+)<br>
+[Center Position Only]If 6 or more cheers are attached to this holomem, during this turn, this holomem and your collab holomem get Arts+100.",2,#JP;#Gen 4;#Singing;#Kemomimi,,"""Gift"" We're Gonna Keep on Going! 
+<br>When this holomem is downed, you may reattach 1 cheer from this holomem to your other ""Tsunomaki Watame"".",,,
+669151,Ayunda Risu (C) (hBP03-073),Ayunda Risu C hBP03 073,https://tcgplayer-cdn.tcgplayer.com/product/669151_200w.jpg,87,24469,https://cpt.tcgcsv.com/2Hm7,2025-12-19T13:57:31.097,1,0.09,0.25,1.23,0.21,,Normal,Common,hBP03-073,Yellow,holomem,,,,Debut,110,[N] Kon-Risu (20),1,#ID;#ID Gen 1;#Singing;#Kemomimi,[Extra] You may include any number of this holomem in the deck,,"[NNN] Puru Puru~ (60)<br>
+You may reattach 1 cheer from this holomem to your ""Inugami Korone"".",,
+669152,Ayunda Risu (S) (hBP03-074),Ayunda Risu S hBP03 074,https://tcgplayer-cdn.tcgplayer.com/product/669152_200w.jpg,87,24469,https://cpt.tcgcsv.com/3Hm7,2025-12-19T13:59:20.523,1,0.25,1.0,4.0,0.51,,Foil,Special,hBP03-074,Yellow,holomem,,,,Debut,80,"[N] Connected Wishes (20+)
+<br>•If your stage has ""Airani Iofifteen"", this Arts gets +10.
+<br>•If your stage has ""Moona Hoshinova"", this Arts gets +10.",1,#ID;#ID Gen 1;#Singing;#Kemomimi,,,,,
+669153,Ayunda Risu (U) (hBP03-074),Ayunda Risu U hBP03 074,https://tcgplayer-cdn.tcgplayer.com/product/669153_200w.jpg,87,24469,https://cpt.tcgcsv.com/5Hm7,2025-12-19T14:01:02.437,1,0.03,0.19,1.23,0.12,,Normal,Uncommon,hBP03-074,Yellow,holomem,,,,Debut,80,"[N] Connected Wishes (20+)
+<br>•If your stage has ""Airani Iofifteen"", this Arts gets +10.
+<br>•If your stage has ""Moona Hoshinova"", this Arts gets +10.",1,#ID;#ID Gen 1;#Singing;#Kemomimi,,,,,
+669154,Ayunda Risu (C) (hBP03-075),Ayunda Risu C hBP03 075,https://tcgplayer-cdn.tcgplayer.com/product/669154_200w.jpg,87,24469,https://cpt.tcgcsv.com/6Hm7,2025-12-19T05:10:13.197,1,0.05,0.2,1.23,0.09,,Normal,Common,hBP03-075,Yellow,holomem,,,,1st,170,[N] Otsu-Risu (30),1,#ID;#ID Gen 1;#Kemomimi;#Singing,,,[YNN] Good-Night Memories (70),,
+669155,Ayunda Risu (S) (hBP03-075),Ayunda Risu S hBP03 075,https://tcgplayer-cdn.tcgplayer.com/product/669155_200w.jpg,87,24469,https://cpt.tcgcsv.com/7Hm7,2025-12-19T05:10:13.197,1,0.75,0.9,4.99,0.8,,Foil,Special,hBP03-075,Yellow,holomem,,,,1st,170,[N] Otsu-Risu (30),1,#ID;#ID Gen 1;#Kemomimi;#Singing,,,[YNN] Good-Night Memories (70),,
+669156,Ayunda Risu (S) (hBP03-076),Ayunda Risu S hBP03 076,https://tcgplayer-cdn.tcgplayer.com/product/669156_200w.jpg,87,24469,https://cpt.tcgcsv.com/8Hm7,2025-12-19T13:59:40.593,1,0.5,1.94,5.0,1.43,,Foil,Special,hBP03-076,Yellow,holomem,,,,1st,150,"[N] Puru Puru, Otsu-Risu!!! (20)",2,#ID;#ID Gen 1;#Singing;#Kemomimi,,"""Bloom Effect"" Heeeyyy! Is everyone having fun? 
+<br>Reveal 1 [green cheer or yellow cheer] from your cheer deck, and send it to your holomem. Then, shuffle the cheer deck.",,,
+669157,Ayunda Risu (U) (hBP03-076),Ayunda Risu U hBP03 076,https://tcgplayer-cdn.tcgplayer.com/product/669157_200w.jpg,87,24469,https://cpt.tcgcsv.com/9Hm7,2025-12-19T14:01:14.657,1,0.03,0.2,1.23,0.13,,Normal,Uncommon,hBP03-076,Yellow,holomem,,,,1st,150,"[N] Puru Puru, Otsu-Risu!!! (20)",2,#ID;#ID Gen 1;#Singing;#Kemomimi,,"""Bloom Effect"" Heeeyyy! Is everyone having fun? 
+<br>Reveal 1 [green cheer or yellow cheer] from your cheer deck, and send it to your holomem. Then, shuffle the cheer deck.",,,
+669158,Ayunda Risu (R),Ayunda Risu R,https://tcgplayer-cdn.tcgplayer.com/product/669158_200w.jpg,87,24469,https://cpt.tcgcsv.com/bHm7,2025-12-19T13:58:10.047,1,0.07,0.25,1.51,0.15,,Foil,Rare,hBP03-077,Yellow,holomem,,,,1st,160,[YN] Nuts (40),2,#ID;#ID Gen 1;#Singing;#Kemomimi,,"""Bloom Effect"" Bond between Genmates 
+<br>When your stage has 5 or less holomem, reveal 1 Debut holomem with [#ID Gen 1] from your deck, and you may place it on stage. Then, shuffle the deck.",,,
+669159,Ayunda Risu (SR) (hBP03-077),Ayunda Risu SR hBP03 077,https://tcgplayer-cdn.tcgplayer.com/product/669159_200w.jpg,87,24469,https://cpt.tcgcsv.com/cHm7,2025-12-19T13:59:54.79,1,1.65,2.29,9.99,2.01,,Foil,Super Rare,hBP03-077,Yellow,holomem,,,,1st,160,[YN] Nuts (40),2,#ID;#ID Gen 1;#Singing;#Kemomimi,,"""Bloom Effect"" Bond between Genmates 
+<br>When your stage has 5 or less holomem, reveal 1 Debut holomem with [#ID Gen 1] from your deck, and you may place it on stage. Then, shuffle the deck.",,,
+669160,Ayunda Risu (RR),Ayunda Risu RR,https://tcgplayer-cdn.tcgplayer.com/product/669160_200w.jpg,87,24469,https://cpt.tcgcsv.com/dHm7,2025-12-19T13:59:04.337,1,0.2,0.52,3.49,0.4,,Foil,Double Rare,hBP03-078,Yellow,holomem,,,,2nd,190,"[YNN] Squirrel Girl from the Magical Forest (50+) [B+50]
+<br>•If a green cheer is attached to this holomem, this Arts gets +50.
+<br>•If a blue cheer is attached to this holomem, this Arts gets +50.",2,#ID;#ID Gen 1;#Singing;#Kemomimi,,"""Bloom Effect"" Magical Support 
+<br>You may reattach 1 cheer from your holomem with [#ID Gen 1] to your other holomem.",,,
+669161,Ayunda Risu (SR) (hBP03-078),Ayunda Risu SR hBP03 078,https://tcgplayer-cdn.tcgplayer.com/product/669161_200w.jpg,87,24469,https://cpt.tcgcsv.com/fHm7,2025-12-19T14:00:47.257,1,0.49,2.48,11.99,2.1,,Foil,Super Rare,hBP03-078,Yellow,holomem,,,,2nd,190,"[YNN] Squirrel Girl from the Magical Forest (50+) [B+50]
+<br>•If a green cheer is attached to this holomem, this Arts gets +50.
+<br>•If a blue cheer is attached to this holomem, this Arts gets +50.",2,#ID;#ID Gen 1;#Singing;#Kemomimi,,"""Bloom Effect"" Magical Support 
+<br>You may reattach 1 cheer from your holomem with [#ID Gen 1] to your other holomem.",,,
+669162,Ayunda Risu (UR),Ayunda Risu UR,https://tcgplayer-cdn.tcgplayer.com/product/669162_200w.jpg,87,24469,https://cpt.tcgcsv.com/gHm7,2025-12-19T13:41:16.21,1,11.49,19.95,49.99,18.17,,Foil,Ultra Rare,hBP03-078,Yellow,holomem,,,,2nd,190,"[YNN] Squirrel Girl from the Magical Forest (50+) [B+50]
+<br>•If a green cheer is attached to this holomem, this Arts gets +50.
+<br>•If a blue cheer is attached to this holomem, this Arts gets +50.",2,#ID;#ID Gen 1;#Singing;#Kemomimi,,"""Bloom Effect"" Magical Support 
+<br>You may reattach 1 cheer from your holomem with [#ID Gen 1] to your other holomem.",,,
+669163,Shiranui Flare (RR) (hBP03-079),Shiranui Flare RR hBP03 079,https://tcgplayer-cdn.tcgplayer.com/product/669163_200w.jpg,87,24469,https://cpt.tcgcsv.com/hHm7,2025-12-19T14:05:04.28,1,0.4,0.99,4.95,0.79,,Foil,Double Rare,hBP03-079,Yellow,buzz holomem,,,,1st,240,"[YN] Sunrise cheer (50+)<br>
+If 3 or more cheers are attached to this holomem, this Arts gets +30.",2,#JP;#Gen 3;#Half-Elf,"[Extra] If this holomem is downed, you get life-2","""Bloom Effect"" Today is a wonderful day 
+<br>Reveal 1 yellow cheer from your cheer deck, and send it to this holomem. Then, shuffle the cheer deck.",,,
+669164,Shiranui Flare (SR),Shiranui Flare SR,https://tcgplayer-cdn.tcgplayer.com/product/669164_200w.jpg,87,24469,https://cpt.tcgcsv.com/jHm7,2025-12-19T14:05:53.84,1,3.25,5.0,9.99,5.36,,Foil,Super Rare,hBP03-079,Yellow,buzz holomem,,,,1st,240,"[YN] Sunrise cheer (50+)<br>
+If 3 or more cheers are attached to this holomem, this Arts gets +30.",2,#JP;#Gen 3;#Half-Elf,"[Extra] If this holomem is downed, you get life-2","""Bloom Effect"" Today is a wonderful day 
+<br>Reveal 1 yellow cheer from your cheer deck, and send it to this holomem. Then, shuffle the cheer deck.",,,
+669165,Shiranui Flare (UR),Shiranui Flare UR,https://tcgplayer-cdn.tcgplayer.com/product/669165_200w.jpg,87,24469,https://cpt.tcgcsv.com/kHm7,2025-12-19T14:07:11.213,1,20.0,27.47,49.99,22.82,,Foil,Ultra Rare,hBP03-079,Yellow,buzz holomem,,,,1st,240,"[YN] Sunrise cheer (50+)<br>
+If 3 or more cheers are attached to this holomem, this Arts gets +30.",2,#JP;#Gen 3;#Half-Elf,"[Extra] If this holomem is downed, you get life-2","""Bloom Effect"" Today is a wonderful day 
+<br>Reveal 1 yellow cheer from your cheer deck, and send it to this holomem. Then, shuffle the cheer deck.",,,
+669166,Otonose Kanade (C) (hBP03-080),Otonose Kanade C hBP03 080,https://tcgplayer-cdn.tcgplayer.com/product/669166_200w.jpg,87,24469,https://cpt.tcgcsv.com/lHm7,2025-12-19T05:10:13.197,1,0.08,0.25,1.23,0.17,,Normal,Common,hBP03-080,Yellow,holomem,,,,Debut,130,[N] Do-Re-Mi-Fa-So-La-Si-Do! (20),1,#DEV_IS;#ReGLOSS;#Singing,[Extra] You may include any number of this holomem in the deck,,"[NNN] Aspiring Musician, Otonose Kanade~! (50)",,
+669167,Otonose Kanade (C) (hBP03-081),Otonose Kanade C hBP03 081,https://tcgplayer-cdn.tcgplayer.com/product/669167_200w.jpg,87,24469,https://cpt.tcgcsv.com/mHm7,2025-12-19T05:10:13.197,1,0.01,0.2,1.23,0.07,,Normal,Common,hBP03-081,Yellow,holomem,,,,1st,180,[N] Tomorrow is Monday~ (30),2,#DEV_IS;#ReGLOSS;#Singing,,,,,
+669168,Otonose Kanade (S) (hBP03-081),Otonose Kanade S hBP03 081,https://tcgplayer-cdn.tcgplayer.com/product/669168_200w.jpg,87,24469,https://cpt.tcgcsv.com/nHm7,2025-12-19T05:10:13.197,1,0.22,1.29,5.0,0.62,,Foil,Special,hBP03-081,Yellow,holomem,,,,1st,180,[N] Tomorrow is Monday~(30),2,#DEV_IS;#ReGLOSS;#Singing,,,,,
+669169,Otonose Kanade (S) (hBP03-082),Otonose Kanade S hBP03 082,https://tcgplayer-cdn.tcgplayer.com/product/669169_200w.jpg,87,24469,https://cpt.tcgcsv.com/pHm7,2025-12-19T20:55:51.023,1,0.45,1.0,4.99,0.86,,Foil,Special,hBP03-082,Yellow,holomem,,,,1st,160,[YNN] I'm not squishy! (60),2,#Singing;#DEV_IS;#ReGLOSS,,"""Bloom Effect"" Because this is my stage! 
+<br>You may reattach 1~2 cheers from your stage to this holomem.",,,
+669170,Otonose Kanade (U),Otonose Kanade U,https://tcgplayer-cdn.tcgplayer.com/product/669170_200w.jpg,87,24469,https://cpt.tcgcsv.com/qHm7,2025-12-19T13:50:21.057,1,0.02,0.2,1.23,0.1,,Normal,Uncommon,hBP03-082,Yellow,holomem,,,,1st,160,[YNN] I'm not squishy! (60),1,#Singing;#DEV_IS;#ReGLOSS,,"""Bloom Effect"" Because this is my stage! 
+<br>You may reattach 1~2 cheers from your stage to this holomem.",,,
+669171,Otonose Kanade (R),Otonose Kanade R,https://tcgplayer-cdn.tcgplayer.com/product/669171_200w.jpg,87,24469,https://cpt.tcgcsv.com/rHm7,2025-12-19T20:50:59.443,1,0.08,0.25,1.52,0.21,,Foil,Rare,hBP03-083,Yellow,buzz holomem,,,,1st,250,"[YNNN] Songstress, Otonose Kanade (120)",2,#Singing;#DEV_IS;#ReGLOSS,"[Extra] If this holomem is downed, you get life-2","""Gift"" What the heck! 
+<br>At the end of your opponent's performance phase, if your life was reduced during that performance phase, you may send 1 cheer from your archive to this holomem.",,,
+669172,Otonose Kanade (SR),Otonose Kanade SR,https://tcgplayer-cdn.tcgplayer.com/product/669172_200w.jpg,87,24469,https://cpt.tcgcsv.com/sHm7,2025-12-19T18:24:28.56,1,2.34,6.99,8.0,2.96,,Foil,Super Rare,hBP03-083,Yellow,buzz holomem,,,,1st,250,"[YNNN] Songstress, Otonose Kanade (120)",2,#Singing;#DEV_IS;#ReGLOSS,"[Extra] If this holomem is downed, you get life-2","""Gift"" What the heck!<br>
+At the end of your opponent's performance phase, if your life was reduced during that performance phase, you may send 1 cheer from your archive to this holomem.",,,
+669173,Gorgeous PC (S),Gorgeous PC S,https://tcgplayer-cdn.tcgplayer.com/product/669173_200w.jpg,87,24469,https://cpt.tcgcsv.com/tHm7,2025-12-19T05:10:13.197,1,1.75,2.05,3.99,2.07,,Foil,Special,hBP03-084,,Support,,,,,,,,,,,,"LIMITED:Usable only 1 per turn.<br><br>
+<br><br>
+This card can only be used if you archive 1 of your holo Power.<br><br>
+<br><br>
+Reveal 1 1st holomem with the same color as your Oshi holomem from your deck, and add it to hand. Then, shuffle the deck.",Item
+669174,Gorgeous PC (U),Gorgeous PC U,https://tcgplayer-cdn.tcgplayer.com/product/669174_200w.jpg,87,24469,https://cpt.tcgcsv.com/vHm7,2025-12-19T05:10:13.197,1,0.03,0.2,1.23,0.15,,Normal,Uncommon,hBP03-084,,Support,,,,,,,,,,,,"LIMITED:Usable only 1 per turn.<br><br>
+<br><br>
+This card can only be used if you archive 1 of your holo Power.<br><br>
+<br><br>
+Reveal 1 1st holomem with the same color as your Oshi holomem from your deck, and add it to hand. Then, shuffle the deck.",Item
+669175,Super PC (S),Super PC S,https://tcgplayer-cdn.tcgplayer.com/product/669175_200w.jpg,87,24469,https://cpt.tcgcsv.com/wHm7,2025-12-19T05:10:13.197,1,0.9,1.57,8.99,1.56,,Foil,Special,hBP03-085,,Support,,,,,,,,,,,,"LIMITED:Usable only 1 per turn.<br><br>
+<br><br>
+Look at the top 4 cards of your deck. Reveal 1 [Debut holomem and/or 1st holomem] each from among them, and add the revealed holomem to hand. Then, return the remaining cards to the bottom of the deck in any order.",Item
+669176,Super PC (U),Super PC U,https://tcgplayer-cdn.tcgplayer.com/product/669176_200w.jpg,87,24469,https://cpt.tcgcsv.com/xHm7,2025-12-19T05:10:13.197,1,0.09,0.25,1.23,0.19,,Normal,Uncommon,hBP03-085,,Support,,,,,,,,,,,,"LIMITED:Usable only 1 per turn.<br><br>
+<br><br>
+Look at the top 4 cards of your deck. Reveal 1 [Debut holomem and/or 1st holomem] each from among them, and add the revealed holomem to hand. Then, return the remaining cards to the bottom of the deck in any order.",Item
+669177,Dual-Monitor PC (C),Dual Monitor PC C,https://tcgplayer-cdn.tcgplayer.com/product/669177_200w.jpg,87,24469,https://cpt.tcgcsv.com/zHm7,2025-12-19T05:10:13.197,1,0.09,0.25,1.23,0.19,,Normal,Common,hBP03-086,,Support,,,,,,,,,,,,"LIMITED:Usable only 1 per turn.<br><br>
+<br><br>
+Reveal 1~2 Debut holomem with [Extra] ""You may include any number of this holomem in the deck"" from your deck, and place them on stage. Then, shuffle the deck.",Item
+669178,Dual-Monitor PC (S),Dual Monitor PC S,https://tcgplayer-cdn.tcgplayer.com/product/669178_200w.jpg,87,24469,https://cpt.tcgcsv.com/BHm7,2025-12-19T05:10:13.197,1,0.48,0.99,4.0,0.85,,Foil,Special,hBP03-086,,Support,,,,,,,,,,,,"LIMITED:Usable only 1 per turn.<br><br>
+<br><br>
+Reveal 1~2 Debut holomem with [Extra] ""You may include any number of this holomem in the deck"" from your deck, and place them on stage. Then, shuffle the deck.",Item
+669179,Call and Response (C),Call and Response C,https://tcgplayer-cdn.tcgplayer.com/product/669179_200w.jpg,87,24469,https://cpt.tcgcsv.com/CHm7,2025-12-19T05:10:13.197,1,0.06,0.2,1.23,0.16,,Normal,Common,hBP03-087,,Support,,,,,,,,,,,,Reattach 1 cheer from your stage to your holomem.,Event
+669180,Call and Response (S),Call and Response S,https://tcgplayer-cdn.tcgplayer.com/product/669180_200w.jpg,87,24469,https://cpt.tcgcsv.com/DHm7,2025-12-19T05:10:13.197,1,0.14,1.09,4.01,0.95,,Foil,Special,hBP03-087,,Support,,,,,,,,,,,,Reattach 1 cheer from your stage to your holomem.,Event
+669181,Totsumachi (S),Totsumachi S,https://tcgplayer-cdn.tcgplayer.com/product/669181_200w.jpg,87,24469,https://cpt.tcgcsv.com/FHm7,2025-12-19T05:10:13.197,1,10.0,24.34,29.99,15.39,,Foil,Special,hBP03-088,,Support,,,,,,,,,,,,"LIMITED:Usable only 1 per turn.<br><br>
+<br><br>
+This card can only be used if your life is less than your opponent's.<br><br>
+<br><br>
+If your opponent has no collab holomem, your opponent moves 1 of their back holomem to the collab position (Moving is not regarded as collab).",Event
+669182,Totsumachi (U),Totsumachi U,https://tcgplayer-cdn.tcgplayer.com/product/669182_200w.jpg,87,24469,https://cpt.tcgcsv.com/GHm7,2025-12-19T05:10:13.197,1,2.0,4.57,11.99,4.54,,Normal,Uncommon,hBP03-088,,Support,,,,,,,,,,,,"LIMITED:Usable only 1 per turn.<br><br>
+<br><br>
+This card can only be used if your life is less than your opponent's.<br><br>
+<br><br>
+If your opponent has no collab holomem, your opponent moves 1 of their back holomem to the collab position (Moving is not regarded as collab).",Event
+669183,Fan Meeting (S),Fan Meeting S,https://tcgplayer-cdn.tcgplayer.com/product/669183_200w.jpg,87,24469,https://cpt.tcgcsv.com/HHm7,2025-12-19T05:10:13.197,1,0.78,1.0,1.44,1.1,,Foil,Special,hBP03-089,,Support,,,,,,,,,,,,"LIMITED:Usable only 1 per turn.<br><br>
+<br><br>
+Reveal 1 fan from your deck, and add it to hand. Then, shuffle the deck.",Event
+669184,Fan Meeting (U),Fan Meeting U,https://tcgplayer-cdn.tcgplayer.com/product/669184_200w.jpg,87,24469,https://cpt.tcgcsv.com/JHm7,2025-12-19T05:10:13.197,1,0.07,0.2,1.23,0.14,,Normal,Uncommon,hBP03-089,,Support,,,,,,,,,,,,"LIMITED:Usable only 1 per turn.<br><br>
+<br><br>
+Reveal 1 fan from your deck, and add it to hand. Then, shuffle the deck.",Event
+669185,Can You Do the hololive? (S),Can You Do the hololive S,https://tcgplayer-cdn.tcgplayer.com/product/669185_200w.jpg,87,24469,https://cpt.tcgcsv.com/KHm7,2025-12-19T05:10:13.197,1,,,,,,,Special,hBP03-090,,Support,,,,,,,,,,,,"Look at the top 4 cards of your deck. Reveal any number of Debut holomem from among them, and add the revealed holomem to hand. Then, return the remaining cards to the bottom of the deck in any order.",Event
+669186,Can You Do the hololive? (U),Can You Do the hololive U,https://tcgplayer-cdn.tcgplayer.com/product/669186_200w.jpg,87,24469,https://cpt.tcgcsv.com/LHm7,2025-12-19T05:10:13.197,1,0.1,0.25,1.23,0.24,,Normal,Uncommon,hBP03-090,,Support,,,,,,,,,,,,"Look at the top 4 cards of your deck. Reveal any number of Debut holomem from among them, and add the revealed holomem to hand. Then, return the remaining cards to the bottom of the deck in any order.",Event
+669187,hololive Indonesia Gen 1 (S),hololive Indonesia Gen 1 S,https://tcgplayer-cdn.tcgplayer.com/product/669187_200w.jpg,87,24469,https://cpt.tcgcsv.com/MHm7,2025-12-19T05:10:13.197,1,0.3,1.0,4.99,0.58,,Foil,Special,hBP03-091,,Support,,,,,,,,,,,,"LIMITED:Usable only 1 per turn.<br><br>
+<br><br>
+This card can only be used if you have 6 or less cards in hand excluding this card.<br><br>
+<br><br>
+Look at the top 4 cards of your deck. Reveal any number of holomem with [#ID Gen 1] from among them, and add the revealed holomem to hand. Then, return the remaining cards to the bottom of the deck in any order.",Event
+669188,hololive Indonesia Gen 1 (U),hololive Indonesia Gen 1 U,https://tcgplayer-cdn.tcgplayer.com/product/669188_200w.jpg,87,24469,https://cpt.tcgcsv.com/NHm7,2025-12-19T05:10:13.197,1,0.01,0.2,1.23,0.1,,Normal,Uncommon,hBP03-091,,Support,,,,,,,,,,,,"LIMITED:Usable only 1 per turn.<br><br>
+<br><br>
+This card can only be used if you have 6 or less cards in hand excluding this card.<br><br>
+<br><br>
+Look at the top 4 cards of your deck. Reveal any number of holomem with [#ID Gen 1] from among them, and add the revealed holomem to hand. Then, return the remaining cards to the bottom of the deck in any order.",Event
+669189,hololive Gen 0 (S),hololive Gen 0 S,https://tcgplayer-cdn.tcgplayer.com/product/669189_200w.jpg,87,24469,https://cpt.tcgcsv.com/PHm7,2025-12-19T05:10:13.197,1,1.0,1.5,3.25,1.5,,Foil,Special,hBP03-092,,Support,,,,,,,,,,,,"LIMITED:Usable only 1 per turn.<br><br>
+<br><br>
+This card can only be used if you have 6 or less cards in hand excluding this card.<br><br>
+<br><br>
+Look at the top 4 cards of your deck. Reveal any number of holomem with [#Gen 0] from among them, and add the revealed holomem to hand. Then, return the remaining cards to the bottom of the deck in any order.",Event
+669190,hololive Gen 0 (U),hololive Gen 0 U,https://tcgplayer-cdn.tcgplayer.com/product/669190_200w.jpg,87,24469,https://cpt.tcgcsv.com/QHm7,2025-12-19T05:10:13.197,1,0.03,0.2,1.23,0.13,,Normal,Uncommon,hBP03-092,,Support,,,,,,,,,,,,"LIMITED:Usable only 1 per turn.<br><br>
+<br><br>
+This card can only be used if you have 6 or less cards in hand excluding this card.<br><br>
+<br><br>
+Look at the top 4 cards of your deck. Reveal any number of holomem with [#Gen 0] from among them, and add the revealed holomem to hand. Then, return the remaining cards to the bottom of the deck in any order.",Event
+669191,hololive Gen 4 (S),hololive Gen 4 S,https://tcgplayer-cdn.tcgplayer.com/product/669191_200w.jpg,87,24469,https://cpt.tcgcsv.com/RHm7,2025-12-19T05:10:13.197,1,1.71,1.77,4.99,1.78,,Foil,Special,hBP03-093,,Support,,,,,,,,,,,,"LIMITED:Usable only 1 per turn.<br><br>
+<br><br>
+This card can only be used if you have 6 or less cards in hand excluding this card.<br><br>
+<br><br>
+Look at the top 4 cards of your deck. Reveal any number of holomem with [#Gen 4] from among them, and add the revealed holomem to hand. Then, return the remaining cards to the bottom of the deck in any order.",Event
+669192,hololive Gen 4 (U),hololive Gen 4 U,https://tcgplayer-cdn.tcgplayer.com/product/669192_200w.jpg,87,24469,https://cpt.tcgcsv.com/SHm7,2025-12-19T05:10:13.197,1,0.03,0.16,1.23,0.12,,Normal,Uncommon,hBP03-093,,Support,,,,,,,,,,,,"LIMITED:Usable only 1 per turn.<br><br>
+<br><br>
+This card can only be used if you have 6 or less cards in hand excluding this card.<br><br>
+<br><br>
+Look at the top 4 cards of your deck. Reveal any number of holomem with [#Gen 4] from among them, and add the revealed holomem to hand. Then, return the remaining cards to the bottom of the deck in any order.",Event
+669193,FPS Stream (S),FPS Stream S,https://tcgplayer-cdn.tcgplayer.com/product/669193_200w.jpg,87,24469,https://cpt.tcgcsv.com/THm7,2025-12-19T05:10:13.197,1,1.42,1.86,5.0,1.5,,Foil,Special,hBP03-094,,Support,,,,,,,,,,,,"LIMITED:Usable only 1 per turn.<br><br>
+<br><br>
+This card can only be used if you have 6 or less cards in hand excluding this card.<br><br>
+<br><br>
+Look at the top 4 cards of your deck. Reveal any number of holomem with [#Shooter] from among them, and add the revealed holomem to hand. Then, return the remaining cards to the bottom of the deck in any order.",Event
+669194,FPS Stream (U),FPS Stream U,https://tcgplayer-cdn.tcgplayer.com/product/669194_200w.jpg,87,24469,https://cpt.tcgcsv.com/VHm7,2025-12-19T05:10:13.197,1,0.03,0.2,1.23,0.18,,Normal,Uncommon,hBP03-094,,Support,,,,,,,,,,,,"LIMITED:Usable only 1 per turn.<br><br>
+<br><br>
+This card can only be used if you have 6 or less cards in hand excluding this card.<br><br>
+<br><br>
+Look at the top 4 cards of your deck. Reveal any number of holomem with [#Shooter] from among them, and add the revealed holomem to hand. Then, return the remaining cards to the bottom of the deck in any order.",Event
+669195,holoCap (C),holoCap C,https://tcgplayer-cdn.tcgplayer.com/product/669195_200w.jpg,87,24469,https://cpt.tcgcsv.com/WHm7,2025-12-19T05:10:13.197,1,0.06,0.2,1.23,0.16,,Normal,Common,hBP03-095,,Support,,,,,,,,,,,,"•Additional ability if attached to Debut holomem or Spot holomem<br><br>
+•The holomem this tool is attached to gets +30 HP.<br><br>
+•The holomem this tool is attached to does not take special damage from your opponent.<br><br>
+<br><br>
+Only 1 tool can be attached to each of your holomem.",Tool
+669196,holoCap (S),holoCap S,https://tcgplayer-cdn.tcgplayer.com/product/669196_200w.jpg,87,24469,https://cpt.tcgcsv.com/XHm7,2025-12-19T05:10:13.197,1,0.9,1.32,3.99,1.17,,Foil,Special,hBP03-095,,Support,,,,,,,,,,,,"•Additional ability if attached to Debut holomem or Spot holomem<br><br>
+•The holomem this tool is attached to gets +30 HP.<br><br>
+•The holomem this tool is attached to does not take special damage from your opponent.<br><br>
+<br><br>
+Only 1 tool can be attached to each of your holomem.",Tool
+669197,Rifle (S),Rifle S,https://tcgplayer-cdn.tcgplayer.com/product/669197_200w.jpg,87,24469,https://cpt.tcgcsv.com/ZHm7,2025-12-19T05:10:13.197,1,3.75,4.49,7.99,4.25,,Foil,Special,hBP03-096,,Support,,,,,,,,,,,,"The holomem this tool is attached to gets Arts+10.<br><br>
+<br><br>
+•Additional ability if attached to a 1st or greater holomem with [#Shooter]<br><br>
+The holomem this tool is attached to deals +10 special damage to 1 of your opponent's holomem.<br><br>
+<br><br>
+Only 1 tool can be attached to each of your holomem.",Tool
+669198,Rifle (U),Rifle U,https://tcgplayer-cdn.tcgplayer.com/product/669198_200w.jpg,87,24469,https://cpt.tcgcsv.com/-Hm7,2025-12-19T05:10:13.197,1,0.1,0.25,1.23,0.23,,Normal,Uncommon,hBP03-096,,Support,,,,,,,,,,,,"The holomem this tool is attached to gets Arts+10.<br><br>
+<br><br>
+•Additional ability if attached to a 1st or greater holomem with [#Shooter]<br><br>
+The holomem this tool is attached to deals +10 special damage to 1 of your opponent's holomem.<br><br>
+<br><br>
+Only 1 tool can be attached to each of your holomem.",Tool
+669199,Recorder (C),Recorder C,https://tcgplayer-cdn.tcgplayer.com/product/669199_200w.jpg,87,24469,https://cpt.tcgcsv.com/_Hm7,2025-12-19T05:10:13.197,1,0.02,0.2,1.23,0.1,,Normal,Common,hBP03-097,,Support,,,,,,,,,,,,"The holomem this tool is attached to gets Arts+10.<br><br>
+<br><br>
+•Additional ability if attached to a 1st or greater ""Otonose Kanade""<br><br>
+When the holomem this tool is attached to downed your opponent's holomem, draw 1 card.<br><br>
+<br><br>
+Only 1 tool can be attached to each of your holomem.",Tool
+669200,Recorder (S),Recorder S,https://tcgplayer-cdn.tcgplayer.com/product/669200_200w.jpg,87,24469,https://cpt.tcgcsv.com/0Jm7,2025-12-19T05:10:13.197,1,0.9,0.99,4.25,1.21,,Foil,Special,hBP03-097,,Support,,,,,,,,,,,,"The holomem this tool is attached to gets Arts+10.<br><br>
+<br><br>
+•Additional ability if attached to a 1st or greater ""Otonose Kanade""<br><br>
+When the holomem this tool is attached to downed your opponent's holomem, draw 1 card.<br><br>
+<br><br>
+Only 1 tool can be attached to each of your holomem.",Tool
+669201,Kintoki (S),Kintoki S,https://tcgplayer-cdn.tcgplayer.com/product/669201_200w.jpg,87,24469,https://cpt.tcgcsv.com/2Jm7,2025-12-19T05:10:13.197,1,1.0,1.26,5.0,1.26,,Foil,Special,hBP03-098,,Support,,,,,,,,,,,,"The holomem this mascot is attached to gets +20 HP.<br><br>
+<br><br>
+•Additional ability if attached to ""Sakura Miko""<br><br>
+When the holomem this mascot is attached to collabs, draw 1 card.<br><br>
+<br><br>
+Only 1 mascot can be attached to each of your holomem.",Mascot
+669202,Kintoki (U),Kintoki U,https://tcgplayer-cdn.tcgplayer.com/product/669202_200w.jpg,87,24469,https://cpt.tcgcsv.com/3Jm7,2025-12-19T05:10:13.197,1,0.03,0.2,1.23,0.12,,Normal,Uncommon,hBP03-098,,Support,,,,,,,,,,,,"The holomem this mascot is attached to gets +20 HP.<br><br>
+<br><br>
+•Additional ability if attached to ""Sakura Miko""<br><br>
+When the holomem this mascot is attached to collabs, draw 1 card.<br><br>
+<br><br>
+Only 1 mascot can be attached to each of your holomem.",Mascot
+669203,Maguchi (C),Maguchi C,https://tcgplayer-cdn.tcgplayer.com/product/669203_200w.jpg,87,24469,https://cpt.tcgcsv.com/5Jm7,2025-12-19T05:10:13.197,1,0.03,0.19,1.23,0.05,,Normal,Common,hBP03-099,,Support,,,,,,,,,,,,"The holomem this mascot is attached to gets Arts+10.<br><br>
+<br><br>
+•Additional ability if attached to ""Sakura Miko""<br><br>
+When the holomem this mascot is attached to collabs, during this turn, your center holomem ""Sakura Miko"" gets Arts+10.<br><br>
+<br><br>
+Only 1 mascot can be attached to each of your holomem.",Mascot
+669204,Maguchi (S),Maguchi S,https://tcgplayer-cdn.tcgplayer.com/product/669204_200w.jpg,87,24469,https://cpt.tcgcsv.com/6Jm7,2025-12-19T05:10:13.197,1,1.19,1.99,8.0,1.5,,Foil,Special,hBP03-099,,Support,,,,,,,,,,,,"The holomem this mascot is attached to gets Arts+10.<br><br>
+<br><br>
+•Additional ability if attached to ""Sakura Miko""<br><br>
+When the holomem this mascot is attached to collabs, during this turn, your center holomem ""Sakura Miko"" gets Arts+10.<br><br>
+<br><br>
+Only 1 mascot can be attached to each of your holomem.",Mascot
+669205,Pero (C),Pero C,https://tcgplayer-cdn.tcgplayer.com/product/669205_200w.jpg,87,24469,https://cpt.tcgcsv.com/7Jm7,2025-12-19T05:10:13.197,1,0.03,0.2,1.23,0.17,,Normal,Common,hBP03-100,,Support,,,,,,,,,,,,"The holomem this mascot is attached to gets +20 HP.<br><br>
+<br><br>
+•Additional ability if attached to ""Fuwawa Abyssgard"" or ""Mococo Abyssgard""<br><br>
+All cheer colors required for the Arts of the holomem this mascot is attached to is set to colorless.<br><br>
+<br><br>
+Only 1 mascot can be attached to each of your holomem.",Mascot
+669206,Pero (S),Pero S,https://tcgplayer-cdn.tcgplayer.com/product/669206_200w.jpg,87,24469,https://cpt.tcgcsv.com/8Jm7,2025-12-19T05:10:13.197,1,1.91,2.19,4.99,1.89,,Foil,Special,hBP03-100,,Support,,,,,,,,,,,,"The holomem this mascot is attached to gets +20 HP.<br><br>
+<br><br>
+•Additional ability if attached to ""Fuwawa Abyssgard"" or ""Mococo Abyssgard""<br><br>
+All cheer colors required for the Arts of the holomem this mascot is attached to is set to colorless.<br><br>
+<br><br>
+Only 1 mascot can be attached to each of your holomem.",Mascot
+669207,Bibi (C),Bibi C,https://tcgplayer-cdn.tcgplayer.com/product/669207_200w.jpg,87,24469,https://cpt.tcgcsv.com/9Jm7,2025-12-19T05:10:13.197,1,0.02,0.2,1.23,0.13,,Normal,Common,hBP03-101,,Support,,,,,,,,,,,,"The holomem this mascot is attached to gets +20 HP.<br><br>
+<br><br>
+•Additional ability if attached to ""Tokoyami Towa""<br><br>
+The holomem this mascot is attached to deals +10 special damage to 1 of your opponent's holomem.<br><br>
+<br><br>
+Only 1 mascot can be attached to each of your holomem.",Mascot
+669208,Bibi (S),Bibi S,https://tcgplayer-cdn.tcgplayer.com/product/669208_200w.jpg,87,24469,https://cpt.tcgcsv.com/bJm7,2025-12-19T05:10:13.197,1,1.93,2.17,5.0,2.16,,Foil,Special,hBP03-101,,Support,,,,,,,,,,,,"The holomem this mascot is attached to gets +20 HP.<br><br>
+<br><br>
+•Additional ability if attached to ""Tokoyami Towa""<br><br>
+The holomem this mascot is attached to deals +10 special damage to 1 of your opponent's holomem.<br><br>
+<br><br>
+Only 1 mascot can be attached to each of your holomem.",Mascot
+669209,Futoinu (S),Futoinu S,https://tcgplayer-cdn.tcgplayer.com/product/669209_200w.jpg,87,24469,https://cpt.tcgcsv.com/cJm7,2025-12-19T05:10:13.197,1,9.19,25.47,29.0,8.17,,Foil,Special,hBP03-102,,Support,,,,,,,,,,,,"The holomem this mascot is attached to gets Arts+10.<br><br>
+<br><br>
+•Additional ability if attached to ""Inugami Korone""<br><br>
+When the holomem this mascot is attached to collabs, you may send 1 yellow cheer from your archive to your holomem.<br><br>
+<br><br>
+Only 1 mascot can be attached to each of your holomem.",Mascot
+669210,Futoinu (U),Futoinu U,https://tcgplayer-cdn.tcgplayer.com/product/669210_200w.jpg,87,24469,https://cpt.tcgcsv.com/dJm7,2025-12-19T05:10:13.197,1,0.1,0.25,1.23,0.27,,Normal,Uncommon,hBP03-102,,Support,,,,,,,,,,,,"The holomem this mascot is attached to gets Arts+10.<br><br>
+<br><br>
+•Additional ability if attached to ""Inugami Korone""<br><br>
+When the holomem this mascot is attached to collabs, you may send 1 yellow cheer from your archive to your holomem.<br><br>
+<br><br>
+Only 1 mascot can be attached to each of your holomem.",Mascot
+669211,Hosoinu (C),Hosoinu C,https://tcgplayer-cdn.tcgplayer.com/product/669211_200w.jpg,87,24469,https://cpt.tcgcsv.com/fJm7,2025-12-19T05:10:13.197,1,0.02,0.2,1.23,0.11,,Normal,Common,hBP03-103,,Support,,,,,,,,,,,,"The holomem this mascot is attached to gets Arts+10.<br><br>
+<br><br>
+•Additional ability if attached to ""Inugami Korone""<br><br>
+When the holomem this mascot is attached to is downed, you may archive 1 of your holo Power:Return this mascot to hand.<br><br>
+<br><br>
+Only 1 mascot can be attached to each of your holomem.",Mascot
+669212,Hosoinu (S),Hosoinu S,https://tcgplayer-cdn.tcgplayer.com/product/669212_200w.jpg,87,24469,https://cpt.tcgcsv.com/gJm7,2025-12-19T05:10:13.197,1,0.2,1.0,4.0,0.51,,Foil,Special,hBP03-103,,Support,,,,,,,,,,,,"The holomem this mascot is attached to gets Arts+10.<br><br>
+<br><br>
+•Additional ability if attached to ""Inugami Korone""<br><br>
+When the holomem this mascot is attached to is downed, you may archive 1 of your holo Power:Return this mascot to hand.<br><br>
+<br><br>
+Only 1 mascot can be attached to each of your holomem.",Mascot
+669213,Riscot (C),Riscot C,https://tcgplayer-cdn.tcgplayer.com/product/669213_200w.jpg,87,24469,https://cpt.tcgcsv.com/hJm7,2025-12-19T05:10:13.197,1,0.01,0.15,1.23,0.04,,Normal,Common,hBP03-104,,Support,,,,,,,,,,,,"The holomem this mascot is attached to gets Arts+10.<br><br>
+<br><br>
+•Additional ability if attached to ""Ayunda Risu""<br><br>
+When the holomem this mascot is attached to collabs, you may reattach 1 cheer from your stage to this holomem.<br><br>
+<br><br>
+Only 1 mascot can be attached to each of your holomem.",Mascot
+669214,Riscot (S),Riscot S,https://tcgplayer-cdn.tcgplayer.com/product/669214_200w.jpg,87,24469,https://cpt.tcgcsv.com/jJm7,2025-12-19T05:10:13.197,1,0.24,0.55,4.75,0.14,,Foil,Special,hBP03-104,,Support,,,,,,,,,,,,"The holomem this mascot is attached to gets Arts+10.<br><br>
+<br><br>
+•Additional ability if attached to ""Ayunda Risu""<br><br>
+When the holomem this mascot is attached to collabs, you may reattach 1 cheer from your stage to this holomem.<br><br>
+<br><br>
+Only 1 mascot can be attached to each of your holomem.",Mascot
+669215,Lu-knights (S),Lu knights S,https://tcgplayer-cdn.tcgplayer.com/product/669215_200w.jpg,87,24469,https://cpt.tcgcsv.com/kJm7,2025-12-19T05:10:13.197,1,0.75,1.5,5.0,1.41,,Foil,Special,hBP03-105,,Support,,,,,,,,,,,,"During your opponent's turn, when the holomem this fan is attached to takes damage, you may archive this fan:The holomem this fan is attached to takes -30 damage.<br><br>
+<br><br>
+You may only attach this fan to your ""Himemori Luna"", and you may attach any number of this fan per holomem.",Fan
+669216,Lu-knights (U),Lu knights U,https://tcgplayer-cdn.tcgplayer.com/product/669216_200w.jpg,87,24469,https://cpt.tcgcsv.com/lJm7,2025-12-19T05:10:13.197,1,0.03,0.15,1.23,0.12,,Normal,Uncommon,hBP03-105,,Support,,,,,,,,,,,,"During your opponent's turn, when the holomem this fan is attached to takes damage, you may archive this fan:The holomem this fan is attached to takes -30 damage.<br><br>
+<br><br>
+You may only attach this fan to your ""Himemori Luna"", and you may attach any number of this fan per holomem.",Fan
+669217,SSRB (C),SSRB C,https://tcgplayer-cdn.tcgplayer.com/product/669217_200w.jpg,87,24469,https://cpt.tcgcsv.com/mJm7,2025-12-19T05:10:13.197,1,0.07,0.17,1.23,0.15,,Normal,Common,hBP03-106,,Support,,,,,,,,,,,,"If you would archive a cheer by the ability of the holomem this fan is attached to, you may archive this fan instead of archiving 1 cheer.<br><br>
+<br><br>
+You may only attach this fan to your ""Shishiro Botan"", and you may attach any number of this fan per holomem.",Fan
+669218,SSRB (S),SSRB S,https://tcgplayer-cdn.tcgplayer.com/product/669218_200w.jpg,87,24469,https://cpt.tcgcsv.com/nJm7,2025-12-19T05:10:13.197,1,0.75,1.49,4.99,1.57,,Foil,Special,hBP03-106,,Support,,,,,,,,,,,,"If you would archive a cheer by the ability of the holomem this fan is attached to, you may archive this fan instead of archiving 1 cheer.<br><br>
+<br><br>
+You may only attach this fan to your ""Shishiro Botan"", and you may attach any number of this fan per holomem.",Fan
+669219,35P (S),35P S,https://tcgplayer-cdn.tcgplayer.com/product/669219_200w.jpg,87,24469,https://cpt.tcgcsv.com/pJm7,2025-12-19T05:10:13.197,1,2.99,4.89,7.99,5.15,,Foil,Special,hBP03-107,,Support,,,,,,,,,,,,"•If the holomem this fan is attached to would use Arts, this fan is also regarded as a red cheer.<br><br>
+•When the holomem this fan is attached to is downed, your opponent may draw 1 card.<br><br>
+<br><br>
+You may only attach this fan to your ""Sakura Miko"", and you may attach any number of this fan per holomem.",Fan
+669220,35P (U),35P U,https://tcgplayer-cdn.tcgplayer.com/product/669220_200w.jpg,87,24469,https://cpt.tcgcsv.com/qJm7,2025-12-19T05:10:13.197,1,0.04,0.25,1.23,0.19,,Normal,Uncommon,hBP03-107,,Support,,,,,,,,,,,,"•If the holomem this fan is attached to would use Arts, this fan is also regarded as a red cheer.<br><br>
+•When the holomem this fan is attached to is downed, your opponent may draw 1 card.<br><br>
+<br><br>
+You may only attach this fan to your ""Sakura Miko"", and you may attach any number of this fan per holomem.",Fan
+669221,Haaton (C),Haaton C,https://tcgplayer-cdn.tcgplayer.com/product/669221_200w.jpg,87,24469,https://cpt.tcgcsv.com/rJm7,2025-12-19T05:10:13.197,1,0.02,0.15,1.23,0.07,,Normal,Common,hBP03-108,,Support,,,,,,,,#Shirakami's Character,,,,"If the holomem this fan is attached to rolled a die by an ability, you may archive this fan:Ignore the previous results, and reroll the die.<br><br>
+<br><br>
+You may only attach this fan to your ""Akai Haato"", and you may attach any number of this fan per holomem.",Fan
+669222,Haaton (S),Haaton S,https://tcgplayer-cdn.tcgplayer.com/product/669222_200w.jpg,87,24469,https://cpt.tcgcsv.com/sJm7,2025-12-19T05:10:13.197,1,0.88,1.0,4.99,0.96,,Foil,Special,hBP03-108,,Support,,,,,,,,#Shirakami's Character,,,,"If the holomem this fan is attached to rolled a die by an ability, you may archive this fan:Ignore the previous results, and reroll the die.<br><br>
+<br><br>
+You may only attach this fan to your ""Akai Haato"", and you may attach any number of this fan per holomem.",Fan
+669223,Ruffians (C),Ruffians C,https://tcgplayer-cdn.tcgplayer.com/product/669223_200w.jpg,87,24469,https://cpt.tcgcsv.com/tJm7,2025-12-19T05:10:13.197,1,0.03,0.16,1.23,0.12,,Normal,Common,hBP03-109,,Support,,,,,,,,,,,,"During your opponent's turn, when the holomem this fan is attached to is downed, you may send 1 blue cheer from your archive to your ""Fuwawa Abyssgard"".<br><br>
+<br><br>
+You may only attach this fan to your ""Fuwawa Abyssgard"" or ""Mococo Abyssgard"", and you may attach any number of this fan per holomem.",Fan
+669224,Ruffians (S),Ruffians S,https://tcgplayer-cdn.tcgplayer.com/product/669224_200w.jpg,87,24469,https://cpt.tcgcsv.com/vJm7,2025-12-19T05:10:13.197,1,0.94,1.26,3.0,1.12,,Foil,Special,hBP03-109,,Support,,,,,,,,,,,,"During your opponent's turn, when the holomem this fan is attached to is downed, you may send 1 blue cheer from your archive to your ""Fuwawa Abyssgard"".<br><br>
+<br><br>
+You may only attach this fan to your ""Fuwawa Abyssgard"" or ""Mococo Abyssgard"", and you may attach any number of this fan per holomem.",Fan
+669225,Roboser (S),Roboser S,https://tcgplayer-cdn.tcgplayer.com/product/669225_200w.jpg,87,24469,https://cpt.tcgcsv.com/wJm7,2025-12-19T05:10:13.197,1,2.39,2.75,5.0,2.51,,Foil,Special,hBP03-110,,Support,,,,,,,,,,,,"•If the holomem this fan is attached to would use Arts, this fan is also regarded as a purple cheer.<br><br>
+•The holomem this fan is attached to gets Arts-10.<br><br>
+<br><br>
+You may only attach this fan to your ""Robocosan"", and you may attach any number of this fan per holomem.",Fan
+669226,Roboser (U),Roboser U,https://tcgplayer-cdn.tcgplayer.com/product/669226_200w.jpg,87,24469,https://cpt.tcgcsv.com/xJm7,2025-12-19T05:10:13.197,1,0.02,0.15,1.57,0.11,,Normal,Uncommon,hBP03-110,,Support,,,,,,,,,,,,"•If the holomem this fan is attached to would use Arts, this fan is also regarded as a purple cheer.<br><br>
+•The holomem this fan is attached to gets Arts-10.<br><br>
+<br><br>
+You may only attach this fan to your ""Robocosan"", and you may attach any number of this fan per holomem.",Fan
+669227,Koronesky (C),Koronesky C,https://tcgplayer-cdn.tcgplayer.com/product/669227_200w.jpg,87,24469,https://cpt.tcgcsv.com/zJm7,2025-12-19T05:10:13.197,1,0.03,0.15,1.23,0.15,,Normal,Common,hBP03-111,,Support,,,,,,,,,,,,"The holomem this fan is attached to requires -1 colorless for its baton pass.<br><br>
+<br><br>
+You may only attach this fan to your ""Inugami Korone"", and you may attach any number of this fan per holomem.",Fan
+669228,Koronesky (S),Koronesky S,https://tcgplayer-cdn.tcgplayer.com/product/669228_200w.jpg,87,24469,https://cpt.tcgcsv.com/BJm7,2025-12-19T05:10:13.197,1,0.24,1.43,3.65,1.14,,Foil,Special,hBP03-111,,Support,,,,,,,,,,,,"The holomem this fan is attached to requires -1 colorless for its baton pass.<br><br>
+<br><br>
+You may only attach this fan to your ""Inugami Korone"", and you may attach any number of this fan per holomem.",Fan
+669229,Watamates (S),Watamates S,https://tcgplayer-cdn.tcgplayer.com/product/669229_200w.jpg,87,24469,https://cpt.tcgcsv.com/CJm7,2025-12-19T05:10:13.197,1,2.0,3.78,6.99,2.78,,Foil,Special,hBP03-112,,Support,,,,,,,,,,,,"During your opponent's turn, when the holomem this fan is attached to is downed, you may reattach 1~2 yellow cheers from this holomem to 1 of your other ""Tsunomaki Watame"".<br><br>
+<br><br>
+You may only attach this fan to your ""Tsunomaki Watame"", and you may attach any number of this fan per holomem.",Fan
+669230,Watamates (U),Watamates U,https://tcgplayer-cdn.tcgplayer.com/product/669230_200w.jpg,87,24469,https://cpt.tcgcsv.com/DJm7,2025-12-19T05:10:13.197,1,0.08,0.24,1.23,0.18,,Normal,Uncommon,hBP03-112,,Support,,,,,,,,,,,,"During your opponent's turn, when the holomem this fan is attached to is downed, you may reattach 1~2 yellow cheers from this holomem to 1 of your other ""Tsunomaki Watame"".<br><br>
+<br><br>
+You may only attach this fan to your ""Tsunomaki Watame"", and you may attach any number of this fan per holomem.",Fan
+669231,Risuners (C),Risuners C,https://tcgplayer-cdn.tcgplayer.com/product/669231_200w.jpg,87,24469,https://cpt.tcgcsv.com/FJm7,2025-12-19T05:10:13.197,1,0.01,0.16,1.23,0.07,,Normal,Common,hBP03-113,,Support,,,,,,,,,,,,"[1/Turn]When a cheer is attached to the holomem this fan is attached to, during this turn, this holomem gets Arts+10.<br><br>
+<br><br>
+You may only attach this fan to your ""Ayunda Risu"", and you may attach any number of this fan per holomem.",Fan
+669232,Risuners (S),Risuners S,https://tcgplayer-cdn.tcgplayer.com/product/669232_200w.jpg,87,24469,https://cpt.tcgcsv.com/GJm7,2025-12-19T05:10:13.197,1,0.24,1.0,4.01,0.54,,Foil,Special,hBP03-113,,Support,,,,,,,,,,,,"[1/Turn]When a cheer is attached to the holomem this fan is attached to, during this turn, this holomem gets Arts+10.<br><br>
+<br><br>
+You may only attach this fan to your ""Ayunda Risu"", and you may attach any number of this fan per holomem.",Fan
+669233,White Cheer (SY),White Cheer SY,https://tcgplayer-cdn.tcgplayer.com/product/669233_200w.jpg,87,24469,https://cpt.tcgcsv.com/HJm7,2026-01-15T19:47:25.1,1,6.5,9.5,20.0,9.48,,Foil,Special Yell,hY01-004,White,Cheer,,,,,,,,,,,,,
+669234,Green Cheer (SY),Green Cheer SY,https://tcgplayer-cdn.tcgplayer.com/product/669234_200w.jpg,87,24469,https://cpt.tcgcsv.com/JJm7,2026-01-15T19:45:36.587,1,33.78,35.0,60.0,47.24,,Foil,Special Yell,hY02-003,Green,Cheer,,,,,,,,,,,,,
+669235,Red Cheer (SY),Red Cheer SY,https://tcgplayer-cdn.tcgplayer.com/product/669235_200w.jpg,87,24469,https://cpt.tcgcsv.com/KJm7,2026-01-15T19:51:12.43,1,22.0,29.99,46.75,31.06,,Foil,Special Yell,hY03-003,Red,Cheer,,,,,,,,,,,,,
+669236,Blue Cheer (SY),Blue Cheer SY,https://tcgplayer-cdn.tcgplayer.com/product/669236_200w.jpg,87,24469,https://cpt.tcgcsv.com/LJm7,2026-01-15T19:52:05.587,1,96.96,101.0,106.39,108.41,,Foil,Special Yell,hY04-003,Blue,Cheer,,,,,,,,,,,,,
+669237,Purple Cheer (SY),Purple Cheer SY,https://tcgplayer-cdn.tcgplayer.com/product/669237_200w.jpg,87,24469,https://cpt.tcgcsv.com/MJm7,2026-01-15T18:47:35.717,1,19.0,25.0,35.36,25.52,,Foil,Special Yell,hY05-003,Purple,Cheer,,,,,,,,,,,,,
+669238,Yellow Cheer (SY),Yellow Cheer SY,https://tcgplayer-cdn.tcgplayer.com/product/669238_200w.jpg,87,24469,https://cpt.tcgcsv.com/NJm7,2025-12-29T17:40:06.993,1,42.99,42.99,42.99,24.33,,Foil,Special Yell,hY06-002,Yellow,Cheer,,,,,,,,,,,,,
+670147,Todoroki Hajime (SR),Todoroki Hajime SR,https://tcgplayer-cdn.tcgplayer.com/product/670147_200w.jpg,87,24469,https://cpt.tcgcsv.com/Z3n7,2026-01-15T20:03:47.05,1,2.5,3.55,9.99,3.29,,Foil,Super Rare,hSD05-009,White,holomem,,,,2nd,180,"[WWN] Thunder of Deep Purple (80+) [P+50]<br>
+ If your stage has a holomem with [#ReGLOSS] other than ""Todoroki Hajime"", this Arts gets+30.",2,#DEV_IS;#ReGLOSS;#Baby,,"""Bloom Effect"" Coloring the World with my Dance! 
+<br>Reveal 1 [Debut holomem or 1st holomem] with [#ReGLOSS] from your deck, and add it to hand. Then, shuffle the deck.",,,
+670487,Yellow Cheer (C),Yellow Cheer C,https://tcgplayer-cdn.tcgplayer.com/product/670487_200w.jpg,87,24469,https://cpt.tcgcsv.com/Mcn7,2026-03-02T12:11:30.197,1,0.4,0.69,1.0,0.46,,Normal,Common,hY06-001,Yellow,Cheer,,,,,,,,,,,,,
+670917,Shiranui Flare (SR) (hSD07-009),Shiranui Flare SR hSD07 009,https://tcgplayer-cdn.tcgplayer.com/product/670917_200w.jpg,87,24469,https://cpt.tcgcsv.com/mnn7,2026-04-29T15:56:31.27,1,4.2,5.2,14.0,5.93,,Foil,Super Rare,hSD07-009,Yellow,holomem,,,,2nd,180,"[YNN] Passionate Stage (70+) [R+50]<br>
+ If your life is 3 or less, this Arts gets +70.",2,#JP;#Gen 3;#Half-Elf,,"""Gift"" Tireless 
+[Center Position Only]This holomem takes -10 damage.",,,
+671616,Sakura Miko (P) (hBP03-030),Sakura Miko P hBP03 030,https://tcgplayer-cdn.tcgplayer.com/product/671616_200w.jpg,87,24469,https://cpt.tcgcsv.com/lGn7,2026-01-08T13:47:33.873,1,,,,,,,Promo,hBP03-030,Red,holomem,,,,2nd,200,"[RNN] Elite Shrine Maiden (120+) [G+50]<br>
+This Arts gets +20 for each ""35P"" attached to this holomem.",2,#JP;#Gen 0;#Baby,,"""Gift"" Elite Gamble 
+[Center Position Only][1/Turn]During your main phase, when ""35P"" is attached to this holomem, you may roll a die once:If it is 3 or 5, during this turn, this holomem gets Arts+50.",,,
+674318,Kazama Iroha (SR) (hSD06-007),Kazama Iroha SR hSD06 007,https://tcgplayer-cdn.tcgplayer.com/product/674318_200w.jpg,87,24469,https://cpt.tcgcsv.com/nLp7,2026-01-23T13:48:05.153,1,4.0,6.0,17.99,7.35,,Foil,Super Rare,hSD06-007,Green,holomem,,,,2nd,180,"[GNN] A genius, aren't I? (70+) [G+50]<br>
+ If your stage has 5 or more cheers, this Arts gets +50.",2,#JP;#holoX,,"""Bloom Effect"" Sending you energy 
+Restore 30 HP to 1 of your holomem with [#holoX].",,,

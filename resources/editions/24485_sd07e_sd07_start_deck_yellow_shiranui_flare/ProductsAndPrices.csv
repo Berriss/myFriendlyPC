@@ -1,0 +1,38 @@
+productId,name,cleanName,imageUrl,categoryId,groupId,url,modifiedOn,imageCount,lowPrice,midPrice,highPrice,marketPrice,directLowPrice,subTypeName,extRarity,extNumber,extColor,extCardType,extOshiSkill,extSPOshiSkill,extLife,extBloomLevel,extHP,extArts1,extArts2,extBatonPass,extTags,extSpecialRules,extKeyword,extDescription,extSubtype
+660620,Start Deck: Yellow Shiranui Flare,Start Deck Yellow Shiranui Flare,https://tcgplayer-cdn.tcgplayer.com/product/660620_200w.jpg,87,24485,https://cpt.tcgcsv.com/qgj7,2025-12-22T20:31:56.337,1,9.85,13.43,18.73,14.81,,Normal,,,,,,,,,,,,,,,,,
+660621,Start Deck: Yellow Shiranui Flare Case,Start Deck Yellow Shiranui Flare Case,https://tcgplayer-cdn.tcgplayer.com/product/660621_200w.jpg,87,24485,https://cpt.tcgcsv.com/rgj7,2025-12-22T20:32:40.553,1,53.8,53.8,60.88,54.05,,Normal,,,,,,,,,,,,,,,,,
+668963,Shiranui Flare (OC),Shiranui Flare OC,https://tcgplayer-cdn.tcgplayer.com/product/668963_200w.jpg,87,24485,https://cpt.tcgcsv.com/hCm7,2025-12-30T14:45:26.16,1,0.05,0.25,1.23,0.17,,Normal,Oshi Common,hSD07-001,Yellow,Oshi holomem,"[holo Power: -2] Yellow Microphone <br>
+[1/Turn]During this turn, your yellow center holomem gets Arts+20.","[holo Power: -1] Leave the rest to me! <br>
+[1/Game]Exchange your center holomem with 1 non-resting back holomem. Then, restore 30 HP to the holomem that moved to the back position.",5,,,,,,,,,,
+668964,Shiranui Flare (C) (hSD07-002),Shiranui Flare C hSD07 002,https://tcgplayer-cdn.tcgplayer.com/product/668964_200w.jpg,87,24485,https://cpt.tcgcsv.com/jCm7,2025-12-19T20:53:49.92,1,0.01,0.25,1.23,0.17,,Normal,Common,hSD07-002,Yellow,holomem,,,,Debut,110,[N] Noon-nui! (20),[NNN] This is Shiranui Flare! (60),1,#JP;#Gen 3;#Half-Elf,[Extra] You may include any number of this holomem in the deck,,,
+668965,Shiranui Flare (C) (hSD07-003),Shiranui Flare C hSD07 003,https://tcgplayer-cdn.tcgplayer.com/product/668965_200w.jpg,87,24485,https://cpt.tcgcsv.com/kCm7,2025-12-19T05:10:14.25,1,0.01,0.25,1.23,0.23,,Normal,Common,hSD07-003,Yellow,holomem,,,,Debut,50,[Y] Going out with you (20),,1,#JP;#Gen 3;#Half-Elf,,"""Collab Effect"" With Cherished Companions 
+If your stage has 5 or less holomem, reveal 1 [""Omaru Polka"", ""Sakura Miko"", ""Hoshimachi Suisei"" or ""Shirogane Noel""] Debut holomem from your deck, and you may place it on stage. Then, shuffle the deck.",,
+668966,Shiranui Flare (U) (hSD07-004),Shiranui Flare U hSD07 004,https://tcgplayer-cdn.tcgplayer.com/product/668966_200w.jpg,87,24485,https://cpt.tcgcsv.com/lCm7,2025-12-19T05:10:14.25,1,0.1,0.35,1.23,0.25,,Normal,Uncommon,hSD07-004,Yellow,holomem,,,,Debut,100,"[Y] Wonderful Life (30+)<br>
+ If your hand has less cards than your opponent's, this Arts gets +10.",,1,#JP;#Gen 3;#Half-Elf,,,,
+668967,Shiranui Flare (C) (hSD07-005),Shiranui Flare C hSD07 005,https://tcgplayer-cdn.tcgplayer.com/product/668967_200w.jpg,87,24485,https://cpt.tcgcsv.com/mCm7,2025-12-19T20:53:27.57,1,0.02,0.25,1.23,0.15,,Normal,Common,hSD07-005,Yellow,holomem,,,,1st,170,[Y] From Me To You (30),[YN] Tea time with you (50),2,#JP;#Gen 3;#Half-Elf,,,,
+668968,Shiranui Flare (C) (hSD07-006),Shiranui Flare C hSD07 006,https://tcgplayer-cdn.tcgplayer.com/product/668968_200w.jpg,87,24485,https://cpt.tcgcsv.com/nCm7,2025-12-19T05:10:14.25,1,0.1,0.25,1.49,0.21,,Normal,Common,hSD07-006,Yellow,holomem,,,,1st,120,"[N] I Love you the Most~ (30+)<br>
+ If your life is 3 or less, this Arts gets +30.",,1,#JP;#Gen 3;#Half-Elf,,"""Bloom Effect"" The Chirp of Elfriends 
+Reveal 1 ""Elfriend"" from your deck, and add it to hand. Then, shuffle the deck.",,
+668969,Shiranui Flare (U) (hSD07-007),Shiranui Flare U hSD07 007,https://tcgplayer-cdn.tcgplayer.com/product/668969_200w.jpg,87,24485,https://cpt.tcgcsv.com/pCm7,2025-12-19T05:10:14.25,1,0.1,0.3,1.7,0.21,,Normal,Uncommon,hSD07-007,Yellow,holomem,,,,1st,150,[YN] Keep your Eyes on Me! (40),,2,#JP;#Gen 3;#Half-Elf,,"""Bloom Effect"" I've Grown Once Again 
+[Back Position Only]You may swap your collab holomem with 70 or less HP with this holomem.",,
+668970,Shiranui Flare (R),Shiranui Flare R,https://tcgplayer-cdn.tcgplayer.com/product/668970_200w.jpg,87,24485,https://cpt.tcgcsv.com/qCm7,2025-12-19T05:10:14.25,1,0.1,0.35,1.23,0.23,,Foil,Rare,hSD07-008,Yellow,buzz holomem,,,,1st,250,"[YN] Elfriend Party (50)<br>
+ You may attach 1 <Elfriend> from your archive to this holomem.",,2,#JP;#Gen 3;#Half-Elf,"[Extra] If this holomem is downed, you get life-2",,,
+668971,Shiranui Flare (RR),Shiranui Flare RR,https://tcgplayer-cdn.tcgplayer.com/product/668971_200w.jpg,87,24485,https://cpt.tcgcsv.com/rCm7,2025-12-19T05:10:14.25,1,0.25,0.98,1.23,0.26,,Foil,Double Rare,hSD07-009,Yellow,holomem,,,,2nd,180,"[YNN] Passionate Stage (70+) [R+50]<br>
+ If your life is 3 or less, this Arts gets +70.",,2,#JP;#Gen 3;#Half-Elf,,"""Gift"" Tireless 
+[Center Position Only]This holomem takes -10 damage.",,
+668972,Shirogane Noel (U),Shirogane Noel U,https://tcgplayer-cdn.tcgplayer.com/product/668972_200w.jpg,87,24485,https://cpt.tcgcsv.com/sCm7,2025-12-19T05:10:14.25,1,0.1,0.25,1.23,0.22,,Normal,Uncommon,hSD07-010,White,holomem,,,,Debut,70,[N] I want to Build Lots of Things (20),,1,#JP;#Gen 3;#Alcohol,,"""Collab Effect"" Proof of Greatness 
+During this turn, your center holomem gets Arts+10.",,
+668973,Sakura Miko (U),Sakura Miko U,https://tcgplayer-cdn.tcgplayer.com/product/668973_200w.jpg,87,24485,https://cpt.tcgcsv.com/tCm7,2025-12-19T05:10:14.25,1,0.12,0.25,1.23,0.2,,Normal,Uncommon,hSD07-011,Red,holomem,,,,Debut,60,[N] The Demon Lord's Army is Gone (20),,1,#JP;#Gen 0;#Baby,,"""Collab Effect"" Burnin' Burnin'
+Deal 10 special damage to your opponent's center holomem.",,
+668974,Omaru Polka (U),Omaru Polka U,https://tcgplayer-cdn.tcgplayer.com/product/668974_200w.jpg,87,24485,https://cpt.tcgcsv.com/vCm7,2025-12-19T05:10:14.25,1,0.08,0.25,1.23,0.19,,Normal,Uncommon,hSD07-012,Red,holomem,,,,Debut,50,[N] Prepare to Bury my Bones (20),,,#JP;#Gen 5;#Kemomimi,,"""Collab Effect"" Give Us Water 
+If your center holomem is ""Shiranui Flare"", and your hand has less cards than your opponent's, draw 1 card.",,
+668975,Hoshimachi Suisei (U),Hoshimachi Suisei U,https://tcgplayer-cdn.tcgplayer.com/product/668975_200w.jpg,87,24485,https://cpt.tcgcsv.com/wCm7,2025-12-19T05:10:14.25,1,0.04,0.25,1.23,0.09,,Normal,Uncommon,hSD07-013,Blue,holomem,,,,Debut,70,[N] Please hire me!! (20),,1,#JP;#Gen 0;#Singing,,"""Collab Effect"" We're almost out of rice…… 
+If your center holomem is ""Shiranui Flare"", you may send 1 cheer from your archive to your holomem other than this holomem.",,
+668976,Shiranui Construction (U),Shiranui Construction U,https://tcgplayer-cdn.tcgplayer.com/product/668976_200w.jpg,87,24485,https://cpt.tcgcsv.com/xCm7,2025-12-19T05:10:14.25,1,0.01,0.25,1.23,0.24,,Normal,Uncommon,hSD07-014,,Support,,,,,,,,,,,,"LIMITED:Usable only 1 per turn.<br><br>
+<br><br>
+This card can only be used if you have 6 or less cards in hand excluding this card.<br><br>
+<br><br>
+Look at the top 4 cards of your deck. Reveal any number of ""Shiranui Flare"", ""Omaru Polka"", ""Sakura Miko"", ""Hoshimachi Suisei"" and ""Shirogane Noel"" from among them, and add the revealed holomem to hand. Then, return the remaining cards to the bottom of the deck in any order.",Event
+668977,Elfriend (C),Elfriend C,https://tcgplayer-cdn.tcgplayer.com/product/668977_200w.jpg,87,24485,https://cpt.tcgcsv.com/zCm7,2025-12-19T05:10:14.25,1,0.14,0.25,1.23,0.16,,Normal,Common,hSD07-015,,Support,,,,,,,,,,,,"The holomem this fan is attached to gets +10 HP.<br><br>
+<br><br>
+You may only attach this fan to your ""Shiranui Flare"", and you may attach any number of this fan per holomem.",Fan

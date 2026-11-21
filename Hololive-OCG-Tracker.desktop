@@ -1,0 +1,21 @@
+[Desktop Entry]
+Version=1.0
+Type=Application
+Name=Hololive OCG Tracker
+GenericName=Hololive Card Collection Tracker
+Comment=Iniciar Hololive Official Card Game Collection Tracker (Rust + SQLite)
+Exec=/home/sebastian/Documentos/repos/myFriendlyPC/hocg start
+Path=/home/sebastian/Documentos/repos/myFriendlyPC
+Icon=/home/sebastian/Documentos/repos/myFriendlyPC/static/icon.svg
+Terminal=false
+Categories=Game;
+StartupNotify=false
+Actions=stop;toggle;
+
+[Desktop Action stop]
+Name=Apagar Servidor (Hololive OCG)
+Exec=/home/sebastian/Documentos/repos/myFriendlyPC/hocg stop
+
+[Desktop Action toggle]
+Name=Alternar Encendido / Apagado
+Exec=/home/sebastian/Documentos/repos/myFriendlyPC/hocg toggle

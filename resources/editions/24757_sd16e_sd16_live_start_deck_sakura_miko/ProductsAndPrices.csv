@@ -1,0 +1,27 @@
+productId,name,cleanName,imageUrl,categoryId,groupId,url,modifiedOn,imageCount,lowPrice,midPrice,highPrice,marketPrice,directLowPrice,subTypeName,extRarity,extNumber,extColor,extCardType,extOshiSkill,extSPOshiSkill,extLife,extBloomLevel,extHP,extArts1,extBatonPass,extTags,extKeyword,extArts2,extDescription,extSubtype
+704945,Live Start Deck: Sakura Miko,Live Start Deck Sakura Miko,https://tcgplayer-cdn.tcgplayer.com/product/704945_200w.jpg,87,24757,https://cpt.tcgcsv.com/W-F7,2026-10-23T04:10:14.753,1,7.86,9.99,20.5,10.14,,Normal,,,,,,,,,,,,,,,,
+704946,Live Start Deck: Sakura Miko Case,Live Start Deck Sakura Miko Case,https://tcgplayer-cdn.tcgplayer.com/product/704946_200w.jpg,87,24757,https://cpt.tcgcsv.com/X-F7,2026-10-23T04:10:14.753,1,74.93,74.97,75.0,,,Normal,,,,,,,,,,,,,,,,
+724279,Sakura Miko (OC),Sakura Miko OC,https://tcgplayer-cdn.tcgplayer.com/product/724279_200w.jpg,87,24757,https://cpt.tcgcsv.com/CKP7,2026-11-12T17:14:11.22,1,5.0,5.0,5.0,,,Normal,Oshi Common,hSD16-001,Red,Oshi holomem,"[holo Power: -2] Over Here, 35P
+<br>
+[1/Turn] If you have a holomem with a <35P> attached, draw 1 card.","[holo Power: -2] Let's Go, 35P!
+<br>
+[1/Game] Choose 1 of your <Sakura Miko> with a fan attached. During this turn, the chosen holomem gets Arts+50.",4,,,,,,,,,
+724280,Sakura Miko (C) (hSD16-002),Sakura Miko C hSD16 002,https://tcgplayer-cdn.tcgplayer.com/product/724280_200w.jpg,87,24757,https://cpt.tcgcsv.com/DKP7,2026-10-23T04:10:14.753,1,0.25,0.47,0.95,,,Normal,Common,hSD16-002,Red,holomem,,,,Debut,80,[N] I'm Sakura Miko (20),1,#JP;#Gen 0;#Baby,,,,
+724281,Sakura Miko (C) (hSD16-003),Sakura Miko C hSD16 003,https://tcgplayer-cdn.tcgplayer.com/product/724281_200w.jpg,87,24757,https://cpt.tcgcsv.com/FKP7,2026-10-23T04:10:14.753,1,0.25,0.8,0.95,0.95,,Normal,Common,hSD16-003,Red,holomem,,,,Debut,70,[R] The Elite Shrine Maiden-Idol! Sakura Miko (30),1,#JP;#Gen 0;#Baby,,,,
+724282,Sakura Miko (C) (hSD16-004),Sakura Miko C hSD16 004,https://tcgplayer-cdn.tcgplayer.com/product/724282_200w.jpg,87,24757,https://cpt.tcgcsv.com/GKP7,2026-10-23T04:10:14.753,1,0.25,0.8,0.95,,,Normal,Common,hSD16-004,Red,holomem,,,,Debut,80,[N] Shaddap! (20),1,#JP;#Gen 0;#Baby,"""Collab Effect"" Going Second…
+If you went second and it is your first turn, reveal 1 <35P> from your deck, and attach it to this holomem. Shuffle the deck.",,,
+724283,Sakura Miko (U) (hSD16-005),Sakura Miko U hSD16 005,https://tcgplayer-cdn.tcgplayer.com/product/724283_200w.jpg,87,24757,https://cpt.tcgcsv.com/HKP7,2026-10-23T04:10:14.753,1,0.47,0.8,0.95,,,Normal,Uncommon,hSD16-005,Red,holomem,,,,Debut,100,"[N] Sakurakaze Running (20)<br>
+ Roll a die once. If it is 3 or 5, draw 1 card.",1,#JP;#Gen 0;#Baby,,,,
+724284,Sakura Miko (C) (hSD16-006),Sakura Miko C hSD16 006,https://tcgplayer-cdn.tcgplayer.com/product/724284_200w.jpg,87,24757,https://cpt.tcgcsv.com/JKP7,2026-10-23T04:10:14.753,1,0.25,0.8,0.95,0.95,,Normal,Common,hSD16-006,Red,holomem,,,,1st,140,"[N] Check This Out, Everyone-Nye (20)",1,#JP;#Gen 0;#Baby,,[RN] Let's Gooo (50),,
+724285,Sakura Miko (U) (hSD16-007),Sakura Miko U hSD16 007,https://tcgplayer-cdn.tcgplayer.com/product/724285_200w.jpg,87,24757,https://cpt.tcgcsv.com/KKP7,2026-10-23T04:10:14.753,1,0.47,0.8,0.95,,,Normal,Uncommon,hSD16-007,Red,holomem,,,,1st,130,"[N] Prepare to Be Blown Away by Miko's Ear-Cleaning Skills (30+)<br>
+ [Nenter Position Only] Roll a die once. If it is 3 or 5, this Arts gets +10.",1,#JP;#Gen 0;#Baby,"""Gift"" Plop Your Head on Miko's Lap
+During your opponent's turn, if this holomem is downed, draw 1 card.",,,
+724286,Sakura Miko (R),Sakura Miko R,https://tcgplayer-cdn.tcgplayer.com/product/724286_200w.jpg,87,24757,https://cpt.tcgcsv.com/LKP7,2026-10-23T04:10:14.753,1,0.75,1.4,1.95,,,Foil,Rare,hSD16-008,Red,holomem,,,,1st,140,[N] Let's Have Lots of Fun (30),1,#JP;#Gen 0;#Baby,"""Collab Effect"" Kept You Waiting-Nye
+Roll a die once. If it is 3 or 5, return 1 <35P> from your archive to your hand.",,,
+724287,Sakura Miko (RR),Sakura Miko RR,https://tcgplayer-cdn.tcgplayer.com/product/724287_200w.jpg,87,24757,https://cpt.tcgcsv.com/MKP7,2026-10-23T04:10:14.753,1,1.47,2.4,2.95,2.71,,Foil,Double Rare,hSD16-009,Red,holomem,,,,2nd,170,[RNN] Hoping to Show You This Exact Moment (100),2,#JP;#Gen 0;#Baby,"""Bloom Effect"" Thank You, 35P!
+During this turn, this holomem gets Arts+10 for each <35P> on your stage.",,,
+724288,Normal PC (C),Normal PC C,https://tcgplayer-cdn.tcgplayer.com/product/724288_200w.jpg,87,24757,https://cpt.tcgcsv.com/NKP7,2026-10-23T04:10:14.753,1,1.25,1.9,5.0,1.95,,Normal,Common,hBP01-104,,Support,,,,,,,,,,,"Reveal 1 Debut holomem from your deck, and place it on your stage. Shuffle the deck.",Item
+724289,35P (U),35P U,https://tcgplayer-cdn.tcgplayer.com/product/724289_200w.jpg,87,24757,https://cpt.tcgcsv.com/PKP7,2026-10-23T04:10:14.753,1,0.47,1.45,1.95,,,Normal,Uncommon,hBP03-107,,Support,,,,,,,,,,,"• If the holomem this fan is attached to would use Arts, this fan is also regarded as a red cheer.<br>
+• If the holomem this fan is attached to is downed, your opponent may draw 1 card.<br>
+<br>
+You may only attach this fan to your ""Sakura Miko"", and you may attach any number of this fan per holomem.",Fan

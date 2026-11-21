@@ -1,0 +1,25 @@
+# Rust build artifacts
+/target/
+
+# Local SQLite database & WAL/SHM files (generated at runtime from resources/)
+/resources/*.db
+/resources/*.db-wal
+/resources/*.db-shm
+/resources/*.db-journal
+
+# Runtime logs & PID file
+.hocg.log
+.hocg.pid
+
+# Firebase local deploy cache
+/.firebase/
+
+# Python bytecode
+__pycache__/
+*.py[cod]
+
+# Environment & OS files
+.env
+.env.*
+.DS_Store
+Thumbs.db

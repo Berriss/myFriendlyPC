@@ -1,0 +1,68 @@
+productId,name,cleanName,imageUrl,categoryId,groupId,url,modifiedOn,imageCount,lowPrice,midPrice,highPrice,marketPrice,directLowPrice,subTypeName,extRarity,extNumber,extColor,extCardType,extOshiSkill,extSPOshiSkill,extLife,extBloomLevel,extHP,extKeyword,extArts1,extBatonPass,extTags,extArts2,extSpecialRules,extDescription,extSubtype
+693821,Start Deck: Oshi Advent,Start Deck Oshi Advent,https://tcgplayer-cdn.tcgplayer.com/product/693821_200w.jpg,87,24643,https://cpt.tcgcsv.com/rxz7,2026-07-24T04:10:34.66,1,14.4,21.54,49.42,18.12,,Normal,,,,,,,,,,,,,,,,,
+693823,Start Deck: Oshi Advent Display,Start Deck Oshi Advent Display,https://tcgplayer-cdn.tcgplayer.com/product/693823_200w.jpg,87,24643,https://cpt.tcgcsv.com/txz7,2026-07-24T04:10:34.66,1,142.87,142.99,264.98,,,Normal,,,,,,,,,,,,,,,,,
+693825,Start Deck: Oshi Advent Display Case,Start Deck Oshi Advent Display Case,https://tcgplayer-cdn.tcgplayer.com/product/693825_200w.jpg,87,24643,https://cpt.tcgcsv.com/wxz7,2026-07-24T04:10:34.66,1,,,,,,,,,,,,,,,,,,,,,,,
+707365,Shiori Novella (OSR),Shiori Novella OSR,https://tcgplayer-cdn.tcgplayer.com/product/707365_200w.jpg,87,24643,https://cpt.tcgcsv.com/kZG7,2026-07-24T04:10:34.66,1,1.25,2.86,9.95,2.71,,Foil,Oshi Super Rare,hSD12-001,Blue,Oshi holomem,"[holo Power: -1] The Archiver 
+[1/Turn]Look at the top 3 cards of your deck. Reveal 1 support card from among them, and add it to hand. Then, return the remaining cards to the bottom of the deck in any order.","[holo Power: -3] Rebellion 
+[1/Game]Deal 10 special damage to 1 of your opponent's back holomem other than Debut for each support card in your archive.",5,,,,,,,,,,
+707366,Koseki Bijou (OSR),Koseki Bijou OSR,https://tcgplayer-cdn.tcgplayer.com/product/707366_200w.jpg,87,24643,https://cpt.tcgcsv.com/lZG7,2026-07-24T04:10:34.66,1,1.01,2.98,7.95,2.88,,Foil,Oshi Super Rare,hSD12-002,Purple,Oshi holomem,"[holo Power: -2] Biboo Tax 
+[1/Turn]Archive the top card of both players' cheer decks. Draw 1 card for each color among cheers archived this way.","[holo Power: -2] Ancient, Mystic Brilliance 
+[1/Game]Deal 10 special damage to your opponent's center holomem for each [holomem with [#Advent] and cheer] in your archive.",5,,,,,,,,,,
+707367,Shiori Novella (C) (hSD12-003),Shiori Novella C hSD12 003,https://tcgplayer-cdn.tcgplayer.com/product/707367_200w.jpg,87,24643,https://cpt.tcgcsv.com/mZG7,2026-07-24T04:10:34.66,1,1.0,1.0,1.95,1.08,,Normal,Common,hSD12-003,Blue,holomem,,,,Debut,130,"(Collab Effect) Have You Heard the Story of Palais Montrose?
+Deal 10 special damage to 1 of your opponent's back holomem.","[N] Adieu, Dear Listener (20)",1,#EN;#Advent,,,,
+707368,Shiori Novella (C) (hSD12-004),Shiori Novella C hSD12 004,https://tcgplayer-cdn.tcgplayer.com/product/707368_200w.jpg,87,24643,https://cpt.tcgcsv.com/nZG7,2026-07-24T04:10:34.66,1,0.69,1.0,1.45,1.09,,Normal,Common,hSD12-004,Blue,holomem,,,,1st,170,,"[N] Unsettling Warning (20)
+ This Arts can target your opponent's back holomem too.",1,#EN;#Advent,"[B] Just a Humble, Kind Witch (30)
+ If you have 4 or more support cards in your archive, send the top card of your cheer deck to your holomem with [#Advent].",,,
+707369,Shiori Novella (U),Shiori Novella U,https://tcgplayer-cdn.tcgplayer.com/product/707369_200w.jpg,87,24643,https://cpt.tcgcsv.com/pZG7,2026-07-24T04:10:34.66,1,1.0,1.0,1.49,1.14,,Normal,Uncommon,hSD12-005,Blue,holomem,,,,1st,160,"(Collab Effect) Journey to the Other World & Happiness
+Send 1 cheer from your archive to your holomem with [#Advent].","[N] Look Out the Window, the Stars Are Beautiful (40)",1,#EN;#Advent,,,,
+707370,Shiori Novella (R),Shiori Novella R,https://tcgplayer-cdn.tcgplayer.com/product/707370_200w.jpg,87,24643,https://cpt.tcgcsv.com/qZG7,2026-07-24T04:10:34.66,1,0.99,1.7,2.5,1.86,,Foil,Rare,hSD12-006,Blue,buzz holomem,,,,1st,250,"(Bloom Effect) A Study in Advent
+You may archive 1 support card from your hand: Reveal 1 [Debut holomem or 1st holomem] with [#Advent] from your deck, and add it to hand. Then, shuffle the deck.","[BN] Elementary (40)
+ Deal 20 special damage to 1 of your opponent's holomem.",2,#EN;#Advent,,"[Extra] If this holomem is downed, you get life-2",,
+707371,Shiori Novella (RR),Shiori Novella RR,https://tcgplayer-cdn.tcgplayer.com/product/707371_200w.jpg,87,24643,https://cpt.tcgcsv.com/rZG7,2026-07-24T04:10:34.66,1,0.96,1.17,3.0,1.56,,Foil,Double Rare,hSD12-007,Blue,holomem,,,,2nd,200,"(Gift) What Knowledge Can Be Obtained
+[1/Turn]If this holomem downed your opponent's holomem, return 1 support card other than LIMITED from your archive to hand.","[BNN] Could You Refrain from Underestimating Us? (110)
+ Deal 10 special damage to 1 of your opponent's holomem other than Debut for each holomem with [#Advent] on your stage.",2,#EN;#Advent,,,,
+707372,Koseki Bijou (C) (hSD12-008),Koseki Bijou C hSD12 008,https://tcgplayer-cdn.tcgplayer.com/product/707372_200w.jpg,87,24643,https://cpt.tcgcsv.com/sZG7,2026-07-24T04:10:34.66,1,0.99,1.53,1.95,1.0,,Normal,Common,hSD12-008,Purple,holomem,,,,Debut,110,"(Collab Effect) Flower Girl
+If you went second and it is your first turn, draw 1 card for each cheer on both players' stage.",[N] I've... Been Dreaming a Lot Lately. (30),1,#EN;#Advent;#Baby,,,,
+707373,Koseki Bijou (C) (hSD12-009),Koseki Bijou C hSD12 009,https://tcgplayer-cdn.tcgplayer.com/product/707373_200w.jpg,87,24643,https://cpt.tcgcsv.com/tZG7,2026-07-24T04:10:34.66,1,0.49,0.92,1.45,0.86,,Normal,Common,hSD12-009,Purple,holomem,,,,1st,130,"(Bloom Effect) Happy Happy Family
+Look at the top 3 cards of your deck. Reveal 1 holomem with [#Advent] from among them, and add it to hand. Then, return the remaining cards to the bottom of the deck in any order.",[N] That Is What I Am Grateful For (30),1,#EN;#Advent;#Baby,,,,
+707374,Koseki Bijou (U),Koseki Bijou U,https://tcgplayer-cdn.tcgplayer.com/product/707374_200w.jpg,87,24643,https://cpt.tcgcsv.com/vZG7,2026-07-24T04:10:34.66,1,0.27,0.8,1.23,0.7,,Normal,Uncommon,hSD12-010,Purple,holomem,,,,1st,170,,[N] The Fading Radiance (30),1,#EN;#Advent;#Baby,"[PN] Your Princess AWAKENS! (50)
+ You may archive 1 cheer other than [Purple] from this holomem: Return 1 holomem from your archive to hand.",,,
+707375,Koseki Bijou (RR),Koseki Bijou RR,https://tcgplayer-cdn.tcgplayer.com/product/707375_200w.jpg,87,24643,https://cpt.tcgcsv.com/wZG7,2026-07-24T04:10:34.66,1,0.96,1.12,3.22,1.95,,Foil,Double Rare,hSD12-011,Purple,holomem,,,,2nd,200,"(Bloom Effect) Join Biboo in the Game?
+Draw 1 card. Then, you may archive 1 cheer from your stage. If archived, choose 1 holomem from your stage. During this turn, the chosen holomem gets Arts+40.","[PNNN] Behold the Sparkle! (110)
+ This Arts requires -1 [Nolorless] for each different color among cheers in both players' archives.",2,#EN;#Advent;#Baby,,,,
+707376,Nerissa Ravencroft (C),Nerissa Ravencroft C,https://tcgplayer-cdn.tcgplayer.com/product/707376_200w.jpg,87,24643,https://cpt.tcgcsv.com/xZG7,2026-07-24T04:10:34.66,1,0.57,0.69,0.8,0.75,,Normal,Common,hSD12-012,Purple,holomem,,,,Debut,140,,"[PNNN] The Transient Blues (80)
+ If your life is 3 or less, this Arts requires -2 [Colorless].",1,#EN;#Advent;#Singing;#Bird,,,,
+707377,Mococo Abyssgard (C),Mococo Abyssgard C,https://tcgplayer-cdn.tcgplayer.com/product/707377_200w.jpg,87,24643,https://cpt.tcgcsv.com/zZG7,2026-07-24T04:10:34.66,1,1.24,1.24,1.24,1.14,,Normal,Common,hSD12-013,Red,holomem,,,,Debut,130,"(Collab Effect) Happy Puppy -MOCOCO-
+If all holomem on your stage are holomem with [#Advent], you may return 1 of your back Debut holomem to the bottom of the deck: Draw 2 cards.",[N] I Totally Totally Mean It!! (30),1,#EN;#Advent;#Kemomimi,,,,
+707378,Fuwawa Abyssgard (C),Fuwawa Abyssgard C,https://tcgplayer-cdn.tcgplayer.com/product/707378_200w.jpg,87,24643,https://cpt.tcgcsv.com/BZG7,2026-07-24T04:10:34.66,1,1.06,1.09,1.25,1.06,,Normal,Common,hSD12-014,Blue,holomem,,,,Debut,100,"(Collab Effect) Happy Puppy -FUWAWA-
+If all holomem on your stage are holomem with [#Advent], you may return 1 of your back Debut holomem to the bottom of the deck: Send the top card of your cheer deck to your holomem.",[N] I Totally Totally Mean It! (30),,#EN;#Advent;#Kemomimi,,,,
+707379,A Group of Criminals That Escaped from The Cell (U),A Group of Criminals That Escaped from The Cell U,https://tcgplayer-cdn.tcgplayer.com/product/707379_200w.jpg,87,24643,https://cpt.tcgcsv.com/CZG7,2026-07-24T04:10:34.66,1,4.86,5.0,5.0,4.93,,Normal,Uncommon,hSD12-015,,Support,,,,,,,,,,,,"This card can only be used if all holomem on your stage are holomem with [#Advent].<br>
+<br>
+Deal 20 special damage to your opponent's center holomem. Then, send 1 cheer from your archive to your holomem.<br>
+You may only use (A Group of Criminals That Escaped from The Cell) once per turn.",Item
+707380,GEOW (C),GEOW C,https://tcgplayer-cdn.tcgplayer.com/product/707380_200w.jpg,87,24643,https://cpt.tcgcsv.com/DZG7,2026-07-24T04:10:34.66,1,0.63,1.13,1.94,1.24,,Normal,Common,hSD12-016,,Support,,,,,,,,,,,,"The holomem this mascot is attached to gets +20 HP.<br>
+<br>
+When this mascot is attached from hand to 1st or greater (Koseki Bijou), you may archive 1 cheer from your stage: Reveal 1 cheer from your cheer deck, and send it to your holomem. Then, shuffle the cheer deck.<br>
+<br>
+Only 1 mascot can be attached to each of your holomem.",Mascot
+707381,Shiori Novella (C) (hBP04-050),Shiori Novella C hBP04 050,https://tcgplayer-cdn.tcgplayer.com/product/707381_200w.jpg,87,24643,https://cpt.tcgcsv.com/FZG7,2026-07-24T04:10:34.66,1,0.36,0.5,1.45,0.67,,Normal,Common,hBP04-050,Blue,holomem,,,,Debut,110,,[N] Shiori~n! (30),1,#EN;#Advent,,[Extra] You may include any number of this holomem in the deck,,
+707382,Koseki Bijou (C) (hBP04-063),Koseki Bijou C hBP04 063,https://tcgplayer-cdn.tcgplayer.com/product/707382_200w.jpg,87,24643,https://cpt.tcgcsv.com/GZG7,2026-07-24T04:10:34.66,1,0.4,0.9,1.93,0.77,,Normal,Common,hBP04-063,Purple,holomem,,,,Debut,110,"(Gift) Kira Kira Koseki!
+During your opponent's turn, if this holomem is downed, draw 1 card.",[N] Bon-Bijou! (20),1,#EN;#Advent;#Baby,,[Extra] You may include any number of this holomem in the deck,,
+707383,Harusaki Nodoka (C),Harusaki Nodoka C,https://tcgplayer-cdn.tcgplayer.com/product/707383_200w.jpg,87,24643,https://cpt.tcgcsv.com/HZG7,2026-07-24T04:10:34.66,1,1.23,1.75,2.95,1.75,,Normal,Common,hSD01-016,,Support,,,,,,,,,,,,"LIMITED: Usable only 1 per turn.<br>
+<br>
+Draw 3 cards.",Staff
+707384,"So, That Makes You My Enemy (U)",So That Makes You My Enemy U,https://tcgplayer-cdn.tcgplayer.com/product/707384_200w.jpg,87,24643,https://cpt.tcgcsv.com/JZG7,2026-07-24T04:10:34.66,1,2.85,2.85,3.0,2.66,,Normal,Uncommon,hBP01-108,,Support,,,,,,,,,,,,"LIMITED: Usable only 1 per turn.<br>
+<br>
+Swap your opponent's center holomem with 1 back holomem.",Event
+707385,Advent (U),Advent U,https://tcgplayer-cdn.tcgplayer.com/product/707385_200w.jpg,87,24643,https://cpt.tcgcsv.com/KZG7,2026-07-24T04:10:34.66,1,0.25,0.59,0.75,0.59,,Normal,Uncommon,hBP04-096,,Support,,,,,,,,,,,,"LIMITED: Usable only 1 per turn.<br>
+<br>
+This card can only be used if you have 6 or less cards in hand excluding this card.<br>
+<br>
+Look at the top 4 cards of your deck. Reveal any number of holomem with [#Advent] from among them, and add the revealed holomem to hand. Then, return the remaining cards to the bottom of the deck in any order.",Event
+707386,Normal PC (C),Normal PC C,https://tcgplayer-cdn.tcgplayer.com/product/707386_200w.jpg,87,24643,https://cpt.tcgcsv.com/LZG7,2026-07-24T04:10:34.66,1,1.94,2.0,3.95,2.78,,Normal,Common,hBP01-104,,Support,,,,,,,,,,,,"Reveal 1 Debut holomem from your deck, and place it on stage. Then, shuffle the deck.",Item
+707387,Retro PC (C),Retro PC C,https://tcgplayer-cdn.tcgplayer.com/product/707387_200w.jpg,87,24643,https://cpt.tcgcsv.com/MZG7,2026-07-24T04:10:34.66,1,1.75,1.95,3.0,2.04,,Normal,Common,hBP02-077,,Support,,,,,,,,,,,,"LIMITED: Usable only 1 per turn.<br>
+<br>
+This card can only be used if your life is 3 or less.<br>
+<br>
+Return 1 holomem from your archive to hand.",Item
+707388,Friendly PC (C) (Alternate Art),Friendly PC C Alternate Art,https://tcgplayer-cdn.tcgplayer.com/product/707388_200w.jpg,87,24643,https://cpt.tcgcsv.com/NZG7,2026-08-19T12:52:52.563,1,2.79,2.92,2.99,2.97,,Normal,Common,hBP05-074,,Support,,,,,,,,,,,,"Reveal 1~2 Debut holomem with [Extra]""You may include any number of this holomem in the deck"" from your deck, and place them on stage. Then, shuffle the deck. If 2 Debut holomem were placed this way, return 1 card from your hand to the bottom of the deck.",Item

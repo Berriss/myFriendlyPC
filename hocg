@@ -1,0 +1,260 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+ROOT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+cd "$ROOT_DIR"
+
+HOST="${HOST:-127.0.0.1}"
+PORT="${PORT:-8080}"
+URL="http://${HOST}:${PORT}"
+PID_FILE="${ROOT_DIR}/.hocg.pid"
+LOG_FILE="${ROOT_DIR}/.hocg.log"
+RELEASE_BIN="${ROOT_DIR}/target/release/hololive-ocg-tracker"
+DEBUG_BIN="${ROOT_DIR}/target/debug/hololive-ocg-tracker"
+
+pick_bin() {
+  if [[ -x "$RELEASE_BIN" ]]; then
+    echo "$RELEASE_BIN"
+  elif [[ -x "$DEBUG_BIN" ]]; then
+    echo "$DEBUG_BIN"
+  else
+    echo ""
+  fi
+}
+
+is_pid_running() {
+  if [[ -f "$PID_FILE" ]]; then
+    local pid
+    pid="$(cat "$PID_FILE" 2>/dev/null || true)"
+    if [[ -n "$pid" ]] && kill -0 "$pid" 2>/dev/null; then
+      return 0
+    fi
+  fi
+  return 1
+}
+
+is_http_up() {
+  curl -fsS --max-time 1 "${URL}/api/health" >/dev/null 2>&1
+}
+
+open_browser() {
+  if [[ -n "${DISPLAY:-}" || -n "${WAYLAND_DISPLAY:-}" ]] && command -v xdg-open >/dev/null 2>&1; then
+    xdg-open "$URL" >/dev/null 2>&1 &
+  fi
+}
+
+cmd_start() {
+  local open_ui=true
+  if [[ "${1:-}" == "--no-browser" ]]; then
+    open_ui=false
+  fi
+
+  if is_pid_running || is_http_up; then
+    local pid_info=""
+    if is_pid_running; then
+      pid_info=" (PID $(cat "$PID_FILE"))"
+    fi
+    echo "✓ Hololive OCG Tracker ya está ENCENDIDO${pid_info} en ${URL}"
+    if [[ "$open_ui" == true ]]; then
+      open_browser
+    fi
+    return 0
+  fi
+
+  local bin
+  bin="$(pick_bin)"
+  if [[ -z "$bin" ]]; then
+    echo "Compilando el servidor Rust (solo la primera vez)..."
+    cargo build --offline
+    bin="$(pick_bin)"
+  fi
+
+  nohup "$bin" >> "$LOG_FILE" 2>&1 < /dev/null &
+  local pid=$!
+  echo "$pid" > "$PID_FILE"
+
+  local ready=false
+  for _ in $(seq 1 40); do
+    if is_http_up; then
+      ready=true
+      break
+    fi
+    if ! kill -0 "$pid" 2>/dev/null; then
+      break
+    fi
+    sleep 0.1
+  done
+
+  if [[ "$ready" == true ]]; then
+    echo "✓ Hololive OCG Tracker ENCENDIDO (PID ${pid}) en ${URL}"
+    echo "  Para apagarlo: ./hocg stop  (o usa el botón ⏻ en la web)"
+    if [[ "$open_ui" == true ]]; then
+      open_browser
+    fi
+  else
+    rm -f "$PID_FILE"
+    echo "✗ No se pudo iniciar el servidor. Revisa ${LOG_FILE}:"
+    tail -n 20 "$LOG_FILE" 2>/dev/null || true
+    return 1
+  fi
+}
+
+cmd_stop() {
+  local was_running=false
+  local pid=""
+  if is_pid_running; then
+    was_running=true
+    pid="$(cat "$PID_FILE")"
+  elif is_http_up; then
+    was_running=true
+  fi
+
+  if [[ "$was_running" == false ]]; then
+    rm -f "$PID_FILE"
+    echo "• Hololive OCG Tracker ya estaba APAGADO."
+    return 0
+  fi
+
+  if is_http_up; then
+    curl -fsS -X POST "${URL}/api/shutdown" >/dev/null 2>&1 || true
+    for _ in $(seq 1 30); do
+      if ! is_http_up && { [[ -z "$pid" ]] || ! kill -0 "$pid" 2>/dev/null; }; then
+        break
+      fi
+      sleep 0.1
+    done
+  fi
+
+  if [[ -n "$pid" ]] && kill -0 "$pid" 2>/dev/null; then
+    kill "$pid" 2>/dev/null || true
+    for _ in $(seq 1 20); do
+      if ! kill -0 "$pid" 2>/dev/null; then
+        break
+      fi
+      sleep 0.1
+    done
+  fi
+
+  rm -f "$PID_FILE"
+  echo "✓ Hololive OCG Tracker APAGADO correctamente."
+}
+
+cmd_status() {
+  if is_http_up; then
+    local pid_msg=""
+    if is_pid_running; then
+      pid_msg=" (PID $(cat "$PID_FILE"))"
+    fi
+    echo "● ENCENDIDO${pid_msg} — ${URL}"
+  elif is_pid_running; then
+    echo "◐ INICIANDO (PID $(cat "$PID_FILE")) — ${URL}"
+  else
+    rm -f "$PID_FILE"
+    echo "○ APAGADO"
+  fi
+}
+
+cmd_toggle() {
+  if is_http_up || is_pid_running; then
+    cmd_stop
+  else
+    cmd_start "${1:-}"
+  fi
+}
+
+cmd_update() {
+  echo "Actualizando catálogo TCGCSV y tasa USD → CLP..."
+  python3 "${ROOT_DIR}/scripts/fetch_and_sanitize_tcgcsv.py"
+  python3 "${ROOT_DIR}/scripts/fetch_clp_rate.py"
+  python3 "${ROOT_DIR}/scripts/export_static_catalog.py"
+  if is_http_up; then
+    curl -fsS -X POST "${URL}/api/resync" >/dev/null
+    curl -fsS -X POST "${URL}/api/exchange-rate/refresh" >/dev/null
+    echo "✓ Base de datos en vivo actualizada."
+  else
+    echo "✓ Archivos en resources/ y static/data/ actualizados."
+  fi
+}
+
+cmd_deploy() {
+  echo "Sincronizando catálogo estático y desplegando en Firebase..."
+  python3 "${ROOT_DIR}/scripts/export_static_catalog.py"
+  npx -y firebase-tools@latest deploy --only firestore,hosting --project hololive-ocg-tracker-sb
+}
+
+cmd_logs() {
+  if [[ -f "$LOG_FILE" ]]; then
+    tail -n 30 "$LOG_FILE"
+  else
+    echo "Aún no hay logs en ${LOG_FILE}."
+  fi
+}
+
+cmd_run() {
+  local bin
+  bin="$(pick_bin)"
+  if [[ -z "$bin" ]]; then
+    echo "Compilando el servidor Rust (solo la primera vez)..."
+    cargo build --offline
+    bin="$(pick_bin)"
+  fi
+  exec "$bin"
+}
+
+cmd_install_desktop() {
+  local src="${ROOT_DIR}/Hololive-OCG-Tracker.desktop"
+  local apps_dir="${HOME}/.local/share/applications"
+  mkdir -p "$apps_dir"
+  chmod +x "$src"
+  cp "$src" "${apps_dir}/Hololive-OCG-Tracker.desktop"
+  chmod +x "${apps_dir}/Hololive-OCG-Tracker.desktop"
+  echo "✓ Acceso directo instalado en ${apps_dir}/Hololive-OCG-Tracker.desktop"
+  local desktop_dir="${HOME}/Desktop"
+  if [[ ! -d "$desktop_dir" && -d "${HOME}/Escritorio" ]]; then
+    desktop_dir="${HOME}/Escritorio"
+  fi
+  if [[ -d "$desktop_dir" ]]; then
+    cp "$src" "${desktop_dir}/Hololive-OCG-Tracker.desktop"
+    chmod +x "${desktop_dir}/Hololive-OCG-Tracker.desktop"
+    echo "✓ Copiado también en ${desktop_dir}/Hololive-OCG-Tracker.desktop"
+  fi
+  if command -v gio >/dev/null 2>&1 && [[ -f "${desktop_dir}/Hololive-OCG-Tracker.desktop" ]]; then
+    gio set "${desktop_dir}/Hololive-OCG-Tracker.desktop" metadata::trusted true 2>/dev/null || true
+  fi
+}
+
+cmd_help() {
+  cat <<'EOF'
+Uso: ./hocg [comando]
+
+Comandos simples:
+  ./hocg                 Enciende la app y la abre en tu navegador
+  ./hocg start           Enciende la app (--no-browser para no abrir navegador)
+  ./hocg stop            Apaga la app guardando la BD SQLite limpiamente
+  ./hocg status          Muestra si está ENCENDIDA o APAGADA
+  ./hocg toggle          Alterna entre encender y apagar
+  ./hocg run             Ejecuta en primer plano (Ctrl+C para apagar)
+  ./hocg update          Actualiza cartas (TCGCSV) y dólar del día (CLP)
+  ./hocg deploy          Publica cambios y catálogo actualizado en Firebase
+  ./hocg install-desktop Instala el acceso directo .desktop en tu menú/escritorio
+  ./hocg logs            Muestra las últimas líneas del log
+EOF
+}
+
+case "${1:-start}" in
+  start)           shift || true; cmd_start "${1:-}" ;;
+  stop)            cmd_stop ;;
+  status)          cmd_status ;;
+  toggle)          shift || true; cmd_toggle "${1:-}" ;;
+  run)             cmd_run ;;
+  update)          cmd_update ;;
+  deploy)          cmd_deploy ;;
+  install-desktop) cmd_install_desktop ;;
+  logs)            cmd_logs ;;
+  help|-h|--help)  cmd_help ;;
+  *)
+    echo "Comando desconocido: $1"
+    cmd_help
+    exit 1
+    ;;
+esac

@@ -1,0 +1,550 @@
+<!DOCTYPE html>
+<html lang="es" data-theme="light">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Hololive OCG Tracker — Colección &amp; Catálogo</title>
+  <link rel="icon" type="image/svg+xml" href="/icon.svg" />
+  <link rel="stylesheet" href="/css/styles.css?v=20261121-1" />
+</head>
+<body>
+  <div class="app-shell">
+    <!-- MD3 Navigation Rail (Desktop >= 900px) -->
+    <aside class="nav-rail" aria-label="Navegación principal">
+      <div class="rail-brand" title="Hololive OCG Tracker">
+        <span class="brand-badge">hOCG</span>
+      </div>
+      <nav class="rail-items">
+        <button class="rail-btn active" data-view="catalog" aria-label="Catálogo">
+          <span class="rail-pill">
+            <svg viewBox="0 0 24 24" class="icon"><path d="M19 2H6c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h13c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zM9 4h2v5l-1-.75L9 9V4zm10 16H6V4h1v9l3-2.25L13 13V4h6v16z"/></svg>
+          </span>
+          <span class="rail-label">Catálogo</span>
+        </button>
+        <button class="rail-btn" data-view="collection" aria-label="Colección">
+          <span class="rail-pill">
+            <svg viewBox="0 0 24 24" class="icon"><path d="M20 6h-8l-2-2H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V8c0-1.1-.9-2-2-2zm0 12H4V8h16v10z"/></svg>
+          </span>
+          <span class="rail-label">Colección</span>
+        </button>
+        <button class="rail-btn" data-view="decks" aria-label="Mazos">
+          <span class="rail-pill">
+            <svg viewBox="0 0 24 24" class="icon"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-2 14H7v-2h10v2zm0-4H7v-2h10v2zm0-4H7V7h10v2z"/></svg>
+          </span>
+          <span class="rail-label">Mazos</span>
+        </button>
+        <button class="rail-btn" data-view="audit" aria-label="Auditoría">
+          <span class="rail-pill">
+            <svg viewBox="0 0 24 24" class="icon"><path d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4zm-2 16l-4-4 1.41-1.41L10 14.17l6.59-6.59L18 9l-8 8z"/></svg>
+          </span>
+          <span class="rail-label">Auditoría</span>
+        </button>
+      </nav>
+      <div class="rail-footer">
+        <button id="currency-toggle-rail" class="rail-btn rail-currency-btn" title="Alternar divisa USD / CLP" aria-label="Alternar divisa USD / CLP" type="button">
+          <span class="rail-pill rail-currency-pill" id="currency-rail-code">USD</span>
+          <span class="rail-label">Divisa</span>
+        </button>
+        <button id="exchange-rate-rail" class="rail-rate-chip" title="Ver o actualizar tasa USD → CLP" aria-label="Ver o actualizar tasa USD → CLP" type="button">
+          <span id="exchange-rate-rail-val">$1.002</span>
+        </button>
+        <button id="theme-toggle-rail" class="icon-btn" title="Cambiar modo nocturno" aria-label="Cambiar modo nocturno" type="button">
+          <svg viewBox="0 0 24 24" class="icon theme-icon-moon"><path d="M12 3a9 9 0 1 0 9 9c0-.46-.04-.92-.1-1.36a5.389 5.389 0 0 1-4.4 2.26 5.403 5.403 0 0 1-3.14-9.8c-.44-.06-.9-.1-1.36-.1z"/></svg>
+          <svg viewBox="0 0 24 24" class="icon theme-icon-sun"><path d="M12 7a5 5 0 1 0 0 10 5 5 0 0 0 0-10zm0-5h-1v3h2V2h-1zm0 17h-1v3h2v-3h-1zM4.22 5.64l1.41-1.41L7.75 6.35 6.34 7.76 4.22 5.64zm12.02 12.02l1.41-1.41 2.12 2.12-1.41 1.41-2.12-2.12zM2 13h3v-2H2v2zm17 0h3v-2h-3v2zM6.34 16.24l1.41 1.41-2.12 2.12-1.41-1.41 2.12-2.12zM18.36 4.22l1.41 1.41-2.12 2.12-1.41-1.41 2.12-2.12z"/></svg>
+        </button>
+        <button id="shutdown-btn-rail" class="icon-btn power-btn" title="Apagar servidor local" aria-label="Apagar servidor local" type="button">
+          <svg viewBox="0 0 24 24" class="icon"><path d="M13 3h-2v10h2V3zm4.83 2.17l-1.42 1.42A6.92 6.92 0 0 1 19 12c0 3.87-3.13 7-7 7s-7-3.13-7-7c0-2.15.97-4.07 2.49-5.35L6.07 5.23A8.932 8.932 0 0 0 3 12a9 9 0 0 0 18 0c0-2.74-1.23-5.18-3.17-6.83z"/></svg>
+        </button>
+      </div>
+    </aside>
+
+    <!-- Main Column -->
+    <div class="main-column">
+      <!-- MD3 Top App Bar -->
+      <header class="top-app-bar">
+        <div class="top-bar-left">
+          <span class="mobile-brand">hOCG</span>
+          <div>
+            <h1 class="app-title">hololive OFFICIAL CARD GAME</h1>
+            <p class="app-subtitle" id="header-subtitle">Tracker local de colección · Rust + SQLite · Datos TCGCSV</p>
+          </div>
+        </div>
+        <div class="top-bar-actions">
+          <button id="firebase-auth-btn" class="tonal-btn auth-chip-btn" type="button" title="Conectar cuenta de Google para sincronizar con Cloud Firestore">
+            <svg viewBox="0 0 24 24" class="icon-sm"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 3c1.66 0 3 1.34 3 3s-1.34 3-3 3-3-1.34-3-3 1.34-3 3-3zm0 14.2c-2.5 0-4.71-1.28-6-3.22.03-1.99 4-3.08 6-3.08 1.99 0 5.97 1.09 6 3.08-1.29 1.94-3.5 3.22-6 3.22z"/></svg>
+            <span id="firebase-auth-label">Iniciar sesión con Google</span>
+          </button>
+          <button id="exchange-rate-chip" class="tonal-btn rate-chip-btn" type="button" title="Ver o actualizar tasa de cambio USD → CLP">
+            <span id="exchange-rate-label">1 USD = $1.008 CLP</span>
+          </button>
+          <div class="segmented-view currency-switch" role="group" aria-label="Divisa principal">
+            <button id="currency-usd" class="seg-btn active" type="button">USD</button>
+            <button id="currency-clp" class="seg-btn" type="button">CLP</button>
+          </div>
+          <button id="export-btn-top" class="tonal-btn hide-sm" title="Exportar colección en JSON">
+            <svg viewBox="0 0 24 24" class="icon-sm"><path d="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z"/></svg>
+            <span>Respaldo</span>
+          </button>
+          <button id="theme-toggle-top" class="icon-btn" title="Alternar modo nocturno" aria-label="Alternar modo nocturno">
+            <svg viewBox="0 0 24 24" class="icon theme-icon-moon"><path d="M12 3a9 9 0 1 0 9 9c0-.46-.04-.92-.1-1.36a5.389 5.389 0 0 1-4.4 2.26 5.403 5.403 0 0 1-3.14-9.8c-.44-.06-.9-.1-1.36-.1z"/></svg>
+            <svg viewBox="0 0 24 24" class="icon theme-icon-sun"><path d="M12 7a5 5 0 1 0 0 10 5 5 0 0 0 0-10zm0-5h-1v3h2V2h-1zm0 17h-1v3h2v-3h-1zM4.22 5.64l1.41-1.41L7.75 6.35 6.34 7.76 4.22 5.64zm12.02 12.02l1.41-1.41 2.12 2.12-1.41 1.41-2.12-2.12zM2 13h3v-2H2v2zm17 0h3v-2h-3v2zM6.34 16.24l1.41 1.41-2.12 2.12-1.41-1.41 2.12-2.12zM18.36 4.22l1.41 1.41-2.12 2.12-1.41-1.41 2.12-2.12z"/></svg>
+          </button>
+          <button id="shutdown-btn-top" class="icon-btn power-btn" title="Apagar servidor local" aria-label="Apagar servidor local" type="button">
+            <svg viewBox="0 0 24 24" class="icon"><path d="M13 3h-2v10h2V3zm4.83 2.17l-1.42 1.42A6.92 6.92 0 0 1 19 12c0 3.87-3.13 7-7 7s-7-3.13-7-7c0-2.15.97-4.07 2.49-5.35L6.07 5.23A8.932 8.932 0 0 0 3 12a9 9 0 0 0 18 0c0-2.74-1.23-5.18-3.17-6.83z"/></svg>
+          </button>
+        </div>
+      </header>
+
+      <!-- Always-visible KPI Summary Strip -->
+      <section class="kpi-grid" aria-label="Indicadores clave de colección">
+        <article class="kpi-card kpi-primary">
+          <div class="kpi-head">
+            <span class="kpi-label" id="kpi-value-title">Valor de Colección (USD)</span>
+            <span class="kpi-badge" id="kpi-value-badge">Market</span>
+          </div>
+          <div class="kpi-value" id="kpi-market-value">$0.00</div>
+          <div class="kpi-sub" id="kpi-value-equiv">≈ $0 CLP</div>
+          <div class="kpi-sub" id="kpi-value-sub">Costo: $0.00 · Neto: $0.00</div>
+        </article>
+
+        <article class="kpi-card">
+          <div class="kpi-head">
+            <span class="kpi-label">Progreso de Catálogo</span>
+            <span class="kpi-badge" id="kpi-completion-pct">0.0%</span>
+          </div>
+          <div class="kpi-value" id="kpi-unique-owned">0 / 0</div>
+          <div class="md3-progress-track">
+            <div class="md3-progress-fill" id="kpi-progress-bar" style="width: 0%"></div>
+          </div>
+        </article>
+
+        <article class="kpi-card">
+          <div class="kpi-head">
+            <span class="kpi-label">Copias en Colección</span>
+            <span class="kpi-badge" id="kpi-fav-wish-badge">0 fav · 0 wish</span>
+          </div>
+          <div class="kpi-value" id="kpi-total-copies">0</div>
+          <div class="kpi-sub" id="kpi-copies-sub">0 Normal · 0 Foil</div>
+        </article>
+
+        <article class="kpi-card">
+          <div class="kpi-head">
+            <span class="kpi-label">Rarezas Altas &amp; Top Carta</span>
+            <span class="kpi-badge" id="kpi-editions-badge">26 sets</span>
+          </div>
+          <div class="kpi-value" id="kpi-high-rarity">0</div>
+          <div class="kpi-sub truncate" id="kpi-top-card">Agrega cartas para ver tu carta top</div>
+        </article>
+      </section>
+
+      <!-- VIEW 1: CATALOG & FILTERS -->
+      <main id="view-catalog" class="view-section active">
+        <!-- Scope Tabs + Search + Filter Toggle -->
+        <section class="toolbar-card">
+          <div class="toolbar-top">
+            <div class="search-field">
+              <svg viewBox="0 0 24 24" class="search-icon"><path d="M15.5 14h-.79l-.28-.27A6.471 6.471 0 0 0 16 9.5 6.5 6.5 0 1 0 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/></svg>
+              <input id="filter-q" type="search" placeholder="Buscar carta, código (hBP01-001), tag (#Promise) o efecto..." autocomplete="off" />
+            </div>
+            <div class="toolbar-right-controls">
+              <button id="toggle-filters-btn" class="outlined-btn mobile-only-flex" type="button">
+                <svg viewBox="0 0 24 24" class="icon-sm"><path d="M10 18h4v-2h-4v2zM3 6v2h18V6H3zm3 7h12v-2H6v2z"/></svg>
+                <span>Filtros</span>
+              </button>
+              <div class="segmented-view" role="group" aria-label="Modo de carga">
+                <button id="scroll-mode-paged" class="seg-btn active" title="Navegar por páginas" type="button">Paginado</button>
+                <button id="scroll-mode-infinite" class="seg-btn" title="Carga continua al bajar" type="button">Infinito</button>
+              </div>
+              <div class="segmented-view" role="group" aria-label="Modo de vista">
+                <button id="view-mode-grid" class="seg-btn active" title="Vista cuadrícula" type="button">Grid</button>
+                <button id="view-mode-table" class="seg-btn" title="Vista tabla compacta" type="button">Lista</button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Ownership Scope Chips -->
+          <div class="chip-row" id="ownership-chips">
+            <button class="filter-chip active" data-ownership="all" type="button">Todo el Catálogo</button>
+            <button class="filter-chip" data-ownership="owned" type="button">Mi Colección</button>
+            <button class="filter-chip" data-ownership="missing" type="button">Faltantes</button>
+            <button class="filter-chip" data-ownership="favorite" type="button">Favoritas <span id="chip-fav-count" class="chip-count hidden">0</span></button>
+            <button class="filter-chip" data-ownership="wishlist" type="button">Wishlist <span id="chip-wish-count" class="chip-count hidden">0</span></button>
+          </div>
+
+          <!-- Color Filter Chips -->
+          <div class="chip-row color-chip-row" id="color-chips">
+            <button class="filter-chip color-chip active" data-color="" type="button">Todos los Colores</button>
+            <button class="filter-chip color-chip" data-color="White" type="button"><span class="color-dot dot-white"></span>White</button>
+            <button class="filter-chip color-chip" data-color="Green" type="button"><span class="color-dot dot-green"></span>Green</button>
+            <button class="filter-chip color-chip" data-color="Red" type="button"><span class="color-dot dot-red"></span>Red</button>
+            <button class="filter-chip color-chip" data-color="Blue" type="button"><span class="color-dot dot-blue"></span>Blue</button>
+            <button class="filter-chip color-chip" data-color="Purple" type="button"><span class="color-dot dot-purple"></span>Purple</button>
+            <button class="filter-chip color-chip" data-color="Yellow" type="button"><span class="color-dot dot-yellow"></span>Yellow</button>
+            <button class="filter-chip color-chip" data-color="Colorless" type="button"><span class="color-dot dot-colorless"></span>Colorless</button>
+          </div>
+
+          <!-- Dropdown & Range Filters -->
+          <div class="advanced-filters" id="advanced-filters">
+            <div class="field-group">
+              <label for="filter-edition">Edición / Set</label>
+              <select id="filter-edition">
+                <option value="">Todas las ediciones (26)</option>
+              </select>
+            </div>
+            <div class="field-group">
+              <label for="filter-card-type">Tipo de Carta</label>
+              <select id="filter-card-type">
+                <option value="">Todos los tipos</option>
+                <option value="Oshi Holomem">Oshi Holomem</option>
+                <option value="Holomem">Holomem</option>
+                <option value="Buzz Holomem">Buzz Holomem</option>
+                <option value="Support">Support</option>
+                <option value="Cheer">Cheer</option>
+              </select>
+            </div>
+            <div class="field-group">
+              <label for="filter-rarity">Rareza</label>
+              <select id="filter-rarity">
+                <option value="">Todas las rarezas</option>
+                <option value="SEC">SEC — Secret Rare</option>
+                <option value="OUR">OUR — Oshi Ultra Rare</option>
+                <option value="OSR">OSR — Oshi Super Rare</option>
+                <option value="UR">UR — Ultra Rare</option>
+                <option value="SR">SR — Super Rare</option>
+                <option value="RR">RR — Double Rare</option>
+                <option value="S">S — Special</option>
+                <option value="SY">SY — Special Yell</option>
+                <option value="HR">HR — Holomem Rare</option>
+                <option value="R">R — Rare</option>
+                <option value="U">U — Uncommon</option>
+                <option value="C">C — Common</option>
+                <option value="OC">OC — Oshi Common</option>
+                <option value="P">P — Promo</option>
+              </select>
+            </div>
+            <div class="field-group">
+              <label for="filter-bloom">Bloom Level</label>
+              <select id="filter-bloom">
+                <option value="">Todos los niveles</option>
+                <option value="Debut">Debut</option>
+                <option value="1st">1st</option>
+                <option value="2nd">2nd</option>
+                <option value="Spot">Spot</option>
+              </select>
+            </div>
+            <div class="field-group">
+              <label for="filter-category">Producto</label>
+              <select id="filter-category">
+                <option value="card">Solo Cartas</option>
+                <option value="sealed">Productos Sellados</option>
+                <option value="all">Todos</option>
+              </select>
+            </div>
+            <div class="field-group">
+              <label for="filter-sort">Ordenar por</label>
+              <select id="filter-sort">
+                <option value="price_desc">Precio: Mayor a Menor</option>
+                <option value="price_asc">Precio: Menor a Mayor</option>
+                <option value="number_asc">N° de Carta (Asc)</option>
+                <option value="rarity_desc">Rareza (Mayor)</option>
+                <option value="owned_desc">En Colección primero</option>
+                <option value="name_asc">Nombre (A-Z)</option>
+              </select>
+            </div>
+            <div class="field-group price-range-group">
+              <label>Precio USD</label>
+              <div class="price-inputs">
+                <input id="filter-min-price" type="number" step="0.01" min="0" placeholder="Mín" />
+                <span>—</span>
+                <input id="filter-max-price" type="number" step="0.01" min="0" placeholder="Máx" />
+              </div>
+            </div>
+            <div class="field-group filter-reset-wrap">
+              <button id="clear-filters-btn" class="text-btn" type="button">Limpiar filtros</button>
+            </div>
+          </div>
+        </section>
+
+        <!-- Results Status Bar -->
+        <div class="results-meta-bar">
+          <span id="results-count-label">Cargando catálogo...</span>
+          <div class="pagination-controls" id="pagination-top"></div>
+        </div>
+
+        <!-- Card Results Container (Grid or Table) -->
+        <section id="cards-container" class="cards-grid" aria-live="polite"></section>
+
+        <!-- Infinite Scroll Sentinel -->
+        <div id="infinite-scroll-sentinel" class="infinite-sentinel hidden" aria-live="polite"></div>
+
+        <!-- Bottom Pagination -->
+        <div class="pagination-footer" id="pagination-bottom"></div>
+      </main>
+
+      <!-- VIEW 2: MY COLLECTION & SET COMPLETION -->
+      <main id="view-collection" class="view-section">
+        <div class="section-header-card">
+          <div>
+            <h2>Mi Colección &amp; Progreso por Edición</h2>
+            <p class="muted-text">Resumen detallado por set, distribución de colores/rarezas y respaldo portátil de tu colección.</p>
+          </div>
+          <div class="action-row">
+            <button id="export-collection-btn" class="filled-btn" type="button">Exportar JSON</button>
+            <label class="outlined-btn file-label">
+              Importar JSON
+              <input id="import-collection-input" type="file" accept="application/json" hidden />
+            </label>
+            <button id="view-owned-in-catalog-btn" class="tonal-btn" type="button">Ver mis cartas en Catálogo</button>
+          </div>
+        </div>
+
+        <div class="analytics-grid">
+          <section class="panel-card">
+            <h3>Distribución por Color</h3>
+            <div id="color-breakdown-list" class="breakdown-list"></div>
+          </section>
+          <section class="panel-card">
+            <h3>Distribución por Rareza</h3>
+            <div id="rarity-breakdown-list" class="breakdown-list"></div>
+          </section>
+        </div>
+
+        <section class="panel-card">
+          <h3>Progreso en las 26 Ediciones</h3>
+          <div id="editions-progress-grid" class="editions-grid"></div>
+        </section>
+      </main>
+
+      <!-- VIEW 3: DECK BUILDER (SCALABLE MODULE) -->
+      <main id="view-decks" class="view-section">
+        <div class="section-header-card">
+          <div>
+            <h2>Constructor de Mazos (Deck Builder)</h2>
+            <p class="muted-text">Módulo escalable conectado a tu colección SQLite para armar recetas y calcular qué cartas te faltan.</p>
+          </div>
+          <button id="new-deck-btn" class="filled-btn" type="button">+ Nuevo Mazo</button>
+        </div>
+
+        <div id="decks-grid" class="editions-grid"></div>
+
+        <section id="deck-editor-panel" class="panel-card hidden">
+          <div class="deck-editor-header">
+            <h3 id="deck-editor-title">Editar Mazo</h3>
+            <button id="close-deck-editor" class="text-btn" type="button">Cerrar editor</button>
+          </div>
+          <div class="deck-form-grid">
+            <div class="field-group">
+              <label for="deck-name-input">Nombre del Mazo</label>
+              <input id="deck-name-input" type="text" placeholder="Ej. Kanata White Aggro" />
+            </div>
+            <div class="field-group">
+              <label for="deck-oshi-select">Oshi Holomem</label>
+              <select id="deck-oshi-select"></select>
+            </div>
+            <div class="field-group span-2">
+              <label for="deck-desc-input">Notas / Estrategia</label>
+              <input id="deck-desc-input" type="text" placeholder="Notas de receta o combos principales..." />
+            </div>
+          </div>
+
+          <div class="deck-card-adder">
+            <div class="search-field">
+              <svg viewBox="0 0 24 24" class="search-icon"><path d="M15.5 14h-.79l-.28-.27A6.471 6.471 0 0 0 16 9.5 6.5 6.5 0 1 0 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/></svg>
+              <input id="deck-card-search" type="search" placeholder="Buscar carta para agregar al mazo (ej. Amane Kanata, Idol Microphone)..." />
+            </div>
+            <div id="deck-search-results" class="deck-search-results"></div>
+          </div>
+
+          <div id="deck-cards-list" class="deck-cards-list"></div>
+
+          <div class="action-row end">
+            <button id="delete-deck-btn" class="text-btn danger hidden" type="button">Eliminar Mazo</button>
+            <button id="save-deck-btn" class="filled-btn" type="button">Guardar Mazo</button>
+          </div>
+        </section>
+      </main>
+
+      <!-- VIEW 4: TCGCSV DATA AUDIT & SANITIZATION -->
+      <main id="view-audit" class="view-section">
+        <div class="section-header-card">
+          <div>
+            <h2>Auditoría de Datos TCGCSV &amp; Saneamiento</h2>
+            <p class="muted-text">Reporte del barrido aplicado a los JSON y CSV en <code>/resources</code> para corregir comas en descripciones, HTML y campos faltantes.</p>
+          </div>
+          <button id="resync-db-btn" class="filled-btn" type="button">Re-sincronizar /resources → SQLite</button>
+        </div>
+
+        <div id="audit-stats-grid" class="kpi-grid"></div>
+
+        <section class="panel-card">
+          <h3>Ejemplos Resueltos (Antes vs Después del Saneamiento)</h3>
+          <div id="audit-examples-list" class="audit-examples"></div>
+        </section>
+      </main>
+    </div>
+
+    <!-- MD3 Bottom Navigation Bar (Mobile < 900px) -->
+    <nav class="bottom-nav" aria-label="Navegación móvil">
+      <button class="bottom-nav-btn active" data-view="catalog" type="button">
+        <span class="bottom-pill">
+          <svg viewBox="0 0 24 24" class="icon"><path d="M19 2H6c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h13c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zM9 4h2v5l-1-.75L9 9V4zm10 16H6V4h1v9l3-2.25L13 13V4h6v16z"/></svg>
+        </span>
+        <span>Catálogo</span>
+      </button>
+      <button class="bottom-nav-btn" data-view="collection" type="button">
+        <span class="bottom-pill">
+          <svg viewBox="0 0 24 24" class="icon"><path d="M20 6h-8l-2-2H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V8c0-1.1-.9-2-2-2zm0 12H4V8h16v10z"/></svg>
+        </span>
+        <span>Colección</span>
+      </button>
+      <button class="bottom-nav-btn" data-view="decks" type="button">
+        <span class="bottom-pill">
+          <svg viewBox="0 0 24 24" class="icon"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-2 14H7v-2h10v2zm0-4H7v-2h10v2zm0-4H7V7h10v2z"/></svg>
+        </span>
+        <span>Mazos</span>
+      </button>
+      <button class="bottom-nav-btn" data-view="audit" type="button">
+        <span class="bottom-pill">
+          <svg viewBox="0 0 24 24" class="icon"><path d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4zm-2 16l-4-4 1.41-1.41L10 14.17l6.59-6.59L18 9l-8 8z"/></svg>
+        </span>
+        <span>Auditoría</span>
+      </button>
+    </nav>
+  </div>
+
+  <!-- Card Detail & Collection Editor Modal -->
+  <div id="card-modal-backdrop" class="modal-backdrop hidden" role="dialog" aria-modal="true" aria-labelledby="modal-card-title">
+    <div class="modal-sheet">
+      <div class="modal-header">
+        <div>
+          <span class="modal-kicker" id="modal-card-meta"></span>
+          <h2 id="modal-card-title">Detalle de Carta</h2>
+        </div>
+        <button id="modal-close-btn" class="icon-btn" aria-label="Cerrar detalle" type="button">
+          <svg viewBox="0 0 24 24" class="icon"><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </div>
+      <div class="modal-body" id="modal-body-content"></div>
+    </div>
+  </div>
+
+  <!-- Exchange Rate Modal (USD -> CLP) -->
+  <div id="exchange-rate-modal" class="modal-backdrop hidden" role="dialog" aria-modal="true" aria-labelledby="rate-modal-title">
+    <div class="modal-sheet modal-sheet-compact">
+      <div class="modal-header">
+        <div>
+          <span class="modal-kicker">Conversión de Divisa Local</span>
+          <h2 id="rate-modal-title">Tasa USD → Pesos Chilenos (CLP)</h2>
+        </div>
+        <button id="rate-modal-close" class="icon-btn" aria-label="Cerrar tasa de cambio" type="button">
+          <svg viewBox="0 0 24 24" class="icon"><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div class="collection-form-box" style="margin-top:0;">
+          <div style="display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap;">
+            <div>
+              <div class="kpi-label">Tasa vigente guardada</div>
+              <div class="kpi-value" id="rate-modal-current">$1.007,79 CLP</div>
+              <div class="muted-text" id="rate-modal-meta">Fuente: —</div>
+            </div>
+            <button id="refresh-live-rate-btn" class="tonal-btn" type="button">↻ Actualizar tasa oficial del día</button>
+          </div>
+        </div>
+
+        <form id="manual-rate-form" class="collection-form-box">
+          <div class="field-group">
+            <label for="manual-rate-input">Tasa personalizada (CLP por 1 USD)</label>
+            <input id="manual-rate-input" type="number" step="0.01" min="1" required />
+          </div>
+          <div class="action-row end">
+            <button class="filled-btn" type="submit">Guardar tasa</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <!-- Shutdown Confirmation Modal -->
+  <div id="shutdown-modal" class="modal-backdrop hidden" role="dialog" aria-modal="true" aria-labelledby="shutdown-modal-title">
+    <div class="modal-sheet modal-sheet-compact">
+      <div class="modal-header">
+        <div>
+          <span class="modal-kicker">Servidor Local</span>
+          <h2 id="shutdown-modal-title">¿Apagar Hololive OCG Tracker?</h2>
+        </div>
+        <button id="shutdown-modal-close" class="icon-btn" aria-label="Cancelar apagado" type="button">
+          <svg viewBox="0 0 24 24" class="icon"><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </div>
+      <div class="modal-body">
+        <p class="muted-text" style="margin-top:0;">
+          Se guardará todo en <code>resources/hololive_ocg.db</code> y se cerrará el proceso del servidor para no consumir recursos cuando no lo uses.
+        </p>
+        <p class="muted-text" style="margin-top:8px;">
+          Para volver a encenderlo cuando lo necesites, ejecuta <code>./hocg</code> en la carpeta del proyecto.
+        </p>
+        <div class="action-row end" style="margin-top:18px;">
+          <button id="shutdown-cancel-btn" class="outlined-btn" type="button">Cancelar</button>
+          <button id="shutdown-confirm-btn" class="filled-btn danger-btn" type="button">⏻ Apagar ahora</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Clean Shutdown Screen -->
+  <div id="shutdown-screen" class="modal-backdrop hidden">
+    <div class="modal-sheet modal-sheet-compact" style="padding:28px;text-align:center;">
+      <h2 style="margin:0 0 8px;">Servidor Apagado Correctamente</h2>
+      <p class="muted-text" style="margin:0 0 14px;">
+        Tu colección está guardada de forma segura en <code>resources/hololive_ocg.db</code>.
+      </p>
+      <p class="muted-text" style="margin:0;">
+        Ya puedes cerrar esta pestaña. Para encenderlo nuevamente ejecuta <code>./hocg</code>.
+      </p>
+    </div>
+  </div>
+
+  <!-- Sign-Out Confirmation Modal -->
+  <div id="signout-modal" class="modal-backdrop hidden" role="dialog" aria-modal="true" aria-labelledby="signout-modal-title">
+    <div class="modal-sheet modal-sheet-compact">
+      <div class="modal-header">
+        <div>
+          <span class="modal-kicker">Cuenta de Google</span>
+          <h2 id="signout-modal-title">¿Desconectar cuenta?</h2>
+        </div>
+        <button id="signout-modal-close" class="icon-btn" aria-label="Cancelar desconexión" type="button">
+          <svg viewBox="0 0 24 24" class="icon"><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div class="collection-form-box" style="margin-top:0;">
+          <div class="kpi-label">Sesión actual</div>
+          <div id="signout-account-name" style="font-weight:700;font-size:1rem;margin-top:4px;">Cuenta Google</div>
+          <div id="signout-account-email" class="muted-text"></div>
+        </div>
+        <p class="muted-text" style="margin-top:12px;">
+          ¿Estás seguro de que quieres desconectarte? Tu colección, mazos y wishlist sincronizados seguirán guardados de forma segura en la nube.
+        </p>
+        <div class="action-row end" style="margin-top:18px;">
+          <button id="signout-sync-local-btn" class="tonal-btn hidden" type="button">☁ Sincronizar ahora</button>
+          <button id="signout-cancel-btn" class="outlined-btn" type="button">Cancelar</button>
+          <button id="signout-confirm-btn" class="filled-btn danger-btn" type="button">Cerrar sesión</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- MD3 Floating Action Button: Scroll to Top -->
+  <button id="scroll-top-btn" class="fab-scroll-top hidden" type="button" title="Ir al tope de la página" aria-label="Ir al tope de la página">
+    <svg viewBox="0 0 24 24" class="icon"><path d="M4 12l1.41 1.41L11 7.83V20h2V7.83l5.58 5.59L20 12l-8-8-8 8z"/></svg>
+  </button>
+
+  <!-- MD3 Snackbar -->
+  <div id="snackbar" class="snackbar hidden" role="status" aria-live="polite"></div>
+
+  <script src="/js/firebase-config.js?v=20261121-1"></script>
+  <script src="/js/firebase-cloud.js?v=20261121-1"></script>
+  <script src="/js/app.js?v=20261121-1"></script>
+</body>
+</html>

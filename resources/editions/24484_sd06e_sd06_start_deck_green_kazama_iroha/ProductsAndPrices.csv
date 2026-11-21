@@ -1,0 +1,39 @@
+productId,name,cleanName,imageUrl,categoryId,groupId,url,modifiedOn,imageCount,lowPrice,midPrice,highPrice,marketPrice,directLowPrice,subTypeName,extRarity,extNumber,extColor,extCardType,extOshiSkill,extSPOshiSkill,extLife,extBloomLevel,extHP,extKeyword,extArts1,extBatonPass,extTags,extSpecialRules,extDescription,extSubtype
+659942,Start Deck: Green Kazama Iroha,Start Deck Green Kazama Iroha,https://tcgplayer-cdn.tcgplayer.com/product/659942_200w.jpg,87,24484,https://cpt.tcgcsv.com/S-h7,2025-12-22T20:24:52.13,1,7.0,10.95,16.0,12.26,,Normal,,,,,,,,,,,,,,,,
+659943,Start Deck: Green Kazama Iroha Case,Start Deck Green Kazama Iroha Case,https://tcgplayer-cdn.tcgplayer.com/product/659943_200w.jpg,87,24484,https://cpt.tcgcsv.com/T-h7,2025-12-22T20:25:02.143,1,45.0,45.0,62.0,49.0,,Normal,,,,,,,,,,,,,,,,
+668978,Kazama Iroha (OC),Kazama Iroha OC,https://tcgplayer-cdn.tcgplayer.com/product/668978_200w.jpg,87,24484,https://cpt.tcgcsv.com/BCm7,2025-12-30T14:44:19.303,1,0.02,0.25,1.23,0.19,,Normal,Oshi Common,hSD06-001,Green,Oshi holomem,"[holo Power: -2] Green Microphone <br>
+[1/Turn]During this turn, your green center holomem gets Arts+20.","[holo Power: -1] We'll Do our Best! <br>
+[1/Game]Restore 20 HP to all of your green holomem.",5,,,,,,,,,
+668979,Kazama Iroha (C) (hSD06-002),Kazama Iroha C hSD06 002,https://tcgplayer-cdn.tcgplayer.com/product/668979_200w.jpg,87,24484,https://cpt.tcgcsv.com/CCm7,2025-12-19T05:10:14.41,1,0.03,0.25,1.23,0.18,,Normal,Common,hSD06-002,Green,holomem,,,,Debut,80,"""Collab Effect"" Not! Nin-Nin!! 
+Restore 10 HP to 1 of your holomem.",[N] Yes! Shing-Shing!! (20),1,#JP;#holoX,,,
+668980,Kazama Iroha (U) (hSD06-003),Kazama Iroha U hSD06 003,https://tcgplayer-cdn.tcgplayer.com/product/668980_200w.jpg,87,24484,https://cpt.tcgcsv.com/DCm7,2025-12-19T05:10:14.41,1,0.04,0.25,1.23,0.15,,Normal,Uncommon,hSD06-003,Green,holomem,,,,Debut,80,,"[G] Deadly Swing of the Blade (30+)<br>
+ If your center holomem's HP is reduced, this Arts gets +10.",1,#JP;#holoX,,,
+668981,Kazama Iroha (C) (hSD06-004),Kazama Iroha C hSD06 004,https://tcgplayer-cdn.tcgplayer.com/product/668981_200w.jpg,87,24484,https://cpt.tcgcsv.com/FCm7,2025-12-19T05:10:14.41,1,0.01,0.25,1.23,0.13,,Normal,Common,hSD06-004,Green,holomem,,,,1st,160,,[GN] Shy Bodyguard (60),1,#JP;#holoX,,,
+668982,Kazama Iroha (C) (hSD06-005),Kazama Iroha C hSD06 005,https://tcgplayer-cdn.tcgplayer.com/product/668982_200w.jpg,87,24484,https://cpt.tcgcsv.com/GCm7,2025-12-19T05:10:14.41,1,0.16,0.21,0.25,0.74,,Normal,Common,hSD06-005,Green,holomem,,,,1st,120,"""Bloom Effect"" Going out with Kazama 
+Send the top card of your cheer deck to your holomem with [#holoX].",[G] Together with Kazama! (30),1,#JP;#holoX,,,
+668983,Kazama Iroha (R),Kazama Iroha R,https://tcgplayer-cdn.tcgplayer.com/product/668983_200w.jpg,87,24484,https://cpt.tcgcsv.com/HCm7,2025-12-19T05:10:14.41,1,0.26,0.38,0.75,0.31,,Foil,Rare,hSD06-006,Green,buzz holomem,,,,1st,220,"""Bloom Effect"" Samurai Girl 
+Reveal 1 [""Chakimaru"" or ""Pokobe""] from your deck, and add it to hand. Then, shuffle the deck.",[GN] Ye will Rust on Thy Blade! (50),2,#JP;#holoX,"[Extra] If this holomem is downed, you get life-2",,
+668984,Kazama Iroha (RR),Kazama Iroha RR,https://tcgplayer-cdn.tcgplayer.com/product/668984_200w.jpg,87,24484,https://cpt.tcgcsv.com/JCm7,2025-12-19T05:10:14.41,1,0.04,0.44,1.23,0.28,,Foil,Double Rare,hSD06-007,Green,holomem,,,,2nd,180,"""Bloom Effect"" Sending you energy 
+Restore 30 HP to 1 of your holomem with [#holoX].","[GNN] A genius, aren't I? (70+) [G+50]<br>
+ If your stage has 5 or more cheers, this Arts gets +50.",2,#JP;#holoX,,,
+668985,Hakui Koyori (U),Hakui Koyori U,https://tcgplayer-cdn.tcgplayer.com/product/668985_200w.jpg,87,24484,https://cpt.tcgcsv.com/KCm7,2025-12-19T05:10:14.41,1,4.3,4.38,4.45,3.8,,Normal,Uncommon,hSD06-008,White,holomem,,,,Debut,70,"""Collab Effect"" Brains! 
+If your center holomem has [#holoX], and your hand has 5 or less cards, draw 1 card.",[N] How's That! (10),1,#JP;#Kemomimi;#holoX,,,
+668986,Takane Lui (U),Takane Lui U,https://tcgplayer-cdn.tcgplayer.com/product/668986_200w.jpg,87,24484,https://cpt.tcgcsv.com/LCm7,2025-12-19T05:10:14.41,1,0.02,0.32,1.23,0.27,,Normal,Uncommon,hSD06-009,Red,holomem,,,,Debut,80,,"[N] Reliable Female Officer (20)<br>
+ You may return 1 Debut holomem with [#holoX] from your archive to hand.",1,#JP;#Bird;#Alcohol;#holoX,,,
+668987,La+ Darknesss (U),Laplus Darknesss U,https://tcgplayer-cdn.tcgplayer.com/product/668987_200w.jpg,87,24484,https://cpt.tcgcsv.com/MCm7,2025-12-19T05:10:14.41,1,0.08,0.25,1.23,0.25,,Normal,Uncommon,hSD06-010,Purple,holomem,,,,Debut,60,,"[N] Banquet of Madness (30+)<br>
+ [Collab Position Only]If you used your SP Oshi skill during your main phase this turn, this Arts gets +50.",1,#JP;#holoX;#Shooter,,,
+668988,Chakimaru (C),Chakimaru C,https://tcgplayer-cdn.tcgplayer.com/product/668988_200w.jpg,87,24484,https://cpt.tcgcsv.com/NCm7,2025-12-19T05:10:14.41,1,0.27,0.5,1.0,1.93,,Normal,Common,hSD06-011,,Support,,,,,,,,,,,"The holomem this tool is attached to gets Arts+10.<br><br>
+ <br><br>
+ •Additional ability if attached to 1st or greater ""Kazama Iroha""<br><br>
+ [1/Turn]During your opponent's turn, when the holomem this tool is attached to takes damage, deal 20 special damage to your opponent's center holomem. However, your opponent's life does not reduce even if downed.<br><br>
+ <br><br>
+ Only 1 tool can be attached to each of your holomem.",Tool
+668989,Pokobe (C),Pokobe C,https://tcgplayer-cdn.tcgplayer.com/product/668989_200w.jpg,87,24484,https://cpt.tcgcsv.com/PCm7,2025-12-19T05:10:14.41,1,0.1,0.4,0.95,0.23,,Normal,Common,hSD06-012,,Support,,,,,,,,,,,"The holomem this mascot is attached to gets +10 HP.<br><br>
+<br><br>
+•Additional ability if attached to ""Kazama Iroha""<br><br>
+The holomem this mascot is attached to gets +20 HP.<br><br>
+<br><br>
+Only 1 mascot can be attached to each of your holomem.",Mascot
+670790,Kazama Iroha (C) (hBP01-048) (Alternate Art) (Reprint),Kazama Iroha C hBP01 048 Alternate Art Reprint,https://tcgplayer-cdn.tcgplayer.com/product/670790_200w.jpg,87,24484,https://cpt.tcgcsv.com/Qkn7,2025-12-30T20:41:37.57,1,0.1,0.25,1.23,0.18,,Normal,Common,hBP01-048,Green,holomem,,,,Debut,120,,"[N] Hear ye, it is I, Kazama Iroha! (20)",1,#JP;#holoX,[Extra] You may include any number of this holomem in the deck,,
+670791,Kazama Iroha (U) (hBP01-050) (Alternate Art) (Reprint),Kazama Iroha U hBP01 050 Alternate Art Reprint,https://tcgplayer-cdn.tcgplayer.com/product/670791_200w.jpg,87,24484,https://cpt.tcgcsv.com/Rkn7,2025-12-30T20:43:04.907,1,0.06,0.25,0.49,0.18,,Normal,Uncommon,hBP01-050,Green,holomem,,,,1st,140,"""Gift""Bodyguard 
+[Collab Position Only]Your opponent's holomem's Arts can only target your collab holomem. However, it excludes Special Damage.","[GN] Bringing You Energy at Full Power! (20) Send the top card of your cheer deck to your holomem with [#holoX] other than ""Kazama Iroha>.",1,#JP;#holoX,,,

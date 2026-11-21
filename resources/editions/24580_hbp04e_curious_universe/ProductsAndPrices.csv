@@ -1,0 +1,638 @@
+productId,name,cleanName,imageUrl,categoryId,groupId,url,modifiedOn,imageCount,lowPrice,midPrice,highPrice,marketPrice,directLowPrice,subTypeName,extRarity,extNumber,extDescription,extCardType,extSubtype,extColor,extOshiSkill,extSPOshiSkill,extLife,extBloomLevel,extHP,extArts1,extBatonPass,extTags,extSpecialRules,extArts2,extKeyword
+671790,Curious Universe Booster Pack,Curious Universe Booster Pack,https://tcgplayer-cdn.tcgplayer.com/product/671790_200w.jpg,87,24580,https://cpt.tcgcsv.com/QKn7,2026-02-20T05:10:21.42,1,,,,,,,,,,,,,,,,,,,,,,,
+671791,Curious Universe Booster Box,Curious Universe Booster Box,https://tcgplayer-cdn.tcgplayer.com/product/671791_200w.jpg,87,24580,https://cpt.tcgcsv.com/RKn7,2026-02-20T05:10:21.42,1,62.62,79.95,89.0,62.35,,Normal,,,,,,,,,,,,,,,,,
+671792,Curious Universe Booster Case,Curious Universe Booster Case,https://tcgplayer-cdn.tcgplayer.com/product/671792_200w.jpg,87,24580,https://cpt.tcgcsv.com/SKn7,2026-02-20T05:10:21.42,1,792.01,810.0,899.99,697.44,,Normal,,,,,,,,,,,,,,,,,
+679258,Mikkorone 24 (U),Mikkorone 24 U,https://tcgplayer-cdn.tcgplayer.com/product/679258_200w.jpg,87,24580,https://cpt.tcgcsv.com/bKr7,2026-02-20T05:10:21.42,1,3.5,4.84,11.12,4.18,,Normal,Uncommon,hBP02-084,"LIMITED:Usable only 1 per turn.<br>
+<br>
+Draw 2 cards, and roll a die once:If it is 3, 5 or 6, reveal 1 Debut holomem from your deck, and add it to hand. Then, shuffle the deck. If it is 2 or 4, draw 1 card.",Support,Event,,,,,,,,,,,,
+679259,Mikkorone 24 (SR),Mikkorone 24 SR,https://tcgplayer-cdn.tcgplayer.com/product/679259_200w.jpg,87,24580,https://cpt.tcgcsv.com/cKr7,2026-02-20T05:10:21.42,1,43.68,45.35,82.0,48.16,,Foil,Super Rare,hBP02-084,"LIMITED:Usable only 1 per turn.<br>
+<br>
+Draw 2 cards, and roll a die once:If it is 3, 5 or 6, reveal 1 Debut holomem from your deck, and add it to hand. Then, shuffle the deck. If it is 2 or 4, draw 1 card.",Support,Event,,,,,,,,,,,,
+679260,hololive Gen 4 (U),hololive Gen 4 U,https://tcgplayer-cdn.tcgplayer.com/product/679260_200w.jpg,87,24580,https://cpt.tcgcsv.com/dKr7,2026-02-20T05:10:21.42,1,0.07,0.25,1.23,0.12,,Normal,Uncommon,hBP03-093,"LIMITED:Usable only 1 per turn.<br>
+<br>
+This card can only be used if you have 6 or less cards in hand excluding this card.<br>
+<br>
+Look at the top 4 cards of your deck. Reveal any number of holomem with [#Gen 4] from among them, and add the revealed holomem to hand. Then, return the remaining cards to the bottom of the deck in any order.",Support,Event,,,,,,,,,,,,
+679261,hololive Gen 4 (S),hololive Gen 4 S,https://tcgplayer-cdn.tcgplayer.com/product/679261_200w.jpg,87,24580,https://cpt.tcgcsv.com/fKr7,2026-02-20T05:10:21.42,1,0.49,1.75,3.85,1.74,,Foil,Special,hBP03-093,"LIMITED:Usable only 1 per turn.<br>
+<br>
+This card can only be used if you have 6 or less cards in hand excluding this card.<br>
+<br>
+Look at the top 4 cards of your deck. Reveal any number of holomem with [#Gen 4] from among them, and add the revealed holomem to hand. Then, return the remaining cards to the bottom of the deck in any order.",Support,Event,,,,,,,,,,,,
+679262,Hakui Koyori (OSR),Hakui Koyori OSR,https://tcgplayer-cdn.tcgplayer.com/product/679262_200w.jpg,87,24580,https://cpt.tcgcsv.com/gKr7,2026-02-20T05:10:21.42,1,4.45,5.14,14.0,5.17,,Foil,Oshi Super Rare,hBP04-001,,Oshi holomem,,White,"[holo Power: -2] Koyori Experimenting <br>
+[1/Turn]During this turn, 1 of your <Hakui Koyori> that has a support card with [#KOYO LABO] attached gets Arts+30.","[holo Power: -2] Assistants, mmmwah! <br>
+[1/Game]Usable if your <Hakui Koyori> with <Koyori's Assistants> attached would take damage from the opponent during the opponent's turn:1 of those holomem takes -100 damage.",5,,,,,,,,
+679263,Hakui Koyori (OUR),Hakui Koyori OUR,https://tcgplayer-cdn.tcgplayer.com/product/679263_200w.jpg,87,24580,https://cpt.tcgcsv.com/hKr7,2026-02-20T05:10:21.42,1,220.0,224.01,228.02,,,Foil,Oshi Ultra Rare,hBP04-001,,Oshi holomem,,White,"[holo Power: -2] Koyori Experimenting <br>
+[1/Turn]During this turn, 1 of your <Hakui Koyori> that has a support card with [#KOYO LABO] attached gets Arts+30.","[holo Power: -2] Assistants, mmmwah! <br>
+[1/Game]Usable if your <Hakui Koyori> with <Koyori's Assistants> attached would take damage from the opponent during the opponent's turn:1 of those holomem takes -100 damage.",5,,,,,,,,
+679264,Hakui Koyori (SEC),Hakui Koyori SEC,https://tcgplayer-cdn.tcgplayer.com/product/679264_200w.jpg,87,24580,https://cpt.tcgcsv.com/jKr7,2026-02-20T05:10:21.42,1,599.67,725.0,899.99,,,Foil,Secret Rare,hBP04-001,,Oshi holomem,,White,"[holo Power: -2] Koyori Experimenting <br>
+[1/Turn]During this turn, 1 of your <Hakui Koyori> that has a support card with [#KOYO LABO] attached gets Arts+30.","[holo Power: -2] Assistants, mmmwah! <br>
+[1/Game]Usable if your <Hakui Koyori> with <Koyori's Assistants> attached would take damage from the opponent during the opponent's turn:1 of those holomem takes -100 damage.",5,,,,,,,,
+679265,Juufuutei Raden (OSR),Juufuutei Raden OSR,https://tcgplayer-cdn.tcgplayer.com/product/679265_200w.jpg,87,24580,https://cpt.tcgcsv.com/kKr7,2026-02-20T05:10:21.42,1,12.99,15.07,25.0,12.0,,Foil,Oshi Super Rare,hBP04-002,,Oshi holomem,,Green,"[holo Power: -2] ReGLOSS's Elegant Girl <br>
+[1/Turn]Send 1 cheer from your archive to your holomem with [#ReGLOSS].","[holo Power: -2] With the Extra Time, Round and Round <br>
+[1/Game]Return 1~4 events with [#Mushroom] from your archive to hand. Then, draw 1 card for every 2 cards returned to hand.",6,,,,,,,,
+679266,Juufuutei Raden (OUR),Juufuutei Raden OUR,https://tcgplayer-cdn.tcgplayer.com/product/679266_200w.jpg,87,24580,https://cpt.tcgcsv.com/lKr7,2026-02-20T05:10:21.42,1,193.77,193.77,193.77,191.12,,Foil,Oshi Ultra Rare,hBP04-002,,Oshi holomem,,Green,"[holo Power: -2] ReGLOSS's Elegant Girl <br>
+[1/Turn]Send 1 cheer from your archive to your holomem with [#ReGLOSS].","[holo Power: -2] With the Extra Time, Round and Round <br>
+[1/Game]Return 1~4 events with [#Mushroom] from your archive to hand. Then, draw 1 card for every 2 cards returned to hand.",6,,,,,,,,
+679267,Ichijou Ririka (OSR),Ichijou Ririka OSR,https://tcgplayer-cdn.tcgplayer.com/product/679267_200w.jpg,87,24580,https://cpt.tcgcsv.com/mKr7,2026-02-20T05:10:21.42,1,3.5,4.44,14.0,3.95,,Foil,Oshi Super Rare,hBP04-003,,Oshi holomem,,Red,"[holo Power: -3] Reach the Top! <br>
+[1/Turn]If your center holomem has [#ReGLOSS], deal 50 special damage to your opponent's collab holomem.","[holo Power: -1] Cute! Positive! Genius! <br>
+[1/Game]Usable when your <Ichijou Ririka> is downed during the opponent's turn:Reveal 1 [<Ichijou Ririka> and/or <Struggle Meal>] each from your deck, and add them to hand. Then, shuffle the deck.",5,,,,,,,,
+679268,Ichijou Ririka (OUR),Ichijou Ririka OUR,https://tcgplayer-cdn.tcgplayer.com/product/679268_200w.jpg,87,24580,https://cpt.tcgcsv.com/nKr7,2026-02-20T05:10:21.42,1,168.5,184.99,200.0,167.44,,Foil,Oshi Ultra Rare,hBP04-003,,Oshi holomem,,Red,"[holo Power: -3] Reach the Top! <br>
+[1/Turn]If your center holomem has [#ReGLOSS], deal 50 special damage to your opponent's collab holomem.","[holo Power: -1] Cute! Positive! Genius! <br>
+[1/Game]Usable when your <Ichijou Ririka> is downed during the opponent's turn:Reveal 1 [<Ichijou Ririka> and/or <Struggle Meal>] each from your deck, and add them to hand. Then, shuffle the deck.",5,,,,,,,,
+679269,Yukihana Lamy (OSR),Yukihana Lamy OSR,https://tcgplayer-cdn.tcgplayer.com/product/679269_200w.jpg,87,24580,https://cpt.tcgcsv.com/pKr7,2026-02-20T05:10:21.42,1,4.25,5.26,12.0,4.86,,Foil,Oshi Super Rare,hBP04-004,,Oshi holomem,,Blue,"[holo Power: -1] I Love You <br>
+[1/Turn]Usable when your holomem is downed during the opponent's turn:Return 1 fan attached to that holomem to hand.","[holo Power: -3] Vroom, Bari Bari Bari Bari <br>
+[1/Game]Choose 1 of your <Yukihana Lamy>. During this turn, the chosen holomem deals +100 special damage to 1 of your opponent's holomem, and if the chosen holomem downed an opponent's holomem, draw 2 cards.",5,,,,,,,,
+679270,Yukihana Lamy (OUR),Yukihana Lamy OUR,https://tcgplayer-cdn.tcgplayer.com/product/679270_200w.jpg,87,24580,https://cpt.tcgcsv.com/qKr7,2026-02-20T05:10:21.42,1,69.97,119.99,150.0,140.0,,Foil,Oshi Ultra Rare,hBP04-004,,Oshi holomem,,Blue,"[holo Power: -1] I Love You <br>
+[1/Turn]Usable when your holomem is downed during the opponent's turn:Return 1 fan attached to that holomem to hand.","[holo Power: -3] Vroom, Bari Bari Bari Bari <br>
+[1/Game]Choose 1 of your <Yukihana Lamy>. During this turn, the chosen holomem deals +100 special damage to 1 of your opponent's holomem, and if the chosen holomem downed an opponent's holomem, draw 2 cards.",5,,,,,,,,
+679271,Yukihana Lamy (SEC),Yukihana Lamy SEC,https://tcgplayer-cdn.tcgplayer.com/product/679271_200w.jpg,87,24580,https://cpt.tcgcsv.com/rKr7,2026-02-20T05:10:21.42,1,899.99,947.08,2000.0,699.99,,Foil,Secret Rare,hBP04-004,,Oshi holomem,,Blue,"[holo Power: -1] I Love You <br>
+[1/Turn]Usable when your holomem is downed during the opponent's turn:Return 1 fan attached to that holomem to hand.","[holo Power: -3] Vroom, Bari Bari Bari Bari <br>
+[1/Game]Choose 1 of your <Yukihana Lamy>. During this turn, the chosen holomem deals +100 special damage to 1 of your opponent's holomem, and if the chosen holomem downed an opponent's holomem, draw 2 cards.",5,,,,,,,,
+679272,La+ Darknesss (OSR),Laplus Darknesss OSR,https://tcgplayer-cdn.tcgplayer.com/product/679272_200w.jpg,87,24580,https://cpt.tcgcsv.com/sKr7,2026-02-20T05:10:21.42,1,17.0,17.25,25.0,16.92,,Foil,Oshi Super Rare,hBP04-005,,Oshi holomem,,Purple,"[holo Power: -2] Leader's Work <br>
+[1/Turn]During this turn, if you would roll a die 3 times for 1 ability of your holomem, regard all numbers on the faces of that die as 5.","[holo Power: -3] We Are Secret Society holoX! <br>
+[1/Game]Choose 1 of your holomem with [#holoX]. During this turn, the chosen holomem's Arts may be used without cheer requirements.",5,,,,,,,,
+679273,La+ Darknesss (OUR),Laplus Darknesss OUR,https://tcgplayer-cdn.tcgplayer.com/product/679273_200w.jpg,87,24580,https://cpt.tcgcsv.com/tKr7,2026-02-20T05:10:21.42,1,139.99,175.0,240.0,133.74,,Foil,Oshi Ultra Rare,hBP04-005,,Oshi holomem,,Purple,"[holo Power: -2] Leader's Work <br>
+[1/Turn]During this turn, if you would roll a die 3 times for 1 ability of your holomem, regard all numbers on the faces of that die as 5.","[holo Power: -3] We Are Secret Society holoX! <br>
+[1/Game]Choose 1 of your holomem with [#holoX]. During this turn, the chosen holomem's Arts may be used without cheer requirements.",5,,,,,,,,
+679274,La+ Darknesss (SEC),Laplus Darknesss SEC,https://tcgplayer-cdn.tcgplayer.com/product/679274_200w.jpg,87,24580,https://cpt.tcgcsv.com/vKr7,2026-02-20T05:10:21.42,1,,,,,,,Secret Rare,hBP04-005,,Oshi holomem,,Purple,"[holo Power: -2] Leader's Work <br>
+[1/Turn]During this turn, if you would roll a die 3 times for 1 ability of your holomem, regard all numbers on the faces of that die as 5.","[holo Power: -3] We Are Secret Society holoX! <br>
+[1/Game]Choose 1 of your holomem with [#holoX]. During this turn, the chosen holomem's Arts may be used without cheer requirements.",5,,,,,,,,
+679275,Oozora Subaru (OSR),Oozora Subaru OSR,https://tcgplayer-cdn.tcgplayer.com/product/679275_200w.jpg,87,24580,https://cpt.tcgcsv.com/wKr7,2026-02-20T05:10:21.42,1,,,,,,,Oshi Super Rare,hBP04-006,,Oshi holomem,,Yellow,"[holo Power: -2] Mental! Physical! Passion! <br>
+[1/Turn]Usable if your <Oozora Subaru> would take damage from the opponent during the opponent's turn:All of your <Oozora Subaru> take -30 damage.","[holo Power: -2] Comedic Reactions <br>
+[1/Game]Usable if your life is 3 or less:During this turn, your center holomem <Oozora Subaru> gets Arts+100.",5,,,,,,,,
+679276,Oozora Subaru (OUR),Oozora Subaru OUR,https://tcgplayer-cdn.tcgplayer.com/product/679276_200w.jpg,87,24580,https://cpt.tcgcsv.com/xKr7,2026-02-20T05:10:21.42,1,223.32,225.31,225.98,237.0,,Foil,Oshi Ultra Rare,hBP04-006,,Oshi holomem,,Yellow,"[holo Power: -2] Mental! Physical! Passion! <br>
+[1/Turn]Usable if your <Oozora Subaru> would take damage from the opponent during the opponent's turn:All of your <Oozora Subaru> take -30 damage.","[holo Power: -2] Comedic Reactions <br>
+[1/Game]Usable if your life is 3 or less:During this turn, your center holomem <Oozora Subaru> gets Arts+100.",5,,,,,,,,
+679277,Oozora Subaru (SEC),Oozora Subaru SEC,https://tcgplayer-cdn.tcgplayer.com/product/679277_200w.jpg,87,24580,https://cpt.tcgcsv.com/zKr7,2026-02-20T05:10:21.42,1,1988.0,1989.0,1990.0,849.99,,Foil,Secret Rare,hBP04-006,,Oshi holomem,,Yellow,"[holo Power: -2] Mental! Physical! Passion! <br>
+[1/Turn]Usable if your <Oozora Subaru> would take damage from the opponent during the opponent's turn:All of your <Oozora Subaru> take -30 damage.","[holo Power: -2] Comedic Reactions <br>
+[1/Game]Usable if your life is 3 or less:During this turn, your center holomem <Oozora Subaru> gets Arts+100.",5,,,,,,,,
+679278,Anya Melfissa (OSR),Anya Melfissa OSR,https://tcgplayer-cdn.tcgplayer.com/product/679278_200w.jpg,87,24580,https://cpt.tcgcsv.com/BKr7,2026-02-20T05:10:21.42,1,4.32,6.0,14.0,4.53,,Foil,Oshi Super Rare,hBP04-007,,Oshi holomem,,Yellow,"[holo Power: -2] Mystical Ritual <br>
+[1/Turn]Reveal 1 <Ancient Weapon> from your deck, and attach it to your holomem. Then, shuffle the deck.","[holo Power: -2] Those Who Think about Life Win <br>
+[1/Game]Send 1 cheer each from your archive to all of your holomem with <Ancient Weapon> attached.",5,,,,,,,,
+679279,Anya Melfissa (OUR),Anya Melfissa OUR,https://tcgplayer-cdn.tcgplayer.com/product/679279_200w.jpg,87,24580,https://cpt.tcgcsv.com/CKr7,2026-02-20T05:10:21.42,1,93.78,95.0,200.0,130.0,,Foil,Oshi Ultra Rare,hBP04-007,,Oshi holomem,,Yellow,"[holo Power: -2] Mystical Ritual <br>
+[1/Turn]Reveal 1 <Ancient Weapon> from your deck, and attach it to your holomem. Then, shuffle the deck.","[holo Power: -2] Those Who Think about Life Win <br>
+[1/Game]Send 1 cheer each from your archive to all of your holomem with <Ancient Weapon> attached.",5,,,,,,,,
+679280,Hakui Koyori (C) (hBP04-008),Hakui Koyori C hBP04 008,https://tcgplayer-cdn.tcgplayer.com/product/679280_200w.jpg,87,24580,https://cpt.tcgcsv.com/DKr7,2026-02-20T05:10:21.42,1,0.1,0.25,1.23,0.22,,Normal,Common,hBP04-008,,holomem,,White,,,,Debut,100,[N] Konkoyo~ (30),1,#JP;#holoX;#Kemomimi,[Extra] You may include any number of this holomem in the deck,,
+679281,Hakui Koyori (U) (hBP04-009),Hakui Koyori U hBP04 009,https://tcgplayer-cdn.tcgplayer.com/product/679281_200w.jpg,87,24580,https://cpt.tcgcsv.com/FKr7,2026-02-20T05:10:21.42,1,0.13,0.35,1.0,0.27,,Normal,Uncommon,hBP04-009,,holomem,,White,,,,Debut,100,"[N] Oh, You Poor Souls Lost within an Eternal Cycle (20)<br>
+ Look at the top 3 cards of your deck. Reveal 1 [Debut holomem with [#holoX] or support card with [#KOYO LABO]] from among them, and add it to hand. Then, return the remaining cards to the bottom of the deck in any order.",1,#JP;#holoX;#Kemomimi,,,
+679282,Hakui Koyori (S) (hBP04-009),Hakui Koyori S hBP04 009,https://tcgplayer-cdn.tcgplayer.com/product/679282_200w.jpg,87,24580,https://cpt.tcgcsv.com/GKr7,2026-02-20T05:10:21.42,1,3.0,7.0,10.99,2.26,,Foil,Special,hBP04-009,,holomem,,White,,,,Debut,100,"[N] Oh, You Poor Souls Lost within an Eternal Cycle (20)<br>
+ Look at the top 3 cards of your deck. Reveal 1 [Debut holomem with [#holoX] or support card with [#KOYO LABO]] from among them, and add it to hand. Then, return the remaining cards to the bottom of the deck in any order.",1,#JP;#holoX;#Kemomimi,,,
+679283,Hakui Koyori (C) (hBP04-010),Hakui Koyori C hBP04 010,https://tcgplayer-cdn.tcgplayer.com/product/679283_200w.jpg,87,24580,https://cpt.tcgcsv.com/HKr7,2026-02-20T05:10:21.42,1,0.01,0.23,1.23,0.14,,Normal,Common,hBP04-010,,holomem,,White,,,,1st,160,[N] Assistants~ Are You Tired? (40),1,#JP;#holoX;#Kemomimi,,[WN] Will You Let Koyo Sleep Beside You? (60),
+679284,Hakui Koyori (S) (hBP04-010),Hakui Koyori S hBP04 010,https://tcgplayer-cdn.tcgplayer.com/product/679284_200w.jpg,87,24580,https://cpt.tcgcsv.com/JKr7,2026-02-20T05:10:21.42,1,2.99,3.0,3.99,3.18,,Foil,Special,hBP04-010,,holomem,,White,,,,1st,160,[N] Assistants~ Are You Tired? (40),1,#JP;#holoX;#Kemomimi,,[WN] Will You Let Koyo Sleep Beside You? (60),
+679285,Hakui Koyori (U) (hBP04-011),Hakui Koyori U hBP04 011,https://tcgplayer-cdn.tcgplayer.com/product/679285_200w.jpg,87,24580,https://cpt.tcgcsv.com/KKr7,2026-02-20T05:10:21.42,1,0.1,0.25,1.23,0.16,,Normal,Uncommon,hBP04-011,,holomem,,White,,,,1st,140,"[N] Assistants, Pay Attention! (30)<br>
+ You may attach 1 <Koyori's Assistants> from your archive to your other <Hakui Koyori>.",1,#JP;#holoX;#Kemomimi,,,
+679286,Hakui Koyori (S) (hBP04-011),Hakui Koyori S hBP04 011,https://tcgplayer-cdn.tcgplayer.com/product/679286_200w.jpg,87,24580,https://cpt.tcgcsv.com/LKr7,2026-02-20T05:10:21.42,1,0.97,3.0,3.99,2.0,,Foil,Special,hBP04-011,,holomem,,White,,,,1st,140,"[N] Assistants, Pay Attention! (30)<br>
+ You may attach 1 <Koyori's Assistants> from your archive to your other <Hakui Koyori>.",1,#JP;#holoX;#Kemomimi,,,
+679287,Hakui Koyori (R),Hakui Koyori R,https://tcgplayer-cdn.tcgplayer.com/product/679287_200w.jpg,87,24580,https://cpt.tcgcsv.com/MKr7,2026-02-20T05:10:21.42,1,0.15,0.39,1.23,0.32,,Foil,Rare,hBP04-012,,holomem,,White,,,,1st,140,"[W] Koyo and Her Assistants Will Always Be Together! (30)<br>
+ If <Koyori's Assistants> is attached to this holomem, draw 1 card.",1,#JP;#holoX;#Kemomimi,,,"«Bloom Effect» Yes! Yes! Yes! Yes!
+Reveal 1 support card with [#KOYO LABO] from your deck, and add it to hand. Then, shuffle the deck."
+679288,Hakui Koyori (SR) (hBP04-012),Hakui Koyori SR hBP04 012,https://tcgplayer-cdn.tcgplayer.com/product/679288_200w.jpg,87,24580,https://cpt.tcgcsv.com/NKr7,2026-02-20T05:10:21.42,1,12.7,14.99,40.0,8.14,,Foil,Super Rare,hBP04-012,,holomem,,White,,,,1st,140,"[W] Koyo and Her Assistants Will Always Be Together! (30)<br>
+ If <Koyori's Assistants> is attached to this holomem, draw 1 card.",1,#JP;#holoX;#Kemomimi,,,"«Bloom Effect» Yes! Yes! Yes! Yes!
+Reveal 1 support card with [#KOYO LABO] from your deck, and add it to hand. Then, shuffle the deck."
+679289,Hakui Koyori (RR),Hakui Koyori RR,https://tcgplayer-cdn.tcgplayer.com/product/679289_200w.jpg,87,24580,https://cpt.tcgcsv.com/PKr7,2026-02-20T05:10:21.42,1,0.2,0.67,5.0,0.6,,Foil,Double Rare,hBP04-013,,holomem,,White,,,,2nd,200,"[WNN] Koyori's Awakening (160)<br>
+ If a support card with [#KOYO LABO] is attached to this holomem, reveal 1 support card with [#KOYO LABO] from your deck, and add it to hand. Then, shuffle the deck.",2,#JP;#holoX;#Kemomimi,,,"«Gift» I'll Never Give Up!
+When this holomem downed your opponent's holomem, put the top card of your deck as holo Power. Look at your holo Power. Reveal 1 card from among them, and add it to hand. Then, shuffle the holo Power."
+679290,Hakui Koyori (SR) (hBP04-013),Hakui Koyori SR hBP04 013,https://tcgplayer-cdn.tcgplayer.com/product/679290_200w.jpg,87,24580,https://cpt.tcgcsv.com/QKr7,2026-02-20T05:10:21.42,1,5.51,7.26,10.77,7.69,,Foil,Super Rare,hBP04-013,,holomem,,White,,,,2nd,200,"[WNN] Koyori's Awakening (160)<br>
+ If a support card with [#KOYO LABO] is attached to this holomem, reveal 1 support card with [#KOYO LABO] from your deck, and add it to hand. Then, shuffle the deck.",2,#JP;#holoX;#Kemomimi,,,"«Gift» I'll Never Give Up!
+When this holomem downed your opponent's holomem, put the top card of your deck as holo Power. Look at your holo Power. Reveal 1 card from among them, and add it to hand. Then, shuffle the holo Power."
+679291,Hakui Koyori (UR),Hakui Koyori UR,https://tcgplayer-cdn.tcgplayer.com/product/679291_200w.jpg,87,24580,https://cpt.tcgcsv.com/RKr7,2026-02-20T05:10:21.42,1,52.97,54.45,75.0,50.66,,Foil,Ultra Rare,hBP04-013,,holomem,,White,,,,2nd,200,"[WNN] Koyori's Awakening (160)<br>
+ If a support card with [#KOYO LABO] is attached to this holomem, reveal 1 support card with [#KOYO LABO] from your deck, and add it to hand. Then, shuffle the deck.",2,#JP;#holoX;#Kemomimi,,,"«Gift» I'll Never Give Up!
+When this holomem downed your opponent's holomem, put the top card of your deck as holo Power. Look at your holo Power. Reveal 1 card from among them, and add it to hand. Then, shuffle the holo Power."
+679292,Shirakami Fubuki (R),Shirakami Fubuki R,https://tcgplayer-cdn.tcgplayer.com/product/679292_200w.jpg,87,24580,https://cpt.tcgcsv.com/SKr7,2026-02-20T05:10:21.42,1,0.09,0.35,1.23,0.25,,Foil,Rare,hBP04-014,,holomem,,White,,,,2nd,200,"[WNN] My Precious One (100+)<br>
+ If your stage has a holomem with [#GAMERS] other than <Shirakami Fubuki>, this Arts gets +50.",2,#JP;#Gen 1;#GAMERS;#Kemomimi;#Painting,,,"«Bloom Effect» Come Back
+You may return 1~2 cards with [#Shirakami's Nharacter] from your archive to hand."
+679293,Shirakami Fubuki (SR),Shirakami Fubuki SR,https://tcgplayer-cdn.tcgplayer.com/product/679293_200w.jpg,87,24580,https://cpt.tcgcsv.com/TKr7,2026-02-20T05:10:21.42,1,7.5,7.95,41.28,3.35,,Foil,Super Rare,hBP04-014,,holomem,,White,,,,2nd,200,"[WNN] My Precious One (100+)<br>
+ If your stage has a holomem with [#GAMERS] other than <Shirakami Fubuki>, this Arts gets +50.",2,#JP;#Gen 1;#GAMERS;#Kemomimi;#Painting,,,"«Bloom Effect» Come Back
+You may return 1~2 cards with [#Shirakami's Nharacter] from your archive to hand."
+679294,IRyS (R),IRyS R,https://tcgplayer-cdn.tcgplayer.com/product/679294_200w.jpg,87,24580,https://cpt.tcgcsv.com/VKr7,2026-02-20T05:10:21.42,1,0.19,0.37,3.0,0.35,,Foil,Rare,hBP04-015,,buzz holomem,,White,,,,1st,230,"[WN] The Race Queen (30+)<br>
+ This Arts gets +10 for each holomem with [#Promise] on your stage. However, only up to 4 holomem are counted.",2,#EN;#Promise;#Singing,"[Extra] If this holomem is downed, you get life-2",,
+679295,IRyS (SR),IRyS SR,https://tcgplayer-cdn.tcgplayer.com/product/679295_200w.jpg,87,24580,https://cpt.tcgcsv.com/WKr7,2026-02-20T05:10:21.42,1,11.99,15.21,47.96,13.81,,Foil,Super Rare,hBP04-015,,buzz holomem,,White,,,,1st,230,"[WN] The Race Queen (30+)<br>
+ This Arts gets +10 for each holomem with [#Promise] on your stage. However, only up to 4 holomem are counted.",2,#EN;#Promise;#Singing,"[Extra] If this holomem is downed, you get life-2",,
+679296,Raora Panthera (C) (hBP04-016),Raora Panthera C hBP04 016,https://tcgplayer-cdn.tcgplayer.com/product/679296_200w.jpg,87,24580,https://cpt.tcgcsv.com/XKr7,2026-02-20T05:10:21.42,1,0.2,0.36,1.23,0.31,,Normal,Common,hBP04-016,,holomem,,White,,,,Debut,100,"[N] Ciaora (10)<br>
+ If your stage has 5 or less holomem, reveal 1 Spot holomem with [#Justice] from your deck, and you may place it on stage. Then, shuffle the deck.",1,#EN;#Justice;#Kemomimi;#Painting,[Extra] You may include any number of this holomem in the deck,,
+679297,Raora Panthera (C) (hBP04-017),Raora Panthera C hBP04 017,https://tcgplayer-cdn.tcgplayer.com/product/679297_200w.jpg,87,24580,https://cpt.tcgcsv.com/ZKr7,2026-02-20T05:10:21.42,1,0.03,0.25,1.23,0.18,,Normal,Common,hBP04-017,,holomem,,White,,,,1st,150,[N] Pink Panther of Justice (40),1,#EN;#Justice;#Kemomimi;#Painting,,,
+679298,Raora Panthera (S) (hBP04-017),Raora Panthera S hBP04 017,https://tcgplayer-cdn.tcgplayer.com/product/679298_200w.jpg,87,24580,https://cpt.tcgcsv.com/-Kr7,2026-02-20T05:10:21.42,1,1.5,2.92,3.71,1.64,,Foil,Special,hBP04-017,,holomem,,White,,,,1st,150,[N] Pink Panther of Justice (40),1,#EN;#Justice;#Kemomimi;#Painting,,,
+679299,Raora Panthera (U),Raora Panthera U,https://tcgplayer-cdn.tcgplayer.com/product/679299_200w.jpg,87,24580,https://cpt.tcgcsv.com/_Kr7,2026-02-20T05:10:21.42,1,0.25,0.5,1.24,0.39,,Normal,Uncommon,hBP04-018,,holomem,,White,,,,1st,140,[NN] Information Gathering Is My Specialty (50),1,#EN;#Justice;#Kemomimi;#Painting,,,"«Bloom Effect» The Artist with the God Eyes
+During this turn, 1 holomem on your stage with [#Painting] gets Arts+20."
+679300,Raora Panthera (S) (hBP04-018),Raora Panthera S hBP04 018,https://tcgplayer-cdn.tcgplayer.com/product/679300_200w.jpg,87,24580,https://cpt.tcgcsv.com/0Lr7,2026-02-20T05:10:21.42,1,19.99,19.99,19.99,23.12,,Foil,Special,hBP04-018,,holomem,,White,,,,1st,140,[NN] Information Gathering Is My Specialty (50),1,#EN;#Justice;#Kemomimi;#Painting,,,"«Bloom Effect» The Artist with the God Eyes
+During this turn, 1 holomem on your stage with [#Painting] gets Arts+20."
+679301,Raora Panthera (R),Raora Panthera R,https://tcgplayer-cdn.tcgplayer.com/product/679301_200w.jpg,87,24580,https://cpt.tcgcsv.com/2Lr7,2026-02-20T05:10:21.42,1,0.18,0.75,2.0,0.46,,Foil,Rare,hBP04-019,,holomem,,White,,,,2nd,190,"[NNN] Art Streamer (70+)<br>
+ [Nollab Position Only]If your center holomem has [#Painting], this Arts gets +80.",2,#EN;#Justice;#Kemomimi;#Painting,,,"«Collab Effect» Currently Gathering Information
+Look at the top 3 cards of your deck. Reveal 1 holomem with [#Painting] from among them, and add it to hand. Then, return the remaining cards to the bottom of the deck in any order."
+679302,Raora Panthera (SR),Raora Panthera SR,https://tcgplayer-cdn.tcgplayer.com/product/679302_200w.jpg,87,24580,https://cpt.tcgcsv.com/3Lr7,2026-02-20T05:10:21.42,1,23.5,24.99,40.0,18.31,,Foil,Super Rare,hBP04-019,,holomem,,White,,,,2nd,190,"[NNN] Art Streamer (70+)<br>
+ [Nollab Position Only]If your center holomem has [#Painting], this Arts gets +80.",2,#EN;#Justice;#Kemomimi;#Painting,,,"«Collab Effect» Currently Gathering Information
+Look at the top 3 cards of your deck. Reveal 1 holomem with [#Painting] from among them, and add it to hand. Then, return the remaining cards to the bottom of the deck in any order."
+679303,Juufuutei Raden (C) (hBP04-020),Juufuutei Raden C hBP04 020,https://tcgplayer-cdn.tcgplayer.com/product/679303_200w.jpg,87,24580,https://cpt.tcgcsv.com/5Lr7,2026-02-20T05:10:21.42,1,0.11,0.41,1.23,0.41,,Normal,Common,hBP04-020,,holomem,,Green,,,,Debut,110,[N] The Juufuutei Family Are Still Apprentice Curtain Raisers! (20),1,#DEV_IS;#ReGLOSS;#Alcohol,[Extra] You may include any number of this holomem in the deck,[GN] I am Juufuutei Raden! (40),
+679304,Juufuutei Raden (U) (hBP04-021),Juufuutei Raden U hBP04 021,https://tcgplayer-cdn.tcgplayer.com/product/679304_200w.jpg,87,24580,https://cpt.tcgcsv.com/6Lr7,2026-02-20T05:10:21.42,1,0.1,0.25,1.23,0.16,,Normal,Uncommon,hBP04-021,,holomem,,Green,,,,Debut,90,[N] Raden Standby (30),1,#DEV_IS;#ReGLOSS;#Alcohol,,,"«Collab Effect» Bringing You Knowledge and Fun
+If you used an event with [#Mushroom] this turn, restore 20 HP to 1 of your holomem with [#ReGLOSS]."
+679305,Juufuutei Raden (S) (hBP04-021),Juufuutei Raden S hBP04 021,https://tcgplayer-cdn.tcgplayer.com/product/679305_200w.jpg,87,24580,https://cpt.tcgcsv.com/7Lr7,2026-02-20T05:10:21.42,1,1.82,2.35,3.99,2.36,,Foil,Special,hBP04-021,,holomem,,Green,,,,Debut,90,[N] Raden Standby (30),1,#DEV_IS;#ReGLOSS;#Alcohol,,,"«Collab Effect» Bringing You Knowledge and Fun
+If you used an event with [#Mushroom] this turn, restore 20 HP to 1 of your holomem with [#ReGLOSS]."
+679306,Juufuutei Raden (C) (hBP04-022),Juufuutei Raden C hBP04 022,https://tcgplayer-cdn.tcgplayer.com/product/679306_200w.jpg,87,24580,https://cpt.tcgcsv.com/8Lr7,2026-02-20T05:10:21.42,1,0.09,0.25,1.23,0.09,,Normal,Common,hBP04-022,,holomem,,Green,,,,1st,160,[G] Knowledgeable Clapback (30),1,#DEV_IS;#ReGLOSS;#Alcohol,,"[GN] Well, Something Like That (50)",
+679307,Juufuutei Raden (S) (hBP04-022),Juufuutei Raden S hBP04 022,https://tcgplayer-cdn.tcgplayer.com/product/679307_200w.jpg,87,24580,https://cpt.tcgcsv.com/9Lr7,2026-02-20T05:10:21.42,1,0.45,0.95,3.96,0.88,,Foil,Special,hBP04-022,,holomem,,Green,,,,1st,160,[G] Knowledgeable Clapback (30),1,#DEV_IS;#ReGLOSS;#Alcohol,,"[GN] Well, Something Like That (50)",
+679308,Juufuutei Raden (U) (hBP04-023),Juufuutei Raden U hBP04 023,https://tcgplayer-cdn.tcgplayer.com/product/679308_200w.jpg,87,24580,https://cpt.tcgcsv.com/bLr7,2026-02-20T05:10:21.42,1,0.05,0.25,1.23,0.24,,Normal,Uncommon,hBP04-023,,holomem,,Green,,,,1st,130,[N] Jokester (40),1,#DEV_IS;#ReGLOSS;#Alcohol,,,"«Gift» ReGLOSS's Hype Squad
+During your opponent's turn, when this holomem is downed, you may reattach 1 cheer from this holomem to your other holomem with [#ReGLOSS]."
+679309,Juufuutei Raden (S) (hBP04-023),Juufuutei Raden S hBP04 023,https://tcgplayer-cdn.tcgplayer.com/product/679309_200w.jpg,87,24580,https://cpt.tcgcsv.com/cLr7,2026-02-20T05:10:21.42,1,3.74,5.0,9.8,3.99,,Foil,Special,hBP04-023,,holomem,,Green,,,,1st,130,[N] Jokester (40),1,#DEV_IS;#ReGLOSS;#Alcohol,,,"«Gift» ReGLOSS's Hype Squad
+During your opponent's turn, when this holomem is downed, you may reattach 1 cheer from this holomem to your other holomem with [#ReGLOSS]."
+679310,Juufuutei Raden (R),Juufuutei Raden R,https://tcgplayer-cdn.tcgplayer.com/product/679310_200w.jpg,87,24580,https://cpt.tcgcsv.com/dLr7,2026-02-20T05:10:21.42,1,0.1,0.4,1.23,0.4,,Foil,Rare,hBP04-024,,holomem,,Green,,,,1st,170,"[G] Reminiscing Applause (30)<br>
+ You may send 1 cheer from your archive to this holomem.",1,#DEV_IS;#ReGLOSS;#Alcohol,,,"«Gift» Calm and Collected
+[Nenter Position Only]During your opponent's main phase, this holomem's HP cannot be reduced or changed by your opponent's abilities."
+679311,Juufuutei Raden (SR) (hBP04-024),Juufuutei Raden SR hBP04 024,https://tcgplayer-cdn.tcgplayer.com/product/679311_200w.jpg,87,24580,https://cpt.tcgcsv.com/fLr7,2026-02-20T05:10:21.42,1,8.0,19.83,43.5,8.7,,Foil,Super Rare,hBP04-024,,holomem,,Green,,,,1st,170,"[G] Reminiscing Applause (30)<br>
+ You may send 1 cheer from your archive to this holomem.",1,#DEV_IS;#ReGLOSS;#Alcohol,,,"«Gift» Calm and Collected
+[Nenter Position Only]During your opponent's main phase, this holomem's HP cannot be reduced or changed by your opponent's abilities."
+679312,Juufuutei Raden (RR),Juufuutei Raden RR,https://tcgplayer-cdn.tcgplayer.com/product/679312_200w.jpg,87,24580,https://cpt.tcgcsv.com/gLr7,2026-02-20T05:10:21.42,1,0.73,2.77,3.37,0.84,,Foil,Double Rare,hBP04-025,,holomem,,Green,,,,2nd,200,"[GGNN] Looks Like the Next Act Is Ready (140+)<br>
+ If your Oshi holomem is <Juufuutei Raden>, you may reattach 2 cheers from this holomem each to 2 of your back holomem:This Arts gets +30.",2,#DEV_IS;#ReGLOSS;#Alcohol,,,"«Collab Effect» Tradition and Revolution
+Reveal 1 event with [#Mushroom] from your deck, and add it to hand. Then, shuffle the deck."
+679313,Juufuutei Raden (SR) (hBP04-025),Juufuutei Raden SR hBP04 025,https://tcgplayer-cdn.tcgplayer.com/product/679313_200w.jpg,87,24580,https://cpt.tcgcsv.com/hLr7,2026-02-20T05:10:21.42,1,13.3,14.64,15.0,9.32,,Foil,Super Rare,hBP04-025,,holomem,,Green,,,,2nd,200,"[GGNN] Looks Like the Next Act Is Ready (140+)<br>
+ If your Oshi holomem is <Juufuutei Raden>, you may reattach 2 cheers from this holomem each to 2 of your back holomem:This Arts gets +30.",2,#DEV_IS;#ReGLOSS;#Alcohol,,,"«Collab Effect» Tradition and Revolution
+Reveal 1 event with [#Mushroom] from your deck, and add it to hand. Then, shuffle the deck."
+679314,Juufuutei Raden (UR),Juufuutei Raden UR,https://tcgplayer-cdn.tcgplayer.com/product/679314_200w.jpg,87,24580,https://cpt.tcgcsv.com/jLr7,2026-02-20T05:10:21.42,1,62.67,77.0,88.88,70.75,,Foil,Ultra Rare,hBP04-025,,holomem,,Green,,,,2nd,200,"[GGNN] Looks Like the Next Act Is Ready (140+)<br>
+ If your Oshi holomem is <Juufuutei Raden>, you may reattach 2 cheers from this holomem each to 2 of your back holomem:This Arts gets +30.",2,#DEV_IS;#ReGLOSS;#Alcohol,,,"«Collab Effect» Tradition and Revolution
+Reveal 1 event with [#Mushroom] from your deck, and add it to hand. Then, shuffle the deck."
+679315,Ookami Mio (R),Ookami Mio R,https://tcgplayer-cdn.tcgplayer.com/product/679315_200w.jpg,87,24580,https://cpt.tcgcsv.com/kLr7,2026-02-20T05:10:21.42,1,0.19,0.35,2.0,0.25,,Foil,Rare,hBP04-026,,holomem,,Green,,,,2nd,190,"[GNN] Wait, I Belong to Fubuki? (100+)<br>
+ If your stage has a holomem with [#GAMERS] other than <Ookami Mio>, this Arts gets +50.",2,#JP;#GAMERS;#Kemomimi;#Cooking,,,"«Bloom Effect» Fubuki Is Someone Special
+If your Oshi holomem is <Shirakami Fubuki>, reveal 1 [White cheer] from your cheer deck, and send it to your <Shirakami Fubuki>. Then, shuffle the cheer deck."
+679316,Ookami Mio (SR),Ookami Mio SR,https://tcgplayer-cdn.tcgplayer.com/product/679316_200w.jpg,87,24580,https://cpt.tcgcsv.com/lLr7,2026-02-20T05:10:21.42,1,3.75,5.0,15.0,4.35,,Foil,Super Rare,hBP04-026,,holomem,,Green,,,,2nd,190,"[GNN] Wait, I Belong to Fubuki? (100+)<br>
+ If your stage has a holomem with [#GAMERS] other than <Ookami Mio>, this Arts gets +50.",2,#JP;#GAMERS;#Kemomimi;#Cooking,,,"«Bloom Effect» Fubuki Is Someone Special
+If your Oshi holomem is <Shirakami Fubuki>, reveal 1 [White cheer] from your cheer deck, and send it to your <Shirakami Fubuki>. Then, shuffle the cheer deck."
+679317,Pavolia Reine (R),Pavolia Reine R,https://tcgplayer-cdn.tcgplayer.com/product/679317_200w.jpg,87,24580,https://cpt.tcgcsv.com/mLr7,2026-02-20T05:10:21.42,1,0.08,0.25,1.23,0.23,,Foil,Rare,hBP04-027,,holomem,,Green,,,,1st,130,[G] Terima Kasih (30),1,#ID;#ID Gen 2;#Bird;#Painting,,,"«Bloom Effect» HOLORO
+Send the top card of your cheer deck to your <Kureiji Ollie> or <Anya Melfissa>."
+679318,Pavolia Reine (SR),Pavolia Reine SR,https://tcgplayer-cdn.tcgplayer.com/product/679318_200w.jpg,87,24580,https://cpt.tcgcsv.com/nLr7,2026-02-20T05:10:21.42,1,2.97,3.33,8.0,3.14,,Foil,Super Rare,hBP04-027,,holomem,,Green,,,,1st,130,[G] Terima Kasih (30),1,#ID;#ID Gen 2;#Bird;#Painting,,,"«Bloom Effect» HOLORO
+Send the top card of your cheer deck to your <Kureiji Ollie> or <Anya Melfissa>."
+679319,Cecilia Immergreen (C) (hBP04-028),Cecilia Immergreen C hBP04 028,https://tcgplayer-cdn.tcgplayer.com/product/679319_200w.jpg,87,24580,https://cpt.tcgcsv.com/pLr7,2026-02-20T05:10:21.42,1,0.24,0.38,1.23,0.26,,Normal,Common,hBP04-028,,holomem,,Green,,,,Debut,100,[N] Melody of Justice (30),1,#EN;#Justice;#Language,[Extra] You may include any number of this holomem in the deck,,
+679320,Cecilia Immergreen (C) (hBP04-029),Cecilia Immergreen C hBP04 029,https://tcgplayer-cdn.tcgplayer.com/product/679320_200w.jpg,87,24580,https://cpt.tcgcsv.com/qLr7,2026-02-20T05:10:21.42,1,0.09,0.2,1.23,0.18,,Normal,Common,hBP04-029,,holomem,,Green,,,,1st,160,[NN] An Ancient Automaton (60),1,#EN;#Justice;#Language,,,
+679321,Cecilia Immergreen (S) (hBP04-029),Cecilia Immergreen S hBP04 029,https://tcgplayer-cdn.tcgplayer.com/product/679321_200w.jpg,87,24580,https://cpt.tcgcsv.com/rLr7,2026-02-20T05:10:21.42,1,0.5,2.33,3.95,2.23,,Foil,Special,hBP04-029,,holomem,,Green,,,,1st,160,[NN] An Ancient Automaton (60),1,#EN;#Justice;#Language,,,
+679322,Cecilia Immergreen (U),Cecilia Immergreen U,https://tcgplayer-cdn.tcgplayer.com/product/679322_200w.jpg,87,24580,https://cpt.tcgcsv.com/sLr7,2026-02-20T05:10:21.42,1,0.08,0.26,1.23,0.26,,Normal,Uncommon,hBP04-030,,holomem,,Green,,,,1st,130,[GN] Would You Like to Listen? (50),1,#EN;#Justice;#Language,,,"«Bloom Effect» I Came Up with a New Melody
+Choose 1~2 cheers from your stage, and you may reattach them divided as you choose to your holomem."
+679323,Cecilia Immergreen (S) (hBP04-030),Cecilia Immergreen S hBP04 030,https://tcgplayer-cdn.tcgplayer.com/product/679323_200w.jpg,87,24580,https://cpt.tcgcsv.com/tLr7,2026-02-20T05:10:21.42,1,5.7,8.76,12.49,6.02,,Foil,Special,hBP04-030,,holomem,,Green,,,,1st,130,[GN] Would You Like to Listen? (50),1,#EN;#Justice;#Language,,,"«Bloom Effect» I Came Up with a New Melody
+Choose 1~2 cheers from your stage, and you may reattach them divided as you choose to your holomem."
+679324,Cecilia Immergreen (R),Cecilia Immergreen R,https://tcgplayer-cdn.tcgplayer.com/product/679324_200w.jpg,87,24580,https://cpt.tcgcsv.com/vLr7,2026-02-20T05:10:21.42,1,0.19,0.33,1.31,0.31,,Foil,Rare,hBP04-031,,holomem,,Green,,,,2nd,200,"[GN] Multilingual (80)<br>
+ Choose 1 of your back holomem with [#Language]. Reveal 1 cheer from your cheer deck with the same color as the chosen holomem, and send it to the chosen holomem. Then, shuffle the cheer deck.",2,#EN;#Justice;#Language,,,"«Gift» Tea Party Across the Sea
+While your opponent's stage has holomem with [[#JP] or [#ID]], this holomem gets Arts+30."
+679325,Cecilia Immergreen (SR),Cecilia Immergreen SR,https://tcgplayer-cdn.tcgplayer.com/product/679325_200w.jpg,87,24580,https://cpt.tcgcsv.com/wLr7,2026-02-20T05:10:21.42,1,13.0,15.44,27.95,16.16,,Foil,Super Rare,hBP04-031,,holomem,,Green,,,,2nd,200,"[GN] Multilingual (80)<br>
+ Choose 1 of your back holomem with [#Language]. Reveal 1 cheer from your cheer deck with the same color as the chosen holomem, and send it to the chosen holomem. Then, shuffle the cheer deck.",2,#EN;#Justice;#Language,,,"«Gift» Tea Party Across the Sea
+While your opponent's stage has holomem with [[#JP] or [#ID]], this holomem gets Arts+30."
+679326,Ichijou Ririka (C) (hBP04-032),Ichijou Ririka C hBP04 032,https://tcgplayer-cdn.tcgplayer.com/product/679326_200w.jpg,87,24580,https://cpt.tcgcsv.com/xLr7,2026-02-20T05:10:21.42,1,0.1,0.25,1.23,0.23,,Normal,Common,hBP04-032,,holomem,,Red,,,,Debut,100,[N] Kon-Riri (30),1,#DEV_IS;#ReGLOSS;#Cooking;#Language,[Extra] You may include any number of this holomem in the deck,,
+679327,Ichijou Ririka (U) (hBP04-033),Ichijou Ririka U hBP04 033,https://tcgplayer-cdn.tcgplayer.com/product/679327_200w.jpg,87,24580,https://cpt.tcgcsv.com/zLr7,2026-02-20T05:10:21.42,1,0.05,0.31,1.23,0.15,,Normal,Uncommon,hBP04-033,,holomem,,Red,,,,Debut,120,[R] Ririka Standby (20),1,#DEV_IS;#ReGLOSS;#Cooking;#Language,,"[RN] Limit Over (30)<br>
+ If you used <Struggle Meal> this turn, deal 20 special damage to your opponent's collab holomem.",
+679328,Ichijou Ririka (S) (hBP04-033),Ichijou Ririka S hBP04 033,https://tcgplayer-cdn.tcgplayer.com/product/679328_200w.jpg,87,24580,https://cpt.tcgcsv.com/BLr7,2026-02-20T05:10:21.42,1,3.99,4.84,10.0,3.48,,Foil,Special,hBP04-033,,holomem,,Red,,,,Debut,120,[R] Ririka Standby (20),1,#DEV_IS;#ReGLOSS;#Cooking;#Language,,"[RN] Limit Over (30)<br>
+ If you used <Struggle Meal> this turn, deal 20 special damage to your opponent's collab holomem.",
+679329,Ichijou Ririka (C) (hBP04-034),Ichijou Ririka C hBP04 034,https://tcgplayer-cdn.tcgplayer.com/product/679329_200w.jpg,87,24580,https://cpt.tcgcsv.com/CLr7,2026-02-20T05:10:21.42,1,0.05,0.24,1.23,0.1,,Normal,Common,hBP04-034,,holomem,,Red,,,,1st,170,[R] Let's Dance (40),1,#DEV_IS;#ReGLOSS;#Cooking;#Language,,[RN] Subscribe or Die! (60),
+679330,Ichijou Ririka (S) (hBP04-034),Ichijou Ririka S hBP04 034,https://tcgplayer-cdn.tcgplayer.com/product/679330_200w.jpg,87,24580,https://cpt.tcgcsv.com/DLr7,2026-02-20T05:10:21.42,1,2.99,3.0,3.66,3.16,,Foil,Special,hBP04-034,,holomem,,Red,,,,1st,170,[R] Let's Dance (40),1,#DEV_IS;#ReGLOSS;#Cooking;#Language,,[RN] Subscribe or Die! (60),
+679331,Ichijou Ririka (U) (hBP04-035),Ichijou Ririka U hBP04 035,https://tcgplayer-cdn.tcgplayer.com/product/679331_200w.jpg,87,24580,https://cpt.tcgcsv.com/FLr7,2026-02-20T05:10:21.42,1,0.1,0.25,1.23,0.17,,Normal,Uncommon,hBP04-035,,holomem,,Red,,,,1st,130,"[RR] Entrepreneur Punch (50)<br>
+ Deal 20 special damage to your opponent's collab holomem.",1,#DEV_IS;#ReGLOSS;#Cooking;#Language,,,"«Bloom Effect» Struggle Meal Chef
+You may return 1 <Struggle Meal> from your archive to hand."
+679332,Ichijou Ririka (S) (hBP04-035),Ichijou Ririka S hBP04 035,https://tcgplayer-cdn.tcgplayer.com/product/679332_200w.jpg,87,24580,https://cpt.tcgcsv.com/GLr7,2026-02-20T05:10:21.42,1,3.75,5.5,7.24,3.26,,Foil,Special,hBP04-035,,holomem,,Red,,,,1st,130,"[RR] Entrepreneur Punch (50)<br>
+ Deal 20 special damage to your opponent's collab holomem.",1,#DEV_IS;#ReGLOSS;#Cooking;#Language,,,"«Bloom Effect» Struggle Meal Chef
+You may return 1 <Struggle Meal> from your archive to hand."
+679333,Ichijou Ririka (R),Ichijou Ririka R,https://tcgplayer-cdn.tcgplayer.com/product/679333_200w.jpg,87,24580,https://cpt.tcgcsv.com/HLr7,2026-02-20T05:10:21.42,1,0.12,0.35,1.23,0.28,,Foil,Rare,hBP04-036,,holomem,,Red,,,,1st,140,"[N] Heehee (30)<br>
+ If the target of this Arts is your opponent's collab holomem, draw 1 card.",1,#DEV_IS;#ReGLOSS;#Cooking;#Language,,,"«Bloom Effect» Keeping All the Delicious Food to Myself
+Deal 20 special damage to your opponent's collab holomem."
+679334,Ichijou Ririka (SR) (hBP04-036),Ichijou Ririka SR hBP04 036,https://tcgplayer-cdn.tcgplayer.com/product/679334_200w.jpg,87,24580,https://cpt.tcgcsv.com/JLr7,2026-02-20T05:10:21.42,1,4.25,9.99,10.0,5.92,,Foil,Super Rare,hBP04-036,,holomem,,Red,,,,1st,140,"[N] Heehee (30)<br>
+ If the target of this Arts is your opponent's collab holomem, draw 1 card.",1,#DEV_IS;#ReGLOSS;#Cooking;#Language,,,"«Bloom Effect» Keeping All the Delicious Food to Myself
+Deal 20 special damage to your opponent's collab holomem."
+679335,Ichijou Ririka (RR),Ichijou Ririka RR,https://tcgplayer-cdn.tcgplayer.com/product/679335_200w.jpg,87,24580,https://cpt.tcgcsv.com/KLr7,2026-02-20T05:10:21.42,1,0.15,0.65,3.42,0.62,,Foil,Double Rare,hBP04-037,,holomem,,Red,,,,2nd,200,"[RNN] Oh? Wanna Fight? (80)<br>
+ Deal 50 special damage to your opponent's center holomem. If you used <Struggle Meal> this turn, deal 30 special damage to your opponent's center holomem or collab holomem.",2,#DEV_IS;#ReGLOSS;#Cooking;#Language,,,"«Bloom Effect» KPG
+You may roll a die once:If it is 4 or greater, and your opponent has no collab holomem, your opponent moves 1 of their back holomem to the collab position (Moving is not regarded as collab)."
+679336,Ichijou Ririka (SR) (hBP04-037),Ichijou Ririka SR hBP04 037,https://tcgplayer-cdn.tcgplayer.com/product/679336_200w.jpg,87,24580,https://cpt.tcgcsv.com/LLr7,2026-02-20T05:10:21.42,1,6.0,6.99,12.0,6.71,,Foil,Super Rare,hBP04-037,,holomem,,Red,,,,2nd,200,"[RNN] Oh? Wanna Fight? (80)<br>
+ Deal 50 special damage to your opponent's center holomem. If you used <Struggle Meal> this turn, deal 30 special damage to your opponent's center holomem or collab holomem.",2,#DEV_IS;#ReGLOSS;#Cooking;#Language,,,"«Bloom Effect» KPG
+You may roll a die once:If it is 4 or greater, and your opponent has no collab holomem, your opponent moves 1 of their back holomem to the collab position (Moving is not regarded as collab)."
+679337,Ichijou Ririka (UR),Ichijou Ririka UR,https://tcgplayer-cdn.tcgplayer.com/product/679337_200w.jpg,87,24580,https://cpt.tcgcsv.com/MLr7,2026-02-20T05:10:21.42,1,90.0,95.0,99.99,86.88,,Foil,Ultra Rare,hBP04-037,,holomem,,Red,,,,2nd,200,"[RNN] Oh? Wanna Fight? (80)<br>
+ Deal 50 special damage to your opponent's center holomem. If you used <Struggle Meal> this turn, deal 30 special damage to your opponent's center holomem or collab holomem.",2,#DEV_IS;#ReGLOSS;#Cooking;#Language,,,"«Bloom Effect» KPG
+You may roll a die once:If it is 4 or greater, and your opponent has no collab holomem, your opponent moves 1 of their back holomem to the collab position (Moving is not regarded as collab)."
+679338,Houshou Marine (R),Houshou Marine R,https://tcgplayer-cdn.tcgplayer.com/product/679338_200w.jpg,87,24580,https://cpt.tcgcsv.com/NLr7,2026-02-20T05:10:21.42,1,0.25,0.56,2.25,0.5,,Foil,Rare,hBP04-038,,holomem,,Red,,,,2nd,200,"[RN] Perv (50+)<br>
+ This Arts gets +20 for each holomem that is stacked to this holomem.",2,#JP;#Gen 3;#Painting;#Sea,,,"«Bloom Effect» Where Are You Looking~!!
+Deal 10 special damage to your opponent's center holomem and collab holomem."
+679339,Houshou Marine (SR),Houshou Marine SR,https://tcgplayer-cdn.tcgplayer.com/product/679339_200w.jpg,87,24580,https://cpt.tcgcsv.com/PLr7,2026-02-20T05:10:21.42,1,15.23,24.1,47.48,11.05,,Foil,Super Rare,hBP04-038,,holomem,,Red,,,,2nd,200,"[RN] Perv(50+)<br>
+ This Arts gets +20 for each holomem that is stacked to this holomem.",2,#JP;#Gen 3;#Painting;#Sea,,,"«Bloom Effect» Where Are You Looking~!!
+Deal 10 special damage to your opponent's center holomem and collab holomem."
+679340,Kaela Kovalskia (C) (hBP04-039),Kaela Kovalskia C hBP04 039,https://tcgplayer-cdn.tcgplayer.com/product/679340_200w.jpg,87,24580,https://cpt.tcgcsv.com/QLr7,2026-02-20T05:10:21.42,1,0.1,0.25,2.0,0.17,,Normal,Common,hBP04-039,,holomem,,Red,,,,Debut,120,[N] Oha-Ela (20),1,#ID;#ID Gen 3,[Extra] You may include any number of this holomem in the deck,,
+679341,Kaela Kovalskia (C) (hBP04-040),Kaela Kovalskia C hBP04 040,https://tcgplayer-cdn.tcgplayer.com/product/679341_200w.jpg,87,24580,https://cpt.tcgcsv.com/RLr7,2026-02-20T05:10:21.42,1,0.1,0.21,1.23,0.15,,Normal,Common,hBP04-040,,holomem,,Red,,,,1st,170,[N] When Life is Hard (30),1,#ID;#ID Gen 3,,[RN] DAHLAH (50),
+679342,Kaela Kovalskia (S) (hBP04-040),Kaela Kovalskia S hBP04 040,https://tcgplayer-cdn.tcgplayer.com/product/679342_200w.jpg,87,24580,https://cpt.tcgcsv.com/SLr7,2026-02-20T05:10:21.42,1,0.99,1.69,5.0,1.38,,Foil,Special,hBP04-040,,holomem,,Red,,,,1st,170,[N] When Life is Hard (30),1,#ID;#ID Gen 3,,[RN] DAHLAH (50),
+679343,Kaela Kovalskia (U),Kaela Kovalskia U,https://tcgplayer-cdn.tcgplayer.com/product/679343_200w.jpg,87,24580,https://cpt.tcgcsv.com/TLr7,2026-02-20T05:10:21.42,1,0.02,0.25,1.23,0.21,,Normal,Uncommon,hBP04-041,,holomem,,Red,,,,1st,130,[N] Silent Laugh (20),1,#ID;#ID Gen 3,,,"«Bloom Effect» JDON My Soul
+You may return 1 tool from your archive to hand."
+679344,Kaela Kovalskia (S) (hBP04-041),Kaela Kovalskia S hBP04 041,https://tcgplayer-cdn.tcgplayer.com/product/679344_200w.jpg,87,24580,https://cpt.tcgcsv.com/VLr7,2026-02-20T05:10:21.42,1,11.47,16.5,19.8,3.5,,Foil,Special,hBP04-041,,holomem,,Red,,,,1st,130,[N] Silent Laugh (20),1,#ID;#ID Gen 3,,,"«Bloom Effect» JDON My Soul
+You may return 1 tool from your archive to hand."
+679345,Kaela Kovalskia (RR),Kaela Kovalskia RR,https://tcgplayer-cdn.tcgplayer.com/product/679345_200w.jpg,87,24580,https://cpt.tcgcsv.com/WLr7,2026-02-20T05:10:21.42,1,0.17,0.53,3.42,0.53,,Foil,Double Rare,hBP04-042,,buzz holomem,,Red,,,,1st,240,"[R] holoh3ro (30)<br>
+ If your stage has other holomem with [#ID Gen 3], draw 1 card.",2,#ID;#ID Gen 3,"[Extra] If this holomem is downed, you get life-2","[RNN] Certified Masterpiece (90)<br>
+ If you have a holomem that has a tool with [#Kaela's Arms] attached, deal 30 special damage to your opponent's collab holomem.",
+679346,Kaela Kovalskia (SR),Kaela Kovalskia SR,https://tcgplayer-cdn.tcgplayer.com/product/679346_200w.jpg,87,24580,https://cpt.tcgcsv.com/XLr7,2026-02-20T05:10:21.42,1,16.14,18.08,19.99,12.12,,Foil,Super Rare,hBP04-042,,buzz holomem,,Red,,,,1st,240,"[R] holoh3ro (30)<br>
+ If your stage has other holomem with [#ID Gen 3], draw 1 card.",2,#ID;#ID Gen 3,"[Extra] If this holomem is downed, you get life-2","[RNN] Certified Masterpiece (90)<br>
+ If you have a holomem that has a tool with [#Kaela's Arms] attached, deal 30 special damage to your opponent's collab holomem.",
+679347,Kaela Kovalskia (UR),Kaela Kovalskia UR,https://tcgplayer-cdn.tcgplayer.com/product/679347_200w.jpg,87,24580,https://cpt.tcgcsv.com/ZLr7,2026-02-20T05:10:21.42,1,29.7,29.7,29.7,30.42,,Foil,Ultra Rare,hBP04-042,,buzz holomem,,Red,,,,1st,240,"[R] holoh3ro (30)<br>
+ If your stage has other holomem with [#ID Gen 3], draw 1 card.",2,#ID;#ID Gen 3,"[Extra] If this holomem is downed, you get life-2","[RNN] Certified Masterpiece (90)<br>
+ If you have a holomem that has a tool with [#Kaela's Arms] attached, deal 30 special damage to your opponent's collab holomem.",
+679348,Yukihana Lamy (C) (hBP04-043),Yukihana Lamy C hBP04 043,https://tcgplayer-cdn.tcgplayer.com/product/679348_200w.jpg,87,24580,https://cpt.tcgcsv.com/-Lr7,2026-02-20T05:10:21.42,1,0.1,0.28,20.0,0.27,,Normal,Common,hBP04-043,,holomem,,Blue,,,,Debut,90,"[N] Lamyoohoo (20)<br>
+ Deal 10 special damage to 1 of your opponent's holomem. However, your opponent's life does not reduce even if downed.",1,#JP;#Gen 5;#Half-Elf;#Alcohol,[Extra] You may include any number of this holomem in the deck,,
+679349,Yukihana Lamy (U) (hBP04-044),Yukihana Lamy U hBP04 044,https://tcgplayer-cdn.tcgplayer.com/product/679349_200w.jpg,87,24580,https://cpt.tcgcsv.com/_Lr7,2026-02-20T05:10:21.42,1,0.13,0.25,1.23,0.2,,Normal,Uncommon,hBP04-044,,holomem,,Blue,,,,Debut,80,[N] Ugh… (30),1,#JP;#Gen 5;#Half-Elf;#Alcohol,,,"«Collab Effect» Snow Flower
+If you do not have a <Yukihana Lamy> with <Yukimin> attached, reveal 1 <Yukimin> from your deck, and attach it to your <Yukihana Lamy>. Then, shuffle the deck."
+679350,Yukihana Lamy (S) (hBP04-044),Yukihana Lamy S hBP04 044,https://tcgplayer-cdn.tcgplayer.com/product/679350_200w.jpg,87,24580,https://cpt.tcgcsv.com/0Mr7,2026-02-20T05:10:21.42,1,1.65,2.08,4.0,2.37,,Foil,Special,hBP04-044,,holomem,,Blue,,,,Debut,80,[N] Ugh… (30),1,#JP;#Gen 5;#Half-Elf;#Alcohol,,,"«Collab Effect» Snow Flower
+If you do not have a <Yukihana Lamy> with <Yukimin> attached, reveal 1 <Yukimin> from your deck, and attach it to your <Yukihana Lamy>. Then, shuffle the deck."
+679351,Yukihana Lamy (C) (hBP04-045),Yukihana Lamy C hBP04 045,https://tcgplayer-cdn.tcgplayer.com/product/679351_200w.jpg,87,24580,https://cpt.tcgcsv.com/2Mr7,2026-02-20T05:10:21.42,1,0.03,0.25,1.23,0.15,,Normal,Common,hBP04-045,,holomem,,Blue,,,,1st,150,[B] Lamy Later (30),1,#JP;#Gen 5;#Half-Elf;#Alcohol,,[BN] I Can't Defeat the Boss~ (50),
+679352,Yukihana Lamy (S) (hBP04-045),Yukihana Lamy S hBP04 045,https://tcgplayer-cdn.tcgplayer.com/product/679352_200w.jpg,87,24580,https://cpt.tcgcsv.com/3Mr7,2026-02-20T05:10:21.42,1,1.0,1.29,3.93,1.16,,Foil,Special,hBP04-045,,holomem,,Blue,,,,1st,150,[B] Lamy Later (30),1,#JP;#Gen 5;#Half-Elf;#Alcohol,,[BN] I Can't Defeat the Boss~ (50),
+679353,Yukihana Lamy (U) (hBP04-046),Yukihana Lamy U hBP04 046,https://tcgplayer-cdn.tcgplayer.com/product/679353_200w.jpg,87,24580,https://cpt.tcgcsv.com/5Mr7,2026-02-20T05:10:21.42,1,0.13,0.25,1.23,0.22,,Normal,Uncommon,hBP04-046,,holomem,,Blue,,,,1st,130,"[N] I'll Work Very Hard! (30)<br>
+ If you have a holomem with a fan attached, deal 10 special damage to 1 of your opponent's holomem.",1,#JP;#Gen 5;#Half-Elf;#Alcohol,,,
+679354,Yukihana Lamy (S) (hBP04-046),Yukihana Lamy S hBP04 046,https://tcgplayer-cdn.tcgplayer.com/product/679354_200w.jpg,87,24580,https://cpt.tcgcsv.com/6Mr7,2026-02-20T05:10:21.42,1,1.39,1.73,6.9,1.94,,Foil,Special,hBP04-046,,holomem,,Blue,,,,1st,130,"[N] I'll Work Very Hard! (30)<br>
+ If you have a holomem with a fan attached, deal 10 special damage to 1 of your opponent's holomem.",1,#JP;#Gen 5;#Half-Elf;#Alcohol,,,
+679355,Yukihana Lamy (R),Yukihana Lamy R,https://tcgplayer-cdn.tcgplayer.com/product/679355_200w.jpg,87,24580,https://cpt.tcgcsv.com/7Mr7,2026-02-20T05:10:21.42,1,0.1,0.3,1.23,0.28,,Foil,Rare,hBP04-047,,holomem,,Blue,,,,1st,120,[BN] Bouquet of Shimmering Snow (50),1,#JP;#Gen 5;#Half-Elf;#Alcohol,,,"«Collab Effect» fleur
+If you have a <Yukihana Lamy> with <Yukimin> attached, deal 20 special damage to 1 of your opponent's holomem. However, your opponent's life does not reduce even if downed."
+679356,Yukihana Lamy (SR) (hBP04-047),Yukihana Lamy SR hBP04 047,https://tcgplayer-cdn.tcgplayer.com/product/679356_200w.jpg,87,24580,https://cpt.tcgcsv.com/8Mr7,2026-02-20T05:10:21.42,1,5.25,7.43,38.88,7.4,,Foil,Super Rare,hBP04-047,,holomem,,Blue,,,,1st,120,[BN] Bouquet of Shimmering Snow (50),1,#JP;#Gen 5;#Half-Elf;#Alcohol,,,"«Collab Effect» fleur
+If you have a <Yukihana Lamy> with <Yukimin> attached, deal 20 special damage to 1 of your opponent's holomem. However, your opponent's life does not reduce even if downed."
+679357,Yukihana Lamy (RR),Yukihana Lamy RR,https://tcgplayer-cdn.tcgplayer.com/product/679357_200w.jpg,87,24580,https://cpt.tcgcsv.com/9Mr7,2026-02-20T05:10:21.42,1,0.25,1.0,5.0,0.62,,Foil,Double Rare,hBP04-048,,holomem,,Blue,,,,2nd,190,"[BNN] May Today Be a Blessed Day (130)<br>
+ You may archive 1 cheer from this holomem:Deal 30 special damage to 1 of your opponent's center holomem or back holomem.",2,#JP;#Gen 5;#Half-Elf;#Alcohol,,,"«Bloom Effect» Lady of Unylia
+Send the top card of your cheer deck to your <Yukihana Lamy> with <Yukimin> attached."
+679358,Yukihana Lamy (SR) (hBP04-048),Yukihana Lamy SR hBP04 048,https://tcgplayer-cdn.tcgplayer.com/product/679358_200w.jpg,87,24580,https://cpt.tcgcsv.com/bMr7,2026-02-20T05:10:21.42,1,3.0,3.58,9.99,3.91,,Foil,Super Rare,hBP04-048,,holomem,,Blue,,,,2nd,190,"[BNN] May Today Be a Blessed Day (130)<br>
+ You may archive 1 cheer from this holomem:Deal 30 special damage to 1 of your opponent's center holomem or back holomem.",2,#JP;#Gen 5;#Half-Elf;#Alcohol,,,"«Bloom Effect» Lady of Unylia
+Send the top card of your cheer deck to your <Yukihana Lamy> with <Yukimin> attached."
+679359,Yukihana Lamy (UR),Yukihana Lamy UR,https://tcgplayer-cdn.tcgplayer.com/product/679359_200w.jpg,87,24580,https://cpt.tcgcsv.com/cMr7,2026-02-20T05:10:21.42,1,40.96,45.32,53.72,51.71,,Foil,Ultra Rare,hBP04-048,,holomem,,Blue,,,,2nd,190,"[BNN] May Today Be a Blessed Day (130)<br>
+ You may archive 1 cheer from this holomem:Deal 30 special damage to 1 of your opponent's center holomem or back holomem.",2,#JP;#Gen 5;#Half-Elf;#Alcohol,,,"«Bloom Effect» Lady of Unylia
+Send the top card of your cheer deck to your <Yukihana Lamy> with <Yukimin> attached."
+679360,Moona Hoshinova (R),Moona Hoshinova R,https://tcgplayer-cdn.tcgplayer.com/product/679360_200w.jpg,87,24580,https://cpt.tcgcsv.com/dMr7,2026-02-20T05:10:21.42,1,0.14,0.33,1.23,0.26,,Foil,Rare,hBP04-049,,holomem,,Blue,,,,2nd,190,[N] Stage of Moon and Stars (50),2,#ID;#ID Gen 1;#Singing,,"[BNN] Shining Moon (80+)<br>
+ Deal 20 special damage to 1 of your opponent's back holomem. If your stage has a holomem with different color as this holomem, this Arts gets +50.",
+679361,Moona Hoshinova (SR),Moona Hoshinova SR,https://tcgplayer-cdn.tcgplayer.com/product/679361_200w.jpg,87,24580,https://cpt.tcgcsv.com/fMr7,2026-02-20T05:10:21.42,1,3.6,5.0,8.0,2.91,,Foil,Super Rare,hBP04-049,,holomem,,Blue,,,,2nd,190,[N] Stage of Moon and Stars (50),2,#ID;#ID Gen 1;#Singing,,"[BNN] Shining Moon (80+)<br>
+ Deal 20 special damage to 1 of your opponent's back holomem. If your stage has a holomem with different color as this holomem, this Arts gets +50.",
+679362,Shiori Novella (C) (hBP04-050),Shiori Novella C hBP04 050,https://tcgplayer-cdn.tcgplayer.com/product/679362_200w.jpg,87,24580,https://cpt.tcgcsv.com/gMr7,2026-02-20T05:10:21.42,1,0.15,0.29,1.23,0.24,,Normal,Common,hBP04-050,,holomem,,Blue,,,,Debut,110,[N] Shiori~n! (30),1,#EN;#Advent,[Extra] You may include any number of this holomem in the deck,,
+679363,Shiori Novella (C) (hBP04-051),Shiori Novella C hBP04 051,https://tcgplayer-cdn.tcgplayer.com/product/679363_200w.jpg,87,24580,https://cpt.tcgcsv.com/hMr7,2026-02-20T05:10:21.42,1,0.08,0.25,1.23,0.19,,Normal,Common,hBP04-051,,holomem,,Blue,,,,1st,150,[B] Don't You Think That's a Wonderful Story? (30),1,#EN;#Advent,,[NN] Thirst for Knowledge (50),
+679364,Shiori Novella (S) (hBP04-051),Shiori Novella S hBP04 051,https://tcgplayer-cdn.tcgplayer.com/product/679364_200w.jpg,87,24580,https://cpt.tcgcsv.com/jMr7,2026-02-20T05:10:21.42,1,5.0,6.0,7.5,6.61,,Foil,Special,hBP04-051,,holomem,,Blue,,,,1st,150,[B] Don't You Think That's a Wonderful Story? (30),1,#EN;#Advent,,[NN] Thirst for Knowledge (50),
+679365,Shiori Novella (U),Shiori Novella U,https://tcgplayer-cdn.tcgplayer.com/product/679365_200w.jpg,87,24580,https://cpt.tcgcsv.com/kMr7,2026-02-20T05:10:21.42,1,0.09,0.3,1.23,0.24,,Normal,Uncommon,hBP04-052,,holomem,,Blue,,,,1st,120,[N] Fascinating Story (20),1,#EN;#Advent,,,"«Bloom Effect» Prison Break Plan
+Deal 20 special damage to 1 of your opponent's back holomem. However, your opponent's life does not reduce even if downed."
+679366,Shiori Novella (S) (hBP04-052),Shiori Novella S hBP04 052,https://tcgplayer-cdn.tcgplayer.com/product/679366_200w.jpg,87,24580,https://cpt.tcgcsv.com/lMr7,2026-02-20T05:10:21.42,1,3.5,5.71,6.0,4.83,,Foil,Special,hBP04-052,,holomem,,Blue,,,,1st,120,[N] Fascinating Story (20),1,#EN;#Advent,,,"«Bloom Effect» Prison Break Plan
+Deal 20 special damage to 1 of your opponent's back holomem. However, your opponent's life does not reduce even if downed."
+679367,Shiori Novella (RR),Shiori Novella RR,https://tcgplayer-cdn.tcgplayer.com/product/679367_200w.jpg,87,24580,https://cpt.tcgcsv.com/mMr7,2026-02-20T05:10:21.42,1,21.5,23.6,30.0,22.48,,Foil,Double Rare,hBP04-053,,buzz holomem,,Blue,,,,1st,230,"[BNN] Bookmark of a Memory (70)<br>
+ You may reveal the top card of your holo Power:If the revealed card is a holomem with [#EN], deal 20 special damage to 1 of your opponent's holomem. Then, return the revealed card to the bottom of the holo Power face down.",2,#EN;#Advent,"[Extra] If this holomem is downed, you get life-2",,"«Bloom Effect» Forbidden Knowledge
+Send the top card of your cheer deck to your holomem with [#EN]."
+679368,Shiori Novella (SR),Shiori Novella SR,https://tcgplayer-cdn.tcgplayer.com/product/679368_200w.jpg,87,24580,https://cpt.tcgcsv.com/nMr7,2026-02-20T05:10:21.42,1,25.0,44.99,49.4,26.24,,Foil,Super Rare,hBP04-053,,buzz holomem,,Blue,,,,1st,230,"[BNN] Bookmark of a Memory (70)<br>
+ You may reveal the top card of your holo Power:If the revealed card is a holomem with [#EN], deal 20 special damage to 1 of your opponent's holomem. Then, return the revealed card to the bottom of the holo Power face down.",2,#EN;#Advent,"[Extra] If this holomem is downed, you get life-2",,"«Bloom Effect» Forbidden Knowledge
+Send the top card of your cheer deck to your holomem with [#EN]."
+679369,Shiori Novella (UR),Shiori Novella UR,https://tcgplayer-cdn.tcgplayer.com/product/679369_200w.jpg,87,24580,https://cpt.tcgcsv.com/pMr7,2026-02-20T05:10:21.42,1,169.99,169.99,169.99,130.07,,Foil,Ultra Rare,hBP04-053,,buzz holomem,,Blue,,,,1st,230,"[BNN] Bookmark of a Memory (70)<br>
+ You may reveal the top card of your holo Power:If the revealed card is a holomem with [#EN], deal 20 special damage to 1 of your opponent's holomem. Then, return the revealed card to the bottom of the holo Power face down.",2,#EN;#Advent,"[Extra] If this holomem is downed, you get life-2",,"«Bloom Effect» Forbidden Knowledge
+Send the top card of your cheer deck to your holomem with [#EN]."
+679370,La+ Darknesss (C) (hBP04-054),Laplus Darknesss C hBP04 054,https://tcgplayer-cdn.tcgplayer.com/product/679370_200w.jpg,87,24580,https://cpt.tcgcsv.com/qMr7,2026-02-20T05:10:21.42,1,0.2,0.35,1.23,0.24,,Normal,Common,hBP04-054,,holomem,,Purple,,,,Debut,100,"[N] See Me, Hear Me, All of You!! (30)",,#JP;#holoX;#Shooter,[Extra] You may include any number of this holomem in the deck,,
+679371,La+ Darknesss (S) (hBP04-054),Laplus Darknesss S hBP04 054,https://tcgplayer-cdn.tcgplayer.com/product/679371_200w.jpg,87,24580,https://cpt.tcgcsv.com/rMr7,2026-02-20T05:10:21.42,1,,,,,,,Special,hBP04-054,,holomem,,Purple,,,,Debut,100,"[N] See Me, Hear Me, All of You!! (30)",,#JP;#holoX;#Shooter,[Extra] You may include any number of this holomem in the deck,,
+679372,La+ Darknesss (U) (hBP04-055),Laplus Darknesss U hBP04 055,https://tcgplayer-cdn.tcgplayer.com/product/679372_200w.jpg,87,24580,https://cpt.tcgcsv.com/sMr7,2026-02-20T05:10:21.42,1,0.15,0.25,1.23,0.21,,Normal,Uncommon,hBP04-055,,holomem,,Purple,,,,Debut,100,"[P] We Who Rule the Star of Eden! (30+)<br>
+ This Arts gets +10 for each of your opponent's resting holomem.",,#JP;#holoX;#Shooter,,,"«Collab Effect» Kneel Over There!
+You may roll a die once:If it is 3 or greater, rest 1 of your opponent's back holomem."
+679373,La+ Darknesss (S) (hBP04-055),Laplus Darknesss S hBP04 055,https://tcgplayer-cdn.tcgplayer.com/product/679373_200w.jpg,87,24580,https://cpt.tcgcsv.com/tMr7,2026-02-20T05:10:21.42,1,3.68,4.0,18.49,3.87,,Foil,Special,hBP04-055,,holomem,,Purple,,,,Debut,100,"[P] We Who Rule the Star of Eden! (30+)<br>
+ This Arts gets +10 for each of your opponent's resting holomem.",,#JP;#holoX;#Shooter,,,"«Collab Effect» Kneel Over There!
+You may roll a die once:If it is 3 or greater, rest 1 of your opponent's back holomem."
+679374,La+ Darknesss (C) (hBP04-056),Laplus Darknesss C hBP04 056,https://tcgplayer-cdn.tcgplayer.com/product/679374_200w.jpg,87,24580,https://cpt.tcgcsv.com/vMr7,2026-02-20T05:10:21.42,1,0.09,0.24,1.23,0.16,,Normal,Common,hBP04-056,,holomem,,Purple,,,,1st,160,[P] I Love Strawberries! (40),1,#JP;#holoX;#Shooter,,"[PP] Thank You, +mate! (70)",
+679375,La+ Darknesss (S) (hBP04-056),Laplus Darknesss S hBP04 056,https://tcgplayer-cdn.tcgplayer.com/product/679375_200w.jpg,87,24580,https://cpt.tcgcsv.com/wMr7,2026-02-20T05:10:21.42,1,0.97,2.0,3.9,1.83,,Foil,Special,hBP04-056,,holomem,,Purple,,,,1st,160,[P] I Love Strawberries! (40),1,#JP;#holoX;#Shooter,,"[PP] Thank You, +mate! (70)",
+679376,La+ Darknesss (U) (hBP04-057),Laplus Darknesss U hBP04 057,https://tcgplayer-cdn.tcgplayer.com/product/679376_200w.jpg,87,24580,https://cpt.tcgcsv.com/xMr7,2026-02-20T05:10:21.42,1,0.15,0.25,1.23,0.22,,Normal,Uncommon,hBP04-057,,holomem,,Purple,,,,1st,130,[N] I'll Show You the Best Stage Ever!! (40),,#JP;#holoX;#Shooter,,,"«Bloom Effect» holoX Assemble
+You may roll a die once:If it is odd, return 1 holomem with [#holoX] from your archive to hand. If it is even, return 1 holomem with [#holoX] from your archive to the top of the deck."
+679377,La+ Darknesss (S) (hBP04-057),Laplus Darknesss S hBP04 057,https://tcgplayer-cdn.tcgplayer.com/product/679377_200w.jpg,87,24580,https://cpt.tcgcsv.com/zMr7,2026-02-20T05:10:21.42,1,5.0,7.87,10.0,4.72,,Foil,Special,hBP04-057,,holomem,,Purple,,,,1st,130,[N] I'll Show You the Best Stage Ever!! (40),,#JP;#holoX;#Shooter,,,"«Bloom Effect» holoX Assemble
+You may roll a die once:If it is odd, return 1 holomem with [#holoX] from your archive to hand. If it is even, return 1 holomem with [#holoX] from your archive to the top of the deck."
+679378,La+ Darknesss (R),Laplus Darknesss R,https://tcgplayer-cdn.tcgplayer.com/product/679378_200w.jpg,87,24580,https://cpt.tcgcsv.com/BMr7,2026-02-20T05:10:21.42,1,0.15,0.28,1.23,0.25,,Foil,Rare,hBP04-058,,holomem,,Purple,,,,1st,140,[P] You Dare Challenge Me? (30),,#JP;#holoX;#Shooter,,,"«Collab Effect» Shall We Test Your Fate?
+You may roll a die 3 times:Deal 10 special damage to your opponent's center holomem for each odd result rolled."
+679379,La+ Darknesss (SR) (hBP04-058),Laplus Darknesss SR hBP04 058,https://tcgplayer-cdn.tcgplayer.com/product/679379_200w.jpg,87,24580,https://cpt.tcgcsv.com/CMr7,2026-02-20T05:10:21.42,1,8.0,12.32,40.0,10.87,,Foil,Super Rare,hBP04-058,,holomem,,Purple,,,,1st,140,[P] You Dare Challenge Me? (30),,#JP;#holoX;#Shooter,,,"«Collab Effect» Shall We Test Your Fate?
+You may roll a die 3 times:Deal 10 special damage to your opponent's center holomem for each odd result rolled."
+679380,La+ Darknesss (RR),Laplus Darknesss RR,https://tcgplayer-cdn.tcgplayer.com/product/679380_200w.jpg,87,24580,https://cpt.tcgcsv.com/DMr7,2026-02-20T05:10:21.42,1,0.69,1.23,3.5,1.06,,Foil,Double Rare,hBP04-059,,holomem,,Purple,,,,2nd,200,"[PNN] Legend of My Supremacy (120)<br>
+ Deal 10 special damage to your opponent's center holomem for each time a die was rolled by your abilities this turn.",2,#JP;#holoX;#Shooter,,,"«Bloom Effect» Yes My Dark!
+By archiving 1 card from your hand, you may roll a die 3 times:Draw 1 card for each odd result rolled. You may only use [Bloom Effect] ""Yes My Dark!"" once per turn."
+679381,La+ Darknesss (SR) (hBP04-059),Laplus Darknesss SR hBP04 059,https://tcgplayer-cdn.tcgplayer.com/product/679381_200w.jpg,87,24580,https://cpt.tcgcsv.com/FMr7,2026-02-20T05:10:21.42,1,5.0,5.9,37.94,5.65,,Foil,Super Rare,hBP04-059,,holomem,,Purple,,,,2nd,200,"[PNN] Legend of My Supremacy (120)<br>
+ Deal 10 special damage to your opponent's center holomem for each time a die was rolled by your abilities this turn.",2,#JP;#holoX;#Shooter,,,"«Bloom Effect» Yes My Dark!
+By archiving 1 card from your hand, you may roll a die 3 times:Draw 1 card for each odd result rolled. You may only use [Bloom Effect] ""Yes My Dark!"" once per turn."
+679382,La+ Darknesss (UR),Laplus Darknesss UR,https://tcgplayer-cdn.tcgplayer.com/product/679382_200w.jpg,87,24580,https://cpt.tcgcsv.com/GMr7,2026-02-20T05:10:21.42,1,52.0,57.95,88.88,57.33,,Foil,Ultra Rare,hBP04-059,,holomem,,Purple,,,,2nd,200,"[PNN] Legend of My Supremacy (120)<br>
+ Deal 10 special damage to your opponent's center holomem for each time a die was rolled by your abilities this turn.",2,#JP;#holoX;#Shooter,,,"«Bloom Effect» Yes My Dark!
+By archiving 1 card from your hand, you may roll a die 3 times:Draw 1 card for each odd result rolled. You may only use [Bloom Effect] ""Yes My Dark!"" once per turn."
+679383,Murasaki Shion (R),Murasaki Shion R,https://tcgplayer-cdn.tcgplayer.com/product/679383_200w.jpg,87,24580,https://cpt.tcgcsv.com/HMr7,2026-02-20T05:10:21.42,1,0.15,0.35,2.0,0.24,,Foil,Rare,hBP04-060,,buzz holomem,,Purple,,,,1st,240,"[PN] Game Streaming (40)<br>
+ Deal 10 special damage to your opponent's center holomem and collab holomem for each of your opponent's center holomem's cheers.",2,#JP;#Gen 2,"[Extra] If this holomem is downed, you get life-2",,"«Bloom Effect» Cheer Reverse
+You may send 1 cheer from your opponent's archive to your opponent's center holomem."
+679384,Murasaki Shion (SR),Murasaki Shion SR,https://tcgplayer-cdn.tcgplayer.com/product/679384_200w.jpg,87,24580,https://cpt.tcgcsv.com/JMr7,2026-02-20T05:10:21.42,1,4.0,7.0,13.49,5.51,,Foil,Super Rare,hBP04-060,,buzz holomem,,Purple,,,,1st,240,"[PN] Game Streaming (40)<br>
+ Deal 10 special damage to your opponent's center holomem and collab holomem for each of your opponent's center holomem's cheers.",2,#JP;#Gen 2,"[Extra] If this holomem is downed, you get life-2",,"«Bloom Effect» Cheer Reverse
+You may send 1 cheer from your opponent's archive to your opponent's center holomem."
+679385,Kureiji Ollie (R),Kureiji Ollie R,https://tcgplayer-cdn.tcgplayer.com/product/679385_200w.jpg,87,24580,https://cpt.tcgcsv.com/KMr7,2026-02-20T05:10:21.42,1,0.1,0.29,3.0,0.26,,Foil,Rare,hBP04-061,,holomem,,Purple,,,,2nd,200,"[PN] HOLORO Soul (80+)<br>
+ This Arts gets +20 for each 2nd holomem with [#ID Gen 2] on your stage other than this holomem.",2,#ID;#ID Gen 2;#Language,,,"«Bloom Effect» Please Watch Ollie!
+If bloomed with [SP Oshi Skill]""Ollie Revives"", restore all HP to 1 of your <Kureiji Ollie>."
+679386,Kureiji Ollie (SR),Kureiji Ollie SR,https://tcgplayer-cdn.tcgplayer.com/product/679386_200w.jpg,87,24580,https://cpt.tcgcsv.com/LMr7,2026-02-20T05:10:21.42,1,1.5,3.53,8.0,2.3,,Foil,Super Rare,hBP04-061,,holomem,,Purple,,,,2nd,200,"[PN] HOLORO Soul (80+)<br>
+ This Arts gets +20 for each 2nd holomem with [#ID Gen 2] on your stage other than this holomem.",2,#ID;#ID Gen 2;#Language,,,"«Bloom Effect» Please Watch Ollie!
+If bloomed with [SP Oshi Skill]""Ollie Revives"", restore all HP to 1 of your <Kureiji Ollie>."
+679387,Mori Calliope (R),Mori Calliope R,https://tcgplayer-cdn.tcgplayer.com/product/679387_200w.jpg,87,24580,https://cpt.tcgcsv.com/MMr7,2026-02-20T05:10:21.42,1,0.13,0.46,2.0,0.42,,Foil,Rare,hBP04-062,,buzz holomem,,Purple,,,,1st,240,"[PN] One Final Drink (50)<br>
+ Look at the top 2 cards of your deck. Archive 1 card from among them. Then, return the rest to the top of the deck.",2,#EN;#Myth;#Singing,"[Extra] If this holomem is downed, you get life-2",,"«Gift» Eternal Rest
+[Nenter Position·Nollab Position Only]While this holomem has <Mori Calliope's Scythe> or <Death-sensei>attached, your center holomem with [#Myth] gets Arts+30."
+679388,Mori Calliope (SR),Mori Calliope SR,https://tcgplayer-cdn.tcgplayer.com/product/679388_200w.jpg,87,24580,https://cpt.tcgcsv.com/NMr7,2026-02-20T05:10:21.42,1,19.71,21.1,40.0,21.41,,Foil,Super Rare,hBP04-062,,buzz holomem,,Purple,,,,1st,240,"[PN] One Final Drink (50)<br>
+ Look at the top 2 cards of your deck. Archive 1 card from among them. Then, return the rest to the top of the deck.",2,#EN;#Myth;#Singing,"[Extra] If this holomem is downed, you get life-2",,"«Gift» Eternal Rest
+[Nenter Position·Nollab Position Only]While this holomem has <Mori Calliope's Scythe> or <Death-sensei>attached, your center holomem with [#Myth] gets Arts+30."
+679389,Koseki Bijou (C) (hBP04-063),Koseki Bijou C hBP04 063,https://tcgplayer-cdn.tcgplayer.com/product/679389_200w.jpg,87,24580,https://cpt.tcgcsv.com/PMr7,2026-02-20T05:10:21.42,1,0.14,0.29,1.23,0.27,,Normal,Common,hBP04-063,,holomem,,Purple,,,,Debut,110,[N] Bon-Bijou! (20),1,#EN;#Advent;#Baby,[Extra] You may include any number of this holomem in the deck,,"«Gift» Kira Kira Koseki!
+During your opponent's turn, when this holomem is downed, draw 1 card."
+679390,Koseki Bijou (C) (hBP04-064),Koseki Bijou C hBP04 064,https://tcgplayer-cdn.tcgplayer.com/product/679390_200w.jpg,87,24580,https://cpt.tcgcsv.com/QMr7,2026-02-20T05:10:21.42,1,0.1,0.25,1.23,0.18,,Normal,Common,hBP04-064,,holomem,,Purple,,,,1st,180,[N] Shining Jewel (30),2,#EN;#Advent;#Baby,,,
+679391,Koseki Bijou (S) (hBP04-064),Koseki Bijou S hBP04 064,https://tcgplayer-cdn.tcgplayer.com/product/679391_200w.jpg,87,24580,https://cpt.tcgcsv.com/RMr7,2026-02-20T05:10:21.42,1,3.6,3.6,3.6,3.83,,Foil,Special,hBP04-064,,holomem,,Purple,,,,1st,180,[N] Shining Jewel (30),2,#EN;#Advent;#Baby,,,
+679392,Koseki Bijou (U),Koseki Bijou U,https://tcgplayer-cdn.tcgplayer.com/product/679392_200w.jpg,87,24580,https://cpt.tcgcsv.com/SMr7,2026-02-20T05:10:21.42,1,0.15,0.31,1.23,0.26,,Normal,Uncommon,hBP04-065,,holomem,,Purple,,,,1st,130,"[P] The Ore and the Miner (30+)<br>
+ If your archive has a [Red cheer], this Arts gets +20.",1,#EN;#Advent;#Baby,,,"«Bloom Effect» An Unmatched Brilliance
+You may archive 1 [Red cheer] from your holomem:Draw 2 cards."
+679393,Koseki Bijou (S) (hBP04-065),Koseki Bijou S hBP04 065,https://tcgplayer-cdn.tcgplayer.com/product/679393_200w.jpg,87,24580,https://cpt.tcgcsv.com/TMr7,2026-02-20T05:10:21.42,1,8.5,11.75,15.0,7.69,,Foil,Special,hBP04-065,,holomem,,Purple,,,,1st,130,"[P] The Ore and the Miner (30+)<br>
+ If your archive has a [Red cheer], this Arts gets +20.",1,#EN;#Advent;#Baby,,,"«Bloom Effect» An Unmatched Brilliance
+You may archive 1 [Red cheer] from your holomem:Draw 2 cards."
+679395,Koseki Bijou (RR),Koseki Bijou RR,https://tcgplayer-cdn.tcgplayer.com/product/679395_200w.jpg,87,24580,https://cpt.tcgcsv.com/WMr7,2026-02-20T05:10:21.42,1,2.0,2.97,5.0,2.5,,Foil,Double Rare,hBP04-066,,holomem,,Purple,,,,2nd,190,"[PN] I Hope You'll Feel My Radiance! (80+)<br>
+ This Arts gets +10 for each cheer in your opponent's archive.",2,#EN;#Advent;#Baby,,,"«Bloom Effect» The Jewel of Emotions
+Count the number of cards in your hand, and you may archive all of your hand:Draw 1 card for each card archived. You may only use [Bloom Effect] ""The Jewel of Emotions"" once per turn."
+679396,Koseki Bijou (SR),Koseki Bijou SR,https://tcgplayer-cdn.tcgplayer.com/product/679396_200w.jpg,87,24580,https://cpt.tcgcsv.com/XMr7,2026-02-20T05:10:21.42,1,10.49,15.78,19.0,12.73,,Foil,Super Rare,hBP04-066,,holomem,,Purple,,,,2nd,190,"[PN] I Hope You'll Feel My Radiance! (80+)<br>
+ This Arts gets +10 for each cheer in your opponent's archive.",2,#EN;#Advent;#Baby,,,"«Bloom Effect» The Jewel of Emotions
+Count the number of cards in your hand, and you may archive all of your hand:Draw 1 card for each card archived. You may only use [Bloom Effect] ""The Jewel of Emotions"" once per turn."
+679397,Koseki Bijou (UR),Koseki Bijou UR,https://tcgplayer-cdn.tcgplayer.com/product/679397_200w.jpg,87,24580,https://cpt.tcgcsv.com/ZMr7,2026-02-20T05:10:21.42,1,,,,,,,Ultra Rare,hBP04-066,,holomem,,Purple,,,,2nd,190,"[PN] I Hope You'll Feel My Radiance! (80+)<br>
+ This Arts gets +10 for each cheer in your opponent's archive.",2,#EN;#Advent;#Baby,,,"«Bloom Effect» The Jewel of Emotions
+Count the number of cards in your hand, and you may archive all of your hand:Draw 1 card for each card archived. You may only use [Bloom Effect] ""The Jewel of Emotions"" once per turn."
+679398,Oozora Subaru (C) (hBP04-067),Oozora Subaru C hBP04 067,https://tcgplayer-cdn.tcgplayer.com/product/679398_200w.jpg,87,24580,https://cpt.tcgcsv.com/-Mr7,2026-02-20T05:10:21.42,1,0.24,0.69,3.0,0.51,,Normal,Common,hBP04-067,,holomem,,Yellow,,,,Debut,130,[Y] Ajimaru! Ajimaru! (20)<br>,1,#JP;#Gen 2;#Bird,[Extra] You may include any number of this holomem in the deck,[YNN] Sup! I'm Oozora Subaru from hololive 2nd Generation!! (60),
+679399,Oozora Subaru (U) (hBP04-068),Oozora Subaru U hBP04 068,https://tcgplayer-cdn.tcgplayer.com/product/679399_200w.jpg,87,24580,https://cpt.tcgcsv.com/_Mr7,2026-02-20T05:10:21.42,1,0.15,0.3,1.23,0.27,,Normal,Uncommon,hBP04-068,,holomem,,Yellow,,,,Debut,100,[N] From Subaru to You! (20),1,#JP;#Gen 2;#Bird,,,"«Gift» Oozora Subaru Special Combo Set
+[Nenter Position·Nollab Position Only]This holomem takes -20 damage from your opponent's 1st holomem."
+679400,Oozora Subaru (S) (hBP04-068),Oozora Subaru S hBP04 068,https://tcgplayer-cdn.tcgplayer.com/product/679400_200w.jpg,87,24580,https://cpt.tcgcsv.com/0Nr7,2026-02-20T05:10:21.42,1,5.99,7.01,11.0,4.85,,Foil,Special,hBP04-068,,holomem,,Yellow,,,,Debut,100,[N] From Subaru to You! (20),1,#JP;#Gen 2;#Bird,,,"«Gift» Oozora Subaru Special Combo Set
+[Nenter Position·Nollab Position Only]This holomem takes -20 damage from your opponent's 1st holomem."
+679401,Oozora Subaru (C) (hBP04-069),Oozora Subaru C hBP04 069,https://tcgplayer-cdn.tcgplayer.com/product/679401_200w.jpg,87,24580,https://cpt.tcgcsv.com/2Nr7,2026-02-20T05:10:21.42,1,0.03,0.25,1.23,0.13,,Normal,Common,hBP04-069,,holomem,,Yellow,,,,1st,190,[Y] Good Morning Subaru (30),2,#JP;#Gen 2;#Bird,,[YN] But I'm Sleepy (50),
+679402,Oozora Subaru (S) (hBP04-069),Oozora Subaru S hBP04 069,https://tcgplayer-cdn.tcgplayer.com/product/679402_200w.jpg,87,24580,https://cpt.tcgcsv.com/3Nr7,2026-02-20T05:10:21.42,1,2.2,6.18,10.25,5.15,,Foil,Special,hBP04-069,,holomem,,Yellow,,,,1st,190,[Y] Good Morning Subaru (30),2,#JP;#Gen 2;#Bird,,[YN] But I'm Sleepy (50),
+679403,Oozora Subaru (U) (hBP04-070),Oozora Subaru U hBP04 070,https://tcgplayer-cdn.tcgplayer.com/product/679403_200w.jpg,87,24580,https://cpt.tcgcsv.com/5Nr7,2026-02-20T05:10:21.42,1,0.16,0.31,1.23,0.25,,Normal,Uncommon,hBP04-070,,holomem,,Yellow,,,,1st,130,[N] Give Us All Your Support and Have Fun! (20),1,#JP;#Gen 2;#Bird,,,"«Collab Effect» I'll Give It My All
+Choose 1 of your holomem. During this turn, the chosen holomem gets Arts+10 for each of the chosen holomem's cheers. However, only up to 3 cheers are counted."
+679404,Oozora Subaru (S) (hBP04-070),Oozora Subaru S hBP04 070,https://tcgplayer-cdn.tcgplayer.com/product/679404_200w.jpg,87,24580,https://cpt.tcgcsv.com/6Nr7,2026-02-20T05:10:21.42,1,,,,,,,Special,hBP04-070,,holomem,,Yellow,,,,1st,130,[N] Give Us All Your Support and Have Fun! (20),1,#JP;#Gen 2;#Bird,,,"«Collab Effect» I'll Give It My All
+Choose 1 of your holomem. During this turn, the chosen holomem gets Arts+10 for each of the chosen holomem's cheers. However, only up to 3 cheers are counted."
+679405,Oozora Subaru (R),Oozora Subaru R,https://tcgplayer-cdn.tcgplayer.com/product/679405_200w.jpg,87,24580,https://cpt.tcgcsv.com/7Nr7,2026-02-20T05:10:21.42,1,0.2,0.35,1.23,0.34,,Foil,Rare,hBP04-071,,holomem,,Yellow,,,,1st,160,"[Y] Shuba! (20)<br>
+ Send the top card of your cheer deck to this holomem.",1,#JP;#Gen 2;#Bird,,"[YNN] Our Strongest, Happiest Days (90)",
+679406,Oozora Subaru (SR) (hBP04-071),Oozora Subaru SR hBP04 071,https://tcgplayer-cdn.tcgplayer.com/product/679406_200w.jpg,87,24580,https://cpt.tcgcsv.com/8Nr7,2026-02-20T05:10:21.42,1,4.51,9.26,20.0,8.86,,Foil,Super Rare,hBP04-071,,holomem,,Yellow,,,,1st,160,"[Y] Shuba! (20)<br>
+ Send the top card of your cheer deck to this holomem.",1,#JP;#Gen 2;#Bird,,"[YNN] Our Strongest, Happiest Days (90)",
+679407,Oozora Subaru (RR),Oozora Subaru RR,https://tcgplayer-cdn.tcgplayer.com/product/679407_200w.jpg,87,24580,https://cpt.tcgcsv.com/9Nr7,2026-02-20T05:10:21.42,1,5.0,5.75,14.0,5.24,,Foil,Double Rare,hBP04-072,,holomem,,Yellow,,,,2nd,190,"[YYN] Sunshine Girl (100+)<br>
+ This Arts gets +10 for each cheer on both players' stage. However, only up to 8 cheers are counted.",2,#JP;#Gen 2;#Singing;#Bird,,,"«Bloom Effect» Sunlight Stage
+You may send 1 [Yellow cheer] from your archive to your holomem."
+679408,Oozora Subaru (SR) (hBP04-072),Oozora Subaru SR hBP04 072,https://tcgplayer-cdn.tcgplayer.com/product/679408_200w.jpg,87,24580,https://cpt.tcgcsv.com/bNr7,2026-02-20T05:10:21.42,1,4.02,15.32,34.0,15.02,,Foil,Super Rare,hBP04-072,,holomem,,Yellow,,,,2nd,190,"[YYN] Sunshine Girl (100+)<br>
+ This Arts gets +10 for each cheer on both players' stage. However, only up to 8 cheers are counted.",2,#JP;#Gen 2;#Singing;#Bird,,,"«Bloom Effect» Sunlight Stage
+You may send 1 [Yellow cheer] from your archive to your holomem."
+679409,Oozora Subaru (UR),Oozora Subaru UR,https://tcgplayer-cdn.tcgplayer.com/product/679409_200w.jpg,87,24580,https://cpt.tcgcsv.com/cNr7,2026-02-20T05:10:21.42,1,89.3,114.97,120.72,,,Foil,Ultra Rare,hBP04-072,,holomem,,Yellow,,,,2nd,190,"[YYN] Sunshine Girl (100+)<br>
+ This Arts gets +10 for each cheer on both players' stage. However, only up to 8 cheers are counted.",2,#JP;#Gen 2;#Singing;#Bird,,,"«Bloom Effect» Sunlight Stage
+You may send 1 [Yellow cheer] from your archive to your holomem."
+679410,Anya Melfissa (C) (hBP04-073),Anya Melfissa C hBP04 073,https://tcgplayer-cdn.tcgplayer.com/product/679410_200w.jpg,87,24580,https://cpt.tcgcsv.com/dNr7,2026-02-20T05:10:21.42,1,0.09,0.25,1.23,0.19,,Normal,Common,hBP04-073,,holomem,,Yellow,,,,Debut,100,[N] Good Day! (30),1,#ID;#ID Gen 2;#Language,[Extra] You may include any number of this holomem in the deck,,
+679411,Anya Melfissa (U) (hBP04-074),Anya Melfissa U hBP04 074,https://tcgplayer-cdn.tcgplayer.com/product/679411_200w.jpg,87,24580,https://cpt.tcgcsv.com/fNr7,2026-02-20T05:10:21.42,1,0.1,0.25,1.23,0.18,,Normal,Uncommon,hBP04-074,,holomem,,Yellow,,,,Debut,120,[Y] Do You Want to Sit Beside Me? (20),1,#ID;#ID Gen 2;#Language,,,"«Gift» A Day at the Café
+[Nenter Position Only]This holomem and your collab holomem take -10 damage."
+679412,Anya Melfissa (S) (hBP04-074),Anya Melfissa S hBP04 074,https://tcgplayer-cdn.tcgplayer.com/product/679412_200w.jpg,87,24580,https://cpt.tcgcsv.com/gNr7,2026-02-20T05:10:21.42,1,2.41,3.29,4.0,2.41,,Foil,Special,hBP04-074,,holomem,,Yellow,,,,Debut,120,[Y] Do You Want to Sit Beside Me? (20),1,#ID;#ID Gen 2;#Language,,,"«Gift» A Day at the Café
+[Nenter Position Only]This holomem and your collab holomem take -10 damage."
+679413,Anya Melfissa (C) (hBP04-075),Anya Melfissa C hBP04 075,https://tcgplayer-cdn.tcgplayer.com/product/679413_200w.jpg,87,24580,https://cpt.tcgcsv.com/hNr7,2026-02-20T05:10:21.42,1,0.1,0.2,1.23,0.12,,Normal,Common,hBP04-075,,holomem,,Yellow,,,,1st,180,[Y] Devil's Invitation (30),2,#ID;#ID Gen 2;#Language,,[YN] Devil's Whisper (50),
+679414,Anya Melfissa (S) (hBP04-075),Anya Melfissa S hBP04 075,https://tcgplayer-cdn.tcgplayer.com/product/679414_200w.jpg,87,24580,https://cpt.tcgcsv.com/jNr7,2026-02-20T05:10:21.42,1,1.75,2.03,3.0,2.18,,Foil,Special,hBP04-075,,holomem,,Yellow,,,,1st,180,[Y] Devil's Invitation (30),2,#ID;#ID Gen 2;#Language,,[YN] Devil's Whisper (50),
+679415,Anya Melfissa (U) (hBP04-076),Anya Melfissa U hBP04 076,https://tcgplayer-cdn.tcgplayer.com/product/679415_200w.jpg,87,24580,https://cpt.tcgcsv.com/kNr7,2026-02-20T05:10:21.42,1,0.11,0.25,1.23,0.18,,Normal,Uncommon,hBP04-076,,holomem,,Yellow,,,,1st,150,[N] Please Cheer for Me! (30),1,#ID;#ID Gen 2;#Language,,,"«Collab Effect» A Song from Me to All of You
+You may attach 1 <Ancient Weapon> from your archive to your <Anya Melfissa>."
+679416,Anya Melfissa (S) (hBP04-076),Anya Melfissa S hBP04 076,https://tcgplayer-cdn.tcgplayer.com/product/679416_200w.jpg,87,24580,https://cpt.tcgcsv.com/lNr7,2026-02-20T05:10:21.42,1,2.23,2.25,3.94,2.54,,Foil,Special,hBP04-076,,holomem,,Yellow,,,,1st,150,[N] Please Cheer for Me! (30),1,#ID;#ID Gen 2;#Language,,,"«Collab Effect» A Song from Me to All of You
+You may attach 1 <Ancient Weapon> from your archive to your <Anya Melfissa>."
+679417,Anya Melfissa (R),Anya Melfissa R,https://tcgplayer-cdn.tcgplayer.com/product/679417_200w.jpg,87,24580,https://cpt.tcgcsv.com/mNr7,2026-02-20T05:10:21.42,1,0.15,0.25,2.0,0.19,,Foil,Rare,hBP04-077,,holomem,,Yellow,,,,1st,180,[YN] Yellow Rose (50),2,#ID;#ID Gen 2;#Language,,,"«Gift» The Garden Beyond the Glass
+During your opponent's turn, when this holomem is downed, return 1 card from among the stacked holomem including this holomem to hand."
+679418,Anya Melfissa (SR) (hBP04-077),Anya Melfissa SR hBP04 077,https://tcgplayer-cdn.tcgplayer.com/product/679418_200w.jpg,87,24580,https://cpt.tcgcsv.com/nNr7,2026-02-20T05:10:21.42,1,4.0,6.5,46.99,4.92,,Foil,Super Rare,hBP04-077,,holomem,,Yellow,,,,1st,180,[YN] Yellow Rose (50),2,#ID;#ID Gen 2;#Language,,,"«Gift» The Garden Beyond the Glass
+During your opponent's turn, when this holomem is downed, return 1 card from among the stacked holomem including this holomem to hand."
+679419,Anya Melfissa (RR),Anya Melfissa RR,https://tcgplayer-cdn.tcgplayer.com/product/679419_200w.jpg,87,24580,https://cpt.tcgcsv.com/pNr7,2026-02-20T05:10:21.42,1,0.2,0.5,3.6,0.4,,Foil,Double Rare,hBP04-078,,holomem,,Yellow,,,,2nd,200,[YYNN] Dungeon Adventure (160),2,#ID;#ID Gen 2;#Language,,,"«Gift» I Found a Treasure
+[Nenter Position·Nollab Position Only]Your center holomem <Anya Melfissa> with <Ancient Weapon> attached requires -1 [Yellow] for its Arts."
+679420,Anya Melfissa (SR) (hBP04-078),Anya Melfissa SR hBP04 078,https://tcgplayer-cdn.tcgplayer.com/product/679420_200w.jpg,87,24580,https://cpt.tcgcsv.com/qNr7,2026-02-20T05:10:21.42,1,2.95,3.81,39.15,3.09,,Foil,Super Rare,hBP04-078,,holomem,,Yellow,,,,2nd,200,[YYNN] Dungeon Adventure (160),2,#ID;#ID Gen 2;#Language,,,"«Gift» I Found a Treasure
+[Nenter Position·Nollab Position Only]Your center holomem <Anya Melfissa> with <Ancient Weapon> attached requires -1 [Yellow] for its Arts."
+679421,Anya Melfissa (UR),Anya Melfissa UR,https://tcgplayer-cdn.tcgplayer.com/product/679421_200w.jpg,87,24580,https://cpt.tcgcsv.com/rNr7,2026-02-20T05:10:21.42,1,19.48,20.49,48.0,21.03,,Foil,Ultra Rare,hBP04-078,,holomem,,Yellow,,,,2nd,200,[YYNN] Dungeon Adventure (160),2,#ID;#ID Gen 2;#Language,,,"«Gift» I Found a Treasure
+[Nenter Position·Nollab Position Only]Your center holomem <Anya Melfissa> with <Ancient Weapon> attached requires -1 [Yellow] for its Arts."
+679422,Natsuiro Matsuri (C) (hBP04-079),Natsuiro Matsuri C hBP04 079,https://tcgplayer-cdn.tcgplayer.com/product/679422_200w.jpg,87,24580,https://cpt.tcgcsv.com/sNr7,2026-02-20T05:10:21.42,1,0.1,0.25,1.23,0.15,,Normal,Common,hBP04-079,,holomem,,Yellow,,,,Debut,120,[N] hololive's Symbol of Purity (10),1,#JP;#Gen 1;#Shooter,[Extra] You may include any number of this holomem in the deck,,"«Gift» Wasshoi!
+During your opponent's turn, when this holomem is downed, you may reattach 1 of this holomem's cheers to your other holomem."
+679423,Natsuiro Matsuri (C) (hBP04-080),Natsuiro Matsuri C hBP04 080,https://tcgplayer-cdn.tcgplayer.com/product/679423_200w.jpg,87,24580,https://cpt.tcgcsv.com/tNr7,2026-02-20T05:10:21.42,1,0.01,0.22,1.23,0.11,,Normal,Common,hBP04-080,,holomem,,Yellow,,,,1st,180,[N] Natsuiro Supporters (30),2,#JP;#Gen 1;#Shooter,,[NN] Fight! Blood for Blood! (50),
+679424,Natsuiro Matsuri (S) (hBP04-080),Natsuiro Matsuri S hBP04 080,https://tcgplayer-cdn.tcgplayer.com/product/679424_200w.jpg,87,24580,https://cpt.tcgcsv.com/vNr7,2026-02-20T05:10:21.42,1,1.69,2.37,3.18,2.39,,Foil,Special,hBP04-080,,holomem,,Yellow,,,,1st,180,[N] Natsuiro Supporters (30),2,#JP;#Gen 1;#Shooter,,[NN] Fight! Blood for Blood! (50),
+679425,Natsuiro Matsuri (U),Natsuiro Matsuri U,https://tcgplayer-cdn.tcgplayer.com/product/679425_200w.jpg,87,24580,https://cpt.tcgcsv.com/wNr7,2026-02-20T05:10:21.42,1,0.1,0.25,1.23,0.22,,Normal,Uncommon,hBP04-081,,holomem,,Yellow,,,,1st,120,[Y] Sing with All My Heart!! (20),1,#JP;#Gen 1;#Shooter,,,"«Bloom Effect» So That It Reaches the One I Love
+Reveal 1 [Yellow cheer] from your cheer deck, and send it to this holomem. Then, shuffle the cheer deck."
+679426,Natsuiro Matsuri (S) (hBP04-081),Natsuiro Matsuri S hBP04 081,https://tcgplayer-cdn.tcgplayer.com/product/679426_200w.jpg,87,24580,https://cpt.tcgcsv.com/xNr7,2026-02-20T05:10:21.42,1,2.44,3.22,3.99,2.42,,Foil,Special,hBP04-081,,holomem,,Yellow,,,,1st,120,[Y] Sing with All My Heart!! (20),1,#JP;#Gen 1;#Shooter,,,"«Bloom Effect» So That It Reaches the One I Love
+Reveal 1 [Yellow cheer] from your cheer deck, and send it to this holomem. Then, shuffle the cheer deck."
+679427,Natsuiro Matsuri (RR),Natsuiro Matsuri RR,https://tcgplayer-cdn.tcgplayer.com/product/679427_200w.jpg,87,24580,https://cpt.tcgcsv.com/zNr7,2026-02-20T05:10:21.42,1,0.15,0.56,5.0,0.61,,Foil,Double Rare,hBP04-082,,holomem,,Yellow,,,,2nd,180,"[Y] Found a Favorite (60+)<br>
+ This Arts gets +20 for each of this holomem's cheers.",2,#JP;#Gen 1;#Shooter,,,"«Bloom Effect» Let's Go Shopping
+You may roll a die once for each differently named holomem with [#Gen 1] on your stage:Send the top card of your cheer deck to this holomem for each result that is 4 or greater rolled."
+679428,Natsuiro Matsuri (SR),Natsuiro Matsuri SR,https://tcgplayer-cdn.tcgplayer.com/product/679428_200w.jpg,87,24580,https://cpt.tcgcsv.com/BNr7,2026-02-20T05:10:21.42,1,2.25,4.99,14.0,2.57,,Foil,Super Rare,hBP04-082,,holomem,,Yellow,,,,2nd,180,"[Y] Found a Favorite (60+)<br>
+ This Arts gets +20 for each of this holomem's cheers.",2,#JP;#Gen 1;#Shooter,,,"«Bloom Effect» Let's Go Shopping
+You may roll a die once for each differently named holomem with [#Gen 1] on your stage:Send the top card of your cheer deck to this holomem for each result that is 4 or greater rolled."
+679429,Natsuiro Matsuri (UR),Natsuiro Matsuri UR,https://tcgplayer-cdn.tcgplayer.com/product/679429_200w.jpg,87,24580,https://cpt.tcgcsv.com/CNr7,2026-02-20T05:10:21.42,1,26.49,28.56,60.0,34.39,,Foil,Ultra Rare,hBP04-082,,holomem,,Yellow,,,,2nd,180,"[Y] Found a Favorite (60+)<br>
+ This Arts gets +20 for each of this holomem's cheers.",2,#JP;#Gen 1;#Shooter,,,"«Bloom Effect» Let's Go Shopping
+You may roll a die once for each differently named holomem with [#Gen 1] on your stage:Send the top card of your cheer deck to this holomem for each result that is 4 or greater rolled."
+679430,Momosuzu Nene (C) (hBP04-083),Momosuzu Nene C hBP04 083,https://tcgplayer-cdn.tcgplayer.com/product/679430_200w.jpg,87,24580,https://cpt.tcgcsv.com/DNr7,2026-02-20T05:10:21.42,1,0.15,0.25,1.23,0.18,,Normal,Common,hBP04-083,,holomem,,Yellow,,,,Debut,90,"[N] Kon-Nene~ (10)<br>
+ If your stage has 5 or less holomem, reveal 1 Debut holomem with [#Gen 5] from your deck, and you may place it on stage. Then, shuffle the deck.",1,#JP;#Gen 5;#Singing;#Painting,[Extra] You may include any number of this holomem in the deck,,
+679431,Momosuzu Nene (C) (hBP04-084),Momosuzu Nene C hBP04 084,https://tcgplayer-cdn.tcgplayer.com/product/679431_200w.jpg,87,24580,https://cpt.tcgcsv.com/FNr7,2026-02-20T05:10:21.42,1,0.03,0.2,1.23,0.05,,Normal,Common,hBP04-084,,holomem,,Yellow,,,,1st,190,[N] HAAAN (30),2,#JP;#Gen 5;#Singing;#Painting,,[YN] Mata-Nene (50),
+679432,Momosuzu Nene (S) (hBP04-084),Momosuzu Nene S hBP04 084,https://tcgplayer-cdn.tcgplayer.com/product/679432_200w.jpg,87,24580,https://cpt.tcgcsv.com/GNr7,2026-02-20T05:10:21.42,1,0.49,0.67,5.0,0.64,,Foil,Special,hBP04-084,,holomem,,Yellow,,,,1st,190,[N] HAAAN (30),2,#JP;#Gen 5;#Singing;#Painting,,[YN] Mata-Nene (50),
+679433,Momosuzu Nene (U),Momosuzu Nene U,https://tcgplayer-cdn.tcgplayer.com/product/679433_200w.jpg,87,24580,https://cpt.tcgcsv.com/HNr7,2026-02-20T05:10:21.42,1,0.14,0.25,1.23,0.2,,Normal,Uncommon,hBP04-085,,holomem,,Yellow,,,,1st,130,[N] I’m Gonna Do My Best!!!!! (20),1,#JP;#Gen 5;#Singing;#Painting,,,"«Bloom Effect» The Best Feeling Ever!!!!!!!!!!!!!!
+Reveal 1 cheer from your cheer deck with the same color as 1 holomem on your stage with [#Gen 5], and send it to your holomem with [#Gen 5]. Then, shuffle the cheer deck."
+679434,Momosuzu Nene (S) (hBP04-085),Momosuzu Nene S hBP04 085,https://tcgplayer-cdn.tcgplayer.com/product/679434_200w.jpg,87,24580,https://cpt.tcgcsv.com/JNr7,2026-02-20T05:10:21.42,1,2.99,5.0,24.74,4.11,,Foil,Special,hBP04-085,,holomem,,Yellow,,,,1st,130,[N] I’m Gonna Do My Best!!!!! (20),1,#JP;#Gen 5;#Singing;#Painting,,,"«Bloom Effect» The Best Feeling Ever!!!!!!!!!!!!!!
+Reveal 1 cheer from your cheer deck with the same color as 1 holomem on your stage with [#Gen 5], and send it to your holomem with [#Gen 5]. Then, shuffle the cheer deck."
+679435,Momosuzu Nene (RR),Momosuzu Nene RR,https://tcgplayer-cdn.tcgplayer.com/product/679435_200w.jpg,87,24580,https://cpt.tcgcsv.com/KNr7,2026-02-20T05:10:21.42,1,0.2,0.63,5.0,0.49,,Foil,Double Rare,hBP04-086,,holomem,,Yellow,,,,2nd,200,[N] Lots of Husbands (50),2,#JP;#Gen 5;#Singing;#Painting,,"[BY] Dazzling Power (50+)<br>
+ This Arts gets +20 for each cheer in your archive. However, only up to 5 cheers are counted.",
+679436,Momosuzu Nene (SR),Momosuzu Nene SR,https://tcgplayer-cdn.tcgplayer.com/product/679436_200w.jpg,87,24580,https://cpt.tcgcsv.com/LNr7,2026-02-20T05:10:21.42,1,3.99,5.2,12.0,4.73,,Foil,Super Rare,hBP04-086,,holomem,,Yellow,,,,2nd,200,[N] Lots of Husbands (50),2,#JP;#Gen 5;#Singing;#Painting,,"[BY] Dazzling Power (50+)<br>
+ This Arts gets +20 for each cheer in your archive. However, only up to 5 cheers are counted.",
+679437,Momosuzu Nene (UR),Momosuzu Nene UR,https://tcgplayer-cdn.tcgplayer.com/product/679437_200w.jpg,87,24580,https://cpt.tcgcsv.com/MNr7,2026-02-20T05:10:21.42,1,39.97,48.19,72.99,46.05,,Foil,Ultra Rare,hBP04-086,,holomem,,Yellow,,,,2nd,200,[N] Lots of Husbands (50),2,#JP;#Gen 5;#Singing;#Painting,,"[BY] Dazzling Power (50+)<br>
+ This Arts gets +20 for each cheer in your archive. However, only up to 5 cheers are counted.",
+679438,Elizabeth Rose Bloodflame (C),Elizabeth Rose Bloodflame C,https://tcgplayer-cdn.tcgplayer.com/product/679438_200w.jpg,87,24580,https://cpt.tcgcsv.com/NNr7,2026-02-20T05:10:21.42,1,0.04,0.25,1.23,0.19,,Normal,Common,hBP04-087,,holomem,,Neutral,,,,spot,140,[NN] ERB (20),1,#EN;#Justice;#Singing,[Extra] This holomem cannot bloom,,"«Gift» The Scarlet Queen
+[Nollab Position Only]Your Debut holomem in the center position takes -20 damage."
+679439,Elizabeth Rose Bloodflame (S),Elizabeth Rose Bloodflame S,https://tcgplayer-cdn.tcgplayer.com/product/679439_200w.jpg,87,24580,https://cpt.tcgcsv.com/PNr7,2026-02-20T05:10:21.42,1,2.25,2.31,3.0,2.27,,Foil,Special,hBP04-087,,holomem,,Neutral,,,,spot,140,[NN] ERB (20),1,#EN;#Justice;#Singing,[Extra] This holomem cannot bloom,,"«Gift» The Scarlet Queen
+[Nollab Position Only]Your Debut holomem in the center position takes -20 damage."
+679440,Gigi Murin (C),Gigi Murin C,https://tcgplayer-cdn.tcgplayer.com/product/679440_200w.jpg,87,24580,https://cpt.tcgcsv.com/QNr7,2026-02-20T05:10:21.42,1,0.22,0.25,1.23,0.22,,Normal,Common,hBP04-088,,holomem,,Neutral,,,,spot,130,[N] Don't Get Mad at Me! (10),,#EN;#Justice,[Extra] This holomem cannot bloom,,"«Gift» Huh? But It was Funny!
+During your opponent's turn, when this holomem is downed, send the top card of your cheer deck to your holomem."
+679441,Gigi Murin (S),Gigi Murin S,https://tcgplayer-cdn.tcgplayer.com/product/679441_200w.jpg,87,24580,https://cpt.tcgcsv.com/RNr7,2026-02-20T05:10:21.42,1,9.03,11.99,12.0,8.03,,Foil,Special,hBP04-088,,holomem,,Neutral,,,,spot,130,[N] Don't Get Mad at Me! (10),,#EN;#Justice,[Extra] This holomem cannot bloom,,"«Gift» Huh? But It was Funny!
+During your opponent's turn, when this holomem is downed, send the top card of your cheer deck to your holomem."
+679442,Two-Tone PC (U),Two Tone PC U,https://tcgplayer-cdn.tcgplayer.com/product/679442_200w.jpg,87,24580,https://cpt.tcgcsv.com/SNr7,2026-02-20T05:10:21.42,1,1.0,2.12,7.94,1.75,,Normal,Uncommon,hBP04-089,"LIMITED:Usable only 1 per turn.<br>
+<br>
+This card can only be used if you have 2 or more holomem on stage, each with only 1 color and is different color from each other.<br>
+<br>
+Choose 2 of your holomem on stage each with only 1 color and is different color from each other. Reveal 1 1st holomem with the same color as each of the chosen holomem other than Buzz from your deck, and add them to hand. Then, shuffle the deck.",Support,Item,,,,,,,,,,,,
+679443,Two-Tone PC (S),Two Tone PC S,https://tcgplayer-cdn.tcgplayer.com/product/679443_200w.jpg,87,24580,https://cpt.tcgcsv.com/TNr7,2026-02-20T05:10:21.42,1,18.0,19.16,25.0,19.01,,Foil,Special,hBP04-089,"LIMITED:Usable only 1 per turn.<br>
+<br>
+This card can only be used if you have 2 or more holomem on stage, each with only 1 color and is different color from each other.<br>
+<br>
+Choose 2 of your holomem on stage each with only 1 color and is different color from each other. Reveal 1 1st holomem with the same color as each of the chosen holomem other than Buzz from your deck, and add them to hand. Then, shuffle the deck.",Support,Item,,,,,,,,,,,,
+679444,Work PC (U),Work PC U,https://tcgplayer-cdn.tcgplayer.com/product/679444_200w.jpg,87,24580,https://cpt.tcgcsv.com/VNr7,2026-02-20T05:10:21.42,1,0.13,0.25,1.23,0.22,,Normal,Uncommon,hBP04-090,"LIMITED:Usable only 1 per turn.<br>
+<br>
+This card can only be used if you have 6 or less cards in hand excluding this card.<br>
+<br>
+Look at the top 4 cards of your deck. Reveal 1 holomem and 1 [tool, mascot or fan] from among them, and add the revealed cards to hand. Then, return the remaining cards to the bottom of the deck in any order.",Support,Item,,,,,,,,,,,,
+679445,Work PC (S),Work PC S,https://tcgplayer-cdn.tcgplayer.com/product/679445_200w.jpg,87,24580,https://cpt.tcgcsv.com/WNr7,2026-02-20T05:10:21.42,1,0.97,1.28,15.0,1.14,,Foil,Special,hBP04-090,"LIMITED:Usable only 1 per turn.<br>
+<br>
+This card can only be used if you have 6 or less cards in hand excluding this card.<br>
+<br>
+Look at the top 4 cards of your deck. Reveal 1 holomem and 1 [tool, mascot or fan] from among them, and add the revealed cards to hand. Then, return the remaining cards to the bottom of the deck in any order.",Support,Item,,,,,,,,,,,,
+679446,Struggle Meal (U),Struggle Meal U,https://tcgplayer-cdn.tcgplayer.com/product/679446_200w.jpg,87,24580,https://cpt.tcgcsv.com/XNr7,2026-02-20T05:10:21.42,1,0.14,0.25,1.23,0.22,,Normal,Uncommon,hBP04-091,"During this turn, 1 of your ""Ichijou Ririka"" requires -1 [Colorless] for its Arts. You may only use ""Struggle Meal"" once a turn.",Support,Event,,,,,,,,,#Food,,,
+679447,Struggle Meal (S),Struggle Meal S,https://tcgplayer-cdn.tcgplayer.com/product/679447_200w.jpg,87,24580,https://cpt.tcgcsv.com/ZNr7,2026-02-20T05:10:21.42,1,11.5,12.25,13.0,11.51,,Foil,Special,hBP04-091,"During this turn, 1 of your ""Ichijou Ririka"" requires -1 [Colorless] for its Arts. You may only use ""Struggle Meal"" once a turn.",Support,Event,,,,,,,,,#Food,,,
+679448,NePoLaBo (U),NePoLaBo U,https://tcgplayer-cdn.tcgplayer.com/product/679448_200w.jpg,87,24580,https://cpt.tcgcsv.com/-Nr7,2026-02-20T05:10:21.42,1,0.03,0.25,1.23,0.13,,Normal,Uncommon,hBP04-092,"LIMITED:Usable only 1 per turn.<br>
+<br>
+This card can only be used if you have 6 or less cards in hand excluding this card.<br>
+<br>
+Look at the top 4 cards of your deck. Reveal any number of holomem with [#Gen 5] from among them, and add the revealed holomem to hand. Then, return the remaining cards to the bottom of the deck in any order.",Support,Event,,,,,,,,,,,,
+679449,NePoLaBo (S),NePoLaBo S,https://tcgplayer-cdn.tcgplayer.com/product/679449_200w.jpg,87,24580,https://cpt.tcgcsv.com/_Nr7,2026-02-20T05:10:21.42,1,1.5,1.95,3.4,1.95,,Foil,Special,hBP04-092,"LIMITED:Usable only 1 per turn.<br>
+<br>
+This card can only be used if you have 6 or less cards in hand excluding this card.<br>
+<br>
+Look at the top 4 cards of your deck. Reveal any number of holomem with [#Gen 5] from among them, and add the revealed holomem to hand. Then, return the remaining cards to the bottom of the deck in any order.",Support,Event,,,,,,,,,,,,
+679450,hololive Gen 2 (U),hololive Gen 2 U,https://tcgplayer-cdn.tcgplayer.com/product/679450_200w.jpg,87,24580,https://cpt.tcgcsv.com/0Pr7,2026-02-20T05:10:21.42,1,0.03,0.3,1.23,0.18,,Normal,Uncommon,hBP04-093,"LIMITED:Usable only 1 per turn.<br>
+<br>
+This card can only be used if you have 6 or less cards in hand excluding this card.<br>
+<br>
+Look at the top 4 cards of your deck. Reveal any number of holomem with [#Gen 2] from among them, and add the revealed holomem to hand. Then, return the remaining cards to the bottom of the deck in any order.",Support,Event,,,,,,,,,,,,
+679451,hololive Gen 2 (S),hololive Gen 2 S,https://tcgplayer-cdn.tcgplayer.com/product/679451_200w.jpg,87,24580,https://cpt.tcgcsv.com/2Pr7,2026-02-20T05:10:21.42,1,0.96,1.08,5.0,1.03,,Foil,Special,hBP04-093,"LIMITED:Usable only 1 per turn.<br>
+<br>
+This card can only be used if you have 6 or less cards in hand excluding this card.<br>
+<br>
+Look at the top 4 cards of your deck. Reveal any number of holomem with [#Gen 2] from among them, and add the revealed holomem to hand. Then, return the remaining cards to the bottom of the deck in any order.",Support,Event,,,,,,,,,,,,
+679452,Maitake Dance (U),Maitake Dance U,https://tcgplayer-cdn.tcgplayer.com/product/679452_200w.jpg,87,24580,https://cpt.tcgcsv.com/3Pr7,2026-02-20T05:10:21.42,1,0.15,0.28,1.23,0.28,,Normal,Uncommon,hBP04-094,"Choose 1 of your ""Juufuutei Raden"". You may reattach 1~2 cheers from your stage to the chosen holomem. If 3 or more cheers are attached to the chosen holomem, during this turn, the chosen holomem gets Arts+10.",Support,Event,,,,,,,,,#Mushroom,,,
+679453,Maitake Dance (S),Maitake Dance S,https://tcgplayer-cdn.tcgplayer.com/product/679453_200w.jpg,87,24580,https://cpt.tcgcsv.com/5Pr7,2026-02-20T05:10:21.42,1,6.5,11.49,21.28,6.24,,Foil,Special,hBP04-094,"Choose 1 of your ""Juufuutei Raden"". You may reattach 1~2 cheers from your stage to the chosen holomem. If 3 or more cheers are attached to the chosen holomem, during this turn, the chosen holomem gets Arts+10.",Support,Event,,,,,,,,,#Mushroom,,,
+679454,Mascot Catcher (U),Mascot Catcher U,https://tcgplayer-cdn.tcgplayer.com/product/679454_200w.jpg,87,24580,https://cpt.tcgcsv.com/6Pr7,2026-02-20T05:10:21.42,1,0.04,0.25,1.23,0.19,,Normal,Uncommon,hBP04-095,"LIMITED:Usable only 1 per turn.<br>
+<br>
+Reveal 1 mascot from your deck, and add it to hand. Then, shuffle the deck.",Support,Event,,,,,,,,,,,,
+679455,Mascot Catcher (S),Mascot Catcher S,https://tcgplayer-cdn.tcgplayer.com/product/679455_200w.jpg,87,24580,https://cpt.tcgcsv.com/7Pr7,2026-02-20T05:10:21.42,1,0.75,0.98,3.44,0.87,,Foil,Special,hBP04-095,"LIMITED:Usable only 1 per turn.<br>
+<br>
+Reveal 1 mascot from your deck, and add it to hand. Then, shuffle the deck.",Support,Event,,,,,,,,,,,,
+679456,Advent (U),Advent U,https://tcgplayer-cdn.tcgplayer.com/product/679456_200w.jpg,87,24580,https://cpt.tcgcsv.com/8Pr7,2026-02-20T05:10:21.42,1,0.02,0.26,1.23,0.25,,Normal,Uncommon,hBP04-096,"LIMITED:Usable only 1 per turn.<br>
+<br>
+This card can only be used if you have 6 or less cards in hand excluding this card.<br>
+<br>
+Look at the top 4 cards of your deck. Reveal any number of holomem with [#Advent] from among them, and add the revealed holomem to hand. Then, return the remaining cards to the bottom of the deck in any order.",Support,Event,,,,,,,,,,,,
+679457,Advent (S),Advent S,https://tcgplayer-cdn.tcgplayer.com/product/679457_200w.jpg,87,24580,https://cpt.tcgcsv.com/9Pr7,2026-02-20T05:10:21.42,1,3.99,4.52,19.0,4.49,,Foil,Special,hBP04-096,"LIMITED:Usable only 1 per turn.<br>
+<br>
+This card can only be used if you have 6 or less cards in hand excluding this card.<br>
+<br>
+Look at the top 4 cards of your deck. Reveal any number of holomem with [#Advent] from among them, and add the revealed holomem to hand. Then, return the remaining cards to the bottom of the deck in any order.",Support,Event,,,,,,,,,,,,
+679458,Advent (SR),Advent SR,https://tcgplayer-cdn.tcgplayer.com/product/679458_200w.jpg,87,24580,https://cpt.tcgcsv.com/bPr7,2026-02-20T05:10:21.42,1,63.67,65.53,80.0,64.96,,Foil,Super Rare,hBP04-096,"LIMITED:Usable only 1 per turn.<br>
+<br>
+This card can only be used if you have 6 or less cards in hand excluding this card.<br>
+<br>
+Look at the top 4 cards of your deck. Reveal any number of holomem with [#Advent] from among them, and add the revealed holomem to hand. Then, return the remaining cards to the bottom of the deck in any order.",Support,Event,,,,,,,,,,,,
+679459,Green Test Tube (U),Green Test Tube U,https://tcgplayer-cdn.tcgplayer.com/product/679459_200w.jpg,87,24580,https://cpt.tcgcsv.com/cPr7,2026-02-20T05:10:21.42,1,0.15,0.25,1.23,0.23,,Normal,Uncommon,hBP04-097,"The holomem this tool is attached to gets Arts+10.<br>
+<br>
+•Additional ability if attached to 1st or greater ""Hakui Koyori"" <br>
+During your main phase, you may archive 1 cheer from the holomem this tool is attached to:Set 1 of your resting holomem with [#holoX] to active.<br>
+<br>
+Only 1 tool can be attached to each of your holomem.",Support,Tool,,,,,,,,,#KOYO LABO,,,
+679460,Green Test Tube (S),Green Test Tube S,https://tcgplayer-cdn.tcgplayer.com/product/679460_200w.jpg,87,24580,https://cpt.tcgcsv.com/dPr7,2026-02-20T05:10:21.42,1,5.5,6.25,7.0,2.98,,Foil,Special,hBP04-097,"The holomem this tool is attached to gets Arts+10.<br>
+<br>
+•Additional ability if attached to 1st or greater ""Hakui Koyori"" <br>
+During your main phase, you may archive 1 cheer from the holomem this tool is attached to:Set 1 of your resting holomem with [#holoX] to active.<br>
+<br>
+Only 1 tool can be attached to each of your holomem.",Support,Tool,,,,,,,,,#KOYO LABO,,,
+679461,Smithing Hammer (U),Smithing Hammer U,https://tcgplayer-cdn.tcgplayer.com/product/679461_200w.jpg,87,24580,https://cpt.tcgcsv.com/fPr7,2026-02-20T05:10:21.42,1,0.1,0.25,1.23,0.19,,Normal,Uncommon,hBP04-098,"The holomem this tool is attached to gets Arts+10.<br>
+<br>
+•Additional ability if attached to 1st or greater holomem with [#IDGen 3]<br>
+The holomem this tool is attached to gets Arts+10.<br>
+<br>
+Only 1 tool can be attached to each of your holomem.",Support,Tool,,,,,,,,,#Kaela's Arms,,,
+679462,Smithing Hammer (S),Smithing Hammer S,https://tcgplayer-cdn.tcgplayer.com/product/679462_200w.jpg,87,24580,https://cpt.tcgcsv.com/gPr7,2026-02-20T05:10:21.42,1,2.89,4.93,13.99,3.33,,Foil,Special,hBP04-098,"The holomem this tool is attached to gets Arts+10.<br>
+<br>
+•Additional ability if attached to 1st or greater holomem with [#IDGen 3]<br>
+The holomem this tool is attached to gets Arts+10.<br>
+<br>
+Only 1 tool can be attached to each of your holomem.",Support,Tool,,,,,,,,,#Kaela's Arms,,,
+679463,Ancient Weapon (U),Ancient Weapon U,https://tcgplayer-cdn.tcgplayer.com/product/679463_200w.jpg,87,24580,https://cpt.tcgcsv.com/hPr7,2026-02-20T05:10:21.42,1,0.02,0.25,1.23,0.15,,Normal,Uncommon,hBP04-099,"During your opponent's turn, when the holomem this tool is attached to is downed, you may archive 1 card from your hand:Return this tool to hand.<br>
+<br>
+•Additional ability if attached to 1st or greater ""Anya Melfissa""<br>
+The holomem this tool is attached to gets Arts+10 for each ""Ancient Weapon"" on your stage.<br>
+<br>
+Only 1 tool can be attached to each of your holomem.",Support,Tool,,,,,,,,,,,,
+679464,Ancient Weapon (S),Ancient Weapon S,https://tcgplayer-cdn.tcgplayer.com/product/679464_200w.jpg,87,24580,https://cpt.tcgcsv.com/jPr7,2026-02-20T05:10:21.42,1,3.9,3.99,5.0,4.12,,Foil,Special,hBP04-099,"During your opponent's turn, when the holomem this tool is attached to is downed, you may archive 1 card from your hand:Return this tool to hand.<br>
+<br>
+•Additional ability if attached to 1st or greater ""Anya Melfissa""<br>
+The holomem this tool is attached to gets Arts+10 for each ""Ancient Weapon"" on your stage.<br>
+<br>
+Only 1 tool can be attached to each of your holomem.",Support,Tool,,,,,,,,,,,,
+679465,Kokoro (C),Kokoro C,https://tcgplayer-cdn.tcgplayer.com/product/679465_200w.jpg,87,24580,https://cpt.tcgcsv.com/kPr7,2026-02-20T05:10:21.42,1,0.03,0.25,1.0,0.21,,Normal,Common,hBP04-100,"The holomem this mascot is attached to gets +20 HP.<br>
+<br>
+•Additional ability if attached to ""Hakui Koyori""<br>
+When the holomem this mascot is attached to collabs, during this turn, this holomem gets Arts+10.<br>
+<br>
+Only 1 mascot can be attached to each of your holomem.",Support,Mascot,,,,,,,,,#KOYO LABO,,,
+679466,Kokoro (S),Kokoro S,https://tcgplayer-cdn.tcgplayer.com/product/679466_200w.jpg,87,24580,https://cpt.tcgcsv.com/lPr7,2026-02-20T05:10:21.42,1,2.5,2.66,4.99,2.79,,Foil,Special,hBP04-100,"The holomem this mascot is attached to gets +20 HP.<br>
+<br>
+•Additional ability if attached to ""Hakui Koyori""<br>
+When the holomem this mascot is attached to collabs, during this turn, this holomem gets Arts+10.<br>
+<br>
+Only 1 mascot can be attached to each of your holomem.",Support,Mascot,,,,,,,,,#KOYO LABO,,,
+679467,Daifuku (C),Daifuku C,https://tcgplayer-cdn.tcgplayer.com/product/679467_200w.jpg,87,24580,https://cpt.tcgcsv.com/mPr7,2026-02-20T05:10:21.42,1,0.09,0.23,1.23,0.14,,Normal,Common,hBP04-101,"The holomem this mascot is attached to gets Arts+10.<br>
+<br>
+•Additional ability if attached to ""Yukihana Lamy""<br>
+The holomem this mascot is attached to gets +20 HP.<br>
+<br>
+Only 1 mascot can be attached to each of your holomem.",Support,Mascot,,,,,,,,,,,,
+679468,Daifuku (S),Daifuku S,https://tcgplayer-cdn.tcgplayer.com/product/679468_200w.jpg,87,24580,https://cpt.tcgcsv.com/nPr7,2026-02-20T05:10:21.42,1,0.48,0.99,3.0,1.24,,Foil,Special,hBP04-101,"The holomem this mascot is attached to gets Arts+10.<br>
+<br>
+•Additional ability if attached to ""Yukihana Lamy""<br>
+The holomem this mascot is attached to gets +20 HP.<br>
+<br>
+Only 1 mascot can be attached to each of your holomem.",Support,Mascot,,,,,,,,,,,,
+679469,Yamena (C),Yamena C,https://tcgplayer-cdn.tcgplayer.com/product/679469_200w.jpg,87,24580,https://cpt.tcgcsv.com/pPr7,2026-02-20T05:10:21.42,1,0.06,0.22,1.23,0.06,,Normal,Common,hBP04-102,"The holomem this mascot is attached to gets Arts+10.<br>
+<br>
+•Additional ability if attached to 1st or greater holomem with [#Gen 5]<br>
+[Back Position Only]The holomem this mascot is attached to does not take damage from your opponent.<br>
+<br>
+Only 1 mascot can be attached to each of your holomem.",Support,Mascot,,,,,,,,,,,,
+679470,Yamena (S),Yamena S,https://tcgplayer-cdn.tcgplayer.com/product/679470_200w.jpg,87,24580,https://cpt.tcgcsv.com/qPr7,2026-02-20T05:10:21.42,1,0.49,1.0,5.28,0.98,,Foil,Special,hBP04-102,"The holomem this mascot is attached to gets Arts+10.<br>
+<br>
+•Additional ability if attached to 1st or greater holomem with [#Gen 5]<br>
+[Back Position Only]The holomem this mascot is attached to does not take damage from your opponent.<br>
+<br>
+Only 1 mascot can be attached to each of your holomem.",Support,Mascot,,,,,,,,,,,,
+679471,Karasu (C),Karasu C,https://tcgplayer-cdn.tcgplayer.com/product/679471_200w.jpg,87,24580,https://cpt.tcgcsv.com/rPr7,2026-02-20T05:10:21.42,1,0.03,0.24,1.23,0.18,,Normal,Common,hBP04-103,"The holomem this mascot is attached to gets Arts+10.<br>
+<br>
+•Additional ability if attached to ""La+ Darknesss""<br>
+[Collab Position Only][1/Turn]During your main phase, you may roll a die once:If it is odd, move the holomem this mascot is attached to to the back position.<br>
+<br>
+Only 1 mascot can be attached to each of your holomem.",Support,Mascot,,,,,,,,,,,,
+679472,Karasu (S),Karasu S,https://tcgplayer-cdn.tcgplayer.com/product/679472_200w.jpg,87,24580,https://cpt.tcgcsv.com/sPr7,2026-02-20T05:10:21.42,1,0.5,1.17,3.71,1.15,,Foil,Special,hBP04-103,"The holomem this mascot is attached to gets Arts+10.<br>
+<br>
+•Additional ability if attached to ""La+ Darknesss""<br>
+[Collab Position Only][1/Turn]During your main phase, you may roll a die once:If it is odd, move the holomem this mascot is attached to to the back position.<br>
+<br>
+Only 1 mascot can be attached to each of your holomem.",Support,Mascot,,,,,,,,,,,,
+679473,Subaru Duck (C),Subaru Duck C,https://tcgplayer-cdn.tcgplayer.com/product/679473_200w.jpg,87,24580,https://cpt.tcgcsv.com/tPr7,2026-02-20T05:10:21.42,1,0.01,0.24,1.23,0.19,,Normal,Common,hBP04-104,"The holomem this mascot is attached to gets +20 HP.<br>
+<br>
+•Additional ability if attached to ""Oozora Subaru""<br>
+While the total number of cheers on both players' stage is 10 or more, the holomem this mascot is attached to gets Arts+20.<br>
+<br>
+Only 1 mascot can be attached to each of your holomem.",Support,Mascot,,,,,,,,,,,,
+679474,Subaru Duck (S),Subaru Duck S,https://tcgplayer-cdn.tcgplayer.com/product/679474_200w.jpg,87,24580,https://cpt.tcgcsv.com/vPr7,2026-02-20T05:10:21.42,1,7.95,7.99,10.11,7.06,,Foil,Special,hBP04-104,"The holomem this mascot is attached to gets +20 HP.<br>
+<br>
+•Additional ability if attached to ""Oozora Subaru""<br>
+While the total number of cheers on both players' stage is 10 or more, the holomem this mascot is attached to gets Arts+20.<br>
+<br>
+Only 1 mascot can be attached to each of your holomem.",Support,Mascot,,,,,,,,,,,,
+679475,Koyori's Assistants (U),Koyoris Assistants U,https://tcgplayer-cdn.tcgplayer.com/product/679475_200w.jpg,87,24580,https://cpt.tcgcsv.com/wPr7,2026-02-20T05:10:21.42,1,0.11,0.25,1.23,0.21,,Normal,Uncommon,hBP04-105,"When this fan is attached to holomem from hand or archive, you may reattach 1 cheer from your stage to the holomem this fan is attached to.<br>
+<br>
+You may only attach this fan to your ""Hakui Koyori"", and you may attach any number of this fan per holomem.",Support,Fan,,,,,,,,,#KOYO LABO,,,
+679476,Koyori's Assistants (S),Koyoris Assistants S,https://tcgplayer-cdn.tcgplayer.com/product/679476_200w.jpg,87,24580,https://cpt.tcgcsv.com/xPr7,2026-02-20T05:10:21.42,1,65.0,65.0,65.0,22.67,,Foil,Special,hBP04-105,"When this fan is attached to holomem from hand or archive, you may reattach 1 cheer from your stage to the holomem this fan is attached to.<br>
+<br>
+You may only attach this fan to your ""Hakui Koyori"", and you may attach any number of this fan per holomem.",Support,Fan,,,,,,,,,#KOYO LABO,,,
+679477,Yukimin (U),Yukimin U,https://tcgplayer-cdn.tcgplayer.com/product/679477_200w.jpg,87,24580,https://cpt.tcgcsv.com/zPr7,2026-02-20T05:10:21.42,1,0.03,0.25,1.23,0.19,,Normal,Uncommon,hBP04-106,"The holomem this fan is attached to deals +10 special damage to your opponent's center holomem.<br>
+<br>
+You may only attach this fan to your ""Yukihana Lamy"", and you may attach any number of this fan per holomem.",Support,Fan,,,,,,,,,,,,
+679478,Yukimin (S),Yukimin S,https://tcgplayer-cdn.tcgplayer.com/product/679478_200w.jpg,87,24580,https://cpt.tcgcsv.com/BPr7,2026-02-20T05:10:21.42,1,1.07,1.75,5.14,1.48,,Foil,Special,hBP04-106,"The holomem this fan is attached to deals +10 special damage to your opponent's center holomem.<br>
+<br>
+You may only attach this fan to your ""Yukihana Lamy"", and you may attach any number of this fan per holomem.",Support,Fan,,,,,,,,,,,,
+679479,Harusaki Nodoka (C),Harusaki Nodoka C,https://tcgplayer-cdn.tcgplayer.com/product/679479_200w.jpg,87,24580,https://cpt.tcgcsv.com/CPr7,2026-02-20T05:10:21.42,1,1.5,1.99,2.5,2.03,,Normal,Common,hSD01-016,"LIMITED:Usable only 1 per turn.<br>
+<br>
+Draw 3 cards.",Support,Staff,,,,,,,,,,,,
+679480,Manager-chan (C),Manager chan C,https://tcgplayer-cdn.tcgplayer.com/product/679480_200w.jpg,87,24580,https://cpt.tcgcsv.com/DPr7,2026-02-20T05:10:21.42,1,0.99,2.5,2.99,1.48,,Normal,Common,hSD01-017,"LIMITED:Usable only 1 per turn.<br>
+<br>
+This card can only be used if you have 1 or more cards in hand excluding this card.<br>
+<br>
+Return all of the cards in your hand to the deck and shuffle it. Then, draw 5 cards.",Support,Staff,,,,,,,,,,,,
+679481,Manager-chan (S),Manager chan S,https://tcgplayer-cdn.tcgplayer.com/product/679481_200w.jpg,87,24580,https://cpt.tcgcsv.com/FPr7,2026-02-20T05:10:21.42,1,24.0,29.9,38.0,24.28,,Foil,Special,hSD01-017,"LIMITED:Usable only 1 per turn.<br>
+<br>
+This card can only be used if you have 1 or more cards in hand excluding this card.<br>
+<br>
+Return all of the cards in your hand to the deck and shuffle it. Then, draw 5 cards.",Support,Staff,,,,,,,,,,,,
+679482,Amane Kanata (U),Amane Kanata U,https://tcgplayer-cdn.tcgplayer.com/product/679482_200w.jpg,87,24580,https://cpt.tcgcsv.com/GPr7,2026-02-20T05:10:21.42,1,0.04,0.25,1.23,0.17,,Normal,Uncommon,hSD08-002,,holomem,,White,,,,Debut,100,"[N] I Look Good in a Yukata, Right? (20)",1,#JP;#Gen 4;#Singing;#Summer,,,"«Collab Effect» holoSummer
+Look at the top 5 cards of your deck. Reveal 1 Debut holomem with [#Summer] from among them, and add it to hand. Then, return the remaining cards to the bottom of the deck in any order."
+679483,Amane Kanata (S),Amane Kanata S,https://tcgplayer-cdn.tcgplayer.com/product/679483_200w.jpg,87,24580,https://cpt.tcgcsv.com/HPr7,2026-02-20T05:10:21.42,1,1.92,2.35,9.81,2.63,,Foil,Special,hSD08-002,,holomem,,White,,,,Debut,100,"[N] I Look Good in a Yukata, Right? (20)",1,#JP;#Gen 4;#Singing;#Summer,,,"«Collab Effect» holoSummer
+Look at the top 5 cards of your deck. Reveal 1 Debut holomem with [#Summer] from among them, and add it to hand. Then, return the remaining cards to the bottom of the deck in any order."
+679484,Amane Kanata (R),Amane Kanata R,https://tcgplayer-cdn.tcgplayer.com/product/679484_200w.jpg,87,24580,https://cpt.tcgcsv.com/JPr7,2026-02-20T05:10:21.42,1,0.08,0.25,1.23,0.17,,Foil,Rare,hSD08-003,,holomem,,White,,,,2nd,200,"[WNN] Everyone's Super Darling (100+)<br>
+ This Arts gets +10 for each holomem with [#Summer] on your stage.",2,#JP;#Gen 4;#Singing,,,"«Bloom Effect» I'll Hear You Out
+Reveal 1 Debut holomem with [#Gen 4] from your deck, and add it to hand. Then, shuffle the deck."
+679485,Amane Kanata (SR) (hSD08-003),Amane Kanata SR hSD08 003,https://tcgplayer-cdn.tcgplayer.com/product/679485_200w.jpg,87,24580,https://cpt.tcgcsv.com/KPr7,2026-02-20T05:10:21.42,1,3.0,4.99,45.0,4.96,,Foil,Super Rare,hSD08-003,,holomem,,White,,,,2nd,200,"[WNN] Everyone's Super Darling (100+)<br>
+ This Arts gets +10 for each holomem with [#Summer] on your stage.",2,#JP;#Gen 4;#Singing,,,"«Bloom Effect» I'll Hear You Out
+Reveal 1 Debut holomem with [#Gen 4] from your deck, and add it to hand. Then, shuffle the deck."
+679486,Amane Kanata (RR),Amane Kanata RR,https://tcgplayer-cdn.tcgplayer.com/product/679486_200w.jpg,87,24580,https://cpt.tcgcsv.com/LPr7,2026-02-20T05:10:21.42,1,0.07,0.49,3.6,0.31,,Foil,Double Rare,hSD08-004,,holomem,,White,,,,2nd,180,"[WWN] So that I Can Catch Up to You (120)<br>
+ [1/Turn]When this Arts downed your opponent's center holomem, deal 40 special damage to 1 of your opponent's 2nd holomem.",2,#JP;#Gen 4;#Singing,,,"«Gift» Angel Wind
+[Nenter Position Only]Your Debut holomem with [#Gen 4] in the collab position gets Arts+40."
+679487,Amane Kanata (SR) (hSD08-004),Amane Kanata SR hSD08 004,https://tcgplayer-cdn.tcgplayer.com/product/679487_200w.jpg,87,24580,https://cpt.tcgcsv.com/MPr7,2026-02-20T05:10:21.42,1,3.2,4.26,26.94,3.66,,Foil,Super Rare,hSD08-004,,holomem,,White,,,,2nd,180,"[WWN] So that I Can Catch Up to You (120)<br>
+ [1/Turn]When this Arts downed your opponent's center holomem, deal 40 special damage to 1 of your opponent's 2nd holomem.",2,#JP;#Gen 4;#Singing,,,"«Gift» Angel Wind
+[Nenter Position Only]Your Debut holomem with [#Gen 4] in the collab position gets Arts+40."
+679488,Himemori Luna (C),Himemori Luna C,https://tcgplayer-cdn.tcgplayer.com/product/679488_200w.jpg,87,24580,https://cpt.tcgcsv.com/NPr7,2026-02-20T05:10:21.42,1,0.1,0.2,1.23,0.17,,Normal,Common,hSD08-005,,holomem,,White,,,,Debut,90,[N] It's a Festival (30),1,#JP;#Gen 4;#Baby;#Summer,,,"«Gift» All-Encompassing Pouch
+[Nollab Position Only]During the opponent's turn, when your holomem is downed, and your life is less than or equal to your opponent's, you may return 1 item with ""PC"" in its card name from your archive to hand."
+679489,Himemori Luna (S),Himemori Luna S,https://tcgplayer-cdn.tcgplayer.com/product/679489_200w.jpg,87,24580,https://cpt.tcgcsv.com/PPr7,2026-02-20T05:10:21.42,1,1.74,2.0,5.95,2.08,,Foil,Special,hSD08-005,,holomem,,White,,,,Debut,90,[N] It's a Festival (30),1,#JP;#Gen 4;#Baby;#Summer,,,"«Gift» All-Encompassing Pouch
+[Nollab Position Only]During the opponent's turn, when your holomem is downed, and your life is less than or equal to your opponent's, you may return 1 item with ""PC"" in its card name from your archive to hand."
+679490,Tokoyami Towa (C),Tokoyami Towa C,https://tcgplayer-cdn.tcgplayer.com/product/679490_200w.jpg,87,24580,https://cpt.tcgcsv.com/QPr7,2026-02-20T05:10:21.42,1,0.09,0.25,1.23,0.15,,Normal,Common,hSD08-006,,holomem,,Purple,,,,Debut,90,[N] Have You Fallen for Towa? (20),1,#JP;#Gen 4;#Singing;#Shooter;#Summer,,,"«Collab Effect» Wanna Watch the Fireworks?
+Deal 10 special damage to your opponent's center holomem. If you went second and it is your first turn, deal 20 special damage to your opponent's center holomem."
+679491,Tokoyami Towa (S),Tokoyami Towa S,https://tcgplayer-cdn.tcgplayer.com/product/679491_200w.jpg,87,24580,https://cpt.tcgcsv.com/RPr7,2026-02-20T05:10:21.42,1,2.79,4.54,10.13,4.26,,Foil,Special,hSD08-006,,holomem,,Purple,,,,Debut,90,[N] Have You Fallen for Towa? (20),1,#JP;#Gen 4;#Singing;#Shooter;#Summer,,,"«Collab Effect» Wanna Watch the Fireworks?
+Deal 10 special damage to your opponent's center holomem. If you went second and it is your first turn, deal 20 special damage to your opponent's center holomem."
+679492,Tsunomaki Watame (C),Tsunomaki Watame C,https://tcgplayer-cdn.tcgplayer.com/product/679492_200w.jpg,87,24580,https://cpt.tcgcsv.com/SPr7,2026-02-20T05:10:21.42,1,0.03,0.24,1.23,0.18,,Normal,Common,hSD08-007,,holomem,,Yellow,,,,Debut,100,[N] Cotton Candy's Delicious (10),1,#JP;#Gen 4;#Kemomimi;#Singing;#Summer,,,"«Collab Effect» Summer Festival with Everyone
+You may send 1 cheer from your archive to your 2nd holomem with [#Gen 4]."
+679493,Tsunomaki Watame (S),Tsunomaki Watame S,https://tcgplayer-cdn.tcgplayer.com/product/679493_200w.jpg,87,24580,https://cpt.tcgcsv.com/TPr7,2026-02-20T05:10:21.42,1,3.61,4.7,8.18,4.95,,Foil,Special,hSD08-007,,holomem,,Yellow,,,,Debut,100,[N] Cotton Candy's Delicious (10),1,#JP;#Gen 4;#Kemomimi;#Singing;#Summer,,,"«Collab Effect» Summer Festival with Everyone
+You may send 1 cheer from your archive to your 2nd holomem with [#Gen 4]."
+679494,White Cheer (SY),White Cheer SY,https://tcgplayer-cdn.tcgplayer.com/product/679494_200w.jpg,87,24580,https://cpt.tcgcsv.com/VPr7,2026-02-20T05:10:21.42,1,14.06,18.0,29.65,17.45,,Foil,Special Yell,hY01-006,,Cheer,,White,,,,,,,,,,,
+679495,Green Cheer (SY),Green Cheer SY,https://tcgplayer-cdn.tcgplayer.com/product/679495_200w.jpg,87,24580,https://cpt.tcgcsv.com/WPr7,2026-02-20T05:10:21.42,1,10.0,12.87,20.0,12.65,,Foil,Special Yell,hY02-005,,Cheer,,Green,,,,,,,,,,,
+679496,Red Cheer (SY),Red Cheer SY,https://tcgplayer-cdn.tcgplayer.com/product/679496_200w.jpg,87,24580,https://cpt.tcgcsv.com/XPr7,2026-02-20T05:10:21.42,1,16.49,24.85,45.88,25.92,,Foil,Special Yell,hY03-004,,Cheer,,Red,,,,,,,,,,,
+679497,Blue Cheer (SY),Blue Cheer SY,https://tcgplayer-cdn.tcgplayer.com/product/679497_200w.jpg,87,24580,https://cpt.tcgcsv.com/ZPr7,2026-02-20T05:10:21.42,1,13.0,17.2,29.99,17.85,,Foil,Special Yell,hY04-005,,Cheer,,Blue,,,,,,,,,,,
+679498,Purple Cheer (SY),Purple Cheer SY,https://tcgplayer-cdn.tcgplayer.com/product/679498_200w.jpg,87,24580,https://cpt.tcgcsv.com/-Pr7,2026-02-20T05:10:21.42,1,19.71,22.12,43.94,20.84,,Foil,Special Yell,hY05-004,,Cheer,,Purple,,,,,,,,,,,
+679499,Yellow Cheer (SY),Yellow Cheer SY,https://tcgplayer-cdn.tcgplayer.com/product/679499_200w.jpg,87,24580,https://cpt.tcgcsv.com/_Pr7,2026-02-20T05:10:21.42,1,23.48,30.25,44.99,39.06,,Foil,Special Yell,hY06-004,,Cheer,,Yellow,,,,,,,,,,,
+682256,Oozora Subaru (P) (hBP04-068) (Alternate Art),Oozora Subaru P hBP04 068 Alternate Art,https://tcgplayer-cdn.tcgplayer.com/product/682256_200w.jpg,87,24580,https://cpt.tcgcsv.com/8Ws7,2026-04-28T17:42:01.64,1,61.75,85.81,93.0,,,Foil,Promo,hBP04-068,,holomem,,Yellow,,,,Debut,100,[N] From Subaru to You! (20),1,#JP;#Gen 2;#Bird,,,"«Gift» Oozora Subaru Special Combo Set
+[Nenter Position·Nollab Position Only]This holomem takes -20 damage from your opponent's 1st holomem."
