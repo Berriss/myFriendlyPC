@@ -516,6 +516,29 @@ async fn get_cards(
         clauses.push(format!("c.bloom_level = {p}"));
     }
 
+    match params.deck_zone.as_deref().map(str::trim) {
+        Some("oshi") => clauses.push("c.card_type = 'Oshi Holomem'".to_string()),
+        Some("main") => {
+            clauses.push("c.card_type IN ('Holomem', 'Buzz Holomem', 'Support')".to_string())
+        }
+        Some("cheer") => clauses.push("c.card_type = 'Cheer'".to_string()),
+        _ => {}
+    }
+
+    match params.parallel.as_deref().map(str::trim) {
+        Some("base") => {
+            clauses.push("c.rarity NOT IN ('SEC', 'OUR', 'UR', 'SR', 'S', 'SY', 'HR')".to_string())
+        }
+        Some("only") => {
+            clauses.push("c.rarity IN ('SEC', 'OUR', 'UR', 'SR', 'S', 'SY', 'HR')".to_string())
+        }
+        _ => {}
+    }
+
+    if params.limited_only == Some(true) {
+        clauses.push("(c.card_type = 'Support' AND c.effect_text LIKE '%LIMITED%')".to_string());
+    }
+
     if let Some(min_p) = params.min_price {
         let p = next_param(SqlValue::from(min_p));
         clauses.push(format!(
@@ -565,7 +588,7 @@ async fn get_cards(
         .query_row_opt(&count_sql, &bind_vals, |r| Ok(r.get_i64(0)))?
         .unwrap_or(0);
 
-    let per_page = params.per_page.unwrap_or(36).clamp(1, 120);
+    let per_page = params.per_page.unwrap_or(36).clamp(1, 250);
     let total_pages = ((total + per_page - 1) / per_page).max(1);
     let page = params.page.unwrap_or(1).clamp(1, total_pages);
     let offset = (page - 1) * per_page;
@@ -944,17 +967,24 @@ async fn list_decks(State(state): State<AppState>) -> Result<Json<Vec<DeckSummar
            d.name,
            d.oshi_product_id,
            oc.name AS oshi_name,
+           oc.card_number AS oshi_card_number,
+           oc.color AS oshi_color,
            oc.image_url AS oshi_image_url,
            d.description,
            COALESCE(SUM(CASE WHEN dc.zone = 'main' THEN dc.quantity ELSE 0 END), 0) AS main_count,
            COALESCE(SUM(CASE WHEN dc.zone = 'cheer' THEN dc.quantity ELSE 0 END), 0) AS cheer_count,
-           COALESCE(SUM(dc.quantity), 0) AS total_cards,
-           COALESCE(SUM(MIN(dc.quantity, COALESCE(col.quantity_normal, 0) + COALESCE(col.quantity_foil, 0))), 0) AS owned_cards,
-           COALESCE(SUM(dc.quantity * COALESCE(c.market_price, c.foil_market_price, 0.0)), 0.0) AS est_cost,
+           COALESCE(SUM(dc.quantity), 0) + MAX(CASE WHEN oc.product_id IS NOT NULL THEN 1 ELSE 0 END) AS total_cards,
+           COALESCE(SUM(MIN(dc.quantity, COALESCE(col.quantity_normal, 0) + COALESCE(col.quantity_foil, 0))), 0)
+             + MAX(CASE WHEN oc.product_id IS NOT NULL AND (COALESCE(ocol.quantity_normal, 0) + COALESCE(ocol.quantity_foil, 0)) > 0 THEN 1 ELSE 0 END) AS owned_cards,
+           COALESCE(SUM(dc.quantity * COALESCE(c.market_price, c.foil_market_price, 0.0)), 0.0)
+             + MAX(CASE WHEN oc.product_id IS NOT NULL THEN COALESCE(oc.market_price, oc.foil_market_price, 0.0) ELSE 0.0 END) AS est_cost,
+           COALESCE(SUM(MAX(0, dc.quantity - (COALESCE(col.quantity_normal, 0) + COALESCE(col.quantity_foil, 0))) * COALESCE(c.market_price, c.foil_market_price, 0.0)), 0.0)
+             + MAX(CASE WHEN oc.product_id IS NOT NULL AND (COALESCE(ocol.quantity_normal, 0) + COALESCE(ocol.quantity_foil, 0)) = 0 THEN COALESCE(oc.market_price, oc.foil_market_price, 0.0) ELSE 0.0 END) AS missing_cost,
            d.created_at,
            d.updated_at
          FROM decks d
          LEFT JOIN cards oc ON oc.product_id = d.oshi_product_id
+         LEFT JOIN collection ocol ON ocol.product_id = d.oshi_product_id
          LEFT JOIN deck_cards dc ON dc.deck_id = d.id
          LEFT JOIN cards c ON c.product_id = dc.product_id
          LEFT JOIN collection col ON col.product_id = dc.product_id
@@ -962,8 +992,8 @@ async fn list_decks(State(state): State<AppState>) -> Result<Json<Vec<DeckSummar
          ORDER BY d.updated_at DESC, d.id DESC",
         &[],
         |r| {
-            let total_cards = r.get_i64(8);
-            let owned_cards = r.get_i64(9);
+            let total_cards = r.get_i64(10);
+            let owned_cards = r.get_i64(11);
             let coverage = if total_cards > 0 {
                 (owned_cards as f64 / total_cards as f64) * 100.0
             } else {
@@ -974,14 +1004,17 @@ async fn list_decks(State(state): State<AppState>) -> Result<Json<Vec<DeckSummar
                 name: r.get_string(1),
                 oshi_product_id: r.get_opt_i64(2),
                 oshi_name: r.get_opt_string(3),
-                oshi_image_url: r.get_opt_string(4),
-                description: r.get_string(5),
-                main_count: r.get_i64(6),
-                cheer_count: r.get_i64(7),
+                oshi_card_number: r.get_opt_string(4),
+                oshi_color: r.get_opt_string(5),
+                oshi_image_url: r.get_opt_string(6),
+                description: r.get_string(7),
+                main_count: r.get_i64(8),
+                cheer_count: r.get_i64(9),
                 owned_coverage_pct: coverage,
-                estimated_cost_usd: r.get_f64(10),
-                created_at: r.get_string(11),
-                updated_at: r.get_string(12),
+                estimated_cost_usd: r.get_f64(12),
+                missing_cost_usd: r.get_f64(13),
+                created_at: r.get_string(14),
+                updated_at: r.get_string(15),
             })
         },
     )?;
@@ -1149,8 +1182,10 @@ fn fetch_deck_detail(db: &Database, deck_id: i64) -> Result<Option<DeckDetail>> 
            c.name,
            c.card_number,
            c.card_type,
+           c.bloom_level,
            c.color,
            c.rarity,
+           c.effect_text,
            c.image_url,
            COALESCE(c.market_price, c.foil_market_price)
          FROM deck_cards dc
@@ -1168,18 +1203,61 @@ fn fetch_deck_detail(db: &Database, deck_id: i64) -> Result<Option<DeckDetail>> 
                 name: r.get_string(4),
                 card_number: r.get_string(5),
                 card_type: r.get_string(6),
-                color: r.get_string(7),
-                rarity: r.get_string(8),
-                image_url: r.get_string(9),
-                market_price: r.get_opt_f64(10),
+                bloom_level: r.get_string(7),
+                color: r.get_string(8),
+                rarity: r.get_string(9),
+                effect_text: r.get_string(10),
+                image_url: r.get_string(11),
+                market_price: r.get_opt_f64(12),
             })
         },
     )?;
+
+    let oshi_card = if let Some(oshi_pid) = oshi_product_id {
+        db.query_row_opt(
+            "SELECT
+               c.product_id,
+               COALESCE(col.quantity_normal, 0) + COALESCE(col.quantity_foil, 0) AS owned_qty,
+               c.name,
+               c.card_number,
+               c.card_type,
+               c.bloom_level,
+               c.color,
+               c.rarity,
+               c.effect_text,
+               c.image_url,
+               COALESCE(c.market_price, c.foil_market_price)
+             FROM cards c
+             LEFT JOIN collection col ON col.product_id = c.product_id
+             WHERE c.product_id = ?1",
+            &[SqlValue::from(oshi_pid)],
+            |r| {
+                Ok(DeckCardItem {
+                    product_id: r.get_i64(0),
+                    zone: "oshi".to_string(),
+                    quantity: 1,
+                    owned_quantity: r.get_i64(1),
+                    name: r.get_string(2),
+                    card_number: r.get_string(3),
+                    card_type: r.get_string(4),
+                    bloom_level: r.get_string(5),
+                    color: r.get_string(6),
+                    rarity: r.get_string(7),
+                    effect_text: r.get_string(8),
+                    image_url: r.get_string(9),
+                    market_price: r.get_opt_f64(10),
+                })
+            },
+        )?
+    } else {
+        None
+    };
 
     Ok(Some(DeckDetail {
         id,
         name,
         oshi_product_id,
+        oshi_card,
         description,
         cards,
         created_at,

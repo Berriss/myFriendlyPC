@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Hololive OCG Tracker — Colección &amp; Catálogo</title>
   <link rel="icon" type="image/svg+xml" href="/icon.svg" />
-  <link rel="stylesheet" href="/css/styles.css?v=20261121-1" />
+  <link rel="stylesheet" href="/css/styles.css?v=20261121-5" />
 </head>
 <body>
   <div class="app-shell">
@@ -315,53 +315,284 @@
         </section>
       </main>
 
-      <!-- VIEW 3: DECK BUILDER (SCALABLE MODULE) -->
+      <!-- VIEW 3: DECK BUILDER STUDIO -->
       <main id="view-decks" class="view-section">
-        <div class="section-header-card">
-          <div>
-            <h2>Constructor de Mazos (Deck Builder)</h2>
-            <p class="muted-text">Módulo escalable conectado a tu colección SQLite para armar recetas y calcular qué cartas te faltan.</p>
+        <!-- Gallery Sub-view -->
+        <div id="decks-gallery-view">
+          <div class="section-header-card">
+            <div>
+              <h2>Constructor de Mazos (hOCG)</h2>
+              <p class="muted-text" id="decks-gallery-subtitle">Arma mazos oficiales (1 Oshi · 50 Main · 20 Cheer), valida reglas en vivo y revisa qué cartas ya tienes.</p>
+            </div>
+            <div class="action-row">
+              <button id="open-deck-import-btn" class="outlined-btn" type="button">Importar lista / JSON</button>
+              <button id="new-deck-btn" class="filled-btn" type="button">+ Nuevo Mazo</button>
+            </div>
           </div>
-          <button id="new-deck-btn" class="filled-btn" type="button">+ Nuevo Mazo</button>
+
+          <div id="decks-auth-banner" class="decks-auth-banner hidden">
+            <div id="decks-auth-banner-text" class="muted-text"></div>
+            <button id="decks-signin-btn" class="tonal-btn hidden" type="button">Iniciar sesión con Google</button>
+          </div>
+
+          <div id="decks-grid" class="decks-gallery-grid"></div>
         </div>
 
-        <div id="decks-grid" class="editions-grid"></div>
-
-        <section id="deck-editor-panel" class="panel-card hidden">
-          <div class="deck-editor-header">
-            <h3 id="deck-editor-title">Editar Mazo</h3>
-            <button id="close-deck-editor" class="text-btn" type="button">Cerrar editor</button>
-          </div>
-          <div class="deck-form-grid">
-            <div class="field-group">
-              <label for="deck-name-input">Nombre del Mazo</label>
-              <input id="deck-name-input" type="text" placeholder="Ej. Kanata White Aggro" />
+        <!-- Bushiroad Deck Log-Style Preview Sub-view -->
+        <div id="deck-preview-view" class="hidden">
+          <div class="deck-preview-topbar">
+            <div class="deck-preview-title-row">
+              <button id="close-deck-preview" class="outlined-btn" type="button">← Mis Mazos</button>
+              <div class="deck-preview-heading">
+                <h2 id="preview-deck-title">Mazo</h2>
+                <span id="preview-deck-legality-pill" class="deck-legality-pill legal-wip">En construcción</span>
+              </div>
             </div>
-            <div class="field-group">
-              <label for="deck-oshi-select">Oshi Holomem</label>
-              <select id="deck-oshi-select"></select>
-            </div>
-            <div class="field-group span-2">
-              <label for="deck-desc-input">Notas / Estrategia</label>
-              <input id="deck-desc-input" type="text" placeholder="Notas de receta o combos principales..." />
+            <div class="deck-studio-actions">
+              <button id="preview-edit-btn" class="filled-btn" type="button">Editar mazo</button>
+              <button id="preview-duplicate-btn" class="outlined-btn" type="button">Duplicar</button>
+              <button id="preview-copy-btn" class="outlined-btn" type="button">Copiar lista</button>
+              <button id="preview-export-btn" class="outlined-btn hide-sm" type="button">Exportar JSON</button>
+              <button id="preview-delete-btn" class="text-btn danger" type="button">Eliminar</button>
             </div>
           </div>
 
-          <div class="deck-card-adder">
-            <div class="search-field">
-              <svg viewBox="0 0 24 24" class="search-icon"><path d="M15.5 14h-.79l-.28-.27A6.471 6.471 0 0 0 16 9.5 6.5 6.5 0 1 0 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/></svg>
-              <input id="deck-card-search" type="search" placeholder="Buscar carta para agregar al mazo (ej. Amane Kanata, Idol Microphone)..." />
+          <div class="deck-rule-banner">
+            <span>Reglas de Construcción: Estándar (1 Oshi · 50 Main · 20 Cheer)</span>
+            <span id="preview-rule-meta">Cobertura: 0% · Valor: $0.00</span>
+          </div>
+
+          <div id="preview-deck-notes" class="deck-preview-notes hidden"></div>
+
+          <div id="preview-analytics-band" class="deck-preview-analytics"></div>
+
+          <div class="deck-preview-sheet-bar">
+            <span class="muted-text" id="preview-sheet-hint">Haz clic en cualquier carta o en 🔍 para ver detalle y estado en colección.</span>
+            <label class="deck-preview-toggle">
+              <input id="preview-ownership-toggle" type="checkbox" checked />
+              <span>Mostrar estado en mi colección</span>
+            </label>
+          </div>
+
+          <div id="preview-deck-sheet" class="deck-preview-sheet"></div>
+        </div>
+
+        <!-- Split-Pane Studio Sub-view -->
+        <div id="deck-builder-studio" class="hidden">
+          <div class="deck-studio-topbar">
+            <div class="deck-studio-left">
+              <button id="close-deck-editor" class="outlined-btn" type="button">← Mis Mazos</button>
+              <input id="deck-name-input" class="deck-name-input" type="text" maxlength="120" placeholder="Nombre del mazo (ej. Kanata White Aggro)..." />
+              <span id="deck-dirty-badge" class="deck-dirty-badge">Sin guardar</span>
             </div>
-            <div id="deck-search-results" class="deck-search-results"></div>
+            <div class="deck-studio-actions">
+              <button id="open-deck-stats-btn" class="tonal-btn" type="button">Estadísticas</button>
+              <button id="copy-deck-text-btn" class="outlined-btn hide-sm" type="button">Copiar lista</button>
+              <button id="export-deck-json-btn" class="outlined-btn hide-sm" type="button">Exportar JSON</button>
+              <button id="save-deck-btn" class="filled-btn" type="button">Guardar Mazo</button>
+            </div>
           </div>
 
-          <div id="deck-cards-list" class="deck-cards-list"></div>
-
-          <div class="action-row end">
-            <button id="delete-deck-btn" class="text-btn danger hidden" type="button">Eliminar Mazo</button>
-            <button id="save-deck-btn" class="filled-btn" type="button">Guardar Mazo</button>
+          <div class="deck-mobile-tabs" role="tablist" aria-label="Vistas del constructor">
+            <button id="mobile-tab-browser" class="deck-mobile-tab active" data-deck-pane="browser" type="button">Explorar Cartas</button>
+            <button id="mobile-tab-deck" class="deck-mobile-tab" data-deck-pane="deck" type="button">
+              <span>Mi Mazo</span>
+              <span id="mobile-deck-count" class="chip-count">0/71</span>
+            </button>
           </div>
-        </section>
+
+          <div class="deck-studio-grid">
+            <!-- Left Pane: Card Browser -->
+            <section id="deck-browser-pane" class="deck-browser-pane">
+              <div class="deck-zone-tabs" id="deck-zone-tabs" role="tablist" aria-label="Zona del mazo">
+                <button id="zone-tab-oshi" class="zone-tab-btn" data-zone="oshi" type="button">
+                  <span>★ Oshi</span>
+                  <span id="zone-count-oshi" class="zone-tab-badge">0/1</span>
+                </button>
+                <button id="zone-tab-main" class="zone-tab-btn active" data-zone="main" type="button">
+                  <span>Main Deck</span>
+                  <span id="zone-count-main" class="zone-tab-badge">0/50</span>
+                </button>
+                <button id="zone-tab-cheer" class="zone-tab-btn" data-zone="cheer" type="button">
+                  <span>Cheer Deck</span>
+                  <span id="zone-count-cheer" class="zone-tab-badge">0/20</span>
+                </button>
+              </div>
+
+              <div class="deck-browser-filters">
+                <div class="deck-search-row">
+                  <div class="search-field">
+                    <svg viewBox="0 0 24 24" class="search-icon"><path d="M15.5 14h-.79l-.28-.27A6.471 6.471 0 0 0 16 9.5 6.5 6.5 0 1 0 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/></svg>
+                    <input id="deck-card-search" type="search" placeholder="Buscar carta, miembro, código (hBP01-001), #tag o efecto..." autocomplete="off" />
+                  </div>
+                  <button id="deck-more-filters-toggle" class="outlined-btn" type="button">Más filtros</button>
+                  <button id="deck-clear-filters-btn" class="text-btn" type="button">Limpiar</button>
+                </div>
+
+                <div class="chip-row" id="deck-color-chips">
+                  <button class="filter-chip active" data-deck-color="" type="button">Todos</button>
+                  <button class="filter-chip" data-deck-color="White" type="button"><span class="color-dot dot-white"></span>White</button>
+                  <button class="filter-chip" data-deck-color="Green" type="button"><span class="color-dot dot-green"></span>Green</button>
+                  <button class="filter-chip" data-deck-color="Red" type="button"><span class="color-dot dot-red"></span>Red</button>
+                  <button class="filter-chip" data-deck-color="Blue" type="button"><span class="color-dot dot-blue"></span>Blue</button>
+                  <button class="filter-chip" data-deck-color="Purple" type="button"><span class="color-dot dot-purple"></span>Purple</button>
+                  <button class="filter-chip" data-deck-color="Yellow" type="button"><span class="color-dot dot-yellow"></span>Yellow</button>
+                  <button class="filter-chip" data-deck-color="Colorless" type="button"><span class="color-dot dot-colorless"></span>Colorless</button>
+                </div>
+
+                <div id="deck-main-subfilters" class="deck-subfilters-row">
+                  <div class="chip-row" id="deck-type-chips">
+                    <button class="filter-chip active" data-deck-type="" type="button">Todos los tipos</button>
+                    <button class="filter-chip" data-deck-type="Holomem" type="button">Holomem</button>
+                    <button class="filter-chip" data-deck-type="Buzz Holomem" type="button">Buzz</button>
+                    <button class="filter-chip" data-deck-type="Support" type="button">Support</button>
+                    <button class="filter-chip" data-deck-type="LIMITED" type="button">LIMITED</button>
+                  </div>
+                  <div class="chip-row" id="deck-bloom-chips">
+                    <button class="filter-chip active" data-deck-bloom="" type="button">Todo Bloom</button>
+                    <button class="filter-chip" data-deck-bloom="Debut" type="button">Debut</button>
+                    <button class="filter-chip" data-deck-bloom="1st" type="button">1st</button>
+                    <button class="filter-chip" data-deck-bloom="2nd" type="button">2nd</button>
+                    <button class="filter-chip" data-deck-bloom="Spot" type="button">Spot</button>
+                  </div>
+                </div>
+
+                <div id="deck-more-filters" class="deck-more-filters hidden">
+                  <div class="field-group">
+                    <label for="deck-filter-edition">Edición / Set</label>
+                    <select id="deck-filter-edition">
+                      <option value="">Todas las ediciones</option>
+                    </select>
+                  </div>
+                  <div class="field-group">
+                    <label for="deck-filter-rarity">Rareza</label>
+                    <select id="deck-filter-rarity">
+                      <option value="">Todas las rarezas</option>
+                      <option value="SEC">SEC</option>
+                      <option value="OUR">OUR</option>
+                      <option value="OSR">OSR</option>
+                      <option value="UR">UR</option>
+                      <option value="SR">SR</option>
+                      <option value="RR">RR</option>
+                      <option value="S">S</option>
+                      <option value="SY">SY</option>
+                      <option value="HR">HR</option>
+                      <option value="R">R</option>
+                      <option value="U">U</option>
+                      <option value="C">C</option>
+                      <option value="OC">OC</option>
+                      <option value="P">P</option>
+                    </select>
+                  </div>
+                  <div class="field-group">
+                    <label for="deck-filter-parallel">Paralelas / Foil altas</label>
+                    <select id="deck-filter-parallel">
+                      <option value="all">Todas (Base + Paralelas)</option>
+                      <option value="base">Ocultar paralelas altas</option>
+                      <option value="only">Solo paralelas (SR/UR/OUR/SEC...)</option>
+                    </select>
+                  </div>
+                  <div class="field-group">
+                    <label for="deck-filter-sort">Ordenar</label>
+                    <select id="deck-filter-sort">
+                      <option value="number_asc">N° de Carta (Asc)</option>
+                      <option value="owned_desc">En mi colección primero</option>
+                      <option value="price_desc">Precio: Mayor a Menor</option>
+                      <option value="price_asc">Precio: Menor a Mayor</option>
+                      <option value="name_asc">Nombre (A-Z)</option>
+                    </select>
+                  </div>
+                  <label class="deck-owned-toggle">
+                    <input id="deck-filter-owned-only" type="checkbox" />
+                    <span>Solo cartas en mi colección</span>
+                  </label>
+                </div>
+              </div>
+
+              <div class="deck-browser-metabar">
+                <span id="deck-browser-meta" class="muted-text">Cargando cartas...</span>
+                <button id="deck-match-oshi-color-btn" class="tonal-btn hidden" type="button">Filtrar por color del Oshi</button>
+              </div>
+
+              <div id="deck-browser-grid" class="deck-browser-grid"></div>
+              <div id="deck-browser-pagination" class="pagination-footer"></div>
+            </section>
+
+            <!-- Right Pane: Persistent Deck Panel -->
+            <aside id="deck-panel-pane" class="deck-panel-pane" aria-label="Panel del mazo">
+              <div id="deck-panel-auth-nudge" class="deck-auth-nudge hidden">
+                <span>Mazo guardado localmente como invitado.</span>
+                <button id="deck-panel-signin-btn" class="tonal-btn" type="button">☁ Conectar Google</button>
+              </div>
+
+              <div class="deck-validation-box">
+                <div class="deck-progress-row">
+                  <div class="deck-progress-head">
+                    <span>Main Deck</span>
+                    <strong id="deck-main-progress-label">0 / 50</strong>
+                  </div>
+                  <div class="md3-progress-track">
+                    <div id="deck-main-progress-bar" class="md3-progress-fill" style="width:0%"></div>
+                  </div>
+                </div>
+                <div class="deck-progress-row">
+                  <div class="deck-progress-head">
+                    <span>Cheer Deck</span>
+                    <strong id="deck-cheer-progress-label">0 / 20</strong>
+                  </div>
+                  <div class="md3-progress-track">
+                    <div id="deck-cheer-progress-bar" class="md3-progress-fill" style="width:0%"></div>
+                  </div>
+                </div>
+                <div id="deck-legality-status" class="deck-legality-status is-wip">En construcción (Regla Estándar: 1 Oshi · 50 Main · 20 Cheer)</div>
+                <ul id="deck-validation-hints" class="deck-validation-hints"></ul>
+              </div>
+
+              <div class="deck-collector-strip">
+                <div class="collector-stat">
+                  <span class="kpi-label">Cobertura</span>
+                  <strong id="deck-coverage-val">0%</strong>
+                </div>
+                <div class="collector-stat">
+                  <span class="kpi-label">Valor mazo</span>
+                  <strong id="deck-cost-total">$0.00</strong>
+                </div>
+                <div class="collector-stat">
+                  <span class="kpi-label">Te faltan</span>
+                  <strong id="deck-cost-missing">$0.00</strong>
+                </div>
+                <button id="deck-add-missing-wishlist-btn" class="outlined-btn" type="button" title="Marcar las cartas que te faltan en tu Wishlist">♥ Faltantes</button>
+              </div>
+
+              <div id="deck-oshi-slot" class="deck-oshi-slot"></div>
+
+              <div id="deck-mini-curve" class="deck-mini-curve"></div>
+
+              <div class="deck-list-toolbar">
+                <span class="kpi-label" id="deck-cards-summary-label">Cartas en el mazo</span>
+                <div class="segmented-view" role="group" aria-label="Vista del mazo">
+                  <button id="deck-view-list" class="seg-btn active" type="button">Lista</button>
+                  <button id="deck-view-visual" class="seg-btn" type="button">Visual</button>
+                </div>
+              </div>
+
+              <div id="deck-cards-list" class="deck-panel-cards"></div>
+
+              <details class="deck-notes-box">
+                <summary>Notas / Estrategia del mazo</summary>
+                <div class="field-group" style="margin-top:8px;">
+                  <textarea id="deck-desc-input" rows="2" maxlength="1000" placeholder="Combos clave, mulligan o notas de estrategia..."></textarea>
+                </div>
+              </details>
+
+              <div class="deck-panel-footer">
+                <button id="clear-deck-btn" class="text-btn" type="button">Vaciar</button>
+                <button id="duplicate-deck-btn" class="outlined-btn hidden" type="button">Duplicar</button>
+                <button id="delete-deck-btn" class="text-btn danger hidden" type="button">Eliminar</button>
+              </div>
+            </aside>
+          </div>
+        </div>
       </main>
 
       <!-- VIEW 4: TCGCSV DATA AUDIT & SANITIZATION -->
@@ -535,6 +766,61 @@
     </div>
   </div>
 
+  <!-- Deck Stats & Confirm Modal -->
+  <div id="deck-stats-modal" class="modal-backdrop hidden" role="dialog" aria-modal="true" aria-labelledby="deck-stats-title">
+    <div class="modal-sheet modal-sheet-wide">
+      <div class="modal-header">
+        <div>
+          <span class="modal-kicker">Revisión &amp; Curva Oficial hOCG</span>
+          <h2 id="deck-stats-title">Estadísticas y Lista Visual del Mazo</h2>
+        </div>
+        <button id="deck-stats-close" class="icon-btn" aria-label="Cerrar estadísticas" type="button">
+          <svg viewBox="0 0 24 24" class="icon"><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </div>
+      <div class="modal-body" id="deck-stats-content"></div>
+      <div class="modal-footer-bar">
+        <button id="deck-stats-copy-btn" class="outlined-btn" type="button">Copiar lista</button>
+        <button id="deck-stats-export-btn" class="outlined-btn" type="button">Exportar JSON</button>
+        <button id="deck-stats-save-btn" class="filled-btn" type="button">Guardar Mazo</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Deck Import Modal -->
+  <div id="deck-import-modal" class="modal-backdrop hidden" role="dialog" aria-modal="true" aria-labelledby="deck-import-title">
+    <div class="modal-sheet modal-sheet-compact">
+      <div class="modal-header">
+        <div>
+          <span class="modal-kicker">Constructor de Mazos</span>
+          <h2 id="deck-import-title">Importar Mazo</h2>
+        </div>
+        <button id="deck-import-close" class="icon-btn" aria-label="Cerrar importación" type="button">
+          <svg viewBox="0 0 24 24" class="icon"><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </div>
+      <div class="modal-body">
+        <p class="muted-text" style="margin-top:0;">
+          Pega una lista por código de carta (<code>4 hBP01-009</code>, <code>1 hBP01-001</code>) o sube un respaldo <code>.json</code> exportado desde hOCG Tracker.
+        </p>
+        <div class="action-row" style="margin-bottom:10px;">
+          <label class="outlined-btn file-label">
+            Cargar archivo .json / .txt
+            <input id="deck-import-file" type="file" accept=".json,.txt,application/json,text/plain" hidden />
+          </label>
+        </div>
+        <div class="field-group">
+          <label for="deck-import-text">Contenido del mazo</label>
+          <textarea id="deck-import-text" rows="8" placeholder="Nombre: Mi Mazo&#10;Oshi: hBP01-001&#10;4 hBP01-009&#10;4 hBP01-011&#10;20 hY01-001"></textarea>
+        </div>
+        <div class="action-row end" style="margin-top:14px;">
+          <button id="deck-import-cancel-btn" class="outlined-btn" type="button">Cancelar</button>
+          <button id="deck-import-confirm-btn" class="filled-btn" type="button">Importar en editor</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
   <!-- MD3 Floating Action Button: Scroll to Top -->
   <button id="scroll-top-btn" class="fab-scroll-top hidden" type="button" title="Ir al tope de la página" aria-label="Ir al tope de la página">
     <svg viewBox="0 0 24 24" class="icon"><path d="M4 12l1.41 1.41L11 7.83V20h2V7.83l5.58 5.59L20 12l-8-8-8 8z"/></svg>
@@ -543,8 +829,8 @@
   <!-- MD3 Snackbar -->
   <div id="snackbar" class="snackbar hidden" role="status" aria-live="polite"></div>
 
-  <script src="/js/firebase-config.js?v=20261121-1"></script>
-  <script src="/js/firebase-cloud.js?v=20261121-1"></script>
-  <script src="/js/app.js?v=20261121-1"></script>
+  <script src="/js/firebase-config.js?v=20261121-2"></script>
+  <script src="/js/firebase-cloud.js?v=20261121-2"></script>
+  <script src="/js/app.js?v=20261121-5"></script>
 </body>
 </html>

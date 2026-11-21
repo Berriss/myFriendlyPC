@@ -1,6 +1,7 @@
 (() => {
   const FOIL_RARITIES = new Set(["R", "RR", "OSR", "S", "SY", "SR", "UR", "OUR", "HR", "SEC"]);
   const HIGH_RARITIES = new Set(["SEC", "OUR", "UR", "SR", "S", "SY", "HR"]);
+  const PARALLEL_RARITIES = new Set(["SEC", "OUR", "UR", "SR", "S", "SY", "HR"]);
   const RARITY_ORDER = {
     SEC: 1, OUR: 2, OSR: 3, UR: 4, SR: 5, RR: 6,
     S: 7, SY: 8, HR: 9, R: 10, U: 11, C: 12, OC: 13, P: 14,
@@ -189,18 +190,28 @@
   }
 
   function toFirestoreDeckDoc(deck) {
-    const now = new Date().toISOString();
+    const now = new Date().toISOString().slice(0, 64);
+    const rawOshi = Number(deck?.oshiProductId);
+    const oshiProductId = Number.isInteger(rawOshi) && rawOshi > 0 ? rawOshi : null;
+    const rawCards = Array.isArray(deck?.cards) ? deck.cards : [];
+    const cards = rawCards
+      .map((c) => {
+        const pid = Math.trunc(Number(c?.productId));
+        const qty = Math.max(1, Math.min(50, Math.trunc(Number(c?.quantity || 1))));
+        const zone = String(c?.zone || "main") === "cheer" ? "cheer" : "main";
+        return { productId: pid, zone, quantity: qty };
+      })
+      .filter((c) => Number.isInteger(c.productId) && c.productId > 0)
+      .slice(0, 100);
+    const createdAt = (typeof deck?.createdAt === "string" ? deck.createdAt : now).slice(0, 64);
+
     return {
-      name: String(deck.name || "Mazo").trim().slice(0, 120) || "Mazo",
-      oshiProductId: deck.oshiProductId ? Math.trunc(Number(deck.oshiProductId)) : null,
-      description: String(deck.description || "").slice(0, 1000),
-      cards: (Array.isArray(deck.cards) ? deck.cards : []).slice(0, 100).map((c) => ({
-        productId: Number(c.productId),
-        zone: String(c.zone || "main"),
-        quantity: Math.max(1, Number(c.quantity || 1)),
-      })),
-      createdAt: String(deck.createdAt || now).slice(0, 64),
-      updatedAt: String(now).slice(0, 64),
+      name: String(deck?.name || "Mazo").trim().slice(0, 120) || "Mazo",
+      oshiProductId,
+      description: String(deck?.description || "").slice(0, 1000),
+      cards,
+      createdAt,
+      updatedAt: now,
     };
   }
 
@@ -281,23 +292,69 @@
 
   async function migrateGuestCollectionToCloud(uid) {
     if (!db || !fbFsMod) return;
+    const { collection, getDocs, getDoc, doc, setDoc } = fbFsMod;
+
     try {
       const rawCol = localStorage.getItem(LS_COLLECTION);
-      if (!rawCol) return;
-      const guestItems = JSON.parse(rawCol);
-      if (!Array.isArray(guestItems) || !guestItems.length) return;
-
-      const { collection, getDocs, doc, setDoc } = fbFsMod;
-      const existingSnap = await getDocs(collection(db, "users", uid, "collection"));
-      if (existingSnap.empty) {
-        for (const item of guestItems) {
-          const docPayload = toFirestoreCollectionDoc(item);
-          await setDoc(doc(db, "users", uid, "collection", String(docPayload.productId)), docPayload);
+      if (rawCol) {
+        const guestItems = JSON.parse(rawCol);
+        if (Array.isArray(guestItems) && guestItems.length) {
+          const existingSnap = await getDocs(collection(db, "users", uid, "collection"));
+          if (existingSnap.empty) {
+            for (const item of guestItems) {
+              const docPayload = toFirestoreCollectionDoc(item);
+              await setDoc(doc(db, "users", uid, "collection", String(docPayload.productId)), docPayload);
+            }
+          }
         }
+        localStorage.removeItem(LS_COLLECTION);
       }
-      localStorage.removeItem(LS_COLLECTION);
     } catch (err) {
-      console.warn("Guest migration warning:", err);
+      console.warn("Guest collection migration warning:", err);
+    }
+
+    try {
+      const rawDecks = localStorage.getItem(LS_DECKS);
+      if (rawDecks) {
+        const guestDecks = JSON.parse(rawDecks);
+        if (Array.isArray(guestDecks) && guestDecks.length) {
+          const existingSnap = await getDocs(collection(db, "users", uid, "decks"));
+          const existingIds = new Set();
+          existingSnap.forEach((d) => existingIds.add(d.id));
+          for (const gDeck of guestDecks) {
+            const docId = String(gDeck.rawId || gDeck.id || Date.now());
+            if (!existingIds.has(docId)) {
+              const docPayload = toFirestoreDeckDoc(gDeck);
+              await setDoc(doc(db, "users", uid, "decks", docId), docPayload);
+            }
+          }
+        }
+        localStorage.removeItem(LS_DECKS);
+      }
+    } catch (err) {
+      console.warn("Guest decks migration warning:", err);
+    }
+
+    try {
+      const rawRate = localStorage.getItem(LS_RATE);
+      if (rawRate) {
+        const guestRate = JSON.parse(rawRate);
+        if (guestRate && Number(guestRate.rateClpPerUsd) > 0) {
+          const rateRef = doc(db, "users", uid, "settings", "exchangeRate");
+          const snap = await getDoc(rateRef);
+          if (!snap.exists()) {
+            await setDoc(rateRef, {
+              rateClpPerUsd: Math.round(Number(guestRate.rateClpPerUsd) * 100) / 100,
+              source: String(guestRate.source || "Manual").slice(0, 120),
+              observedDate: String(guestRate.observedDate || new Date().toISOString().slice(0, 10)).slice(0, 64),
+              updatedAt: String(guestRate.updatedAt || new Date().toISOString()).slice(0, 64),
+            });
+          }
+        }
+        localStorage.removeItem(LS_RATE);
+      }
+    } catch (err) {
+      console.warn("Guest rate migration warning:", err);
     }
   }
 
@@ -524,6 +581,10 @@
     const bloomLevel = (searchParams.get("bloom_level") || "").trim();
     const itemCategory = (searchParams.get("item_category") || "card").trim() || "card";
     const ownership = (searchParams.get("ownership") || "all").trim();
+    const deckZone = (searchParams.get("deck_zone") || "").trim();
+    const parallel = (searchParams.get("parallel") || "all").trim();
+    const limitedOnlyRaw = (searchParams.get("limited_only") || "").trim().toLowerCase();
+    const limitedOnly = limitedOnlyRaw === "1" || limitedOnlyRaw === "true";
     const minPriceRaw = searchParams.get("min_price");
     const maxPriceRaw = searchParams.get("max_price");
     const sort = searchParams.get("sort") || "price_desc";
@@ -532,6 +593,12 @@
     for (const c of cardsList) {
       if (itemCategory !== "all" && c.itemCategory !== itemCategory) continue;
       if (groupId && Number(c.groupId) !== Number(groupId)) continue;
+      if (deckZone === "oshi" && c.cardType !== "Oshi Holomem") continue;
+      if (deckZone === "main" && c.cardType !== "Holomem" && c.cardType !== "Buzz Holomem" && c.cardType !== "Support") continue;
+      if (deckZone === "cheer" && c.cardType !== "Cheer") continue;
+      if (parallel === "base" && PARALLEL_RARITIES.has(c.rarity)) continue;
+      if (parallel === "only" && !PARALLEL_RARITIES.has(c.rarity)) continue;
+      if (limitedOnly && (c.cardType !== "Support" || !String(c.effectText || "").includes("LIMITED"))) continue;
       if (q) {
         const hay = `${c.name} ${c.cardNumber} ${c.effectText} ${c.tags} ${c.editionName}`.toLowerCase();
         if (!hay.includes(q)) continue;
@@ -590,7 +657,7 @@
     });
 
     const total = filtered.length;
-    const perPage = Math.max(1, Math.min(120, Number(searchParams.get("per_page") || 36)));
+    const perPage = Math.max(1, Math.min(250, Number(searchParams.get("per_page") || 36)));
     const totalPages = Math.max(1, Math.ceil(total / perPage));
     const page = Math.max(1, Math.min(totalPages, Number(searchParams.get("page") || 1)));
     const offset = (page - 1) * perPage;
@@ -773,9 +840,16 @@
         const oshi = d.oshiProductId ? cardsById.get(Number(d.oshiProductId)) : null;
         let mainCount = 0;
         let cheerCount = 0;
-        let total = 0;
+        let total = oshi ? 1 : 0;
         let owned = 0;
-        let estCost = 0;
+        let estCost = oshi ? (effectivePrice(oshi) ?? 0) : 0;
+        let missingCost = 0;
+        if (oshi) {
+          const ocol = collectionMap.get(Number(oshi.productId));
+          const oHave = ocol ? Number(ocol.quantity ?? ((ocol.quantityNormal || 0) + (ocol.quantityFoil || 0))) : 0;
+          if (oHave > 0) owned += 1;
+          else missingCost += effectivePrice(oshi) ?? 0;
+        }
         for (const item of d.cards || []) {
           const q = Number(item.quantity || 0);
           total += q;
@@ -785,19 +859,26 @@
           const have = col ? Number(col.quantity ?? ((col.quantityNormal || 0) + (col.quantityFoil || 0))) : 0;
           owned += Math.min(q, have);
           const card = cardsById.get(Number(item.productId));
-          if (card) estCost += q * (effectivePrice(card) ?? 0);
+          if (card) {
+            const price = effectivePrice(card) ?? 0;
+            estCost += q * price;
+            missingCost += Math.max(0, q - have) * price;
+          }
         }
         return {
           id: d.id,
           name: d.name,
           oshiProductId: d.oshiProductId ?? null,
           oshiName: oshi?.name || null,
+          oshiCardNumber: oshi?.cardNumber || null,
+          oshiColor: oshi?.color || null,
           oshiImageUrl: oshi?.imageUrl || null,
           description: d.description || "",
           mainCount,
           cheerCount,
           ownedCoveragePct: total > 0 ? (owned / total) * 100 : 0,
           estimatedCostUsd: estCost,
+          missingCostUsd: missingCost,
           createdAt: d.createdAt,
           updatedAt: d.updatedAt,
         };
@@ -810,6 +891,7 @@
       if (currentUser && db && fbFsMod) {
         const { doc, setDoc } = fbFsMod;
         await setDoc(doc(db, "users", currentUser.uid, "decks", String(id)), docData);
+        decksList = [created, ...decksList.filter((d) => String(d.rawId || d.id) !== String(id))];
       } else {
         decksList.unshift(created);
         saveGuestStateToStorage();
@@ -817,7 +899,7 @@
       return enrichDeckDetail(created);
     }
     if (path.startsWith("/api/decks/")) {
-      const idStr = path.split("/").pop();
+      const idStr = decodeURIComponent(path.split("/").pop());
       const deck = decksList.find((d) => String(d.id) === idStr || String(d.rawId) === idStr);
       if (method === "GET") {
         if (!deck) throw new Error(`Deck ${idStr} not found`);
@@ -829,6 +911,7 @@
         if (currentUser && db && fbFsMod) {
           const { doc, setDoc } = fbFsMod;
           await setDoc(doc(db, "users", currentUser.uid, "decks", String(deck.rawId || deck.id)), docData);
+          Object.assign(deck, docData);
         } else {
           Object.assign(deck, docData);
           saveGuestStateToStorage();
@@ -836,11 +919,13 @@
         return enrichDeckDetail({ ...deck, ...docData });
       }
       if (method === "DELETE") {
+        const targetRawId = String(deck?.rawId || idStr);
         if (currentUser && db && fbFsMod) {
           const { doc, deleteDoc } = fbFsMod;
-          await deleteDoc(doc(db, "users", currentUser.uid, "decks", String(deck?.rawId || idStr)));
+          await deleteDoc(doc(db, "users", currentUser.uid, "decks", targetRawId));
+          decksList = decksList.filter((d) => String(d.rawId || d.id) !== targetRawId && String(d.id) !== idStr);
         } else {
-          decksList = decksList.filter((d) => String(d.id) !== idStr);
+          decksList = decksList.filter((d) => String(d.id) !== idStr && String(d.rawId) !== idStr);
           saveGuestStateToStorage();
         }
         return { deleted: true };
@@ -850,30 +935,37 @@
     throw new Error(`Unsupported cloud API route: ${method} ${path}`);
   }
 
+  function formatDeckCardDetail(productId, zone, quantity) {
+    const pid = Number(productId);
+    const card = cardsById.get(pid);
+    const col = collectionMap.get(pid);
+    const have = col ? Number(col.quantity ?? ((col.quantityNormal || 0) + (col.quantityFoil || 0))) : 0;
+    return {
+      productId: pid,
+      zone: zone || "main",
+      quantity: Number(quantity || 1),
+      ownedQuantity: have,
+      name: card?.name || `#${pid}`,
+      cardNumber: card?.cardNumber || "",
+      cardType: card?.cardType || "",
+      bloomLevel: card?.bloomLevel || "",
+      color: card?.color || "",
+      rarity: card?.rarity || "",
+      effectText: card?.effectText || "",
+      imageUrl: card?.imageUrl || "",
+      marketPrice: card ? effectivePrice(card) : null,
+    };
+  }
+
   function enrichDeckDetail(deck) {
+    const oshiProductId = deck.oshiProductId ? Number(deck.oshiProductId) : null;
     return {
       id: deck.id,
       name: deck.name,
-      oshiProductId: deck.oshiProductId ?? null,
+      oshiProductId,
+      oshiCard: oshiProductId ? formatDeckCardDetail(oshiProductId, "oshi", 1) : null,
       description: deck.description || "",
-      cards: (deck.cards || []).map((item) => {
-        const card = cardsById.get(Number(item.productId));
-        const col = collectionMap.get(Number(item.productId));
-        const have = col ? Number(col.quantity ?? ((col.quantityNormal || 0) + (col.quantityFoil || 0))) : 0;
-        return {
-          productId: Number(item.productId),
-          zone: item.zone || "main",
-          quantity: Number(item.quantity || 1),
-          ownedQuantity: have,
-          name: card?.name || `#${item.productId}`,
-          cardNumber: card?.cardNumber || "",
-          cardType: card?.cardType || "",
-          color: card?.color || "",
-          rarity: card?.rarity || "",
-          imageUrl: card?.imageUrl || "",
-          marketPrice: card ? effectivePrice(card) : null,
-        };
-      }),
+      cards: (deck.cards || []).map((item) => formatDeckCardDetail(item.productId, item.zone, item.quantity)),
       createdAt: deck.createdAt || "",
       updatedAt: deck.updatedAt || "",
     };
@@ -915,6 +1007,21 @@
     return pushed;
   }
 
+  async function pushLocalDecksToFirestore(decks) {
+    if (!currentUser || !db || !fbFsMod) {
+      throw new Error("Inicia sesión con Google primero para sincronizar mazos con Firestore.");
+    }
+    const { doc, setDoc } = fbFsMod;
+    let pushed = 0;
+    for (const deck of decks || []) {
+      const docId = `local_${deck.id}`;
+      const docData = toFirestoreDeckDoc(deck);
+      await setDoc(doc(db, "users", currentUser.uid, "decks", docId), docData);
+      pushed += 1;
+    }
+    return pushed;
+  }
+
   const initPromise = (async () => {
     await detectRuntimeMode();
     if (useCloudBackend) {
@@ -933,6 +1040,7 @@
     signInWithGoogle,
     signOutUser,
     pushLocalCollectionToFirestore,
+    pushLocalDecksToFirestore,
     handleRequest,
   };
 })();
