@@ -6,9 +6,18 @@ Aplicación web en **Rust + SQLite 3** (modo local) y **Firebase Hosting + Cloud
 
 - **URL Pública:** https://hololive-ocg-tracker-sb.web.app
 - **Consola Firebase:** https://console.firebase.google.com/project/hololive-ocg-tracker-sb/overview
-- **Base de datos en la nube:** Cloud Firestore (`users/{uid}/collection`, `users/{uid}/decks`, `users/{uid}/settings/exchangeRate`) protegida por [firestore.rules](firestore.rules).
+- **Base de datos en la nube:** Cloud Firestore:
+  - Privada por usuario: `users/{uid}/collection`, `users/{uid}/decks`, `users/{uid}/settings/exchangeRate`.
+  - Catálogo y tasas diarias públicas (solo lectura en web, escritura por Admin SDK): `editions/{groupId}`, `metadata/catalog`, `metadata/prices`, `metadata/audit`, `metadata/exchangeRate` (protegido por [firestore.rules](firestore.rules)).
 - **Acceso:** Haz clic en **"Iniciar sesión con Google"** en la barra superior para sincronizar tu colección, mazos y tasa CLP en tiempo real desde cualquier dispositivo.
-- **Publicar cambios a Firebase:**
+- **Actualización diaria automática (GitHub Actions + Firebase Admin):**
+  - `.github/workflows/sync-tcgcsv-daily.yml`: Se ejecuta todos los días a las **20:30 UTC** (luego de la actualización diaria de las `20:00:00 UTC` en `tcgcsv.com`), descarga y sanea las 26+ ediciones/precios y las guarda incrementalmente en Cloud Firestore ([sync_tcgcsv_to_firestore.py](scripts/sync_tcgcsv_to_firestore.py)).
+  - `.github/workflows/sync-clp-rate-daily.yml`: Se ejecuta todos los días a las **13:00 UTC**, obtiene la tasa oficial **USD → CLP** (`mindicador.cl` con respaldo en `open.er-api.com`) y la actualiza en `metadata/exchangeRate` ([sync_clp_rate_to_firestore.py](scripts/sync_clp_rate_to_firestore.py)).
+  - **Configuración única requerida en GitHub:**
+    1. En **Firebase Console → Configuración del proyecto → Cuentas de servicio → Generar nueva clave privada**, descarga el archivo JSON.
+    2. En tu repositorio de GitHub ve a **Settings → Secrets and variables → Actions → New repository secret**, crea el secreto llamado `FIREBASE_SERVICE_ACCOUNT` y pega el contenido completo del JSON.
+    3. Desde la pestaña **Actions** en GitHub ya puedes disparar ambos flujos manualmente con **Run workflow** la primera vez para poblar Firestore de inmediato.
+- **Publicar cambios a Firebase Hosting / Rules:**
   ```bash
   ./hocg deploy
   ```

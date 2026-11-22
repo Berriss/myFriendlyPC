@@ -1295,6 +1295,169 @@ textarea {
   border-radius: var(--radius-pill);
   background: var(--md-sys-color-secondary-container);
   color: var(--md-sys-color-on-secondary-container);
+  white-space: nowrap;
+}
+
+/* Simplified Collection View */
+.collection-balance-strip {
+  display: grid;
+  grid-template-columns: 1.3fr 1fr 1fr;
+  gap: 12px;
+  margin-bottom: 16px;
+}
+
+.collection-balance-card {
+  background: var(--md-sys-color-surface-container-lowest);
+  border: 1px solid var(--md-sys-color-outline-variant);
+  border-radius: var(--radius-lg);
+  padding: 16px;
+  box-shadow: var(--md-elev-1);
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.collection-balance-card.is-primary {
+  background: var(--md-sys-color-primary-container);
+  color: var(--md-sys-color-on-primary-container);
+  border-color: transparent;
+}
+
+.collection-balance-card.is-primary .kpi-label,
+.collection-balance-card.is-primary .kpi-sub {
+  color: var(--md-sys-color-on-primary-container);
+  opacity: 0.9;
+}
+
+.collection-panel-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  flex-wrap: wrap;
+  margin-bottom: 12px;
+}
+
+.collection-binder-toolbar {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-bottom: 14px;
+  padding-bottom: 12px;
+  border-bottom: 1px solid var(--md-sys-color-outline-variant);
+}
+
+.collection-binder-inputs {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.collection-binder-inputs .search-field {
+  flex: 1 1 220px;
+}
+
+.collection-binder-inputs .field-group {
+  min-width: 165px;
+}
+
+.sets-simple-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  gap: 10px;
+}
+
+.set-simple-card {
+  background: var(--md-sys-color-surface-container-low);
+  border: 1px solid var(--md-sys-color-outline-variant);
+  border-radius: var(--radius-md);
+  padding: 12px 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  cursor: pointer;
+  transition: border-color 0.15s ease, background-color 0.15s ease, transform 0.14s ease;
+}
+
+.set-simple-card:hover {
+  border-color: var(--md-sys-color-primary);
+  background: var(--md-sys-color-surface-container);
+  transform: translateY(-1px);
+}
+
+.set-simple-card.has-cards {
+  border-color: var(--md-sys-color-owned-border);
+  box-shadow: inset 3px 0 0 var(--md-sys-color-owned-border);
+}
+
+.set-release-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  font-size: 0.78rem;
+  color: var(--md-sys-color-on-surface-variant);
+}
+
+.set-release-badge {
+  padding: 1px 7px;
+  border-radius: var(--radius-pill);
+  font-size: 0.7rem;
+  font-weight: 700;
+  background: var(--md-sys-color-surface-container-highest);
+  color: var(--md-sys-color-on-surface-variant);
+}
+
+.set-release-badge.is-upcoming {
+  background: #fef3c7;
+  color: #92400e;
+}
+
+[data-theme="dark"] .set-release-badge.is-upcoming {
+  background: #452c08;
+  color: #fde68a;
+}
+
+.set-status-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  flex-wrap: wrap;
+  margin-top: auto;
+  padding-top: 4px;
+}
+
+.set-owned-pill {
+  padding: 3px 9px;
+  border-radius: var(--radius-pill);
+  font-size: 0.75rem;
+  font-weight: 700;
+  background: var(--md-sys-color-owned-tint);
+  color: var(--md-sys-color-owned-text);
+  border: 1px solid var(--md-sys-color-owned-border);
+}
+
+.set-empty-label {
+  font-size: 0.76rem;
+  color: var(--md-sys-color-on-surface-variant);
+}
+
+.set-catalog-link {
+  border: none;
+  background: transparent;
+  padding: 2px 6px;
+  border-radius: var(--radius-sm);
+  font-size: 0.76rem;
+  font-weight: 700;
+  color: var(--md-sys-color-primary);
+  cursor: pointer;
+}
+
+.set-catalog-link:hover {
+  background: var(--md-sys-color-primary-container);
+  color: var(--md-sys-color-on-primary-container);
 }
 
 /* Deck Builder Studio */
@@ -2859,6 +3022,14 @@ textarea {
 }
 
 @media (max-width: 899px) {
+  .collection-balance-strip {
+    grid-template-columns: 1fr;
+  }
+
+  .collection-binder-inputs .field-group {
+    flex: 1 1 140px;
+  }
+
   .deck-mobile-tabs {
     display: grid;
     grid-template-columns: 1fr 1fr;

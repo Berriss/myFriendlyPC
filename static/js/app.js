@@ -59,6 +59,16 @@
     decks: [],
     editingDeck: null,
     previewDeck: null,
+    collectionView: {
+      scope: "owned",
+      q: "",
+      group_id: "",
+      sort: "price_desc",
+      page: 1,
+      per_page: 24,
+      setsFilter: "all",
+      pageData: null,
+    },
     deckBuilder: {
       filters: {
         zone: "main",
@@ -172,7 +182,11 @@
     localStorage.setItem("hocg-currency", nextCurrency);
     updateCurrencyUI();
     if (state.kpis) renderKpis(state.kpis);
-    if (state.activeView === "collection") renderEditionsGrid(state.editions);
+    if (state.activeView === "collection") {
+      renderCollectionBalance(state.kpis, state.editions);
+      renderEditionsGrid(state.editions);
+      if (state.collectionView.pageData) renderCollectionCards(state.collectionView.pageData);
+    }
     if (state.activeView === "decks") {
       renderDecksList(state.decks);
       if (state.previewDeck && !document.getElementById("deck-preview-view")?.classList.contains("hidden")) {
@@ -218,7 +232,11 @@
       openExchangeRateModal();
     }
     await loadKpis();
-    if (state.activeView === "collection") renderEditionsGrid(state.editions);
+    if (state.activeView === "collection") {
+      renderCollectionBalance(state.kpis, state.editions);
+      renderEditionsGrid(state.editions);
+      if (state.collectionView.pageData) renderCollectionCards(state.collectionView.pageData);
+    }
     if (state.activeView === "decks") {
       renderDecksList(state.decks);
       if (state.previewDeck && !document.getElementById("deck-preview-view")?.classList.contains("hidden")) {
@@ -418,9 +436,18 @@
   function configureRuntimeEnvironmentUI() {
     const isCloud = window.HololiveCloudBackend?.isCloudMode();
     const subtitle = document.getElementById("header-subtitle");
+    const resyncBtn = document.getElementById("resync-db-btn");
+    const auditSubtitle = document.getElementById("audit-subtitle");
     if (isCloud) {
       if (subtitle) {
         subtitle.textContent = "Tracker online · Firebase Hosting + Cloud Firestore · Datos TCGCSV";
+      }
+      if (resyncBtn) {
+        resyncBtn.textContent = "↻ Actualizar catálogo desde Firebase";
+      }
+      if (auditSubtitle) {
+        auditSubtitle.textContent =
+          "Reporte del saneamiento TCGCSV y estado de sincronización automática diaria hacia Cloud Firestore.";
       }
       document.getElementById("shutdown-btn-rail")?.classList.add("hidden");
       document.getElementById("shutdown-btn-top")?.classList.add("hidden");
@@ -460,7 +487,7 @@
     });
 
     if (viewName === "collection") {
-      loadEditionsAndBreakdowns();
+      loadEditionsAndCollection();
     } else if (viewName === "decks") {
       loadDecks();
     } else if (viewName === "audit") {
@@ -475,7 +502,7 @@
       state.kpis = kpis;
       renderKpis(kpis);
       if (state.activeView === "collection") {
-        renderBreakdowns(kpis);
+        renderCollectionBalance(kpis, state.editions);
       }
     } catch (err) {
       console.error("Error loading KPIs:", err);
@@ -503,11 +530,15 @@
     document.getElementById("kpi-value-sub").textContent =
       `Costo: ${fmtMoney(k.collectionCostBasisUsd)} · Neto: ${netSign}${fmtMoney(netAbs)}`;
 
-    document.getElementById("kpi-completion-pct").textContent = `${k.completionPct.toFixed(1)}%`;
-    document.getElementById("kpi-unique-owned").textContent =
-      `${k.ownedUniqueCards.toLocaleString()} / ${k.catalogTotalCards.toLocaleString()}`;
-    document.getElementById("kpi-progress-bar").style.width =
-      `${Math.min(100, k.completionPct).toFixed(2)}%`;
+    const uniqueEl = document.getElementById("kpi-unique-owned");
+    if (uniqueEl) uniqueEl.textContent = k.ownedUniqueCards.toLocaleString();
+    const setsBadgeEl = document.getElementById("kpi-sets-owned-badge");
+    if (setsBadgeEl && state.editions.length) {
+      const setsWithCards = state.editions.filter((ed) => ed.ownedTotalCopies > 0).length;
+      setsBadgeEl.textContent = `${setsWithCards} / ${state.editions.length} sets`;
+    } else if (setsBadgeEl) {
+      setsBadgeEl.textContent = `${k.totalEditions} sets`;
+    }
 
     document.getElementById("kpi-total-copies").textContent = k.ownedTotalCopies.toLocaleString();
     document.getElementById("kpi-copies-sub").textContent =
@@ -538,7 +569,7 @@
     }
   }
 
-  /* ================= EDITIONS ================= */
+  /* ================= EDITIONS & SIMPLIFIED COLLECTION ================= */
   async function loadEditions() {
     try {
       const editions = await apiFetch("/api/editions");
@@ -550,10 +581,26 @@
         const opt = document.createElement("option");
         opt.value = String(ed.groupId);
         const abbr = ed.abbreviation ? `[${ed.abbreviation}] ` : "";
-        opt.textContent = `${abbr}${ed.name} (${ed.ownedUniqueCards}/${ed.totalCards})`;
+        const ownTag = ed.ownedTotalCopies > 0 ? ` (${ed.ownedTotalCopies})` : "";
+        opt.textContent = `${abbr}${ed.name}${ownTag}`;
         select.appendChild(opt);
       });
       if (currentVal) select.value = currentVal;
+
+      const colEdSelect = document.getElementById("collection-filter-edition");
+      if (colEdSelect) {
+        const curColVal = colEdSelect.value;
+        colEdSelect.innerHTML = `<option value="">Todos los sets (${editions.length})</option>`;
+        editions.forEach((ed) => {
+          const opt = document.createElement("option");
+          opt.value = String(ed.groupId);
+          const abbr = ed.abbreviation ? `[${ed.abbreviation}] ` : "";
+          const ownTag = ed.ownedTotalCopies > 0 ? ` (${ed.ownedTotalCopies})` : "";
+          opt.textContent = `${abbr}${ed.name}${ownTag}`;
+          colEdSelect.appendChild(opt);
+        });
+        if (curColVal) colEdSelect.value = curColVal;
+      }
 
       const deckEdSelect = document.getElementById("deck-filter-edition");
       if (deckEdSelect) {
@@ -569,7 +616,14 @@
         if (curDeckVal) deckEdSelect.value = curDeckVal;
       }
 
+      const setsBadgeEl = document.getElementById("kpi-sets-owned-badge");
+      if (setsBadgeEl) {
+        const setsWithCards = editions.filter((ed) => ed.ownedTotalCopies > 0).length;
+        setsBadgeEl.textContent = `${setsWithCards} / ${editions.length} sets`;
+      }
+
       if (state.activeView === "collection") {
+        renderCollectionBalance(state.kpis, editions);
         renderEditionsGrid(editions);
       }
     } catch (err) {
@@ -577,81 +631,256 @@
     }
   }
 
-  async function loadEditionsAndBreakdowns() {
-    await Promise.all([loadEditions(), loadKpis()]);
-    if (state.kpis) renderBreakdowns(state.kpis);
+  async function loadEditionsAndCollection() {
+    await Promise.all([loadEditions(), loadKpis(), loadCollectionCards()]);
+    renderCollectionBalance(state.kpis, state.editions);
     renderEditionsGrid(state.editions);
   }
 
-  function renderBreakdowns(kpis) {
-    const colorHost = document.getElementById("color-breakdown-list");
-    colorHost.innerHTML = (kpis.colorBreakdown || [])
-      .map((item) => {
-        const pct = item.catalogCount > 0 ? (item.ownedUnique / item.catalogCount) * 100 : 0;
-        return `
-          <div class="breakdown-row">
-            <div class="breakdown-label">
-              <span>${escapeHtml(item.color)}</span>
-              <span>${item.ownedUnique}/${item.catalogCount} únicas · ${item.ownedCopies} copias (${pct.toFixed(1)}%)</span>
-            </div>
-            <div class="md3-progress-track">
-              <div class="md3-progress-fill" style="width:${Math.min(100, pct)}%"></div>
-            </div>
-          </div>`;
-      })
-      .join("");
+  function formatReleaseMeta(publishedOn) {
+    const raw = String(publishedOn || "").slice(0, 10);
+    if (!raw) return { label: "Fecha s/d", isUpcoming: false };
+    const today = new Date().toISOString().slice(0, 10);
+    const isUpcoming = raw > today;
+    const months = ["Ene", "Feb", "Mar", "Abr", "May", "Jun", "Jul", "Ago", "Sep", "Oct", "Nov", "Dic"];
+    const parts = raw.split("-");
+    const year = parts[0];
+    const monIdx = Number(parts[1]) - 1;
+    const label = months[monIdx] ? `${months[monIdx]} ${year}` : raw;
+    return { label, isUpcoming };
+  }
 
-    const rarityHost = document.getElementById("rarity-breakdown-list");
-    rarityHost.innerHTML = (kpis.rarityBreakdown || [])
-      .map((item) => {
-        const pct = item.catalogCount > 0 ? (item.ownedUnique / item.catalogCount) * 100 : 0;
-        return `
-          <div class="breakdown-row">
-            <div class="breakdown-label">
-              <span><strong>${escapeHtml(item.rarity)}</strong> — ${escapeHtml(item.rarityName)}</span>
-              <span>${item.ownedUnique}/${item.catalogCount} · ${item.ownedCopies} copias</span>
-            </div>
-            <div class="md3-progress-track">
-              <div class="md3-progress-fill" style="width:${Math.min(100, pct)}%"></div>
-            </div>
-          </div>`;
-      })
-      .join("");
+  function renderCollectionBalance(kpis, editions) {
+    const k = kpis || {};
+    const eds = Array.isArray(editions) ? editions : [];
+    const isClp = state.currency === "CLP";
+    const mkt = Number(k.collectionMarketValueUsd || 0);
+    const cost = Number(k.collectionCostBasisUsd || 0);
+    const net = Number(k.netGainUsd || 0);
+
+    const balTitle = document.getElementById("col-balance-title");
+    const balMain = document.getElementById("col-balance-main");
+    const balEquiv = document.getElementById("col-balance-equiv");
+    const balNet = document.getElementById("col-balance-net");
+    if (balTitle) balTitle.textContent = isClp ? "Total a Favor (CLP)" : "Total a Favor (USD)";
+    if (balMain) balMain.textContent = fmtMoney(mkt);
+    if (balEquiv) {
+      balEquiv.textContent = isClp
+        ? `≈ ${fmtUsd(mkt)} USD (Tasa $${Math.round(state.exchangeRate.rateClpPerUsd).toLocaleString("es-CL")})`
+        : `≈ ${fmtClp(mkt)}`;
+    }
+    if (balNet) {
+      if (cost > 0) {
+        const netSign = net >= 0 ? "+" : "-";
+        balNet.textContent = `Costo registrado: ${fmtMoney(cost)} · Neto: ${netSign}${fmtMoney(Math.abs(net))}`;
+        balNet.classList.remove("hidden");
+      } else {
+        balNet.classList.add("hidden");
+      }
+    }
+
+    const totalCopies = Number(k.ownedTotalCopies || 0);
+    const uniqueOwned = Number(k.ownedUniqueCards || 0);
+    const favs = Number(k.favoritesCount || 0);
+    const wish = Number(k.wishlistCount || 0);
+    const copiesMain = document.getElementById("col-copies-main");
+    const copiesSub = document.getElementById("col-copies-sub");
+    if (copiesMain) copiesMain.textContent = `${totalCopies.toLocaleString()} copias`;
+    if (copiesSub) copiesSub.textContent = `${uniqueOwned.toLocaleString()} distintas · ${favs} fav · ${wish} wishlist`;
+
+    const setsWithCards = eds.filter((ed) => ed.ownedTotalCopies > 0).length;
+    const totalSets = eds.length || Number(k.totalEditions || 0);
+    const releasedCount = eds.filter((ed) => !formatReleaseMeta(ed.publishedOn).isUpcoming).length;
+    const setsMain = document.getElementById("col-sets-main");
+    const setsSub = document.getElementById("col-sets-sub");
+    if (setsMain) setsMain.textContent = `${setsWithCards} / ${totalSets}`;
+    if (setsSub) setsSub.textContent = `${releasedCount} sets ya liberados · ${setsWithCards} con cartas`;
+
+    const setsTitle = document.getElementById("collection-sets-title");
+    if (setsTitle) setsTitle.textContent = `Sets liberados hasta la fecha (${totalSets})`;
+
+    const filterBar = document.getElementById("collection-sets-filter");
+    if (filterBar) {
+      filterBar.querySelectorAll("[data-sets-filter]").forEach((btn) => {
+        const mode = btn.getAttribute("data-sets-filter");
+        btn.classList.toggle("active", mode === state.collectionView.setsFilter);
+        if (mode === "all") btn.textContent = `Todos (${totalSets})`;
+        else if (mode === "owned") btn.textContent = `Con cartas (${setsWithCards})`;
+      });
+    }
+  }
+
+  async function loadCollectionCards() {
+    const container = document.getElementById("collection-cards-container");
+    const metaEl = document.getElementById("collection-results-meta");
+    if (!container || !metaEl) return;
+
+    const cv = state.collectionView;
+    const params = new URLSearchParams();
+    params.set("item_category", "card");
+    params.set("ownership", cv.scope);
+    if (cv.q.trim()) params.set("q", cv.q.trim());
+    if (cv.group_id) params.set("group_id", cv.group_id);
+    params.set("sort", cv.sort);
+    params.set("page", String(cv.page));
+    params.set("per_page", String(cv.per_page));
+
+    const clearBtn = document.getElementById("collection-clear-filters-btn");
+    if (clearBtn) {
+      clearBtn.classList.toggle("hidden", !cv.q.trim() && !cv.group_id);
+    }
+
+    metaEl.textContent = "Cargando cartas...";
+    try {
+      const data = await apiFetch(`/api/cards?${params.toString()}`);
+      state.collectionView.pageData = data;
+      renderCollectionCards(data);
+    } catch (err) {
+      container.innerHTML = `<div class="panel-card">Error cargando cartas: ${escapeHtml(err.message)}</div>`;
+      metaEl.textContent = "Error al cargar";
+    }
+  }
+
+  function renderCollectionCards(data) {
+    const container = document.getElementById("collection-cards-container");
+    const metaEl = document.getElementById("collection-results-meta");
+    if (!container || !metaEl) return;
+
+    const items = data.items || [];
+    const total = Number(data.total || 0);
+    metaEl.textContent = `${total.toLocaleString()} resultado(s)${data.totalPages > 1 ? ` · Pág. ${data.page}/${data.totalPages}` : ""}`;
+
+    renderPagination("collection-pagination", data.page, data.totalPages, (nextPage) => {
+      state.collectionView.page = nextPage;
+      loadCollectionCards();
+    });
+
+    if (!items.length) {
+      container.className = "";
+      const scopeLabel =
+        state.collectionView.scope === "favorite"
+          ? "favoritas"
+          : state.collectionView.scope === "wishlist"
+            ? "en tu wishlist"
+            : "registradas en tu colección";
+      const hasSearchFilter = Boolean(state.collectionView.q.trim() || state.collectionView.group_id);
+      container.innerHTML = `
+        <div class="panel-card" style="text-align:center;padding:28px;">
+          <p class="muted-text" style="margin:0 0 12px;">
+            ${
+              hasSearchFilter
+                ? "No hay cartas que coincidan con los filtros actuales."
+                : `Todavía no tienes cartas ${scopeLabel}.`
+            }
+          </p>
+          <button id="collection-empty-action-btn" class="tonal-btn" type="button">
+            ${hasSearchFilter ? "Limpiar filtros" : "Ir al Catálogo a registrar cartas"}
+          </button>
+        </div>`;
+      document.getElementById("collection-empty-action-btn")?.addEventListener("click", () => {
+        if (hasSearchFilter) {
+          resetCollectionFilters();
+        } else {
+          jumpToCatalogForAdding();
+        }
+      });
+      return;
+    }
+
+    container.className = "cards-grid";
+    container.innerHTML = items.map(renderCardTile).join("");
+    bindCardInteractions(container);
+  }
+
+  function resetCollectionFilters() {
+    state.collectionView.q = "";
+    state.collectionView.group_id = "";
+    state.collectionView.page = 1;
+    const qEl = document.getElementById("collection-filter-q");
+    if (qEl) qEl.value = "";
+    const edEl = document.getElementById("collection-filter-edition");
+    if (edEl) edEl.value = "";
+    loadCollectionCards();
+  }
+
+  function jumpToCatalogForAdding(groupId) {
+    state.filters.ownership = "all";
+    state.filters.group_id = groupId ? String(groupId) : "";
+    state.filters.page = 1;
+    const edEl = document.getElementById("filter-edition");
+    if (edEl) edEl.value = state.filters.group_id;
+    document.querySelectorAll("#ownership-chips .filter-chip").forEach((c) => {
+      c.classList.toggle("active", c.getAttribute("data-ownership") === "all");
+    });
+    switchView("catalog");
+    loadCards();
   }
 
   function renderEditionsGrid(editions) {
     const host = document.getElementById("editions-progress-grid");
-    host.innerHTML = editions
-      .map(
-        (ed) => `
-      <article class="edition-card" data-jump-edition="${ed.groupId}">
-        <div class="edition-head">
-          <div class="edition-title">${escapeHtml(ed.name)}</div>
-          <span class="edition-abbr">${escapeHtml(ed.abbreviation || "SET")}</span>
-        </div>
-        <div class="card-sub-meta">
-          <span>${ed.ownedUniqueCards} / ${ed.totalCards} cartas (${ed.completionPct.toFixed(1)}%)</span>
-          <span>${ed.ownedTotalCopies} copias</span>
-        </div>
-        <div class="md3-progress-track">
-          <div class="md3-progress-fill" style="width:${Math.min(100, ed.completionPct)}%"></div>
-        </div>
-        <div class="card-sub-meta">
-          <span>Mi valor: <strong>${fmtMoney(ed.collectionValueUsd)}</strong></span>
-          <span>Set completo: ${fmtMoney(ed.setTotalValueUsd)}</span>
-        </div>
-      </article>`
-      )
+    if (!host) return;
+    const onlyOwned = state.collectionView.setsFilter === "owned";
+    const list = onlyOwned ? editions.filter((ed) => ed.ownedTotalCopies > 0) : editions;
+
+    if (!list.length) {
+      host.innerHTML = `
+        <div class="panel-card" style="grid-column:1/-1;">
+          <p class="muted-text" style="margin:0;">Aún no tienes cartas registradas en ningún set. Cambia a <strong>Todos</strong> o agrega cartas desde el Catálogo.</p>
+        </div>`;
+      return;
+    }
+
+    host.innerHTML = list
+      .map((ed) => {
+        const hasCards = Number(ed.ownedTotalCopies || 0) > 0;
+        const rel = formatReleaseMeta(ed.publishedOn);
+        return `
+          <article class="set-simple-card ${hasCards ? "has-cards" : ""}" data-set-card="${ed.groupId}" data-has-cards="${hasCards ? "1" : "0"}">
+            <div class="edition-head">
+              <div class="edition-title">${escapeHtml(ed.name)}</div>
+              <span class="edition-abbr">${escapeHtml(ed.abbreviation || "SET")}</span>
+            </div>
+            <div class="set-release-row">
+              <span>${escapeHtml(rel.label)}</span>
+              <span class="set-release-badge ${rel.isUpcoming ? "is-upcoming" : ""}">${rel.isUpcoming ? "Próximo" : "Liberado"}</span>
+            </div>
+            <div class="set-status-row">
+              ${
+                hasCards
+                  ? `<span class="set-owned-pill">✓ ${ed.ownedTotalCopies} ${ed.ownedTotalCopies === 1 ? "copia" : "copias"} · ${fmtMoney(ed.collectionValueUsd)}</span>`
+                  : `<span class="set-empty-label">Sin cartas registradas</span>`
+              }
+              <button class="set-catalog-link" data-jump-catalog-set="${ed.groupId}" type="button">Catálogo ↗</button>
+            </div>
+          </article>`;
+      })
       .join("");
 
-    host.querySelectorAll("[data-jump-edition]").forEach((el) => {
+    host.querySelectorAll("[data-jump-catalog-set]").forEach((btn) => {
+      btn.addEventListener("click", (e) => {
+        e.stopPropagation();
+        jumpToCatalogForAdding(btn.getAttribute("data-jump-catalog-set"));
+      });
+    });
+
+    host.querySelectorAll("[data-set-card]").forEach((el) => {
       el.addEventListener("click", () => {
-        const gid = el.getAttribute("data-jump-edition");
-        state.filters.group_id = gid;
-        state.filters.page = 1;
-        document.getElementById("filter-edition").value = gid;
-        switchView("catalog");
-        loadCards();
+        const gid = el.getAttribute("data-set-card");
+        const hasCards = el.getAttribute("data-has-cards") === "1";
+        if (hasCards) {
+          state.collectionView.scope = "owned";
+          state.collectionView.group_id = String(gid);
+          state.collectionView.page = 1;
+          const edSel = document.getElementById("collection-filter-edition");
+          if (edSel) edSel.value = String(gid);
+          document.querySelectorAll("#collection-scope-chips .filter-chip").forEach((c) => {
+            c.classList.toggle("active", c.getAttribute("data-col-scope") === "owned");
+          });
+          loadCollectionCards();
+          document.getElementById("collection-cards-section")?.scrollIntoView({ behavior: "smooth" });
+        } else {
+          jumpToCatalogForAdding(gid);
+        }
       });
     });
   }
@@ -942,9 +1171,13 @@
       </table>`;
   }
 
-  function renderPagination(targetId, page, totalPages) {
+  function renderPagination(targetId, page, totalPages, onPageChange) {
     const el = document.getElementById(targetId);
     if (!el) return;
+    if (onPageChange && totalPages <= 1) {
+      el.innerHTML = "";
+      return;
+    }
     el.innerHTML = `
       <button class="page-btn" ${page <= 1 ? "disabled" : ""} data-page="${page - 1}" type="button">← Anterior</button>
       <span class="page-info">Página ${page} / ${totalPages}</span>
@@ -954,9 +1187,13 @@
       btn.addEventListener("click", () => {
         const nextPage = Number(btn.getAttribute("data-page"));
         if (nextPage >= 1 && nextPage <= totalPages) {
-          state.filters.page = nextPage;
-          loadCards();
-          window.scrollTo({ top: 0, behavior: "smooth" });
+          if (onPageChange) {
+            onPageChange(nextPage);
+          } else {
+            state.filters.page = nextPage;
+            loadCards();
+            window.scrollTo({ top: 0, behavior: "smooth" });
+          }
         }
       });
     });
@@ -997,13 +1234,26 @@
 
   function replaceSingleCardInDom(updated) {
     const existingEl = document.querySelector(`#cards-container [data-pid="${updated.productId}"]`);
-    if (!existingEl) return;
-    const wrapper = document.createElement(state.viewMode === "grid" ? "div" : "tbody");
-    wrapper.innerHTML =
-      state.viewMode === "grid" ? renderCardTile(updated) : renderCardTableRow(updated);
+    if (existingEl) {
+      const wrapper = document.createElement(state.viewMode === "grid" ? "div" : "tbody");
+      wrapper.innerHTML =
+        state.viewMode === "grid" ? renderCardTile(updated) : renderCardTableRow(updated);
+      const nextEl = wrapper.firstElementChild;
+      if (nextEl) {
+        existingEl.replaceWith(nextEl);
+        bindCardInteractions(nextEl);
+      }
+    }
+  }
+
+  function replaceSingleCardInCollectionDom(updated) {
+    const existingCol = document.querySelector(`#collection-cards-container [data-pid="${updated.productId}"]`);
+    if (!existingCol) return;
+    const wrapper = document.createElement("div");
+    wrapper.innerHTML = renderCardTile(updated);
     const nextEl = wrapper.firstElementChild;
     if (nextEl) {
-      existingEl.replaceWith(nextEl);
+      existingCol.replaceWith(nextEl);
       bindCardInteractions(nextEl);
     }
   }
@@ -1042,7 +1292,21 @@
           await loadCards();
         }
       }
+
+      if (state.activeView === "collection") {
+        const cvItems = state.collectionView.pageData?.items || [];
+        const cIdx = cvItems.findIndex((x) => x.productId === productId);
+        const stillMatchesCol = cardMatchesOwnershipFilter(updated, state.collectionView.scope);
+        if (cIdx >= 0 && stillMatchesCol) {
+          cvItems[cIdx] = updated;
+          replaceSingleCardInCollectionDom(updated);
+        } else {
+          await loadCollectionCards();
+        }
+      }
+
       await Promise.all([loadKpis(), loadEditions()]);
+      syncEditingDeckOwnedCount(productId, updated.totalOwned);
       if (payload.toggleWishlist) {
         showSnackbar(
           updated.isWishlist
@@ -1253,7 +1517,9 @@
           });
           backdrop.classList.add("hidden");
           syncEditingDeckOwnedCount(productId, savedCol?.totalOwned);
-          await Promise.all([loadCards(), loadKpis(), loadEditions()]);
+          const tasks = [loadCards(), loadKpis(), loadEditions()];
+          if (state.activeView === "collection") tasks.push(loadCollectionCards());
+          await Promise.all(tasks);
           showSnackbar(`Colección guardada para ${c.name}`);
         } catch (err) {
           showSnackbar(`Error al guardar: ${err.message}`);
@@ -1293,7 +1559,9 @@
         method: "POST",
         body: JSON.stringify({ entries, replaceExisting: false }),
       });
-      await Promise.all([loadKpis(), loadEditions(), loadCards()]);
+      const tasks = [loadKpis(), loadEditions(), loadCards()];
+      if (state.activeView === "collection") tasks.push(loadCollectionCards());
+      await Promise.all(tasks);
       showSnackbar(`Importadas ${res.imported} cartas (${res.skipped} omitidas)`);
     } catch (err) {
       showSnackbar(`Error al importar: ${err.message}`);
@@ -3074,6 +3342,18 @@
     try {
       const data = await apiFetch("/api/audit");
       const r = data.report || {};
+      const syncMetaEl = document.getElementById("audit-sync-meta");
+      if (syncMetaEl) {
+        if (data.source) {
+          const priceTs = data.pricesUpdatedAt
+            ? ` · Precios: ${String(data.pricesUpdatedAt).replace("T", " ").slice(0, 19)} UTC`
+            : "";
+          syncMetaEl.textContent = `Origen activo: ${data.source}${priceTs}`;
+          syncMetaEl.classList.remove("hidden");
+        } else {
+          syncMetaEl.classList.add("hidden");
+        }
+      }
       const grid = document.getElementById("audit-stats-grid");
       grid.innerHTML = `
         <article class="kpi-card">
@@ -3284,13 +3564,51 @@
     });
 
     document.getElementById("view-owned-in-catalog-btn").addEventListener("click", () => {
-      state.filters.ownership = "owned";
-      state.filters.page = 1;
-      document.querySelectorAll("#ownership-chips .filter-chip").forEach((c) => {
-        c.classList.toggle("active", c.getAttribute("data-ownership") === "owned");
+      jumpToCatalogForAdding();
+    });
+
+    // Simplified Collection binder & sets events
+    document.querySelectorAll("#collection-scope-chips [data-col-scope]").forEach((btn) => {
+      btn.addEventListener("click", () => {
+        document.querySelectorAll("#collection-scope-chips .filter-chip").forEach((c) => c.classList.remove("active"));
+        btn.classList.add("active");
+        state.collectionView.scope = btn.getAttribute("data-col-scope");
+        state.collectionView.page = 1;
+        loadCollectionCards();
       });
-      switchView("catalog");
-      loadCards();
+    });
+
+    let colSearchTimer = null;
+    document.getElementById("collection-filter-q")?.addEventListener("input", (e) => {
+      clearTimeout(colSearchTimer);
+      colSearchTimer = setTimeout(() => {
+        state.collectionView.q = e.target.value;
+        state.collectionView.page = 1;
+        loadCollectionCards();
+      }, 220);
+    });
+
+    document.getElementById("collection-filter-edition")?.addEventListener("change", (e) => {
+      state.collectionView.group_id = e.target.value;
+      state.collectionView.page = 1;
+      loadCollectionCards();
+    });
+
+    document.getElementById("collection-filter-sort")?.addEventListener("change", (e) => {
+      state.collectionView.sort = e.target.value;
+      state.collectionView.page = 1;
+      loadCollectionCards();
+    });
+
+    document.getElementById("collection-clear-filters-btn")?.addEventListener("click", resetCollectionFilters);
+
+    document.querySelectorAll("#collection-sets-filter [data-sets-filter]").forEach((btn) => {
+      btn.addEventListener("click", () => {
+        document.querySelectorAll("#collection-sets-filter .filter-chip").forEach((c) => c.classList.remove("active"));
+        btn.classList.add("active");
+        state.collectionView.setsFilter = btn.getAttribute("data-sets-filter") || "all";
+        renderEditionsGrid(state.editions);
+      });
     });
 
     // Deck builder studio events
@@ -3510,8 +3828,13 @@
     });
 
     document.getElementById("resync-db-btn").addEventListener("click", async () => {
+      const isCloud = window.HololiveCloudBackend?.isCloudMode();
       try {
-        showSnackbar("Re-sincronizando /resources hacia SQLite...");
+        showSnackbar(
+          isCloud
+            ? "Actualizando catálogo y precios desde Cloud Firestore..."
+            : "Re-sincronizando /resources hacia SQLite..."
+        );
         const res = await apiFetch("/api/resync", { method: "POST" });
         await Promise.all([loadAudit(), loadKpis(), loadEditions(), loadCards()]);
         showSnackbar(`Sincronizadas ${res.editionsSynced} ediciones y ${res.cardsSynced} cartas`);
@@ -3685,6 +4008,7 @@
         loadKpis();
         loadEditions();
         if (state.activeView === "catalog" && Date.now() >= suppressCloudCardsReloadUntil) loadCards();
+        if (state.activeView === "collection" && Date.now() >= suppressCloudCardsReloadUntil) loadCollectionCards();
         if (state.activeView === "decks") {
           loadDecks();
           if (state.previewDeck && !document.getElementById("deck-preview-view")?.classList.contains("hidden")) {

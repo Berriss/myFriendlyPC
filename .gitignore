@@ -18,8 +18,12 @@
 __pycache__/
 *.py[cod]
 
-# Environment & OS files
+# Environment, OS & Service Account Key files
 .env
 .env.*
+*firebase-adminsdk*.json
+service-account*.json
+firebase-service-account.json
+*.key.json
 .DS_Store
 Thumbs.db

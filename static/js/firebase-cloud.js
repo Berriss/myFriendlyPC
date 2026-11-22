@@ -10,12 +10,16 @@
   const LS_COLLECTION = "hocg-cloud-guest-collection";
   const LS_DECKS = "hocg-cloud-guest-decks";
   const LS_RATE = "hocg-cloud-guest-rate";
+  const IDB_NAME = "hocg-catalog-cache-v1";
+  const IDB_STORE = "kv";
+  const IDB_BUNDLE_KEY = "catalog_bundle";
 
   let app = null;
   let auth = null;
   let db = null;
   let fbAuthMod = null;
   let fbFsMod = null;
+  let sdkBootstrapPromise = null;
 
   let currentUser = null;
   let useCloudBackend = false;
@@ -25,17 +29,131 @@
   let cardsById = new Map();
   let editionsList = [];
   let auditReport = {};
+  let catalogSyncInfo = {
+    source: "Hosting CDN (/data)",
+    catalogUpdatedAt: "",
+    pricesUpdatedAt: "",
+    editionsCount: 0,
+    totalProducts: 0,
+    cacheHit: false,
+  };
   let defaultRate = {
     rateClpPerUsd: 1002.07,
     source: "Banco Central de Chile",
     observedDate: new Date().toISOString().slice(0, 10),
     updatedAt: new Date().toISOString(),
   };
+  let cloudAutoRate = null;
+  let personalRate = null;
 
   let collectionMap = new Map(); // productId -> CollectionEntry
   let decksList = [];
   let activeRate = { ...defaultRate };
   let unsubs = [];
+
+  function resolveEffectiveRate(metaRate, userRate) {
+    if (userRate && Number(userRate.rateClpPerUsd) > 0) {
+      if (userRate.source === "Manual") return userRate;
+      if (!metaRate || String(userRate.updatedAt || "") >= String(metaRate.updatedAt || "")) {
+        return userRate;
+      }
+    }
+    if (metaRate && Number(metaRate.rateClpPerUsd) > 0) return metaRate;
+    return { ...defaultRate };
+  }
+
+  function refreshActiveRate() {
+    activeRate = resolveEffectiveRate(cloudAutoRate, personalRate);
+  }
+
+  function openCacheDb() {
+    return new Promise((resolve) => {
+      if (typeof indexedDB === "undefined") {
+        resolve(null);
+        return;
+      }
+      try {
+        const req = indexedDB.open(IDB_NAME, 1);
+        req.onupgradeneeded = () => {
+          const idb = req.result;
+          if (!idb.objectStoreNames.contains(IDB_STORE)) {
+            idb.createObjectStore(IDB_STORE);
+          }
+        };
+        req.onsuccess = () => resolve(req.result);
+        req.onerror = () => resolve(null);
+        req.onblocked = () => resolve(null);
+      } catch (_) {
+        resolve(null);
+      }
+    });
+  }
+
+  async function idbGet(key) {
+    const idb = await openCacheDb();
+    if (!idb) return null;
+    return new Promise((resolve) => {
+      try {
+        const tx = idb.transaction(IDB_STORE, "readonly");
+        const req = tx.objectStore(IDB_STORE).get(key);
+        req.onsuccess = () => resolve(req.result ?? null);
+        req.onerror = () => resolve(null);
+      } catch (_) {
+        resolve(null);
+      }
+    });
+  }
+
+  async function idbSet(key, val) {
+    const idb = await openCacheDb();
+    if (!idb) return;
+    return new Promise((resolve) => {
+      try {
+        const tx = idb.transaction(IDB_STORE, "readwrite");
+        tx.objectStore(IDB_STORE).put(val, key);
+        tx.oncomplete = () => resolve();
+        tx.onerror = () => resolve();
+      } catch (_) {
+        resolve();
+      }
+    });
+  }
+
+  async function idbDelete(key) {
+    const idb = await openCacheDb();
+    if (!idb) return;
+    return new Promise((resolve) => {
+      try {
+        const tx = idb.transaction(IDB_STORE, "readwrite");
+        tx.objectStore(IDB_STORE).delete(key);
+        tx.oncomplete = () => resolve();
+        tx.onerror = () => resolve();
+      } catch (_) {
+        resolve();
+      }
+    });
+  }
+
+  async function ensureFirebaseModules() {
+    if (!window.FIREBASE_CONFIG) return null;
+    if (db && fbFsMod && auth && fbAuthMod) return { app, auth, db, fbFsMod, fbAuthMod };
+    if (!sdkBootstrapPromise) {
+      sdkBootstrapPromise = (async () => {
+        const [appMod, authMod, fsMod] = await Promise.all([
+          import("https://www.gstatic.com/firebasejs/11.0.2/firebase-app.js"),
+          import("https://www.gstatic.com/firebasejs/11.0.2/firebase-auth.js"),
+          import("https://www.gstatic.com/firebasejs/11.0.2/firebase-firestore.js"),
+        ]);
+        fbAuthMod = authMod;
+        fbFsMod = fsMod;
+        app = appMod.getApps?.().length ? appMod.getApp() : appMod.initializeApp(window.FIREBASE_CONFIG);
+        auth = authMod.getAuth(app);
+        db = fsMod.getFirestore(app);
+        return { app, auth, db, fbFsMod, fbAuthMod };
+      })();
+    }
+    return sdkBootstrapPromise;
+  }
 
   function clearSnapshotListeners() {
     unsubs.forEach((fn) => {
@@ -66,11 +184,13 @@
       const rawDecks = localStorage.getItem(LS_DECKS);
       decksList = rawDecks ? JSON.parse(rawDecks) : [];
       const rawRate = localStorage.getItem(LS_RATE);
-      activeRate = rawRate ? JSON.parse(rawRate) : { ...defaultRate };
+      personalRate = rawRate ? JSON.parse(rawRate) : null;
+      refreshActiveRate();
     } catch (_) {
       collectionMap = new Map();
       decksList = [];
-      activeRate = { ...defaultRate };
+      personalRate = null;
+      refreshActiveRate();
     }
   }
 
@@ -78,7 +198,9 @@
     if (currentUser) return;
     localStorage.setItem(LS_COLLECTION, JSON.stringify(Array.from(collectionMap.values())));
     localStorage.setItem(LS_DECKS, JSON.stringify(decksList));
-    localStorage.setItem(LS_RATE, JSON.stringify(activeRate));
+    if (personalRate) {
+      localStorage.setItem(LS_RATE, JSON.stringify(personalRate));
+    }
   }
 
   async function detectRuntimeMode() {
@@ -101,8 +223,263 @@
     useCloudBackend = true;
   }
 
-  async function ensureCatalogLoaded() {
-    if (catalogLoaded) return;
+  function sortEditionsDesc(list) {
+    return (list || []).slice().sort((a, b) => {
+      const pa = String(a.publishedOn || "");
+      const pb = String(b.publishedOn || "");
+      if (pb !== pa) return pb.localeCompare(pa);
+      return Number(b.groupId) - Number(a.groupId);
+    });
+  }
+
+  function hydrateSlimCard(raw, edMeta) {
+    return {
+      productId: Number(raw.productId),
+      groupId: Number(edMeta.groupId),
+      editionName: edMeta.name || "",
+      editionAbbr: edMeta.abbreviation || "",
+      name: raw.name || "",
+      cleanName: raw.cleanName || raw.name || "",
+      imageUrl: raw.imageUrl || "",
+      url: raw.url || "",
+      itemCategory: raw.itemCategory || "card",
+      cardNumber: raw.cardNumber || "",
+      rarity: raw.rarity || "",
+      rarityName: raw.rarityName || "",
+      cardType: raw.cardType || "",
+      subtype: raw.subtype || "",
+      color: raw.color || "",
+      bloomLevel: raw.bloomLevel || "",
+      hp: raw.hp ?? null,
+      life: raw.life ?? null,
+      batonPass: raw.batonPass || "",
+      tags: raw.tags || "",
+      oshiSkill: raw.oshiSkill || "",
+      spOshiSkill: raw.spOshiSkill || "",
+      keywordText: raw.keywordText || "",
+      arts1: raw.arts1 || "",
+      arts2: raw.arts2 || "",
+      specialRules: raw.specialRules || "",
+      descriptionText: raw.descriptionText || "",
+      effectText: raw.effectText || "",
+      rawDescription: raw.rawDescription || "",
+      marketPrice: raw.marketPrice ?? null,
+      lowPrice: raw.lowPrice ?? null,
+      midPrice: raw.midPrice ?? null,
+      highPrice: raw.highPrice ?? null,
+      directLowPrice: raw.directLowPrice ?? null,
+      foilMarketPrice: raw.foilMarketPrice ?? null,
+      foilLowPrice: raw.foilLowPrice ?? null,
+      priceSubtype: raw.priceSubtype || "Normal",
+      sanitizedFlag: Boolean(raw.sanitizedFlag),
+      hadCommaOrHtml: Boolean(raw.hadCommaOrHtml),
+    };
+  }
+
+  function applyPricesOverlay(cards, pricesMap) {
+    if (!pricesMap) return;
+    for (const c of cards) {
+      const row = pricesMap[String(c.productId)];
+      if (!Array.isArray(row)) continue;
+      c.marketPrice = row[0] ?? null;
+      c.lowPrice = row[1] ?? null;
+      c.midPrice = row[2] ?? null;
+      c.highPrice = row[3] ?? null;
+      c.directLowPrice = row[4] ?? null;
+      c.foilMarketPrice = row[5] ?? null;
+      c.foilLowPrice = row[6] ?? null;
+    }
+  }
+
+  async function syncExchangeRateFromMetadata() {
+    try {
+      const mods = await ensureFirebaseModules();
+      if (!mods || !mods.db || !mods.fbFsMod) return null;
+      const { doc, getDoc } = mods.fbFsMod;
+      const snap = await getDoc(doc(mods.db, "metadata", "exchangeRate"));
+      if (snap.exists()) {
+        const rateData = snap.data();
+        if (rateData && Number(rateData.rateClpPerUsd) > 0) {
+          cloudAutoRate = rateData;
+          defaultRate = rateData;
+          refreshActiveRate();
+          return rateData;
+        }
+      }
+    } catch (err) {
+      console.warn("Firestore exchangeRate read skipped:", err?.message || err);
+    }
+    return null;
+  }
+
+  async function tryLoadCatalogFromFirestore(forceRefresh = false) {
+    try {
+      const mods = await Promise.race([
+        ensureFirebaseModules(),
+        new Promise((resolve) => setTimeout(() => resolve(null), 4000)),
+      ]);
+      if (!mods || !mods.db || !mods.fbFsMod) return false;
+
+      const { collection, doc, getDoc, getDocs } = mods.fbFsMod;
+      const [catSnap, rateSnap] = await Promise.all([
+        getDoc(doc(mods.db, "metadata", "catalog")),
+        getDoc(doc(mods.db, "metadata", "exchangeRate")).catch(() => null),
+      ]);
+
+      if (rateSnap && rateSnap.exists()) {
+        const rateData = rateSnap.data();
+        if (rateData && Number(rateData.rateClpPerUsd) > 0) {
+          cloudAutoRate = rateData;
+          defaultRate = rateData;
+          refreshActiveRate();
+        }
+      }
+
+      if (!catSnap || !catSnap.exists()) {
+        return false;
+      }
+
+      const catMeta = catSnap.data() || {};
+      const catalogHash = String(catMeta.catalogHash || "");
+      const pricesUpdatedAt = String(catMeta.pricesUpdatedAt || "");
+      const catalogUpdatedAt = String(catMeta.catalogUpdatedAt || pricesUpdatedAt);
+
+      if (!forceRefresh && catalogHash) {
+        const cached = await idbGet(IDB_BUNDLE_KEY);
+        if (cached && Array.isArray(cached.cards) && cached.cards.length > 0 && cached.catalogHash === catalogHash) {
+          if (cached.pricesUpdatedAt === pricesUpdatedAt) {
+            cardsList = cached.cards;
+            cardsById = new Map(cardsList.map((c) => [Number(c.productId), c]));
+            editionsList = sortEditionsDesc(cached.editions || []);
+            auditReport = normalizeAuditReport(cached.auditReport || {});
+            catalogSyncInfo = {
+              source: "Cloud Firestore (Caché local al día)",
+              catalogUpdatedAt,
+              pricesUpdatedAt,
+              editionsCount: editionsList.length,
+              totalProducts: cardsList.length,
+              cacheHit: true,
+            };
+            return true;
+          }
+
+          // Catalog structure unchanged, only daily prices updated -> read 1 doc (metadata/prices)!
+          const pricesSnap = await getDoc(doc(mods.db, "metadata", "prices"));
+          if (pricesSnap.exists()) {
+            const pData = pricesSnap.data() || {};
+            const pricesMap = pData.pricesJson ? JSON.parse(pData.pricesJson) : {};
+            applyPricesOverlay(cached.cards, pricesMap);
+            cardsList = cached.cards;
+            cardsById = new Map(cardsList.map((c) => [Number(c.productId), c]));
+            editionsList = sortEditionsDesc(cached.editions || []);
+            auditReport = normalizeAuditReport(cached.auditReport || {});
+            await idbSet(IDB_BUNDLE_KEY, {
+              catalogHash,
+              catalogUpdatedAt,
+              pricesUpdatedAt,
+              cards: cardsList,
+              editions: editionsList,
+              auditReport,
+            });
+            catalogSyncInfo = {
+              source: "Cloud Firestore (Precios actualizados hoy)",
+              catalogUpdatedAt,
+              pricesUpdatedAt,
+              editionsCount: editionsList.length,
+              totalProducts: cardsList.length,
+              cacheHit: "prices-only",
+            };
+            return true;
+          }
+        }
+      }
+
+      // Full sync from Firestore (editions + metadata/prices + metadata/audit)
+      const [editionsSnap, pricesSnap, auditSnap] = await Promise.all([
+        getDocs(collection(mods.db, "editions")),
+        getDoc(doc(mods.db, "metadata", "prices")),
+        getDoc(doc(mods.db, "metadata", "audit")).catch(() => null),
+      ]);
+
+      if (editionsSnap.empty || !pricesSnap.exists()) {
+        return false;
+      }
+
+      const pricesData = pricesSnap.data() || {};
+      const pricesMap = pricesData.pricesJson ? JSON.parse(pricesData.pricesJson) : {};
+
+      const nextEditions = [];
+      const nextCards = [];
+
+      editionsSnap.forEach((docSnap) => {
+        const d = docSnap.data() || {};
+        const edMeta = {
+          groupId: Number(d.groupId || docSnap.id),
+          name: String(d.name || ""),
+          abbreviation: String(d.abbreviation || ""),
+          isSupplemental: Boolean(d.isSupplemental),
+          publishedOn: String(d.publishedOn || ""),
+          modifiedOn: String(d.modifiedOn || ""),
+        };
+        nextEditions.push(edMeta);
+
+        const rawCards = d.cardsJson ? JSON.parse(d.cardsJson) : Array.isArray(d.cards) ? d.cards : [];
+        for (const rawCard of rawCards) {
+          nextCards.push(hydrateSlimCard(rawCard, edMeta));
+        }
+      });
+
+      if (!nextCards.length) return false;
+      applyPricesOverlay(nextCards, pricesMap);
+
+      let parsedAudit = {};
+      if (auditSnap && auditSnap.exists()) {
+        const ad = auditSnap.data() || {};
+        parsedAudit = ad.reportJson ? JSON.parse(ad.reportJson) : ad.report || ad;
+      }
+
+      cardsList = nextCards;
+      cardsById = new Map(cardsList.map((c) => [Number(c.productId), c]));
+      editionsList = sortEditionsDesc(nextEditions);
+      auditReport = normalizeAuditReport(parsedAudit);
+
+      await idbSet(IDB_BUNDLE_KEY, {
+        catalogHash,
+        catalogUpdatedAt,
+        pricesUpdatedAt,
+        cards: cardsList,
+        editions: editionsList,
+        auditReport,
+      });
+
+      catalogSyncInfo = {
+        source: "Cloud Firestore",
+        catalogUpdatedAt,
+        pricesUpdatedAt,
+        editionsCount: editionsList.length,
+        totalProducts: cardsList.length,
+        cacheHit: false,
+      };
+      return true;
+    } catch (err) {
+      console.warn("Firestore catalog fallback to static /data/:", err?.message || err);
+      return false;
+    }
+  }
+
+  async function ensureCatalogLoaded(forceRefresh = false) {
+    if (catalogLoaded && !forceRefresh) return;
+
+    if (forceRefresh) {
+      await idbDelete(IDB_BUNDLE_KEY);
+    }
+
+    const loadedFromCloud = await tryLoadCatalogFromFirestore(forceRefresh);
+    if (loadedFromCloud) {
+      catalogLoaded = true;
+      return;
+    }
+
     const [cardsRes, groupsRes, auditRes, rateRes] = await Promise.all([
       fetch("/data/cards_cleaned.json"),
       fetch("/data/groups.json"),
@@ -118,24 +495,25 @@
     cardsById = new Map(cardsList.map((c) => [Number(c.productId), c]));
 
     const groupsJson = await groupsRes.json();
-    editionsList = (groupsJson.results || []).slice().sort((a, b) => {
-      const pa = String(a.publishedOn || "");
-      const pb = String(b.publishedOn || "");
-      if (pb !== pa) return pb.localeCompare(pa);
-      return Number(b.groupId) - Number(a.groupId);
-    });
+    editionsList = sortEditionsDesc(groupsJson.results || []);
 
     if (auditRes && auditRes.ok) {
       const rawAudit = await auditRes.json();
       auditReport = normalizeAuditReport(rawAudit);
     }
-    if (rateRes && rateRes.ok) {
+    if (rateRes && rateRes.ok && !cloudAutoRate) {
       defaultRate = await rateRes.json();
-      if (!localStorage.getItem(LS_RATE) && !currentUser) {
-        activeRate = { ...defaultRate };
-      }
+      refreshActiveRate();
     }
 
+    catalogSyncInfo = {
+      source: "Hosting CDN (/data)",
+      catalogUpdatedAt: "",
+      pricesUpdatedAt: "",
+      editionsCount: editionsList.length,
+      totalProducts: cardsList.length,
+      cacheHit: false,
+    };
     catalogLoaded = true;
   }
 
@@ -280,7 +658,8 @@
       rateRef,
       (snap) => {
         if (snap.exists()) {
-          activeRate = snap.data();
+          personalRate = snap.data();
+          refreshActiveRate();
           window.onCloudDataChanged?.();
         }
       },
@@ -359,29 +738,25 @@
   }
 
   async function initFirebaseSdk() {
-    if (!window.FIREBASE_CONFIG || app) return;
+    if (!window.FIREBASE_CONFIG) return;
     try {
-      const [appMod, authMod, fsMod] = await Promise.all([
-        import("https://www.gstatic.com/firebasejs/11.0.2/firebase-app.js"),
-        import("https://www.gstatic.com/firebasejs/11.0.2/firebase-auth.js"),
-        import("https://www.gstatic.com/firebasejs/11.0.2/firebase-firestore.js"),
-      ]);
-      fbAuthMod = authMod;
-      fbFsMod = fsMod;
-      app = appMod.initializeApp(window.FIREBASE_CONFIG);
-      auth = authMod.getAuth(app);
-      db = fsMod.getFirestore(app);
+      const mods = await ensureFirebaseModules();
+      if (!mods || !mods.auth || !mods.fbAuthMod) return;
+      if (initFirebaseSdk._bound) return;
+      initFirebaseSdk._bound = true;
 
       await new Promise((resolve) => {
         let settled = false;
-        authMod.onAuthStateChanged(auth, async (user) => {
+        mods.fbAuthMod.onAuthStateChanged(mods.auth, async (user) => {
           currentUser = user;
           if (user) {
             await migrateGuestCollectionToCloud(user.uid);
             attachFirestoreListeners(user.uid);
           } else {
             clearSnapshotListeners();
+            personalRate = null;
             if (useCloudBackend) loadGuestStateFromStorage();
+            else refreshActiveRate();
           }
           window.onFirebaseAuthChanged?.(user);
           if (!settled) {
@@ -713,14 +1088,18 @@
       observedDate: String(observedDate || new Date().toISOString().slice(0, 10)).slice(0, 64),
       updatedAt: new Date().toISOString().slice(0, 64),
     };
-    activeRate = rateObj;
+    personalRate = rateObj;
+    if (rateObj.source !== "Manual") {
+      cloudAutoRate = rateObj;
+    }
+    refreshActiveRate();
     if (currentUser && db && fbFsMod) {
       const { doc, setDoc } = fbFsMod;
       await setDoc(doc(db, "users", currentUser.uid, "settings", "exchangeRate"), rateObj);
     } else {
       saveGuestStateToStorage();
     }
-    return rateObj;
+    return activeRate;
   }
 
   async function handleRequest(url, options = {}) {
@@ -814,16 +1193,23 @@
       return joinCardWithCollection(card);
     }
     if (path === "/api/audit") {
-      return { syncedAt: new Date().toISOString(), report: auditReport };
+      return {
+        syncedAt: catalogSyncInfo.pricesUpdatedAt || catalogSyncInfo.catalogUpdatedAt || new Date().toISOString(),
+        source: catalogSyncInfo.source,
+        catalogUpdatedAt: catalogSyncInfo.catalogUpdatedAt || "",
+        pricesUpdatedAt: catalogSyncInfo.pricesUpdatedAt || "",
+        report: auditReport,
+      };
     }
     if (path === "/api/resync" && method === "POST") {
       catalogLoaded = false;
-      await ensureCatalogLoaded();
+      await ensureCatalogLoaded(true);
       return {
         editionsSynced: editionsList.length,
         cardsSynced: cardsList.length,
         skippedAlreadyPopulated: false,
-        syncedAt: new Date().toISOString(),
+        source: catalogSyncInfo.source,
+        syncedAt: catalogSyncInfo.pricesUpdatedAt || new Date().toISOString(),
       };
     }
     if (path === "/api/exchange-rate" && method === "GET") {
@@ -833,6 +1219,7 @@
       return saveExchangeRate(body.rateClpPerUsd, body.source, body.observedDate);
     }
     if (path === "/api/exchange-rate/refresh" && method === "POST") {
+      await syncExchangeRateFromMetadata();
       return activeRate;
     }
     if (path === "/api/decks" && method === "GET") {
@@ -1037,6 +1424,7 @@
     initPromise,
     isCloudMode: () => useCloudBackend,
     getCurrentUser: () => currentUser,
+    getCatalogSyncInfo: () => ({ ...catalogSyncInfo }),
     signInWithGoogle,
     signOutUser,
     pushLocalCollectionToFirestore,

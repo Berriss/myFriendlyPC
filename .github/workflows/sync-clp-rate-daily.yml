@@ -1,0 +1,42 @@
+name: Sync Daily USD to CLP Exchange Rate (→ Firestore)
+
+on:
+  schedule:
+    # Banco Central de Chile publishes Dólar Observado each morning; 13:00 UTC ≈ 09:00-10:00 CLT
+    - cron: '0 13 * * *'
+  workflow_dispatch:
+
+jobs:
+  sync-clp-rate:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+          cache: 'pip'
+          cache-dependency-path: 'scripts/requirements-sync.txt'
+
+      - name: Install sync dependencies
+        run: python -m pip install --upgrade pip && pip install -r scripts/requirements-sync.txt
+
+      - name: Verify Firebase Service Account secret
+        env:
+          FIREBASE_SERVICE_ACCOUNT: ${{ secrets.FIREBASE_SERVICE_ACCOUNT }}
+        run: |
+          if [ -z "$FIREBASE_SERVICE_ACCOUNT" ]; then
+            echo "::error::Falta el secreto FIREBASE_SERVICE_ACCOUNT en GitHub (Settings -> Secrets and variables -> Actions)."
+            echo "Genera la clave JSON en Firebase Console -> Configuracion del proyecto -> Cuentas de servicio -> Generar nueva clave privada."
+            exit 1
+          fi
+
+      - name: Fetch daily USD → CLP rate & sync to Cloud Firestore
+        env:
+          FIREBASE_SERVICE_ACCOUNT: ${{ secrets.FIREBASE_SERVICE_ACCOUNT }}
+          FIREBASE_PROJECT_ID: hololive-ocg-tracker-sb
+        run: python3 scripts/sync_clp_rate_to_firestore.py

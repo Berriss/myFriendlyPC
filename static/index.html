@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Hololive OCG Tracker — Colección &amp; Catálogo</title>
   <link rel="icon" type="image/svg+xml" href="/icon.svg" />
-  <link rel="stylesheet" href="/css/styles.css?v=20261121-5" />
+  <link rel="stylesheet" href="/css/styles.css?v=20261122-1" />
 </head>
 <body>
   <div class="app-shell">
@@ -109,13 +109,11 @@
 
         <article class="kpi-card">
           <div class="kpi-head">
-            <span class="kpi-label">Progreso de Catálogo</span>
-            <span class="kpi-badge" id="kpi-completion-pct">0.0%</span>
+            <span class="kpi-label">Cartas Registradas</span>
+            <span class="kpi-badge" id="kpi-sets-owned-badge">0 / 26 sets</span>
           </div>
-          <div class="kpi-value" id="kpi-unique-owned">0 / 0</div>
-          <div class="md3-progress-track">
-            <div class="md3-progress-fill" id="kpi-progress-bar" style="width: 0%"></div>
-          </div>
+          <div class="kpi-value" id="kpi-unique-owned">0</div>
+          <div class="kpi-sub" id="kpi-unique-sub">cartas distintas en tu colección</div>
         </article>
 
         <article class="kpi-card">
@@ -281,12 +279,12 @@
         <div class="pagination-footer" id="pagination-bottom"></div>
       </main>
 
-      <!-- VIEW 2: MY COLLECTION & SET COMPLETION -->
+      <!-- VIEW 2: MY COLLECTION & RELEASED SETS -->
       <main id="view-collection" class="view-section">
         <div class="section-header-card">
           <div>
-            <h2>Mi Colección &amp; Progreso por Edición</h2>
-            <p class="muted-text">Resumen detallado por set, distribución de colores/rarezas y respaldo portátil de tu colección.</p>
+            <h2>Mi Colección</h2>
+            <p class="muted-text">Tus cartas registradas, saldo estimado a favor y referencia rápida por set liberado.</p>
           </div>
           <div class="action-row">
             <button id="export-collection-btn" class="filled-btn" type="button">Exportar JSON</button>
@@ -294,24 +292,80 @@
               Importar JSON
               <input id="import-collection-input" type="file" accept="application/json" hidden />
             </label>
-            <button id="view-owned-in-catalog-btn" class="tonal-btn" type="button">Ver mis cartas en Catálogo</button>
+            <button id="view-owned-in-catalog-btn" class="tonal-btn" type="button">+ Agregar desde Catálogo</button>
           </div>
         </div>
 
-        <div class="analytics-grid">
-          <section class="panel-card">
-            <h3>Distribución por Color</h3>
-            <div id="color-breakdown-list" class="breakdown-list"></div>
-          </section>
-          <section class="panel-card">
-            <h3>Distribución por Rareza</h3>
-            <div id="rarity-breakdown-list" class="breakdown-list"></div>
-          </section>
-        </div>
+        <section class="collection-balance-strip" aria-label="Resumen de tu colección">
+          <article class="collection-balance-card is-primary">
+            <div class="kpi-label" id="col-balance-title">Total a Favor (USD)</div>
+            <div class="kpi-value" id="col-balance-main">$0.00</div>
+            <div class="kpi-sub" id="col-balance-equiv">≈ $0 CLP</div>
+            <div class="kpi-sub hidden" id="col-balance-net"></div>
+          </article>
+          <article class="collection-balance-card">
+            <div class="kpi-label">Cartas Registradas</div>
+            <div class="kpi-value" id="col-copies-main">0 copias</div>
+            <div class="kpi-sub" id="col-copies-sub">0 cartas distintas · 0 favoritas · 0 wishlist</div>
+          </article>
+          <article class="collection-balance-card">
+            <div class="kpi-label">Sets con Cartas</div>
+            <div class="kpi-value" id="col-sets-main">0 / 26</div>
+            <div class="kpi-sub" id="col-sets-sub">sets liberados con al menos 1 carta</div>
+          </article>
+        </section>
 
-        <section class="panel-card">
-          <h3>Progreso en las 26 Ediciones</h3>
-          <div id="editions-progress-grid" class="editions-grid"></div>
+        <section id="collection-cards-section" class="panel-card" style="margin-bottom: 16px;">
+          <div class="collection-panel-head">
+            <h3 style="margin:0;">Mis Cartas Registradas</h3>
+            <span id="collection-results-meta" class="muted-text">Cargando...</span>
+          </div>
+
+          <div class="collection-binder-toolbar">
+            <div class="chip-row" id="collection-scope-chips">
+              <button class="filter-chip active" data-col-scope="owned" type="button">En mi colección</button>
+              <button class="filter-chip" data-col-scope="favorite" type="button">Favoritas</button>
+              <button class="filter-chip" data-col-scope="wishlist" type="button">Wishlist</button>
+            </div>
+
+            <div class="collection-binder-inputs">
+              <div class="search-field" style="min-width:190px;">
+                <svg viewBox="0 0 24 24" class="search-icon"><path d="M15.5 14h-.79l-.28-.27A6.471 6.471 0 0 0 16 9.5 6.5 6.5 0 1 0 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/></svg>
+                <input id="collection-filter-q" type="search" placeholder="Buscar entre mis cartas..." autocomplete="off" />
+              </div>
+              <div class="field-group">
+                <select id="collection-filter-edition" aria-label="Filtrar por set">
+                  <option value="">Todos los sets</option>
+                </select>
+              </div>
+              <div class="field-group">
+                <select id="collection-filter-sort" aria-label="Ordenar mis cartas">
+                  <option value="price_desc">Valor: Mayor a Menor</option>
+                  <option value="owned_desc">Mayor cantidad</option>
+                  <option value="number_asc">N° de Carta (Asc)</option>
+                  <option value="name_asc">Nombre (A-Z)</option>
+                </select>
+              </div>
+              <button id="collection-clear-filters-btn" class="text-btn hidden" type="button">Limpiar</button>
+            </div>
+          </div>
+
+          <div id="collection-cards-container" class="cards-grid" aria-live="polite"></div>
+          <div id="collection-pagination" class="pagination-footer"></div>
+        </section>
+
+        <section id="collection-sets-section" class="panel-card">
+          <div class="collection-panel-head" style="margin-bottom:12px;">
+            <div>
+              <h3 id="collection-sets-title" style="margin:0;">Sets liberados hasta la fecha</h3>
+              <p class="muted-text" style="margin:4px 0 0;font-size:0.84rem;">Referencia rápida de ediciones publicadas y en cuáles tienes cartas registradas.</p>
+            </div>
+            <div class="chip-row" id="collection-sets-filter">
+              <button class="filter-chip active" data-sets-filter="all" type="button">Todos (26)</button>
+              <button class="filter-chip" data-sets-filter="owned" type="button">Con cartas (0)</button>
+            </div>
+          </div>
+          <div id="editions-progress-grid" class="sets-simple-grid"></div>
         </section>
       </main>
 
@@ -600,7 +654,8 @@
         <div class="section-header-card">
           <div>
             <h2>Auditoría de Datos TCGCSV &amp; Saneamiento</h2>
-            <p class="muted-text">Reporte del barrido aplicado a los JSON y CSV en <code>/resources</code> para corregir comas en descripciones, HTML y campos faltantes.</p>
+            <p class="muted-text" id="audit-subtitle">Reporte del barrido aplicado a los JSON y CSV en <code>/resources</code> para corregir comas en descripciones, HTML y campos faltantes.</p>
+            <p class="muted-text hidden" id="audit-sync-meta" style="margin-top:6px;font-size:0.8rem;"></p>
           </div>
           <button id="resync-db-btn" class="filled-btn" type="button">Re-sincronizar /resources → SQLite</button>
         </div>
@@ -830,7 +885,7 @@
   <div id="snackbar" class="snackbar hidden" role="status" aria-live="polite"></div>
 
   <script src="/js/firebase-config.js?v=20261121-2"></script>
-  <script src="/js/firebase-cloud.js?v=20261121-2"></script>
-  <script src="/js/app.js?v=20261121-5"></script>
+  <script src="/js/firebase-cloud.js?v=20261122-2"></script>
+  <script src="/js/app.js?v=20261122-2"></script>
 </body>
 </html>
