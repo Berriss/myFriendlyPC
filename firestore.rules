@@ -53,6 +53,27 @@ service cloud.firestore {
     //   - observedDate: string (required, length <= 64)
     //   - updatedAt: string (required, length <= 64)
     //
+    // Collection: users/{userId}/trades
+    // Document ID: {tradeId}
+    // Access: Owner-only (request.auth != null && request.auth.uid == userId).
+    // Fields:
+    //   - type: string (required, one of ['buy', 'sell', 'trade'])
+    //   - date: string (required, length 1..=32)
+    //   - counterparty: string (required, length <= 120)
+    //   - notes: string (required, length <= 1000)
+    //   - currencyInput: string (required, one of ['USD', 'CLP'])
+    //   - exchangeRateUsed: number (required, > 0 && <= 1000000)
+    //   - cashPaidUsd: number (required, 0..=1000000)
+    //   - cashReceivedUsd: number (required, 0..=1000000)
+    //   - cashPaidOriginal: number (required, 0..=1000000000)
+    //   - cashReceivedOriginal: number (required, 0..=1000000000)
+    //   - itemsIn: list (required, size <= 50; itemsIn or itemsOut must be non-empty)
+    //   - itemsOut: list (required, size <= 50; itemsIn or itemsOut must be non-empty)
+    //   - appliedToCollection: bool (required)
+    //   - wishlistFulfilledIds: list (required, size <= 50)
+    //   - createdAt: string (required, length <= 64, immutable on update)
+    //   - updatedAt: string (required, length <= 64)
+    //
     // ===============================================================
 
     // ===============================================================
@@ -193,6 +214,54 @@ service cloud.firestore {
         isBoundedString(data.updatedAt, 0, 64);
     }
 
+    function isValidTrade(data) {
+      let allowedFields = [
+        'type',
+        'date',
+        'counterparty',
+        'notes',
+        'currencyInput',
+        'exchangeRateUsed',
+        'cashPaidUsd',
+        'cashReceivedUsd',
+        'cashPaidOriginal',
+        'cashReceivedOriginal',
+        'itemsIn',
+        'itemsOut',
+        'appliedToCollection',
+        'wishlistFulfilledIds',
+        'createdAt',
+        'updatedAt'
+      ];
+      let requiredFields = allowedFields;
+      return hasOnlyAllowedFields(allowedFields) &&
+        hasRequiredFields(requiredFields) &&
+        data.type is string &&
+        data.type in ['buy', 'sell', 'trade'] &&
+        isBoundedString(data.date, 1, 32) &&
+        isBoundedString(data.counterparty, 0, 120) &&
+        isBoundedString(data.notes, 0, 1000) &&
+        data.currencyInput is string &&
+        data.currencyInput in ['USD', 'CLP'] &&
+        (data.exchangeRateUsed is int || data.exchangeRateUsed is float) &&
+        data.exchangeRateUsed > 0 &&
+        data.exchangeRateUsed <= 1000000 &&
+        isNumberInRange(data.cashPaidUsd, 0, 1000000) &&
+        isNumberInRange(data.cashReceivedUsd, 0, 1000000) &&
+        isNumberInRange(data.cashPaidOriginal, 0, 1000000000) &&
+        isNumberInRange(data.cashReceivedOriginal, 0, 1000000000) &&
+        data.itemsIn is list &&
+        data.itemsIn.size() <= 50 &&
+        data.itemsOut is list &&
+        data.itemsOut.size() <= 50 &&
+        (data.itemsIn.size() > 0 || data.itemsOut.size() > 0) &&
+        data.appliedToCollection is bool &&
+        data.wishlistFulfilledIds is list &&
+        data.wishlistFulfilledIds.size() <= 50 &&
+        isBoundedString(data.createdAt, 0, 64) &&
+        isBoundedString(data.updatedAt, 0, 64);
+    }
+
     // ===============================================================
     // Collection Rules
     // ===============================================================
@@ -229,6 +298,14 @@ service cloud.firestore {
       match /settings/{settingId} {
         allow read, delete: if isOwner(userId);
         allow create, update: if isOwner(userId) && isValidSetting(request.resource.data);
+      }
+
+      match /trades/{tradeId} {
+        allow read, delete: if isOwner(userId);
+        allow create: if isOwner(userId) && isValidTrade(request.resource.data);
+        allow update: if isOwner(userId) &&
+          isValidTrade(request.resource.data) &&
+          areImmutableFieldsUnchanged(['createdAt']);
       }
     }
 

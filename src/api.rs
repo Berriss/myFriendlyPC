@@ -4,17 +4,19 @@ use crate::models::{
     AdjustCollectionRequest, AuditReport, CardFilterParams, CardRecord, CardWithCollection,
     CardsPageResponse, CollectionEntry, CollectionExportPayload, ColorBreakdown, DeckCardItem,
     DeckDetail, DeckSummary, EditionStats, ExchangeRateConfig, FacetCount, FilterFacets,
-    KpiSummary, RarityBreakdown, SaveDeckRequest, TopCardHighlight, UpdateExchangeRateRequest,
-    UpsertCollectionRequest,
+    KpiSummary, RarityBreakdown, SaveDeckRequest, SaveTradeItemInput, SaveTradeRequest,
+    SaveTradeResponse, TopCardHighlight, TradeDetail, TradeItemEnriched, TradeItemStored,
+    TradeSummary, TradesListResponse, UpdateExchangeRateRequest, UpsertCollectionRequest,
 };
 use anyhow::Result;
 use axum::extract::{Path, Query, State};
 use axum::http::StatusCode;
 use axum::response::{IntoResponse, Response};
-use axum::routing::{get, patch, post};
+use axum::routing::{get, patch, post, put};
 use axum::{Json, Router};
 use chrono::Utc;
 use serde::{Deserialize, Serialize};
+use std::collections::{HashMap, HashSet};
 use std::path::PathBuf;
 use std::sync::Arc;
 use tokio::sync::Notify;
@@ -26,6 +28,7 @@ pub struct AppState {
     pub shutdown_notify: Arc<Notify>,
 }
 
+#[derive(Debug)]
 pub struct ApiError {
     status: StatusCode,
     message: String,
@@ -86,6 +89,11 @@ pub fn build_api_router(state: AppState) -> Router {
         .route(
             "/decks/{deck_id}",
             get(get_deck).put(update_deck).delete(delete_deck),
+        )
+        .route("/trades", get(list_trades).post(create_trade))
+        .route(
+            "/trades/{trade_id}",
+            put(update_trade).delete(delete_trade),
         )
         .with_state(state)
 }
@@ -1409,4 +1417,972 @@ async fn refresh_exchange_rate(
 
     let existing = read_exchange_rate_config(&state.db)?;
     Ok(Json(existing))
+}
+
+/* ================= TRADING / BUY / SELL / SWAP ================= */
+
+#[derive(Debug, Deserialize)]
+struct DeleteTradeQuery {
+    revert: Option<bool>,
+}
+
+fn round2(val: f64) -> f64 {
+    if !val.is_finite() {
+        0.0
+    } else {
+        (val * 100.0).round() / 100.0
+    }
+}
+
+fn clamp_usd(val: f64) -> f64 {
+    if !val.is_finite() {
+        0.0
+    } else {
+        round2(val.clamp(0.0, 1_000_000.0))
+    }
+}
+
+fn clamp_original_cash(val: f64) -> f64 {
+    if !val.is_finite() {
+        0.0
+    } else {
+        round2(val.clamp(0.0, 1_000_000_000.0))
+    }
+}
+
+fn normalize_condition(cond: Option<&str>) -> String {
+    match cond.unwrap_or("NM").trim() {
+        "NM" | "LP" | "MP" | "HP" | "DMG" => cond.unwrap_or("NM").trim().to_string(),
+        _ => "NM".to_string(),
+    }
+}
+
+pub fn classify_trade_verdict(balance_usd: f64, roi_pct: f64) -> &'static str {
+    if balance_usd.abs() < 0.50 && roi_pct.abs() < 5.0 {
+        "fair"
+    } else if balance_usd > 0.0 && (roi_pct >= 5.0 || balance_usd >= 5.0) {
+        "worth"
+    } else if balance_usd < 0.0 && (roi_pct <= -5.0 || balance_usd <= -5.0) {
+        "not_worth"
+    } else {
+        "fair"
+    }
+}
+
+fn compute_roi_pct(balance_usd: f64, in_total: f64, out_total: f64) -> f64 {
+    if out_total > 0.0 {
+        round2((balance_usd / out_total) * 100.0)
+    } else if in_total > 0.0 {
+        100.0
+    } else {
+        0.0
+    }
+}
+
+fn normalize_trade_items(
+    db: &Database,
+    raw_items: Option<&[SaveTradeItemInput]>,
+) -> Result<Vec<TradeItemStored>> {
+    let mut order: Vec<i64> = Vec::new();
+    let mut by_pid: HashMap<i64, TradeItemStored> = HashMap::new();
+
+    for raw in raw_items.unwrap_or(&[]) {
+        if raw.product_id <= 0 || raw.quantity <= 0 {
+            continue;
+        }
+        let card_opt = db.query_row_opt(
+            "SELECT COALESCE(market_price, foil_market_price, 0.0) FROM cards WHERE product_id = ?1",
+            &[SqlValue::from(raw.product_id)],
+            |r| Ok(r.get_f64(0)),
+        )?;
+        let Some(default_market) = card_opt else {
+            continue;
+        };
+
+        let qty = raw.quantity.clamp(1, 999);
+        let unit_market = raw
+            .unit_market_usd
+            .filter(|v| v.is_finite() && *v >= 0.0)
+            .map(clamp_usd)
+            .unwrap_or_else(|| clamp_usd(default_market));
+        let unit_cost = raw
+            .unit_cost_usd
+            .filter(|v| v.is_finite() && *v >= 0.0)
+            .map(clamp_usd);
+        let condition = normalize_condition(raw.condition.as_deref());
+
+        if let Some(existing) = by_pid.get_mut(&raw.product_id) {
+            let prev_q = existing.quantity;
+            let new_q = (prev_q + qty).clamp(1, 999);
+            existing.unit_market_usd = round2(
+                ((existing.unit_market_usd * prev_q as f64) + (unit_market * qty as f64))
+                    / (prev_q + qty) as f64,
+            );
+            if let (Some(old_c), Some(new_c)) = (existing.unit_cost_usd, unit_cost) {
+                existing.unit_cost_usd = Some(round2(
+                    ((old_c * prev_q as f64) + (new_c * qty as f64)) / (prev_q + qty) as f64,
+                ));
+            } else if existing.unit_cost_usd.is_none() {
+                existing.unit_cost_usd = unit_cost;
+            }
+            existing.quantity = new_q;
+        } else {
+            if order.len() >= 50 {
+                continue;
+            }
+            order.push(raw.product_id);
+            by_pid.insert(
+                raw.product_id,
+                TradeItemStored {
+                    product_id: raw.product_id,
+                    quantity: qty,
+                    unit_market_usd: unit_market,
+                    unit_cost_usd: unit_cost,
+                    condition,
+                },
+            );
+        }
+    }
+
+    Ok(order
+        .into_iter()
+        .filter_map(|pid| by_pid.remove(&pid))
+        .collect())
+}
+
+fn apply_trade_to_collection(
+    db: &Database,
+    trade_type: &str,
+    cash_paid_usd: f64,
+    items_in: &mut [TradeItemStored],
+    items_out: &mut [TradeItemStored],
+) -> Result<Vec<i64>> {
+    if trade_type == "buy" && cash_paid_usd > 0.0 {
+        let total_in_market: f64 = items_in
+            .iter()
+            .map(|i| i.quantity as f64 * i.unit_market_usd)
+            .sum();
+        let total_in_units: i64 = items_in.iter().map(|i| i.quantity).sum();
+        for item in items_in.iter_mut() {
+            if item.unit_cost_usd.is_none() {
+                if total_in_market > 0.0 {
+                    item.unit_cost_usd =
+                        Some(clamp_usd(item.unit_market_usd * (cash_paid_usd / total_in_market)));
+                } else if total_in_units > 0 {
+                    item.unit_cost_usd = Some(clamp_usd(cash_paid_usd / total_in_units as f64));
+                }
+            }
+        }
+    }
+
+    let mut wishlist_fulfilled_ids = Vec::new();
+    for item in items_in.iter() {
+        let Some(existing) = fetch_single_card_with_collection(db, item.product_id)? else {
+            continue;
+        };
+        let prev_qty = existing.total_owned.max(0);
+        let next_qty = (prev_qty + item.quantity).clamp(0, 9999);
+        let next_purchase_price = match item.unit_cost_usd {
+            Some(cost) => {
+                if prev_qty > 0 {
+                    if let Some(old_cost) = existing.purchase_price {
+                        Some(clamp_usd(
+                            ((old_cost * prev_qty as f64) + (cost * item.quantity as f64))
+                                / next_qty as f64,
+                        ))
+                    } else {
+                        Some(clamp_usd(cost))
+                    }
+                } else {
+                    Some(clamp_usd(cost))
+                }
+            }
+            None => existing.purchase_price,
+        };
+
+        let mut next_wishlist = existing.is_wishlist;
+        if existing.is_wishlist && next_qty >= existing.wishlist_target_qty {
+            next_wishlist = false;
+            wishlist_fulfilled_ids.push(item.product_id);
+        }
+
+        let next_condition = if prev_qty == 0 && existing.updated_at.is_none() {
+            item.condition.as_str()
+        } else {
+            existing.condition.as_str()
+        };
+
+        persist_collection_state(
+            db,
+            item.product_id,
+            next_qty,
+            0,
+            next_condition,
+            &existing.language,
+            next_purchase_price,
+            existing.is_favorite,
+            next_wishlist,
+            existing.wishlist_target_qty,
+            &existing.notes,
+        )?;
+    }
+
+    for item in items_out.iter_mut() {
+        let Some(existing) = fetch_single_card_with_collection(db, item.product_id)? else {
+            continue;
+        };
+        if item.unit_cost_usd.is_none() && existing.purchase_price.is_some() {
+            item.unit_cost_usd = existing.purchase_price;
+        }
+        let prev_qty = existing.total_owned.max(0);
+        let next_qty = (prev_qty - item.quantity).max(0);
+
+        persist_collection_state(
+            db,
+            item.product_id,
+            next_qty,
+            0,
+            &existing.condition,
+            &existing.language,
+            existing.purchase_price,
+            existing.is_favorite,
+            existing.is_wishlist,
+            existing.wishlist_target_qty,
+            &existing.notes,
+        )?;
+    }
+
+    Ok(wishlist_fulfilled_ids)
+}
+
+fn revert_trade_from_collection(
+    db: &Database,
+    applied: bool,
+    items_in: &[TradeItemStored],
+    items_out: &[TradeItemStored],
+    wishlist_fulfilled_ids: &[i64],
+) -> Result<bool> {
+    if !applied {
+        return Ok(false);
+    }
+    let fulfilled_set: HashSet<i64> = wishlist_fulfilled_ids.iter().copied().collect();
+
+    for item in items_in {
+        let Some(existing) = fetch_single_card_with_collection(db, item.product_id)? else {
+            continue;
+        };
+        let next_qty = (existing.total_owned.max(0) - item.quantity).max(0);
+        let next_wishlist = if fulfilled_set.contains(&item.product_id) {
+            true
+        } else {
+            existing.is_wishlist
+        };
+        persist_collection_state(
+            db,
+            item.product_id,
+            next_qty,
+            0,
+            &existing.condition,
+            &existing.language,
+            existing.purchase_price,
+            existing.is_favorite,
+            next_wishlist,
+            existing.wishlist_target_qty,
+            &existing.notes,
+        )?;
+    }
+
+    for item in items_out {
+        let Some(existing) = fetch_single_card_with_collection(db, item.product_id)? else {
+            continue;
+        };
+        let next_qty = (existing.total_owned.max(0) + item.quantity).clamp(0, 9999);
+        let next_purchase_price = if existing.purchase_price.is_none() && item.unit_cost_usd.is_some() {
+            item.unit_cost_usd
+        } else {
+            existing.purchase_price
+        };
+        persist_collection_state(
+            db,
+            item.product_id,
+            next_qty,
+            0,
+            &existing.condition,
+            &existing.language,
+            next_purchase_price,
+            existing.is_favorite,
+            existing.is_wishlist,
+            existing.wishlist_target_qty,
+            &existing.notes,
+        )?;
+    }
+
+    Ok(true)
+}
+
+struct StoredTradeRow {
+    id: i64,
+    trade_type: String,
+    date: String,
+    counterparty: String,
+    notes: String,
+    currency_input: String,
+    exchange_rate_used: f64,
+    cash_paid_usd: f64,
+    cash_received_usd: f64,
+    cash_paid_original: f64,
+    cash_received_original: f64,
+    items_in: Vec<TradeItemStored>,
+    items_out: Vec<TradeItemStored>,
+    applied_to_collection: bool,
+    wishlist_fulfilled_ids: Vec<i64>,
+    created_at: String,
+    updated_at: String,
+}
+
+fn read_trade_row(r: &Row) -> Result<StoredTradeRow> {
+    let items_in_json = r.get_string(11);
+    let items_out_json = r.get_string(12);
+    let wishlist_json = r.get_string(14);
+    Ok(StoredTradeRow {
+        id: r.get_i64(0),
+        trade_type: r.get_string(1),
+        date: r.get_string(2),
+        counterparty: r.get_string(3),
+        notes: r.get_string(4),
+        currency_input: r.get_string(5),
+        exchange_rate_used: r.get_f64(6),
+        cash_paid_usd: r.get_f64(7),
+        cash_received_usd: r.get_f64(8),
+        cash_paid_original: r.get_f64(9),
+        cash_received_original: r.get_f64(10),
+        items_in: serde_json::from_str(&items_in_json).unwrap_or_default(),
+        items_out: serde_json::from_str(&items_out_json).unwrap_or_default(),
+        applied_to_collection: r.get_bool(13),
+        wishlist_fulfilled_ids: serde_json::from_str(&wishlist_json).unwrap_or_default(),
+        created_at: r.get_string(15),
+        updated_at: r.get_string(16),
+    })
+}
+
+fn load_card_lookup_map(
+    db: &Database,
+    product_ids: &HashSet<i64>,
+) -> Result<HashMap<i64, CardWithCollection>> {
+    if product_ids.is_empty() {
+        return Ok(HashMap::new());
+    }
+    let placeholders: Vec<String> = (1..=product_ids.len()).map(|i| format!("?{i}")).collect();
+    let binds: Vec<SqlValue> = product_ids.iter().copied().map(SqlValue::from).collect();
+    let sql = format!(
+        "SELECT {CARD_WITH_COLLECTION_SELECT}
+         FROM cards c
+         LEFT JOIN collection col ON col.product_id = c.product_id
+         WHERE c.product_id IN ({})",
+        placeholders.join(",")
+    );
+    let rows = db.query_map(&sql, &binds, map_card_with_collection)?;
+    Ok(rows.into_iter().map(|c| (c.card.product_id, c)).collect())
+}
+
+fn enrich_trade_item(
+    stored: &TradeItemStored,
+    lookup: &HashMap<i64, CardWithCollection>,
+) -> TradeItemEnriched {
+    let card_col = lookup.get(&stored.product_id);
+    TradeItemEnriched {
+        product_id: stored.product_id,
+        quantity: stored.quantity,
+        unit_market_usd: stored.unit_market_usd,
+        unit_cost_usd: stored.unit_cost_usd,
+        condition: stored.condition.clone(),
+        name: card_col
+            .map(|c| c.card.name.clone())
+            .unwrap_or_else(|| format!("#{}", stored.product_id)),
+        card_number: card_col
+            .map(|c| c.card.card_number.clone())
+            .unwrap_or_default(),
+        edition_name: card_col
+            .map(|c| c.card.edition_name.clone())
+            .unwrap_or_default(),
+        edition_abbr: card_col
+            .map(|c| c.card.edition_abbr.clone())
+            .unwrap_or_default(),
+        rarity: card_col.map(|c| c.card.rarity.clone()).unwrap_or_default(),
+        color: card_col.map(|c| c.card.color.clone()).unwrap_or_default(),
+        card_type: card_col
+            .map(|c| c.card.card_type.clone())
+            .unwrap_or_default(),
+        image_url: card_col
+            .map(|c| c.card.image_url.clone())
+            .unwrap_or_default(),
+        item_category: card_col
+            .map(|c| c.card.item_category.clone())
+            .unwrap_or_else(|| "card".to_string()),
+        current_market_usd: card_col.and_then(|c| c.card.market_price.or(c.card.foil_market_price)),
+        owned_quantity: card_col.map(|c| c.total_owned).unwrap_or(0),
+        is_wishlist: card_col.map(|c| c.is_wishlist).unwrap_or(false),
+        wishlist_target_qty: card_col.map(|c| c.wishlist_target_qty).unwrap_or(1),
+    }
+}
+
+fn build_trade_detail(
+    row: StoredTradeRow,
+    lookup: &HashMap<i64, CardWithCollection>,
+) -> TradeDetail {
+    let items_in: Vec<TradeItemEnriched> = row
+        .items_in
+        .iter()
+        .map(|i| enrich_trade_item(i, lookup))
+        .collect();
+    let items_out: Vec<TradeItemEnriched> = row
+        .items_out
+        .iter()
+        .map(|i| enrich_trade_item(i, lookup))
+        .collect();
+
+    let in_value_at_deal_usd = round2(
+        items_in
+            .iter()
+            .map(|i| i.quantity as f64 * i.unit_market_usd)
+            .sum(),
+    );
+    let out_value_at_deal_usd = round2(
+        items_out
+            .iter()
+            .map(|i| i.quantity as f64 * i.unit_market_usd)
+            .sum(),
+    );
+    let in_total_at_deal = in_value_at_deal_usd + row.cash_received_usd;
+    let out_total_at_deal = out_value_at_deal_usd + row.cash_paid_usd;
+    let deal_balance_usd = round2(in_total_at_deal - out_total_at_deal);
+    let deal_roi_pct = compute_roi_pct(deal_balance_usd, in_total_at_deal, out_total_at_deal);
+    let verdict_at_deal = classify_trade_verdict(deal_balance_usd, deal_roi_pct).to_string();
+
+    let in_value_now_usd = round2(
+        items_in
+            .iter()
+            .map(|i| i.quantity as f64 * i.current_market_usd.unwrap_or(i.unit_market_usd))
+            .sum(),
+    );
+    let out_value_now_usd = round2(
+        items_out
+            .iter()
+            .map(|i| i.quantity as f64 * i.current_market_usd.unwrap_or(i.unit_market_usd))
+            .sum(),
+    );
+    let in_total_now = in_value_now_usd + row.cash_received_usd;
+    let out_total_now = out_value_now_usd + row.cash_paid_usd;
+    let current_balance_usd = round2(in_total_now - out_total_now);
+    let current_roi_pct = compute_roi_pct(current_balance_usd, in_total_now, out_total_now);
+    let verdict_now = classify_trade_verdict(current_balance_usd, current_roi_pct).to_string();
+
+    let (out_cost_basis_usd, realized_profit_usd) =
+        if !items_out.is_empty() && items_out.iter().all(|i| i.unit_cost_usd.is_some()) {
+            let cost_basis = round2(
+                items_out
+                    .iter()
+                    .map(|i| i.quantity as f64 * i.unit_cost_usd.unwrap_or(0.0))
+                    .sum(),
+            );
+            let realized = round2(
+                (row.cash_received_usd + in_value_at_deal_usd) - row.cash_paid_usd - cost_basis,
+            );
+            (Some(cost_basis), Some(realized))
+        } else {
+            (None, None)
+        };
+
+    TradeDetail {
+        id: row.id,
+        trade_type: row.trade_type,
+        date: row.date,
+        counterparty: row.counterparty,
+        notes: row.notes,
+        currency_input: row.currency_input,
+        exchange_rate_used: row.exchange_rate_used,
+        cash_paid_usd: row.cash_paid_usd,
+        cash_received_usd: row.cash_received_usd,
+        cash_paid_original: row.cash_paid_original,
+        cash_received_original: row.cash_received_original,
+        items_in,
+        items_out,
+        applied_to_collection: row.applied_to_collection,
+        wishlist_fulfilled_ids: row.wishlist_fulfilled_ids,
+        in_value_at_deal_usd,
+        out_value_at_deal_usd,
+        deal_balance_usd,
+        deal_roi_pct,
+        verdict_at_deal,
+        in_value_now_usd,
+        out_value_now_usd,
+        current_balance_usd,
+        current_roi_pct,
+        verdict_now,
+        out_cost_basis_usd,
+        realized_profit_usd,
+        created_at: row.created_at,
+        updated_at: row.updated_at,
+    }
+}
+
+fn format_trade_highlight_label(trade: &TradeDetail) -> String {
+    let kind = match trade.trade_type.as_str() {
+        "buy" => "Compra",
+        "sell" => "Venta",
+        _ => "Intercambio",
+    };
+    let head = trade
+        .items_in
+        .first()
+        .or_else(|| trade.items_out.first())
+        .map(|i| i.name.as_str())
+        .unwrap_or("Movimiento");
+    if trade.counterparty.is_empty() {
+        format!("{kind}: {head}")
+    } else {
+        format!("{kind}: {head} ({})", trade.counterparty)
+    }
+}
+
+fn compute_trade_summary(items: &[TradeDetail]) -> TradeSummary {
+    let total_trades = items.len() as i64;
+    let mut buy_count = 0;
+    let mut sell_count = 0;
+    let mut trade_count = 0;
+    let mut total_cash_paid_usd = 0.0;
+    let mut total_cash_received_usd = 0.0;
+    let mut net_worth_at_deal_usd = 0.0;
+    let mut net_worth_now_usd = 0.0;
+    let mut worth_count_now = 0;
+    let mut fair_count_now = 0;
+    let mut not_worth_count_now = 0;
+    let mut worth_count_at_deal = 0;
+    let mut fair_count_at_deal = 0;
+    let mut not_worth_count_at_deal = 0;
+    let mut wishlist_fulfilled_total = 0;
+    let mut best_trade: Option<&TradeDetail> = None;
+
+    for t in items {
+        match t.trade_type.as_str() {
+            "buy" => buy_count += 1,
+            "sell" => sell_count += 1,
+            _ => trade_count += 1,
+        }
+        total_cash_paid_usd += t.cash_paid_usd;
+        total_cash_received_usd += t.cash_received_usd;
+        net_worth_at_deal_usd += t.deal_balance_usd;
+        net_worth_now_usd += t.current_balance_usd;
+        wishlist_fulfilled_total += t.wishlist_fulfilled_ids.len() as i64;
+
+        match t.verdict_now.as_str() {
+            "worth" => worth_count_now += 1,
+            "not_worth" => not_worth_count_now += 1,
+            _ => fair_count_now += 1,
+        }
+        match t.verdict_at_deal.as_str() {
+            "worth" => worth_count_at_deal += 1,
+            "not_worth" => not_worth_count_at_deal += 1,
+            _ => fair_count_at_deal += 1,
+        }
+
+        if best_trade
+            .map(|b| t.current_balance_usd > b.current_balance_usd)
+            .unwrap_or(true)
+        {
+            best_trade = Some(t);
+        }
+    }
+
+    let worth_rate_now_pct = if total_trades > 0 {
+        round2((worth_count_now as f64 / total_trades as f64) * 100.0)
+    } else {
+        0.0
+    };
+    let worth_rate_at_deal_pct = if total_trades > 0 {
+        round2((worth_count_at_deal as f64 / total_trades as f64) * 100.0)
+    } else {
+        0.0
+    };
+
+    TradeSummary {
+        total_trades,
+        buy_count,
+        sell_count,
+        trade_count,
+        total_cash_paid_usd: round2(total_cash_paid_usd),
+        total_cash_received_usd: round2(total_cash_received_usd),
+        net_cashflow_usd: round2(total_cash_received_usd - total_cash_paid_usd),
+        net_worth_at_deal_usd: round2(net_worth_at_deal_usd),
+        net_worth_now_usd: round2(net_worth_now_usd),
+        worth_count_now,
+        fair_count_now,
+        not_worth_count_now,
+        worth_count_at_deal,
+        fair_count_at_deal,
+        not_worth_count_at_deal,
+        worth_rate_now_pct,
+        worth_rate_at_deal_pct,
+        wishlist_fulfilled_total,
+        best_trade_id: best_trade.map(|b| b.id),
+        best_trade_label: best_trade.map(format_trade_highlight_label),
+        best_trade_gain_usd: best_trade.map(|b| b.current_balance_usd),
+    }
+}
+
+fn fetch_trade_detail_by_id(db: &Database, trade_id: i64) -> Result<Option<TradeDetail>> {
+    let row = db.query_row_opt(
+        "SELECT id, trade_type, trade_date, counterparty, notes, currency_input,
+                exchange_rate_used, cash_paid_usd, cash_received_usd,
+                cash_paid_original, cash_received_original,
+                items_in_json, items_out_json, applied_to_collection,
+                wishlist_fulfilled_json, created_at, updated_at
+         FROM trades WHERE id = ?1",
+        &[SqlValue::from(trade_id)],
+        read_trade_row,
+    )?;
+    let Some(row) = row else {
+        return Ok(None);
+    };
+    let mut pids = HashSet::new();
+    for item in row.items_in.iter().chain(row.items_out.iter()) {
+        pids.insert(item.product_id);
+    }
+    let lookup = load_card_lookup_map(db, &pids)?;
+    Ok(Some(build_trade_detail(row, &lookup)))
+}
+
+pub fn list_trades_response(db: &Database) -> Result<TradesListResponse> {
+    let rows = db.query_map(
+        "SELECT id, trade_type, trade_date, counterparty, notes, currency_input,
+                exchange_rate_used, cash_paid_usd, cash_received_usd,
+                cash_paid_original, cash_received_original,
+                items_in_json, items_out_json, applied_to_collection,
+                wishlist_fulfilled_json, created_at, updated_at
+         FROM trades
+         ORDER BY trade_date DESC, created_at DESC, id DESC",
+        &[],
+        read_trade_row,
+    )?;
+    let mut pids = HashSet::new();
+    for row in &rows {
+        for item in row.items_in.iter().chain(row.items_out.iter()) {
+            pids.insert(item.product_id);
+        }
+    }
+    let lookup = load_card_lookup_map(db, &pids)?;
+    let items: Vec<TradeDetail> = rows
+        .into_iter()
+        .map(|row| build_trade_detail(row, &lookup))
+        .collect();
+    let summary = compute_trade_summary(&items);
+    Ok(TradesListResponse { summary, items })
+}
+
+struct PreparedTradeData {
+    trade_type: String,
+    date: String,
+    counterparty: String,
+    notes: String,
+    currency_input: String,
+    exchange_rate_used: f64,
+    cash_paid_usd: f64,
+    cash_received_usd: f64,
+    cash_paid_original: f64,
+    cash_received_original: f64,
+    items_in: Vec<TradeItemStored>,
+    items_out: Vec<TradeItemStored>,
+    apply_to_collection: bool,
+}
+
+fn prepare_trade_request(db: &Database, body: &SaveTradeRequest) -> std::result::Result<PreparedTradeData, ApiError> {
+    let trade_type = body.trade_type.trim().to_lowercase();
+    if !matches!(trade_type.as_str(), "buy" | "sell" | "trade") {
+        return Err(ApiError::bad_request("Tipo de operación inválido (usa buy, sell o trade)"));
+    }
+
+    let now = Utc::now().to_rfc3339();
+    let default_date: String = now.chars().take(10).collect();
+    let date_raw = body.date.as_deref().unwrap_or("").trim();
+    let date: String = if date_raw.is_empty() {
+        default_date
+    } else {
+        date_raw.chars().take(32).collect()
+    };
+
+    let counterparty: String = body
+        .counterparty
+        .as_deref()
+        .unwrap_or("")
+        .trim()
+        .chars()
+        .take(120)
+        .collect();
+    let notes: String = body
+        .notes
+        .as_deref()
+        .unwrap_or("")
+        .trim()
+        .chars()
+        .take(1000)
+        .collect();
+    let currency_input = match body.currency_input.as_deref().unwrap_or("USD").trim() {
+        "CLP" => "CLP".to_string(),
+        _ => "USD".to_string(),
+    };
+    let default_rate = read_exchange_rate_config(db)
+        .map(|r| r.rate_clp_per_usd)
+        .unwrap_or(1000.0);
+    let exchange_rate_used = body
+        .exchange_rate_used
+        .filter(|v| v.is_finite() && *v > 0.0)
+        .unwrap_or(default_rate)
+        .clamp(1.0, 1_000_000.0);
+
+    let cash_paid_usd = clamp_usd(body.cash_paid_usd.unwrap_or(0.0));
+    let cash_received_usd = clamp_usd(body.cash_received_usd.unwrap_or(0.0));
+    let cash_paid_original = clamp_original_cash(body.cash_paid_original.unwrap_or(cash_paid_usd));
+    let cash_received_original =
+        clamp_original_cash(body.cash_received_original.unwrap_or(cash_received_usd));
+
+    let items_in = normalize_trade_items(db, body.items_in.as_deref())?;
+    let items_out = normalize_trade_items(db, body.items_out.as_deref())?;
+
+    if trade_type == "buy" && items_in.is_empty() {
+        return Err(ApiError::bad_request("Agrega al menos 1 carta recibida en la compra"));
+    }
+    if trade_type == "sell" && items_out.is_empty() {
+        return Err(ApiError::bad_request("Agrega al menos 1 carta entregada en la venta"));
+    }
+    if items_in.is_empty() && items_out.is_empty() {
+        return Err(ApiError::bad_request("El movimiento debe incluir al menos 1 carta"));
+    }
+
+    Ok(PreparedTradeData {
+        trade_type,
+        date,
+        counterparty,
+        notes,
+        currency_input,
+        exchange_rate_used,
+        cash_paid_usd,
+        cash_received_usd,
+        cash_paid_original,
+        cash_received_original,
+        items_in,
+        items_out,
+        apply_to_collection: body.apply_to_collection.unwrap_or(true),
+    })
+}
+
+pub fn create_trade_record(
+    db: &Database,
+    body: &SaveTradeRequest,
+) -> std::result::Result<SaveTradeResponse, ApiError> {
+    let mut prepared = prepare_trade_request(db, body)?;
+    let wishlist_fulfilled_ids = if prepared.apply_to_collection {
+        apply_trade_to_collection(
+            db,
+            &prepared.trade_type,
+            prepared.cash_paid_usd,
+            &mut prepared.items_in,
+            &mut prepared.items_out,
+        )?
+    } else {
+        Vec::new()
+    };
+
+    let now = Utc::now().to_rfc3339();
+    let items_in_json = serde_json::to_string(&prepared.items_in).unwrap_or_else(|_| "[]".into());
+    let items_out_json = serde_json::to_string(&prepared.items_out).unwrap_or_else(|_| "[]".into());
+    let wishlist_json =
+        serde_json::to_string(&wishlist_fulfilled_ids).unwrap_or_else(|_| "[]".into());
+
+    let trade_id = db.with_transaction(|tx| {
+        tx.execute(
+            "INSERT INTO trades (
+                trade_type, trade_date, counterparty, notes, currency_input,
+                exchange_rate_used, cash_paid_usd, cash_received_usd,
+                cash_paid_original, cash_received_original,
+                items_in_json, items_out_json, applied_to_collection,
+                wishlist_fulfilled_json, created_at, updated_at
+             ) VALUES (?1, ?2, ?3, ?4, ?5, ?6, ?7, ?8, ?9, ?10, ?11, ?12, ?13, ?14, ?15, ?16)",
+            &[
+                SqlValue::from(prepared.trade_type.as_str()),
+                SqlValue::from(prepared.date.as_str()),
+                SqlValue::from(prepared.counterparty.as_str()),
+                SqlValue::from(prepared.notes.as_str()),
+                SqlValue::from(prepared.currency_input.as_str()),
+                SqlValue::from(prepared.exchange_rate_used),
+                SqlValue::from(prepared.cash_paid_usd),
+                SqlValue::from(prepared.cash_received_usd),
+                SqlValue::from(prepared.cash_paid_original),
+                SqlValue::from(prepared.cash_received_original),
+                SqlValue::from(items_in_json.as_str()),
+                SqlValue::from(items_out_json.as_str()),
+                SqlValue::from(prepared.apply_to_collection),
+                SqlValue::from(wishlist_json.as_str()),
+                SqlValue::from(now.as_str()),
+                SqlValue::from(now.as_str()),
+            ],
+        )?;
+        Ok(tx.last_insert_rowid())
+    })?;
+
+    let detail = fetch_trade_detail_by_id(db, trade_id)?
+        .ok_or_else(|| ApiError::not_found("Created trade not found"))?;
+    Ok(SaveTradeResponse {
+        wishlist_fulfilled_count: wishlist_fulfilled_ids.len(),
+        trade: detail,
+    })
+}
+
+pub fn update_trade_record(
+    db: &Database,
+    trade_id: i64,
+    body: &SaveTradeRequest,
+) -> std::result::Result<SaveTradeResponse, ApiError> {
+    let existing = db
+        .query_row_opt(
+            "SELECT id, trade_type, trade_date, counterparty, notes, currency_input,
+                    exchange_rate_used, cash_paid_usd, cash_received_usd,
+                    cash_paid_original, cash_received_original,
+                    items_in_json, items_out_json, applied_to_collection,
+                    wishlist_fulfilled_json, created_at, updated_at
+             FROM trades WHERE id = ?1",
+            &[SqlValue::from(trade_id)],
+            read_trade_row,
+        )?
+        .ok_or_else(|| ApiError::not_found(format!("Trade {trade_id} not found")))?;
+
+    let mut prepared = prepare_trade_request(db, body)?;
+    if existing.applied_to_collection {
+        revert_trade_from_collection(
+            db,
+            true,
+            &existing.items_in,
+            &existing.items_out,
+            &existing.wishlist_fulfilled_ids,
+        )?;
+    }
+
+    let wishlist_fulfilled_ids = if prepared.apply_to_collection {
+        apply_trade_to_collection(
+            db,
+            &prepared.trade_type,
+            prepared.cash_paid_usd,
+            &mut prepared.items_in,
+            &mut prepared.items_out,
+        )?
+    } else {
+        Vec::new()
+    };
+
+    let now = Utc::now().to_rfc3339();
+    let items_in_json = serde_json::to_string(&prepared.items_in).unwrap_or_else(|_| "[]".into());
+    let items_out_json = serde_json::to_string(&prepared.items_out).unwrap_or_else(|_| "[]".into());
+    let wishlist_json =
+        serde_json::to_string(&wishlist_fulfilled_ids).unwrap_or_else(|_| "[]".into());
+
+    db.execute(
+        "UPDATE trades SET
+            trade_type = ?1, trade_date = ?2, counterparty = ?3, notes = ?4,
+            currency_input = ?5, exchange_rate_used = ?6,
+            cash_paid_usd = ?7, cash_received_usd = ?8,
+            cash_paid_original = ?9, cash_received_original = ?10,
+            items_in_json = ?11, items_out_json = ?12,
+            applied_to_collection = ?13, wishlist_fulfilled_json = ?14,
+            updated_at = ?15
+         WHERE id = ?16",
+        &[
+            SqlValue::from(prepared.trade_type.as_str()),
+            SqlValue::from(prepared.date.as_str()),
+            SqlValue::from(prepared.counterparty.as_str()),
+            SqlValue::from(prepared.notes.as_str()),
+            SqlValue::from(prepared.currency_input.as_str()),
+            SqlValue::from(prepared.exchange_rate_used),
+            SqlValue::from(prepared.cash_paid_usd),
+            SqlValue::from(prepared.cash_received_usd),
+            SqlValue::from(prepared.cash_paid_original),
+            SqlValue::from(prepared.cash_received_original),
+            SqlValue::from(items_in_json.as_str()),
+            SqlValue::from(items_out_json.as_str()),
+            SqlValue::from(prepared.apply_to_collection),
+            SqlValue::from(wishlist_json.as_str()),
+            SqlValue::from(now.as_str()),
+            SqlValue::from(trade_id),
+        ],
+    )?;
+
+    let detail = fetch_trade_detail_by_id(db, trade_id)?
+        .ok_or_else(|| ApiError::not_found("Updated trade not found"))?;
+    Ok(SaveTradeResponse {
+        wishlist_fulfilled_count: wishlist_fulfilled_ids.len(),
+        trade: detail,
+    })
+}
+
+pub fn delete_trade_record(
+    db: &Database,
+    trade_id: i64,
+    revert: bool,
+) -> std::result::Result<bool, ApiError> {
+    let existing = db
+        .query_row_opt(
+            "SELECT id, trade_type, trade_date, counterparty, notes, currency_input,
+                    exchange_rate_used, cash_paid_usd, cash_received_usd,
+                    cash_paid_original, cash_received_original,
+                    items_in_json, items_out_json, applied_to_collection,
+                    wishlist_fulfilled_json, created_at, updated_at
+             FROM trades WHERE id = ?1",
+            &[SqlValue::from(trade_id)],
+            read_trade_row,
+        )?
+        .ok_or_else(|| ApiError::not_found(format!("Trade {trade_id} not found")))?;
+
+    let reverted = if revert && existing.applied_to_collection {
+        revert_trade_from_collection(
+            db,
+            true,
+            &existing.items_in,
+            &existing.items_out,
+            &existing.wishlist_fulfilled_ids,
+        )?
+    } else {
+        false
+    };
+
+    db.execute("DELETE FROM trades WHERE id = ?1", &[SqlValue::from(trade_id)])?;
+    Ok(reverted)
+}
+
+async fn list_trades(State(state): State<AppState>) -> Result<Json<TradesListResponse>, ApiError> {
+    let res = list_trades_response(&state.db)?;
+    Ok(Json(res))
+}
+
+async fn create_trade(
+    State(state): State<AppState>,
+    Json(body): Json<SaveTradeRequest>,
+) -> Result<(StatusCode, Json<SaveTradeResponse>), ApiError> {
+    let created = create_trade_record(&state.db, &body)?;
+    Ok((StatusCode::CREATED, Json(created)))
+}
+
+async fn update_trade(
+    State(state): State<AppState>,
+    Path(trade_id): Path<i64>,
+    Json(body): Json<SaveTradeRequest>,
+) -> Result<Json<SaveTradeResponse>, ApiError> {
+    let updated = update_trade_record(&state.db, trade_id, &body)?;
+    Ok(Json(updated))
+}
+
+async fn delete_trade(
+    State(state): State<AppState>,
+    Path(trade_id): Path<i64>,
+    Query(q): Query<DeleteTradeQuery>,
+) -> Result<Json<serde_json::Value>, ApiError> {
+    let reverted = delete_trade_record(&state.db, trade_id, q.revert.unwrap_or(true))?;
+    Ok(Json(serde_json::json!({ "deleted": true, "reverted": reverted })))
 }

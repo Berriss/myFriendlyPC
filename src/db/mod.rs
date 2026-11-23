@@ -111,6 +111,28 @@ pub fn init_schema(db: &Database) -> Result<()> {
             source TEXT NOT NULL,
             observed_date TEXT NOT NULL,
             updated_at TEXT NOT NULL
-        );",
+        );
+
+        CREATE TABLE IF NOT EXISTS trades (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            trade_type TEXT NOT NULL,
+            trade_date TEXT NOT NULL,
+            counterparty TEXT NOT NULL DEFAULT '',
+            notes TEXT NOT NULL DEFAULT '',
+            currency_input TEXT NOT NULL DEFAULT 'USD',
+            exchange_rate_used REAL NOT NULL DEFAULT 1000.0,
+            cash_paid_usd REAL NOT NULL DEFAULT 0.0,
+            cash_received_usd REAL NOT NULL DEFAULT 0.0,
+            cash_paid_original REAL NOT NULL DEFAULT 0.0,
+            cash_received_original REAL NOT NULL DEFAULT 0.0,
+            items_in_json TEXT NOT NULL DEFAULT '[]',
+            items_out_json TEXT NOT NULL DEFAULT '[]',
+            applied_to_collection INTEGER NOT NULL DEFAULT 1,
+            wishlist_fulfilled_json TEXT NOT NULL DEFAULT '[]',
+            created_at TEXT NOT NULL,
+            updated_at TEXT NOT NULL
+        );
+
+        CREATE INDEX IF NOT EXISTS idx_trades_date ON trades(trade_date DESC, id DESC);",
     )
 }

@@ -9,6 +9,7 @@
 
   const LS_COLLECTION = "hocg-cloud-guest-collection";
   const LS_DECKS = "hocg-cloud-guest-decks";
+  const LS_TRADES = "hocg-cloud-guest-trades";
   const LS_RATE = "hocg-cloud-guest-rate";
   const IDB_NAME = "hocg-catalog-cache-v1";
   const IDB_STORE = "kv";
@@ -48,6 +49,7 @@
 
   let collectionMap = new Map(); // productId -> CollectionEntry
   let decksList = [];
+  let tradesList = [];
   let activeRate = { ...defaultRate };
   let unsubs = [];
 
@@ -183,12 +185,15 @@
       }
       const rawDecks = localStorage.getItem(LS_DECKS);
       decksList = rawDecks ? JSON.parse(rawDecks) : [];
+      const rawTrades = localStorage.getItem(LS_TRADES);
+      tradesList = rawTrades ? JSON.parse(rawTrades) : [];
       const rawRate = localStorage.getItem(LS_RATE);
       personalRate = rawRate ? JSON.parse(rawRate) : null;
       refreshActiveRate();
     } catch (_) {
       collectionMap = new Map();
       decksList = [];
+      tradesList = [];
       personalRate = null;
       refreshActiveRate();
     }
@@ -198,6 +203,7 @@
     if (currentUser) return;
     localStorage.setItem(LS_COLLECTION, JSON.stringify(Array.from(collectionMap.values())));
     localStorage.setItem(LS_DECKS, JSON.stringify(decksList));
+    localStorage.setItem(LS_TRADES, JSON.stringify(tradesList));
     if (personalRate) {
       localStorage.setItem(LS_RATE, JSON.stringify(personalRate));
     }
@@ -593,6 +599,454 @@
     };
   }
 
+  function round2(val) {
+    const num = Number(val);
+    if (!Number.isFinite(num)) return 0;
+    return Math.round(num * 100) / 100;
+  }
+
+  function clampUsd(val) {
+    const num = Number(val);
+    if (!Number.isFinite(num)) return 0;
+    return round2(Math.max(0, Math.min(1000000, num)));
+  }
+
+  function clampOriginalCash(val) {
+    const num = Number(val);
+    if (!Number.isFinite(num)) return 0;
+    return round2(Math.max(0, Math.min(1000000000, num)));
+  }
+
+  function classifyTradeVerdict(balanceUsd, roiPct) {
+    if (Math.abs(balanceUsd) < 0.5 && Math.abs(roiPct) < 5.0) {
+      return "fair";
+    }
+    if (balanceUsd > 0 && (roiPct >= 5.0 || balanceUsd >= 5.0)) {
+      return "worth";
+    }
+    if (balanceUsd < 0 && (roiPct <= -5.0 || balanceUsd <= -5.0)) {
+      return "not_worth";
+    }
+    return "fair";
+  }
+
+  function computeTradeRoiPct(balanceUsd, inTotal, outTotal) {
+    if (outTotal > 0) return round2((balanceUsd / outTotal) * 100);
+    if (inTotal > 0) return 100;
+    return 0;
+  }
+
+  function normalizeTradeItems(rawItems) {
+    const order = [];
+    const byPid = new Map();
+    for (const raw of rawItems || []) {
+      const pid = Math.trunc(Number(raw?.productId));
+      const qtyRaw = Math.trunc(Number(raw?.quantity || 0));
+      if (!Number.isInteger(pid) || pid <= 0 || qtyRaw <= 0) continue;
+      const card = cardsById.get(pid);
+      if (!card) continue;
+
+      const qty = Math.max(1, Math.min(999, qtyRaw));
+      const defaultMarket = clampUsd(effectivePrice(card) ?? 0);
+      const unitMarketUsd =
+        raw?.unitMarketUsd !== null && raw?.unitMarketUsd !== undefined && raw?.unitMarketUsd !== "" && Number.isFinite(Number(raw.unitMarketUsd))
+          ? clampUsd(raw.unitMarketUsd)
+          : defaultMarket;
+      const unitCostUsd =
+        raw?.unitCostUsd !== null && raw?.unitCostUsd !== undefined && raw?.unitCostUsd !== "" && Number.isFinite(Number(raw.unitCostUsd))
+          ? clampUsd(raw.unitCostUsd)
+          : null;
+      const condition = ["NM", "LP", "MP", "HP", "DMG"].includes(raw?.condition) ? raw.condition : "NM";
+
+      if (byPid.has(pid)) {
+        const prev = byPid.get(pid);
+        const totalQ = prev.quantity + qty;
+        prev.unitMarketUsd = round2(((prev.unitMarketUsd * prev.quantity) + (unitMarketUsd * qty)) / totalQ);
+        if (prev.unitCostUsd !== null && unitCostUsd !== null) {
+          prev.unitCostUsd = round2(((prev.unitCostUsd * prev.quantity) + (unitCostUsd * qty)) / totalQ);
+        } else if (prev.unitCostUsd === null) {
+          prev.unitCostUsd = unitCostUsd;
+        }
+        prev.quantity = Math.max(1, Math.min(999, totalQ));
+      } else {
+        if (order.length >= 50) continue;
+        order.push(pid);
+        byPid.set(pid, {
+          productId: pid,
+          quantity: qty,
+          unitMarketUsd,
+          unitCostUsd,
+          condition,
+        });
+      }
+    }
+    return order.map((pid) => byPid.get(pid));
+  }
+
+  function toFirestoreTradeDoc(trade, nowOverride) {
+    const now = String(nowOverride || new Date().toISOString()).slice(0, 64);
+    const type = ["buy", "sell", "trade"].includes(String(trade?.type || "").trim().toLowerCase())
+      ? String(trade.type).trim().toLowerCase()
+      : "trade";
+    const date = String(trade?.date || "").trim().slice(0, 32) || now.slice(0, 10);
+    const rateNum = Number(trade?.exchangeRateUsed || activeRate?.rateClpPerUsd || 1000);
+    const exchangeRateUsed =
+      Number.isFinite(rateNum) && rateNum > 0
+        ? round2(Math.max(1, Math.min(1000000, rateNum)))
+        : 1000;
+    const cashPaidUsd = clampUsd(trade?.cashPaidUsd || 0);
+    const cashReceivedUsd = clampUsd(trade?.cashReceivedUsd || 0);
+    const cashPaidOriginal = clampOriginalCash(trade?.cashPaidOriginal ?? cashPaidUsd);
+    const cashReceivedOriginal = clampOriginalCash(trade?.cashReceivedOriginal ?? cashReceivedUsd);
+    const serializeItem = (item) => ({
+      productId: Math.trunc(Number(item.productId)),
+      quantity: Math.max(1, Math.min(999, Math.trunc(Number(item.quantity || 1)))),
+      unitMarketUsd: clampUsd(item.unitMarketUsd || 0),
+      unitCostUsd:
+        item.unitCostUsd !== null && item.unitCostUsd !== undefined && Number.isFinite(Number(item.unitCostUsd))
+          ? clampUsd(item.unitCostUsd)
+          : null,
+      condition: ["NM", "LP", "MP", "HP", "DMG"].includes(item.condition) ? item.condition : "NM",
+    });
+
+    const itemsIn = (Array.isArray(trade?.itemsIn) ? trade.itemsIn : []).slice(0, 50).map(serializeItem);
+    const itemsOut = (Array.isArray(trade?.itemsOut) ? trade.itemsOut : []).slice(0, 50).map(serializeItem);
+    const wishlistFulfilledIds = Array.from(
+      new Set(
+        (Array.isArray(trade?.wishlistFulfilledIds) ? trade.wishlistFulfilledIds : [])
+          .map((id) => Math.trunc(Number(id)))
+          .filter((id) => Number.isInteger(id) && id > 0)
+      )
+    ).slice(0, 50);
+
+    const createdAt = (typeof trade?.createdAt === "string" && trade.createdAt ? trade.createdAt : now).slice(0, 64);
+
+    return {
+      type,
+      date,
+      counterparty: String(trade?.counterparty || "").trim().slice(0, 120),
+      notes: String(trade?.notes || "").trim().slice(0, 1000),
+      currencyInput: trade?.currencyInput === "CLP" ? "CLP" : "USD",
+      exchangeRateUsed,
+      cashPaidUsd,
+      cashReceivedUsd,
+      cashPaidOriginal,
+      cashReceivedOriginal,
+      itemsIn,
+      itemsOut,
+      appliedToCollection: trade?.appliedToCollection !== false,
+      wishlistFulfilledIds,
+      createdAt,
+      updatedAt: now,
+    };
+  }
+
+  async function applyTradeToCollection(tradeDoc) {
+    const itemsIn = tradeDoc.itemsIn || [];
+    const itemsOut = tradeDoc.itemsOut || [];
+
+    if (tradeDoc.type === "buy" && tradeDoc.cashPaidUsd > 0) {
+      const totalInMarket = itemsIn.reduce((acc, it) => acc + it.quantity * it.unitMarketUsd, 0);
+      const totalInUnits = itemsIn.reduce((acc, it) => acc + it.quantity, 0);
+      for (const it of itemsIn) {
+        if (it.unitCostUsd === null || it.unitCostUsd === undefined) {
+          if (totalInMarket > 0) {
+            it.unitCostUsd = clampUsd(it.unitMarketUsd * (tradeDoc.cashPaidUsd / totalInMarket));
+          } else if (totalInUnits > 0) {
+            it.unitCostUsd = clampUsd(tradeDoc.cashPaidUsd / totalInUnits);
+          }
+        }
+      }
+    }
+
+    const fulfilledIds = [];
+    for (const item of itemsIn) {
+      const card = cardsById.get(Number(item.productId));
+      if (!card) continue;
+      const existing = joinCardWithCollection(card);
+      const prevQty = Math.max(0, Number(existing.totalOwned || 0));
+      const nextQty = Math.min(9999, prevQty + Number(item.quantity || 0));
+
+      let nextPurchasePrice = existing.purchasePrice;
+      if (item.unitCostUsd !== null && item.unitCostUsd !== undefined) {
+        if (prevQty > 0 && existing.purchasePrice !== null && existing.purchasePrice !== undefined) {
+          nextPurchasePrice = clampUsd(
+            ((Number(existing.purchasePrice) * prevQty) + (Number(item.unitCostUsd) * Number(item.quantity))) / nextQty
+          );
+        } else {
+          nextPurchasePrice = clampUsd(item.unitCostUsd);
+        }
+      }
+
+      let nextWishlist = Boolean(existing.isWishlist);
+      if (existing.isWishlist && nextQty >= Number(existing.wishlistTargetQty || 1)) {
+        nextWishlist = false;
+        fulfilledIds.push(Number(item.productId));
+      }
+
+      const nextCondition = prevQty === 0 && !existing.updatedAt ? (item.condition || "NM") : existing.condition;
+      await persistCollectionEntry(Number(item.productId), {
+        productId: Number(item.productId),
+        quantity: nextQty,
+        condition: nextCondition,
+        language: existing.language,
+        purchasePrice: nextPurchasePrice,
+        isFavorite: existing.isFavorite,
+        isWishlist: nextWishlist,
+        wishlistTargetQty: existing.wishlistTargetQty,
+        notes: existing.notes,
+        updatedAt: new Date().toISOString(),
+      });
+    }
+
+    for (const item of itemsOut) {
+      const card = cardsById.get(Number(item.productId));
+      if (!card) continue;
+      const existing = joinCardWithCollection(card);
+      if ((item.unitCostUsd === null || item.unitCostUsd === undefined) && existing.purchasePrice !== null && existing.purchasePrice !== undefined) {
+        item.unitCostUsd = clampUsd(existing.purchasePrice);
+      }
+      const prevQty = Math.max(0, Number(existing.totalOwned || 0));
+      const nextQty = Math.max(0, prevQty - Number(item.quantity || 0));
+      await persistCollectionEntry(Number(item.productId), {
+        productId: Number(item.productId),
+        quantity: nextQty,
+        condition: existing.condition,
+        language: existing.language,
+        purchasePrice: existing.purchasePrice,
+        isFavorite: existing.isFavorite,
+        isWishlist: existing.isWishlist,
+        wishlistTargetQty: existing.wishlistTargetQty,
+        notes: existing.notes,
+        updatedAt: new Date().toISOString(),
+      });
+    }
+
+    tradeDoc.wishlistFulfilledIds = Array.from(new Set(fulfilledIds));
+    return tradeDoc.wishlistFulfilledIds;
+  }
+
+  async function revertTradeFromCollection(trade) {
+    if (!trade || !trade.appliedToCollection) return false;
+    const fulfilledSet = new Set((trade.wishlistFulfilledIds || []).map((id) => Number(id)));
+
+    for (const item of trade.itemsIn || []) {
+      const pid = Number(item.productId);
+      const card = cardsById.get(pid);
+      if (!card) continue;
+      const existing = joinCardWithCollection(card);
+      const nextQty = Math.max(0, Math.max(0, Number(existing.totalOwned || 0)) - Number(item.quantity || 0));
+      const nextWishlist = fulfilledSet.has(pid) ? true : Boolean(existing.isWishlist);
+      await persistCollectionEntry(pid, {
+        productId: pid,
+        quantity: nextQty,
+        condition: existing.condition,
+        language: existing.language,
+        purchasePrice: existing.purchasePrice,
+        isFavorite: existing.isFavorite,
+        isWishlist: nextWishlist,
+        wishlistTargetQty: existing.wishlistTargetQty,
+        notes: existing.notes,
+        updatedAt: new Date().toISOString(),
+      });
+    }
+
+    for (const item of trade.itemsOut || []) {
+      const pid = Number(item.productId);
+      const card = cardsById.get(pid);
+      if (!card) continue;
+      const existing = joinCardWithCollection(card);
+      const nextQty = Math.min(9999, Math.max(0, Number(existing.totalOwned || 0)) + Number(item.quantity || 0));
+      const nextPurchasePrice =
+        (existing.purchasePrice === null || existing.purchasePrice === undefined) &&
+        item.unitCostUsd !== null &&
+        item.unitCostUsd !== undefined
+          ? clampUsd(item.unitCostUsd)
+          : existing.purchasePrice;
+      await persistCollectionEntry(pid, {
+        productId: pid,
+        quantity: nextQty,
+        condition: existing.condition,
+        language: existing.language,
+        purchasePrice: nextPurchasePrice,
+        isFavorite: existing.isFavorite,
+        isWishlist: existing.isWishlist,
+        wishlistTargetQty: existing.wishlistTargetQty,
+        notes: existing.notes,
+        updatedAt: new Date().toISOString(),
+      });
+    }
+    return true;
+  }
+
+  function enrichTradeItemDetail(item) {
+    const pid = Number(item.productId);
+    const card = cardsById.get(pid);
+    const col = collectionMap.get(pid);
+    const have = col ? Number(col.quantity ?? ((col.quantityNormal || 0) + (col.quantityFoil || 0))) : 0;
+    const currentMarketUsd = card ? effectivePrice(card) : null;
+    return {
+      productId: pid,
+      quantity: Number(item.quantity || 1),
+      unitMarketUsd: clampUsd(item.unitMarketUsd || 0),
+      unitCostUsd:
+        item.unitCostUsd !== null && item.unitCostUsd !== undefined ? clampUsd(item.unitCostUsd) : null,
+      condition: item.condition || "NM",
+      name: card?.name || `#${pid}`,
+      cardNumber: card?.cardNumber || "",
+      editionName: card?.editionName || "",
+      editionAbbr: card?.editionAbbr || "",
+      rarity: card?.rarity || "",
+      color: card?.color || "",
+      cardType: card?.cardType || "",
+      imageUrl: card?.imageUrl || "",
+      itemCategory: card?.itemCategory || "card",
+      currentMarketUsd: currentMarketUsd !== null && currentMarketUsd !== undefined ? clampUsd(currentMarketUsd) : null,
+      ownedQuantity: have,
+      isWishlist: Boolean(col?.isWishlist),
+      wishlistTargetQty: Number(col?.wishlistTargetQty || 1),
+    };
+  }
+
+  function enrichTradeDetail(trade) {
+    const itemsIn = (trade.itemsIn || []).map(enrichTradeItemDetail);
+    const itemsOut = (trade.itemsOut || []).map(enrichTradeItemDetail);
+    const cashPaidUsd = clampUsd(trade.cashPaidUsd || 0);
+    const cashReceivedUsd = clampUsd(trade.cashReceivedUsd || 0);
+
+    const inValueAtDealUsd = round2(itemsIn.reduce((s, i) => s + i.quantity * i.unitMarketUsd, 0));
+    const outValueAtDealUsd = round2(itemsOut.reduce((s, i) => s + i.quantity * i.unitMarketUsd, 0));
+    const inTotalAtDeal = inValueAtDealUsd + cashReceivedUsd;
+    const outTotalAtDeal = outValueAtDealUsd + cashPaidUsd;
+    const dealBalanceUsd = round2(inTotalAtDeal - outTotalAtDeal);
+    const dealRoiPct = computeTradeRoiPct(dealBalanceUsd, inTotalAtDeal, outTotalAtDeal);
+    const verdictAtDeal = classifyTradeVerdict(dealBalanceUsd, dealRoiPct);
+
+    const inValueNowUsd = round2(
+      itemsIn.reduce((s, i) => s + i.quantity * (i.currentMarketUsd ?? i.unitMarketUsd), 0)
+    );
+    const outValueNowUsd = round2(
+      itemsOut.reduce((s, i) => s + i.quantity * (i.currentMarketUsd ?? i.unitMarketUsd), 0)
+    );
+    const inTotalNow = inValueNowUsd + cashReceivedUsd;
+    const outTotalNow = outValueNowUsd + cashPaidUsd;
+    const currentBalanceUsd = round2(inTotalNow - outTotalNow);
+    const currentRoiPct = computeTradeRoiPct(currentBalanceUsd, inTotalNow, outTotalNow);
+    const verdictNow = classifyTradeVerdict(currentBalanceUsd, currentRoiPct);
+
+    let outCostBasisUsd = null;
+    let realizedProfitUsd = null;
+    if (itemsOut.length > 0 && itemsOut.every((i) => i.unitCostUsd !== null && i.unitCostUsd !== undefined)) {
+      outCostBasisUsd = round2(itemsOut.reduce((s, i) => s + i.quantity * Number(i.unitCostUsd || 0), 0));
+      realizedProfitUsd = round2((cashReceivedUsd + inValueAtDealUsd) - cashPaidUsd - outCostBasisUsd);
+    }
+
+    return {
+      id: trade.id,
+      type: trade.type || "trade",
+      date: trade.date || "",
+      counterparty: trade.counterparty || "",
+      notes: trade.notes || "",
+      currencyInput: trade.currencyInput || "USD",
+      exchangeRateUsed: Number(trade.exchangeRateUsed || activeRate?.rateClpPerUsd || 1000),
+      cashPaidUsd,
+      cashReceivedUsd,
+      cashPaidOriginal: clampOriginalCash(trade.cashPaidOriginal ?? cashPaidUsd),
+      cashReceivedOriginal: clampOriginalCash(trade.cashReceivedOriginal ?? cashReceivedUsd),
+      itemsIn,
+      itemsOut,
+      appliedToCollection: Boolean(trade.appliedToCollection),
+      wishlistFulfilledIds: Array.isArray(trade.wishlistFulfilledIds) ? trade.wishlistFulfilledIds : [],
+      inValueAtDealUsd,
+      outValueAtDealUsd,
+      dealBalanceUsd,
+      dealRoiPct,
+      verdictAtDeal,
+      inValueNowUsd,
+      outValueNowUsd,
+      currentBalanceUsd,
+      currentRoiPct,
+      verdictNow,
+      outCostBasisUsd,
+      realizedProfitUsd,
+      createdAt: trade.createdAt || "",
+      updatedAt: trade.updatedAt || "",
+    };
+  }
+
+  function formatTradeHighlightLabel(trade) {
+    const kind = trade.type === "buy" ? "Compra" : trade.type === "sell" ? "Venta" : "Intercambio";
+    const head = (trade.itemsIn?.[0] || trade.itemsOut?.[0])?.name || "Movimiento";
+    return trade.counterparty ? `${kind}: ${head} (${trade.counterparty})` : `${kind}: ${head}`;
+  }
+
+  function computeTradesSummary(items) {
+    const totalTrades = items.length;
+    let buyCount = 0;
+    let sellCount = 0;
+    let tradeCount = 0;
+    let totalCashPaidUsd = 0;
+    let totalCashReceivedUsd = 0;
+    let netWorthAtDealUsd = 0;
+    let netWorthNowUsd = 0;
+    let worthCountNow = 0;
+    let fairCountNow = 0;
+    let notWorthCountNow = 0;
+    let worthCountAtDeal = 0;
+    let fairCountAtDeal = 0;
+    let notWorthCountAtDeal = 0;
+    let wishlistFulfilledTotal = 0;
+    let bestTrade = null;
+
+    for (const t of items) {
+      if (t.type === "buy") buyCount += 1;
+      else if (t.type === "sell") sellCount += 1;
+      else tradeCount += 1;
+
+      totalCashPaidUsd += t.cashPaidUsd;
+      totalCashReceivedUsd += t.cashReceivedUsd;
+      netWorthAtDealUsd += t.dealBalanceUsd;
+      netWorthNowUsd += t.currentBalanceUsd;
+      wishlistFulfilledTotal += (t.wishlistFulfilledIds || []).length;
+
+      if (t.verdictNow === "worth") worthCountNow += 1;
+      else if (t.verdictNow === "not_worth") notWorthCountNow += 1;
+      else fairCountNow += 1;
+
+      if (t.verdictAtDeal === "worth") worthCountAtDeal += 1;
+      else if (t.verdictAtDeal === "not_worth") notWorthCountAtDeal += 1;
+      else fairCountAtDeal += 1;
+
+      if (!bestTrade || t.currentBalanceUsd > bestTrade.currentBalanceUsd) {
+        bestTrade = t;
+      }
+    }
+
+    return {
+      totalTrades,
+      buyCount,
+      sellCount,
+      tradeCount,
+      totalCashPaidUsd: round2(totalCashPaidUsd),
+      totalCashReceivedUsd: round2(totalCashReceivedUsd),
+      netCashflowUsd: round2(totalCashReceivedUsd - totalCashPaidUsd),
+      netWorthAtDealUsd: round2(netWorthAtDealUsd),
+      netWorthNowUsd: round2(netWorthNowUsd),
+      worthCountNow,
+      fairCountNow,
+      notWorthCountNow,
+      worthCountAtDeal,
+      fairCountAtDeal,
+      notWorthCountAtDeal,
+      worthRateNowPct: totalTrades > 0 ? round2((worthCountNow / totalTrades) * 100) : 0,
+      worthRateAtDealPct: totalTrades > 0 ? round2((worthCountAtDeal / totalTrades) * 100) : 0,
+      wishlistFulfilledTotal,
+      bestTradeId: bestTrade ? bestTrade.id : null,
+      bestTradeLabel: bestTrade ? formatTradeHighlightLabel(bestTrade) : null,
+      bestTradeGainUsd: bestTrade ? bestTrade.currentBalanceUsd : null,
+    };
+  }
+
   function attachFirestoreListeners(uid) {
     clearSnapshotListeners();
     if (!db || !fbFsMod) return;
@@ -666,7 +1120,32 @@
       (err) => console.error("Firestore settings listener error:", err)
     );
 
-    unsubs.push(unsubCol, unsubDecks, unsubRate);
+    const tradesRef = collection(db, "users", uid, "trades");
+    const unsubTrades = onSnapshot(
+      tradesRef,
+      (snap) => {
+        const list = [];
+        snap.forEach((d) => {
+          const data = d.data() || {};
+          list.push({
+            id: Number(d.id) || d.id,
+            rawId: d.id,
+            ...data,
+          });
+        });
+        list.sort((a, b) => {
+          const da = String(a.date || "");
+          const dbv = String(b.date || "");
+          if (dbv !== da) return dbv.localeCompare(da);
+          return String(b.createdAt || "").localeCompare(String(a.createdAt || ""));
+        });
+        tradesList = list;
+        window.onCloudDataChanged?.();
+      },
+      (err) => console.error("Firestore trades listener error:", err)
+    );
+
+    unsubs.push(unsubCol, unsubDecks, unsubRate, unsubTrades);
   }
 
   async function migrateGuestCollectionToCloud(uid) {
@@ -715,6 +1194,30 @@
     }
 
     try {
+      const rawTrades = localStorage.getItem(LS_TRADES);
+      if (rawTrades) {
+        const guestTrades = JSON.parse(rawTrades);
+        if (Array.isArray(guestTrades) && guestTrades.length) {
+          const existingSnap = await getDocs(collection(db, "users", uid, "trades"));
+          const existingIds = new Set();
+          existingSnap.forEach((d) => existingIds.add(d.id));
+          for (const gTrade of guestTrades) {
+            const docId = String(gTrade.rawId || gTrade.id || Date.now());
+            if (!existingIds.has(docId)) {
+              const docPayload = toFirestoreTradeDoc(gTrade);
+              if (docPayload.itemsIn.length > 0 || docPayload.itemsOut.length > 0) {
+                await setDoc(doc(db, "users", uid, "trades", docId), docPayload);
+              }
+            }
+          }
+        }
+        localStorage.removeItem(LS_TRADES);
+      }
+    } catch (err) {
+      console.warn("Guest trades migration warning:", err);
+    }
+
+    try {
       const rawRate = localStorage.getItem(LS_RATE);
       if (rawRate) {
         const guestRate = JSON.parse(rawRate);
@@ -755,6 +1258,9 @@
           } else {
             clearSnapshotListeners();
             personalRate = null;
+            collectionMap = new Map();
+            decksList = [];
+            tradesList = [];
             if (useCloudBackend) loadGuestStateFromStorage();
             else refreshActiveRate();
           }
@@ -1319,6 +1825,139 @@
       }
     }
 
+    if (path === "/api/trades" && method === "GET") {
+      const enriched = tradesList
+        .map(enrichTradeDetail)
+        .sort((a, b) => {
+          const da = String(a.date || "");
+          const dbv = String(b.date || "");
+          if (dbv !== da) return dbv.localeCompare(da);
+          return String(b.createdAt || "").localeCompare(String(a.createdAt || ""));
+        });
+      return {
+        summary: computeTradesSummary(enriched),
+        items: enriched,
+      };
+    }
+
+    if (path === "/api/trades" && method === "POST") {
+      const id = Date.now();
+      const normalizedIn = normalizeTradeItems(body.itemsIn);
+      const normalizedOut = normalizeTradeItems(body.itemsOut);
+      const tradeType = ["buy", "sell", "trade"].includes(String(body.type || "").trim().toLowerCase())
+        ? String(body.type).trim().toLowerCase()
+        : "trade";
+      if (tradeType === "buy" && normalizedIn.length === 0) {
+        throw new Error("Agrega al menos 1 carta recibida en la compra");
+      }
+      if (tradeType === "sell" && normalizedOut.length === 0) {
+        throw new Error("Agrega al menos 1 carta entregada en la venta");
+      }
+      if (normalizedIn.length === 0 && normalizedOut.length === 0) {
+        throw new Error("El movimiento debe incluir al menos 1 carta");
+      }
+
+      const applyCol = body.applyToCollection !== false;
+      const docData = toFirestoreTradeDoc({
+        ...body,
+        type: tradeType,
+        itemsIn: normalizedIn,
+        itemsOut: normalizedOut,
+        appliedToCollection: applyCol,
+        wishlistFulfilledIds: [],
+      });
+
+      if (applyCol) {
+        await applyTradeToCollection(docData);
+      }
+
+      const created = { id, rawId: String(id), ...docData };
+      if (currentUser && db && fbFsMod) {
+        const { doc, setDoc } = fbFsMod;
+        await setDoc(doc(db, "users", currentUser.uid, "trades", String(id)), docData);
+        tradesList = [created, ...tradesList.filter((t) => String(t.rawId || t.id) !== String(id))];
+      } else {
+        tradesList.unshift(created);
+        saveGuestStateToStorage();
+      }
+      return {
+        trade: enrichTradeDetail(created),
+        wishlistFulfilledCount: (docData.wishlistFulfilledIds || []).length,
+      };
+    }
+
+    if (path.startsWith("/api/trades/")) {
+      const idStr = decodeURIComponent(path.split("/").pop());
+      const existing = tradesList.find((t) => String(t.id) === idStr || String(t.rawId) === idStr);
+      if (method === "PUT") {
+        if (!existing) throw new Error(`Trade ${idStr} not found`);
+        const normalizedIn = normalizeTradeItems(body.itemsIn);
+        const normalizedOut = normalizeTradeItems(body.itemsOut);
+        const tradeType = ["buy", "sell", "trade"].includes(String(body.type || "").trim().toLowerCase())
+          ? String(body.type).trim().toLowerCase()
+          : "trade";
+        if (tradeType === "buy" && normalizedIn.length === 0) {
+          throw new Error("Agrega al menos 1 carta recibida en la compra");
+        }
+        if (tradeType === "sell" && normalizedOut.length === 0) {
+          throw new Error("Agrega al menos 1 carta entregada en la venta");
+        }
+        if (normalizedIn.length === 0 && normalizedOut.length === 0) {
+          throw new Error("El movimiento debe incluir al menos 1 carta");
+        }
+
+        if (existing.appliedToCollection) {
+          await revertTradeFromCollection(existing);
+        }
+
+        const applyCol = body.applyToCollection !== false;
+        const docData = toFirestoreTradeDoc({
+          ...body,
+          type: tradeType,
+          itemsIn: normalizedIn,
+          itemsOut: normalizedOut,
+          appliedToCollection: applyCol,
+          wishlistFulfilledIds: [],
+          createdAt: existing.createdAt,
+        });
+
+        if (applyCol) {
+          await applyTradeToCollection(docData);
+        }
+
+        const targetRawId = String(existing.rawId || existing.id);
+        if (currentUser && db && fbFsMod) {
+          const { doc, setDoc } = fbFsMod;
+          await setDoc(doc(db, "users", currentUser.uid, "trades", targetRawId), docData);
+          Object.assign(existing, docData);
+        } else {
+          Object.assign(existing, docData);
+          saveGuestStateToStorage();
+        }
+        return {
+          trade: enrichTradeDetail({ ...existing, ...docData }),
+          wishlistFulfilledCount: (docData.wishlistFulfilledIds || []).length,
+        };
+      }
+      if (method === "DELETE") {
+        const revert = parsedUrl.searchParams.get("revert") !== "false";
+        let reverted = false;
+        if (revert && existing && existing.appliedToCollection) {
+          reverted = await revertTradeFromCollection(existing);
+        }
+        const targetRawId = String(existing?.rawId || idStr);
+        if (currentUser && db && fbFsMod) {
+          const { doc, deleteDoc } = fbFsMod;
+          await deleteDoc(doc(db, "users", currentUser.uid, "trades", targetRawId));
+          tradesList = tradesList.filter((t) => String(t.rawId || t.id) !== targetRawId && String(t.id) !== idStr);
+        } else {
+          tradesList = tradesList.filter((t) => String(t.id) !== idStr && String(t.rawId) !== idStr);
+          saveGuestStateToStorage();
+        }
+        return { deleted: true, reverted };
+      }
+    }
+
     throw new Error(`Unsupported cloud API route: ${method} ${path}`);
   }
 
@@ -1409,6 +2048,23 @@
     return pushed;
   }
 
+  async function pushLocalTradesToFirestore(trades) {
+    if (!currentUser || !db || !fbFsMod) {
+      throw new Error("Inicia sesión con Google primero para sincronizar trading con Firestore.");
+    }
+    const { doc, setDoc } = fbFsMod;
+    let pushed = 0;
+    for (const trade of trades || []) {
+      const docId = `local_${trade.id}`;
+      const docData = toFirestoreTradeDoc(trade);
+      if (docData.itemsIn.length > 0 || docData.itemsOut.length > 0) {
+        await setDoc(doc(db, "users", currentUser.uid, "trades", docId), docData);
+        pushed += 1;
+      }
+    }
+    return pushed;
+  }
+
   const initPromise = (async () => {
     await detectRuntimeMode();
     if (useCloudBackend) {
@@ -1429,6 +2085,7 @@
     signOutUser,
     pushLocalCollectionToFirestore,
     pushLocalDecksToFirestore,
+    pushLocalTradesToFirestore,
     handleRequest,
   };
 })();

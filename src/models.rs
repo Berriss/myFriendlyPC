@@ -383,3 +383,140 @@ pub struct DeckCardInput {
     pub zone: String,
     pub quantity: i64,
 }
+
+#[derive(Debug, Clone, Serialize, Deserialize)]
+#[serde(rename_all = "camelCase")]
+pub struct TradeItemStored {
+    pub product_id: i64,
+    pub quantity: i64,
+    pub unit_market_usd: f64,
+    pub unit_cost_usd: Option<f64>,
+    pub condition: String,
+}
+
+#[derive(Debug, Clone, Serialize, Deserialize)]
+#[serde(rename_all = "camelCase")]
+pub struct TradeItemEnriched {
+    pub product_id: i64,
+    pub quantity: i64,
+    pub unit_market_usd: f64,
+    pub unit_cost_usd: Option<f64>,
+    pub condition: String,
+    pub name: String,
+    pub card_number: String,
+    pub edition_name: String,
+    pub edition_abbr: String,
+    pub rarity: String,
+    pub color: String,
+    pub card_type: String,
+    pub image_url: String,
+    pub item_category: String,
+    pub current_market_usd: Option<f64>,
+    pub owned_quantity: i64,
+    pub is_wishlist: bool,
+    pub wishlist_target_qty: i64,
+}
+
+#[derive(Debug, Clone, Serialize, Deserialize)]
+#[serde(rename_all = "camelCase")]
+pub struct TradeDetail {
+    pub id: i64,
+    #[serde(rename = "type")]
+    pub trade_type: String,
+    pub date: String,
+    pub counterparty: String,
+    pub notes: String,
+    pub currency_input: String,
+    pub exchange_rate_used: f64,
+    pub cash_paid_usd: f64,
+    pub cash_received_usd: f64,
+    pub cash_paid_original: f64,
+    pub cash_received_original: f64,
+    pub items_in: Vec<TradeItemEnriched>,
+    pub items_out: Vec<TradeItemEnriched>,
+    pub applied_to_collection: bool,
+    pub wishlist_fulfilled_ids: Vec<i64>,
+    pub in_value_at_deal_usd: f64,
+    pub out_value_at_deal_usd: f64,
+    pub deal_balance_usd: f64,
+    pub deal_roi_pct: f64,
+    pub verdict_at_deal: String,
+    pub in_value_now_usd: f64,
+    pub out_value_now_usd: f64,
+    pub current_balance_usd: f64,
+    pub current_roi_pct: f64,
+    pub verdict_now: String,
+    pub out_cost_basis_usd: Option<f64>,
+    pub realized_profit_usd: Option<f64>,
+    pub created_at: String,
+    pub updated_at: String,
+}
+
+#[derive(Debug, Clone, Serialize, Deserialize)]
+#[serde(rename_all = "camelCase")]
+pub struct TradeSummary {
+    pub total_trades: i64,
+    pub buy_count: i64,
+    pub sell_count: i64,
+    pub trade_count: i64,
+    pub total_cash_paid_usd: f64,
+    pub total_cash_received_usd: f64,
+    pub net_cashflow_usd: f64,
+    pub net_worth_at_deal_usd: f64,
+    pub net_worth_now_usd: f64,
+    pub worth_count_now: i64,
+    pub fair_count_now: i64,
+    pub not_worth_count_now: i64,
+    pub worth_count_at_deal: i64,
+    pub fair_count_at_deal: i64,
+    pub not_worth_count_at_deal: i64,
+    pub worth_rate_now_pct: f64,
+    pub worth_rate_at_deal_pct: f64,
+    pub wishlist_fulfilled_total: i64,
+    pub best_trade_id: Option<i64>,
+    pub best_trade_label: Option<String>,
+    pub best_trade_gain_usd: Option<f64>,
+}
+
+#[derive(Debug, Clone, Serialize, Deserialize)]
+#[serde(rename_all = "camelCase")]
+pub struct TradesListResponse {
+    pub summary: TradeSummary,
+    pub items: Vec<TradeDetail>,
+}
+
+#[derive(Debug, Clone, Deserialize)]
+#[serde(rename_all = "camelCase")]
+pub struct SaveTradeItemInput {
+    pub product_id: i64,
+    pub quantity: i64,
+    pub unit_market_usd: Option<f64>,
+    pub unit_cost_usd: Option<f64>,
+    pub condition: Option<String>,
+}
+
+#[derive(Debug, Clone, Deserialize)]
+#[serde(rename_all = "camelCase")]
+pub struct SaveTradeRequest {
+    #[serde(rename = "type")]
+    pub trade_type: String,
+    pub date: Option<String>,
+    pub counterparty: Option<String>,
+    pub notes: Option<String>,
+    pub currency_input: Option<String>,
+    pub exchange_rate_used: Option<f64>,
+    pub cash_paid_usd: Option<f64>,
+    pub cash_received_usd: Option<f64>,
+    pub cash_paid_original: Option<f64>,
+    pub cash_received_original: Option<f64>,
+    pub items_in: Option<Vec<SaveTradeItemInput>>,
+    pub items_out: Option<Vec<SaveTradeItemInput>>,
+    pub apply_to_collection: Option<bool>,
+}
+
+#[derive(Debug, Clone, Serialize, Deserialize)]
+#[serde(rename_all = "camelCase")]
+pub struct SaveTradeResponse {
+    pub trade: TradeDetail,
+    pub wishlist_fulfilled_count: usize,
+}
