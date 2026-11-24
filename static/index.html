@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Hololive OCG Tracker — Colección &amp; Catálogo</title>
   <link rel="icon" type="image/svg+xml" href="/icon.svg" />
-  <link rel="stylesheet" href="/css/styles.css?v=20261123-1" />
+  <link rel="stylesheet" href="/css/styles.css?v=20261124-2" />
 </head>
 <body>
   <div class="app-shell">
@@ -271,7 +271,10 @@
 
         <!-- Results Status Bar -->
         <div class="results-meta-bar">
-          <span id="results-count-label">Cargando catálogo...</span>
+          <div style="display:flex;align-items:center;gap:10px;flex-wrap:wrap;">
+            <span id="results-count-label">Cargando catálogo...</span>
+            <button id="catalog-wishlist-pdf-btn" class="tonal-btn hidden" style="height:34px;padding:0 12px;font-size:0.8rem;" type="button">📄 Exportar Wishlist PDF</button>
+          </div>
           <div class="pagination-controls" id="pagination-top"></div>
         </div>
 
@@ -293,6 +296,7 @@
             <p class="muted-text">Tus cartas registradas, saldo estimado a favor y referencia rápida por set liberado.</p>
           </div>
           <div class="action-row">
+            <button id="open-wishlist-pdf-btn" class="tonal-btn" type="button">📄 Wishlist PDF</button>
             <button id="export-collection-btn" class="filled-btn" type="button">Exportar JSON</button>
             <label class="outlined-btn file-label">
               Importar JSON
@@ -354,6 +358,14 @@
               </div>
               <button id="collection-clear-filters-btn" class="text-btn hidden" type="button">Limpiar</button>
             </div>
+          </div>
+
+          <div id="collection-wishlist-pdf-bar" class="wpdf-context-bar hidden">
+            <div>
+              <strong>¿Buscando comprar o intercambiar en grupos?</strong>
+              <span class="muted-text" style="display:block;font-size:0.82rem;">Elige exactamente qué cartas y cuántas copias quieres incluir en tu PDF (sin precios, formato Oshi · Cartas · Cheer).</span>
+            </div>
+            <button id="collection-inline-wishlist-pdf-btn" class="filled-btn" type="button">📄 Armar PDF para grupos</button>
           </div>
 
           <div id="collection-cards-container" class="cards-grid" aria-live="polite"></div>
@@ -1110,6 +1122,76 @@
     </div>
   </div>
 
+  <!-- Selective Wishlist PDF Export Modal -->
+  <div id="wishlist-pdf-modal" class="modal-backdrop hidden" role="dialog" aria-modal="true" aria-labelledby="wpdf-modal-title">
+    <div class="modal-sheet modal-sheet-wide">
+      <div class="modal-header">
+        <div>
+          <span class="modal-kicker">Wishlist · Listo para grupos de compra y venta</span>
+          <h2 id="wpdf-modal-title">Exportar Wishlist a PDF</h2>
+        </div>
+        <button id="wpdf-modal-close" class="icon-btn" aria-label="Cerrar exportador Wishlist PDF" type="button">
+          <svg viewBox="0 0 24 24" class="icon"><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div class="wpdf-step-bar">
+          <div class="segmented-view" id="wpdf-step-switch" role="group" aria-label="Pasos de exportación PDF">
+            <button class="seg-btn active" data-wpdf-step="select" type="button">1. Seleccionar cartas y cantidades</button>
+            <button class="seg-btn" data-wpdf-step="preview" type="button">2. Vista previa (Formato Mazo)</button>
+          </div>
+          <span class="muted-text" style="font-size:0.8rem;">Sin precios · Solo imagen, código y cantidad buscada</span>
+        </div>
+
+        <div id="wpdf-select-pane">
+          <div class="wpdf-meta-grid">
+            <div class="field-group">
+              <label for="wpdf-title-input">Título del listado</label>
+              <input id="wpdf-title-input" type="text" maxlength="100" value="Busco / Wishlist — Hololive OCG" placeholder="Ej: Busco cartas hBP01 / Compro o cambio" />
+            </div>
+            <div class="field-group">
+              <label for="wpdf-contact-input">Nota o contacto (opcional)</label>
+              <input id="wpdf-contact-input" type="text" maxlength="140" placeholder="Ej: @usuario · Entrega metro / envío" />
+            </div>
+          </div>
+
+          <div class="wpdf-select-toolbar">
+            <div class="collection-binder-inputs" style="margin-bottom:8px;">
+              <div class="search-field">
+                <svg viewBox="0 0 24 24" class="search-icon"><path d="M15.5 14h-.79l-.28-.27A6.471 6.471 0 0 0 16 9.5 6.5 6.5 0 1 0 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/></svg>
+                <input id="wpdf-search-input" type="search" placeholder="Filtrar tu wishlist por nombre, código o set..." autocomplete="off" />
+              </div>
+              <button id="wpdf-select-visible-btn" class="outlined-btn" type="button">Seleccionar visibles</button>
+              <button id="wpdf-clear-selection-btn" class="text-btn" type="button">Limpiar selección</button>
+            </div>
+            <div class="chip-row" id="wpdf-cat-chips">
+              <button class="filter-chip active" data-wpdf-cat="all" type="button">Todas</button>
+              <button class="filter-chip" data-wpdf-cat="oshi" type="button">Oshi</button>
+              <button class="filter-chip" data-wpdf-cat="main" type="button">Cartas (Holomem &amp; Support)</button>
+              <button class="filter-chip" data-wpdf-cat="cheer" type="button">Cheer</button>
+              <button class="filter-chip" data-wpdf-cat="sealed" type="button">Sellados</button>
+            </div>
+          </div>
+
+          <div id="wpdf-checklist-container" class="wpdf-checklist"></div>
+        </div>
+
+        <div id="wpdf-preview-pane" class="hidden">
+          <p class="muted-text" style="margin:0 0 12px;font-size:0.84rem;">
+            Vista exacta del PDF (sin precios, ordenado por <strong>Oshi</strong>, <strong>Cartas</strong> y <strong>Cheer</strong>). Al exportar elige <strong>Guardar como PDF</strong> en el diálogo de impresión.
+          </p>
+          <div id="wpdf-preview-sheet" class="wpdf-sheet"></div>
+        </div>
+      </div>
+      <div class="modal-footer-bar">
+        <span id="wpdf-selection-summary" class="muted-text" style="margin-right:auto;font-weight:700;">0 cartas seleccionadas · 0 copias</span>
+        <button id="wpdf-cancel-btn" class="outlined-btn" type="button">Cancelar</button>
+        <button id="wpdf-toggle-step-btn" class="tonal-btn" type="button">Ver vista previa</button>
+        <button id="wpdf-export-btn" class="filled-btn" type="button" disabled>📄 Exportar / Guardar PDF</button>
+      </div>
+    </div>
+  </div>
+
   <!-- MD3 Floating Action Button: Scroll to Top -->
   <button id="scroll-top-btn" class="fab-scroll-top hidden" type="button" title="Ir al tope de la página" aria-label="Ir al tope de la página">
     <svg viewBox="0 0 24 24" class="icon"><path d="M4 12l1.41 1.41L11 7.83V20h2V7.83l5.58 5.59L20 12l-8-8-8 8z"/></svg>
@@ -1118,8 +1200,11 @@
   <!-- MD3 Snackbar -->
   <div id="snackbar" class="snackbar hidden" role="status" aria-live="polite"></div>
 
+  <!-- Dedicated Print Root (Rendered cleanly for @media print -> PDF) -->
+  <div id="wishlist-pdf-print-root" class="wpdf-print-root" aria-hidden="true"></div>
+
   <script src="/js/firebase-config.js?v=20261121-2"></script>
   <script src="/js/firebase-cloud.js?v=20261123-1"></script>
-  <script src="/js/app.js?v=20261123-1"></script>
+  <script src="/js/app.js?v=20261124-1"></script>
 </body>
 </html>

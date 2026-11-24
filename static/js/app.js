@@ -102,6 +102,15 @@
       editor: null,
       deleteTargetId: null,
     },
+    wishlistPdf: {
+      items: [],
+      selected: new Map(),
+      step: "select",
+      category: "all",
+      q: "",
+      title: "Busco / Wishlist — Hololive OCG",
+      contact: "",
+    },
     filters: {
       q: "",
       group_id: "",
@@ -609,6 +618,11 @@
       chipWishCount.classList.toggle("hidden", k.wishlistCount <= 0);
     }
 
+    const wPdfBtn = document.getElementById("open-wishlist-pdf-btn");
+    if (wPdfBtn) {
+      wPdfBtn.textContent = k.wishlistCount > 0 ? `📄 Wishlist PDF (${k.wishlistCount})` : "📄 Wishlist PDF";
+    }
+
     document.getElementById("kpi-editions-badge").textContent = `${k.totalEditions} sets`;
     document.getElementById("kpi-high-rarity").textContent = k.highRarityOwnedCopies.toLocaleString();
 
@@ -781,6 +795,8 @@
     if (clearBtn) {
       clearBtn.classList.toggle("hidden", !cv.q.trim() && !cv.group_id);
     }
+
+    document.getElementById("collection-wishlist-pdf-bar")?.classList.toggle("hidden", cv.scope !== "wishlist");
 
     metaEl.textContent = "Cargando cartas...";
     try {
@@ -1079,6 +1095,8 @@
   function renderCards(data) {
     const container = document.getElementById("cards-container");
     updateResultsCountLabel();
+
+    document.getElementById("catalog-wishlist-pdf-btn")?.classList.toggle("hidden", state.filters.ownership !== "wishlist");
 
     renderPagination("pagination-top", data.page, data.totalPages);
     renderPagination("pagination-bottom", data.page, data.totalPages);
@@ -1627,6 +1645,422 @@
       showSnackbar(`Importadas ${res.imported} cartas (${res.skipped} omitidas)`);
     } catch (err) {
       showSnackbar(`Error al importar: ${err.message}`);
+    }
+  }
+
+  /* ================= WISHLIST PDF SELECTOR & DECK-LOG EXPORT ================= */
+  const WPDF_SECTIONS = [
+    { id: "oshi", label: "Oshi" },
+    { id: "main", label: "Cartas (Holomem & Support)" },
+    { id: "cheer", label: "Cheer" },
+    { id: "sealed", label: "Productos Sellados" },
+  ];
+
+  function classifyWishlistSection(card) {
+    if (!card) return "main";
+    if (card.itemCategory === "sealed") return "sealed";
+    if (card.cardType === "Oshi Holomem") return "oshi";
+    if (card.cardType === "Cheer") return "cheer";
+    return "main";
+  }
+
+  function sortWishlistGroupCards(sectionId, items, getCard = (x) => x) {
+    const mainOrderRank = { debut: 1, "1st": 2, "2nd": 3, spot: 4, other: 5, support: 6 };
+    return (items || []).slice().sort((a, b) => {
+      const ca = getCard(a);
+      const cb = getCard(b);
+      if (sectionId === "main") {
+        const ra = mainOrderRank[getDeckGroupCategory(ca)] || 9;
+        const rb = mainOrderRank[getDeckGroupCategory(cb)] || 9;
+        if (ra !== rb) return ra - rb;
+      }
+      return (
+        String(ca.cardNumber || "").localeCompare(String(cb.cardNumber || "")) ||
+        String(ca.name || "").localeCompare(String(cb.name || ""))
+      );
+    });
+  }
+
+  function defaultWishlistDesiredQty(card) {
+    const target = Number(card?.wishlistTargetQty || 1);
+    const owned = Number(card?.totalOwned || 0);
+    return Math.max(1, Math.min(99, target > owned ? target - owned : target));
+  }
+
+  async function fetchAllWishlistCards() {
+    const first = await apiFetch("/api/cards?ownership=wishlist&item_category=all&sort=number_asc&per_page=250&page=1");
+    const all = Array.isArray(first.items) ? first.items.slice() : [];
+    const totalPages = Number(first.totalPages || 1);
+    for (let p = 2; p <= totalPages; p += 1) {
+      const next = await apiFetch(`/api/cards?ownership=wishlist&item_category=all&sort=number_asc&per_page=250&page=${p}`);
+      if (Array.isArray(next.items)) all.push(...next.items);
+    }
+    return all;
+  }
+
+  function getFilteredWishlistChecklistItems() {
+    const { items, category, q } = state.wishlistPdf;
+    const query = (q || "").trim().toLowerCase();
+    return (items || []).filter((c) => {
+      if (category !== "all" && classifyWishlistSection(c) !== category) return false;
+      if (query) {
+        const hay = `${c.name} ${c.cardNumber} ${c.editionName} ${c.editionAbbr} ${c.cardType} ${c.color} ${c.tags}`.toLowerCase();
+        if (!hay.includes(query)) return false;
+      }
+      return true;
+    });
+  }
+
+  function updateWishlistPdfSummary() {
+    const sel = state.wishlistPdf.selected;
+    let copies = 0;
+    for (const qty of sel.values()) copies += Number(qty || 0);
+    const count = sel.size;
+
+    const sumEl = document.getElementById("wpdf-selection-summary");
+    if (sumEl) {
+      sumEl.textContent = `${count} ${count === 1 ? "carta seleccionada" : "cartas seleccionadas"} · ${copies} ${copies === 1 ? "copia" : "copias"}`;
+    }
+    const expBtn = document.getElementById("wpdf-export-btn");
+    if (expBtn) expBtn.disabled = count === 0;
+  }
+
+  function setWishlistPdfStep(step) {
+    const nextStep = step === "preview" ? "preview" : "select";
+    state.wishlistPdf.step = nextStep;
+    document.querySelectorAll("#wpdf-step-switch [data-wpdf-step]").forEach((btn) => {
+      btn.classList.toggle("active", btn.getAttribute("data-wpdf-step") === nextStep);
+    });
+    document.getElementById("wpdf-select-pane")?.classList.toggle("hidden", nextStep !== "select");
+    document.getElementById("wpdf-preview-pane")?.classList.toggle("hidden", nextStep !== "preview");
+    const toggleBtn = document.getElementById("wpdf-toggle-step-btn");
+    if (toggleBtn) {
+      toggleBtn.textContent = nextStep === "preview" ? "← Volver a seleccionar" : "Ver vista previa";
+    }
+    if (nextStep === "preview") {
+      renderWishlistPdfPreview();
+    }
+  }
+
+  function renderWishlistPdfChecklist() {
+    const host = document.getElementById("wpdf-checklist-container");
+    if (!host) return;
+
+    if (!state.wishlistPdf.items.length) {
+      host.innerHTML = `
+        <div class="panel-card" style="text-align:center;padding:28px;">
+          <h3 style="margin:0 0 8px;">Tu Wishlist está vacía</h3>
+          <p class="muted-text" style="margin:0 0 14px;">Marca con ♥ las cartas que buscas desde el Catálogo o tus Mazos y vuelve aquí para generar tu PDF.</p>
+          <button id="wpdf-goto-catalog-btn" class="tonal-btn" type="button">Ir al Catálogo</button>
+        </div>`;
+      document.getElementById("wpdf-goto-catalog-btn")?.addEventListener("click", () => {
+        document.getElementById("wishlist-pdf-modal")?.classList.add("hidden");
+        jumpToCatalogForAdding();
+      });
+      updateWishlistPdfSummary();
+      return;
+    }
+
+    const filtered = getFilteredWishlistChecklistItems();
+    if (!filtered.length) {
+      host.innerHTML = `<div class="muted-text" style="padding:20px;text-align:center;">No hay cartas de tu wishlist que coincidan con ese filtro.</div>`;
+      updateWishlistPdfSummary();
+      return;
+    }
+
+    const buckets = new Map(WPDF_SECTIONS.map((s) => [s.id, []]));
+    for (const card of filtered) {
+      buckets.get(classifyWishlistSection(card)).push(card);
+    }
+
+    const sel = state.wishlistPdf.selected;
+    host.innerHTML = WPDF_SECTIONS.map((sec) => {
+      const groupItems = sortWishlistGroupCards(sec.id, buckets.get(sec.id));
+      if (!groupItems.length) return "";
+      return `
+        <section class="wpdf-checklist-group">
+          <div class="wpdf-checklist-group-title">
+            <span>${escapeHtml(sec.label)}</span>
+            <span class="edition-abbr">${groupItems.length}</span>
+          </div>
+          <div class="wpdf-check-rows">
+            ${groupItems
+              .map((c) => {
+                const pid = Number(c.productId);
+                const isSel = sel.has(pid);
+                const qty = isSel ? sel.get(pid) : defaultWishlistDesiredQty(c);
+                return `
+                  <div class="wpdf-check-row ${isSel ? "is-selected" : ""}" data-wpdf-pid="${pid}">
+                    <label class="wpdf-check-label">
+                      <input type="checkbox" data-wpdf-check="${pid}" ${isSel ? "checked" : ""} />
+                      ${
+                        c.imageUrl
+                          ? `<img class="trade-item-thumb" src="${escapeHtml(c.imageUrl)}" alt="" loading="lazy" />`
+                          : `<div class="trade-item-thumb-ph">?</div>`
+                      }
+                      <span class="wpdf-check-meta">
+                        <strong class="truncate">${escapeHtml(c.name)}</strong>
+                        <span class="muted-text">
+                          ${escapeHtml(c.cardNumber || "S/N")} · ${escapeHtml(c.editionAbbr || c.editionName)} · ${escapeHtml(c.rarity || "—")}
+                          ${c.cardType ? ` · ${escapeHtml(c.cardType)}` : ""}
+                        </span>
+                      </span>
+                    </label>
+                    <div class="wpdf-row-qty" aria-label="Cantidad deseada">
+                      <button class="step-btn" data-wpdf-step-qty="${pid}:-1" type="button" aria-label="Restar cantidad">−</button>
+                      <input class="wpdf-qty-input" type="number" min="1" max="99" value="${qty}" data-wpdf-qty-input="${pid}" aria-label="Cantidad de ${escapeHtml(c.name)}" />
+                      <button class="step-btn plus" data-wpdf-step-qty="${pid}:1" type="button" aria-label="Sumar cantidad">+</button>
+                    </div>
+                  </div>`;
+              })
+              .join("")}
+          </div>
+        </section>`;
+    }).join("");
+
+    const itemById = new Map(filtered.map((c) => [Number(c.productId), c]));
+
+    host.querySelectorAll("[data-wpdf-check]").forEach((cb) => {
+      cb.addEventListener("change", () => {
+        const pid = Number(cb.getAttribute("data-wpdf-check"));
+        const row = host.querySelector(`[data-wpdf-pid="${pid}"]`);
+        const inp = row?.querySelector(`[data-wpdf-qty-input="${pid}"]`);
+        if (cb.checked) {
+          const qVal = Math.max(1, Math.min(99, Math.trunc(Number(inp?.value || defaultWishlistDesiredQty(itemById.get(pid))))));
+          sel.set(pid, qVal);
+          if (inp) inp.value = String(qVal);
+        } else {
+          sel.delete(pid);
+        }
+        row?.classList.toggle("is-selected", sel.has(pid));
+        updateWishlistPdfSummary();
+      });
+    });
+
+    host.querySelectorAll("[data-wpdf-step-qty]").forEach((btn) => {
+      btn.addEventListener("click", (e) => {
+        e.stopPropagation();
+        const [pidStr, dStr] = btn.getAttribute("data-wpdf-step-qty").split(":");
+        const pid = Number(pidStr);
+        const delta = Number(dStr);
+        const row = host.querySelector(`[data-wpdf-pid="${pid}"]`);
+        const inp = row?.querySelector(`[data-wpdf-qty-input="${pid}"]`);
+        const cb = row?.querySelector(`[data-wpdf-check="${pid}"]`);
+        const current = sel.has(pid) ? sel.get(pid) : Number(inp?.value || defaultWishlistDesiredQty(itemById.get(pid)));
+        const nextQty = Math.max(1, Math.min(99, Math.trunc(current + delta)));
+        sel.set(pid, nextQty);
+        if (inp) inp.value = String(nextQty);
+        if (cb) cb.checked = true;
+        row?.classList.add("is-selected");
+        updateWishlistPdfSummary();
+      });
+    });
+
+    host.querySelectorAll("[data-wpdf-qty-input]").forEach((inp) => {
+      inp.addEventListener("click", (e) => e.stopPropagation());
+      inp.addEventListener("input", () => {
+        const pid = Number(inp.getAttribute("data-wpdf-qty-input"));
+        const parsed = Math.trunc(Number(inp.value || 0));
+        if (!Number.isFinite(parsed) || parsed <= 0) return;
+        const clamped = Math.max(1, Math.min(99, parsed));
+        sel.set(pid, clamped);
+        const row = host.querySelector(`[data-wpdf-pid="${pid}"]`);
+        const cb = row?.querySelector(`[data-wpdf-check="${pid}"]`);
+        if (cb) cb.checked = true;
+        row?.classList.add("is-selected");
+        updateWishlistPdfSummary();
+      });
+    });
+
+    updateWishlistPdfSummary();
+  }
+
+  function buildWishlistPdfSheetHtml(selectedEntries, titleText, contactText) {
+    if (!selectedEntries.length) {
+      return `
+        <div class="wpdf-empty-preview">
+          <p style="margin:0 0 8px;font-weight:700;">Todavía no seleccionaste ninguna carta.</p>
+          <p class="muted-text" style="margin:0;">Vuelve al paso 1 para elegir qué cartas de tu Wishlist y qué cantidades incluir en el PDF.</p>
+        </div>`;
+    }
+
+    const buckets = new Map(WPDF_SECTIONS.map((s) => [s.id, []]));
+    for (const entry of selectedEntries) {
+      buckets.get(classifyWishlistSection(entry.card)).push(entry);
+    }
+
+    const totalCopies = selectedEntries.reduce((s, e) => s + Number(e.qty || 1), 0);
+    const today = new Date().toISOString().slice(0, 10);
+    const title = String(titleText || "").trim() || "Busco / Wishlist — Hololive OCG";
+    const contact = String(contactText || "").trim();
+
+    const sectionsHtml = WPDF_SECTIONS.map((sec) => {
+      const list = sortWishlistGroupCards(sec.id, buckets.get(sec.id), (e) => e.card);
+      if (!list.length) return "";
+      const secCopies = list.reduce((s, e) => s + Number(e.qty || 1), 0);
+      return `
+        <section class="wpdf-section-block">
+          <h3 class="wpdf-section-title">
+            <span>${escapeHtml(sec.label)}</span>
+            <span class="wpdf-section-count">${secCopies} ${secCopies === 1 ? "copia" : "copias"}</span>
+          </h3>
+          <div class="wpdf-cards-grid">
+            ${list
+              .map(({ card: c, qty }) => {
+                const subCode = [c.cardNumber, c.rarity].filter(Boolean).join(" · ") || "—";
+                return `
+                  <article class="wpdf-card-item">
+                    <div class="wpdf-card-art-wrap">
+                      ${
+                        c.imageUrl
+                          ? `<img src="${escapeHtml(c.imageUrl)}" alt="${escapeHtml(c.name)}" loading="eager" />`
+                          : `<div class="art-fallback">${escapeHtml(c.name)}</div>`
+                      }
+                      <span class="wpdf-qty-box">×${Number(qty || 1)}</span>
+                    </div>
+                    <div class="wpdf-card-caption">
+                      <div class="wpdf-card-name">${escapeHtml(c.name)}</div>
+                      <div class="wpdf-card-code">${escapeHtml(subCode)}</div>
+                    </div>
+                  </article>`;
+              })
+              .join("")}
+          </div>
+        </section>`;
+    }).join("");
+
+    return `
+      <header class="wpdf-sheet-header">
+        <div>
+          <h2 class="wpdf-sheet-title">${escapeHtml(title)}</h2>
+          ${contact ? `<p class="wpdf-sheet-contact">${escapeHtml(contact)}</p>` : ""}
+        </div>
+        <div class="wpdf-sheet-meta">
+          <span class="wpdf-sheet-pill">${totalCopies} ${totalCopies === 1 ? "copia" : "copias"} · ${selectedEntries.length} ${selectedEntries.length === 1 ? "carta" : "cartas"}</span>
+          <span class="wpdf-sheet-date">${escapeHtml(today)}</span>
+        </div>
+      </header>
+      <div class="wpdf-sheet-sections">${sectionsHtml}</div>`;
+  }
+
+  function getSelectedWishlistEntries() {
+    const sel = state.wishlistPdf.selected;
+    const out = [];
+    for (const card of state.wishlistPdf.items || []) {
+      const pid = Number(card.productId);
+      if (sel.has(pid)) {
+        out.push({ card, qty: Math.max(1, Math.min(99, Number(sel.get(pid) || 1))) });
+      }
+    }
+    return out;
+  }
+
+  function renderWishlistPdfPreview() {
+    const host = document.getElementById("wpdf-preview-sheet");
+    if (!host) return;
+    const title = document.getElementById("wpdf-title-input")?.value || state.wishlistPdf.title;
+    const contact = document.getElementById("wpdf-contact-input")?.value || state.wishlistPdf.contact;
+    host.innerHTML = buildWishlistPdfSheetHtml(getSelectedWishlistEntries(), title, contact);
+  }
+
+  async function openWishlistPdfModal() {
+    const modal = document.getElementById("wishlist-pdf-modal");
+    const checklistEl = document.getElementById("wpdf-checklist-container");
+    if (!modal || !checklistEl) return;
+
+    state.wishlistPdf.selected = new Map();
+    state.wishlistPdf.category = "all";
+    state.wishlistPdf.q = "";
+    const searchInp = document.getElementById("wpdf-search-input");
+    if (searchInp) searchInp.value = "";
+    document.querySelectorAll("#wpdf-cat-chips [data-wpdf-cat]").forEach((b) =>
+      b.classList.toggle("active", b.getAttribute("data-wpdf-cat") === "all")
+    );
+    setWishlistPdfStep("select");
+    checklistEl.innerHTML = `<div class="muted-text" style="padding:24px;text-align:center;">Cargando cartas de tu Wishlist...</div>`;
+    updateWishlistPdfSummary();
+    modal.classList.remove("hidden");
+
+    try {
+      state.wishlistPdf.items = await fetchAllWishlistCards();
+      renderWishlistPdfChecklist();
+    } catch (err) {
+      checklistEl.innerHTML = `<div class="panel-card">Error cargando wishlist: ${escapeHtml(err.message)}</div>`;
+    }
+  }
+
+  function waitForContainerImages(container, timeoutMs = 4000) {
+    const imgs = Array.from(container.querySelectorAll("img"));
+    const pending = imgs.filter((img) => !img.complete);
+    if (!pending.length) return Promise.resolve();
+    return Promise.race([
+      Promise.all(
+        pending.map(
+          (img) =>
+            new Promise((resolve) => {
+              img.addEventListener("load", resolve, { once: true });
+              img.addEventListener("error", resolve, { once: true });
+            })
+        )
+      ),
+      new Promise((resolve) => setTimeout(resolve, timeoutMs)),
+    ]);
+  }
+
+  async function exportWishlistToPdf() {
+    const entries = getSelectedWishlistEntries();
+    if (!entries.length) {
+      showSnackbar("Selecciona al menos 1 carta de tu Wishlist");
+      return;
+    }
+
+    const printRoot = document.getElementById("wishlist-pdf-print-root");
+    const exportBtn = document.getElementById("wpdf-export-btn");
+    if (!printRoot) return;
+
+    const title = (document.getElementById("wpdf-title-input")?.value || state.wishlistPdf.title || "").trim();
+    const contact = (document.getElementById("wpdf-contact-input")?.value || state.wishlistPdf.contact || "").trim();
+
+    if (exportBtn) {
+      exportBtn.disabled = true;
+      exportBtn.textContent = "Preparando imágenes...";
+    }
+
+    printRoot.innerHTML = `<div class="wpdf-sheet wpdf-sheet-print">${buildWishlistPdfSheetHtml(entries, title, contact)}</div>`;
+    await waitForContainerImages(printRoot, 4000);
+
+    const prevTitle = document.title;
+    const slug = (title || "Wishlist_Hololive_OCG")
+      .replace(/[^\w\- ]+/g, "")
+      .trim()
+      .replace(/\s+/g, "_")
+      .slice(0, 48);
+    const today = new Date().toISOString().slice(0, 10);
+
+    let cleaned = false;
+    let fallbackTimer = null;
+    const cleanupPrint = () => {
+      if (cleaned) return;
+      cleaned = true;
+      if (fallbackTimer) clearTimeout(fallbackTimer);
+      document.body.classList.remove("printing-wishlist");
+      document.title = prevTitle;
+      printRoot.innerHTML = "";
+    };
+
+    window.addEventListener("afterprint", cleanupPrint, { once: true });
+    document.title = `${slug || "Wishlist_Hololive_OCG"}_${today}`;
+    document.body.classList.add("printing-wishlist");
+
+    try {
+      window.print();
+      showSnackbar("Elige 'Guardar como PDF' en el diálogo de impresión");
+    } finally {
+      if (exportBtn) {
+        exportBtn.disabled = state.wishlistPdf.selected.size === 0;
+        exportBtn.textContent = "📄 Exportar / Guardar PDF";
+      }
+      fallbackTimer = setTimeout(cleanupPrint, 1200);
     }
   }
 
@@ -4601,6 +5035,58 @@
 
     document.getElementById("export-btn-top").addEventListener("click", exportCollection);
     document.getElementById("export-collection-btn").addEventListener("click", exportCollection);
+    document.getElementById("open-wishlist-pdf-btn")?.addEventListener("click", openWishlistPdfModal);
+    document.getElementById("collection-inline-wishlist-pdf-btn")?.addEventListener("click", openWishlistPdfModal);
+    document.getElementById("catalog-wishlist-pdf-btn")?.addEventListener("click", openWishlistPdfModal);
+
+    // Wishlist PDF Modal events
+    const closeWishlistPdfModal = () => {
+      document.getElementById("wishlist-pdf-modal")?.classList.add("hidden");
+    };
+    document.getElementById("wpdf-modal-close")?.addEventListener("click", closeWishlistPdfModal);
+    document.getElementById("wpdf-cancel-btn")?.addEventListener("click", closeWishlistPdfModal);
+    document.getElementById("wishlist-pdf-modal")?.addEventListener("click", (e) => {
+      if (e.target.id === "wishlist-pdf-modal") closeWishlistPdfModal();
+    });
+    document.querySelectorAll("#wpdf-step-switch [data-wpdf-step]").forEach((btn) => {
+      btn.addEventListener("click", () => setWishlistPdfStep(btn.getAttribute("data-wpdf-step")));
+    });
+    document.getElementById("wpdf-toggle-step-btn")?.addEventListener("click", () => {
+      setWishlistPdfStep(state.wishlistPdf.step === "preview" ? "select" : "preview");
+    });
+    document.getElementById("wpdf-title-input")?.addEventListener("input", (e) => {
+      state.wishlistPdf.title = e.target.value;
+    });
+    document.getElementById("wpdf-contact-input")?.addEventListener("input", (e) => {
+      state.wishlistPdf.contact = e.target.value;
+    });
+    document.getElementById("wpdf-search-input")?.addEventListener("input", (e) => {
+      state.wishlistPdf.q = e.target.value;
+      renderWishlistPdfChecklist();
+    });
+    document.querySelectorAll("#wpdf-cat-chips [data-wpdf-cat]").forEach((btn) => {
+      btn.addEventListener("click", () => {
+        document.querySelectorAll("#wpdf-cat-chips .filter-chip").forEach((c) => c.classList.remove("active"));
+        btn.classList.add("active");
+        state.wishlistPdf.category = btn.getAttribute("data-wpdf-cat") || "all";
+        renderWishlistPdfChecklist();
+      });
+    });
+    document.getElementById("wpdf-select-visible-btn")?.addEventListener("click", () => {
+      const visible = getFilteredWishlistChecklistItems();
+      for (const c of visible) {
+        const pid = Number(c.productId);
+        if (!state.wishlistPdf.selected.has(pid)) {
+          state.wishlistPdf.selected.set(pid, defaultWishlistDesiredQty(c));
+        }
+      }
+      renderWishlistPdfChecklist();
+    });
+    document.getElementById("wpdf-clear-selection-btn")?.addEventListener("click", () => {
+      state.wishlistPdf.selected.clear();
+      renderWishlistPdfChecklist();
+    });
+    document.getElementById("wpdf-export-btn")?.addEventListener("click", exportWishlistToPdf);
     document.getElementById("import-collection-input").addEventListener("change", (e) => {
       const file = e.target.files[0];
       if (file) importCollectionFile(file);
@@ -5165,7 +5651,7 @@
 
     document.addEventListener("keydown", (e) => {
       if (e.key !== "Escape") return;
-      ["card-modal-backdrop", "exchange-rate-modal", "shutdown-modal", "signout-modal", "deck-stats-modal", "deck-import-modal", "trade-editor-modal", "trade-delete-modal"].forEach((id) => {
+      ["card-modal-backdrop", "exchange-rate-modal", "shutdown-modal", "signout-modal", "deck-stats-modal", "deck-import-modal", "trade-editor-modal", "trade-delete-modal", "wishlist-pdf-modal"].forEach((id) => {
         document.getElementById(id)?.classList.add("hidden");
       });
     });
