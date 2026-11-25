@@ -1878,9 +1878,13 @@
   function buildWishlistPdfSheetHtml(selectedEntries, titleText, contactText) {
     if (!selectedEntries.length) {
       return `
-        <div class="wpdf-empty-preview">
-          <p style="margin:0 0 8px;font-weight:700;">Todavía no seleccionaste ninguna carta.</p>
-          <p class="muted-text" style="margin:0;">Vuelve al paso 1 para elegir qué cartas de tu Wishlist y qué cantidades incluir en el PDF.</p>
+        <div class="wpdf-pages-stack">
+          <section class="wpdf-page wpdf-sheet">
+            <div class="wpdf-empty-preview">
+              <p style="margin:0 0 8px;font-weight:700;">Todavía no seleccionaste ninguna carta.</p>
+              <p class="muted-text" style="margin:0;">Vuelve al paso 1 para elegir qué cartas de tu Wishlist y qué cantidades incluir en el PDF.</p>
+            </div>
+          </section>
         </div>`;
     }
 
@@ -1894,15 +1898,71 @@
     const title = String(titleText || "").trim() || "Busco / Wishlist — Hololive OCG";
     const contact = String(contactText || "").trim();
 
-    const sectionsHtml = WPDF_SECTIONS.map((sec) => {
-      const list = sortWishlistGroupCards(sec.id, buckets.get(sec.id), (e) => e.card);
-      if (!list.length) return "";
-      const secCopies = list.reduce((s, e) => s + Number(e.qty || 1), 0);
+    const secById = {};
+    for (const s of WPDF_SECTIONS) {
+      secById[s.id] = {
+        sec: s,
+        list: sortWishlistGroupCards(s.id, buckets.get(s.id), (e) => e.card),
+      };
+    }
+
+    const ROW_MAX_COLS = 5;
+    // Conservative mm height budget safe for both US Letter (279.4mm) and A4 (297mm) with 7mm padding.
+    const PAGE_USABLE_MM = 256;
+    const HEADER_FIRST_MM = contact ? 16 : 12;
+    const HEADER_CONT_MM = 10;
+    const ZONE_CHROME_MM = 13.2;
+    const CARD_ROW_MM = 61.8;
+    const CARD_ROW_GAP_MM = 2.0;
+    const BLOCK_GAP_MM = 2.6;
+
+    const estimateZoneHeightMm = (cardRows) =>
+      ZONE_CHROME_MM +
+      cardRows * CARD_ROW_MM +
+      Math.max(0, cardRows - 1) * CARD_ROW_GAP_MM;
+
+    // Equalize card widths across zones on a row and align 5-col rows flush edge-to-edge.
+    const buildRowTrackExpr = (colCount, zoneCount, totalCols) => {
+      if (totalCols >= ROW_MAX_COLS && zoneCount === 1) return "1fr";
+      const overhead =
+        totalCols >= ROW_MAX_COLS
+          ? `(${zoneCount} * var(--wpdf-z-chrome) + ${ROW_MAX_COLS - zoneCount} * var(--wpdf-card-gap) + ${zoneCount - 1} * var(--wpdf-row-gap))`
+          : `(var(--wpdf-z-chrome) + ${ROW_MAX_COLS - 1} * var(--wpdf-card-gap))`;
+      const cardUnit = `((100% - ${overhead}) / ${ROW_MAX_COLS})`;
+      const gapPart =
+        colCount > 1 ? ` + ${colCount - 1} * var(--wpdf-card-gap)` : "";
+      return `calc(${colCount} * ${cardUnit}${gapPart} + var(--wpdf-z-chrome))`;
+    };
+
+    const renderZone = (sec, list, cols, opts = {}) => {
+      if (!list || !list.length) return "";
+      const chunkCopies = list.reduce((s, e) => s + Number(e.qty || 1), 0);
+      const secCopies = Number.isFinite(opts.totalSectionCopies)
+        ? opts.totalSectionCopies
+        : chunkCopies;
+      const baseTitle =
+        cols <= 2
+          ? sec.id === "main"
+            ? "Cartas"
+            : sec.id === "sealed"
+              ? "Sellados"
+              : sec.label
+          : sec.label;
+      const titleLabel = opts.isContinuation ? `${baseTitle} (cont.)` : baseTitle;
+      const hasParts = Number(opts.totalParts || 1) > 1 && Number(opts.partIndex || 0) >= 1;
+      const countLabel = hasParts
+        ? cols === 1
+          ? `×${secCopies} (${opts.partIndex}/${opts.totalParts})`
+          : `${secCopies} ${secCopies === 1 ? "copia" : "copias"} · ${opts.partIndex}/${opts.totalParts}`
+        : cols === 1
+          ? `×${secCopies}`
+          : `${secCopies} ${secCopies === 1 ? "copia" : "copias"}`;
+
       return `
-        <section class="wpdf-section-block">
+        <section class="wpdf-section-block wpdf-zone-${sec.id}" style="--zone-cols:${cols}">
           <h3 class="wpdf-section-title">
-            <span>${escapeHtml(sec.label)}</span>
-            <span class="wpdf-section-count">${secCopies} ${secCopies === 1 ? "copia" : "copias"}</span>
+            <span>${escapeHtml(titleLabel)}</span>
+            <span class="wpdf-section-count">${countLabel}</span>
           </h3>
           <div class="wpdf-cards-grid">
             ${list
@@ -1927,20 +1987,231 @@
               .join("")}
           </div>
         </section>`;
-    }).join("");
+    };
 
-    return `
+    const renderAlignedRow = (zoneSpecs) => {
+      if (!zoneSpecs.length) return "";
+      const totalCols = zoneSpecs.reduce((s, z) => s + z.cols, 0);
+      const tracks = zoneSpecs
+        .map((z) => buildRowTrackExpr(z.cols, zoneSpecs.length, totalCols))
+        .join(" ");
+      return `
+        <div class="wpdf-playmat-row" style="grid-template-columns:${tracks}">
+          ${zoneSpecs.map((z) => renderZone(z.sec, z.list, z.cols)).join("")}
+        </div>`;
+    };
+
+    const packFlowRowSpecs = (zoneSpecs) => {
+      const rows = [];
+      let currentRow = [];
+      let currentCols = 0;
+
+      for (const item of zoneSpecs) {
+        if (!item || !item.list || !item.list.length) continue;
+        const cols = Math.min(item.list.length, ROW_MAX_COLS);
+        const spec = { sec: item.sec, list: item.list, cols };
+        if (currentRow.length > 0 && currentCols + cols > ROW_MAX_COLS) {
+          rows.push(currentRow);
+          currentRow = [spec];
+          currentCols = cols;
+        } else {
+          currentRow.push(spec);
+          currentCols += cols;
+        }
+      }
+      if (currentRow.length > 0) rows.push(currentRow);
+      return rows;
+    };
+
+    const pages = [{ blocks: [], usedMm: HEADER_FIRST_MM }];
+    const startNewPage = () => {
+      const next = { blocks: [], usedMm: HEADER_CONT_MM };
+      pages.push(next);
+      return next;
+    };
+
+    const appendAtomicBlock = (html, heightMm) => {
+      let page = pages[pages.length - 1];
+      if (page.blocks.length > 0 && page.usedMm + BLOCK_GAP_MM + heightMm > PAGE_USABLE_MM) {
+        page = startNewPage();
+      }
+      const hadBlocks = page.blocks.length > 0;
+      page.blocks.push({ html });
+      page.usedMm += (hadBlocks ? BLOCK_GAP_MM : 0) + heightMm;
+    };
+
+    const appendFlowRows = (zoneSpecs) => {
+      const rows = packFlowRowSpecs(zoneSpecs);
+      for (const row of rows) {
+        if (row.length > 1 || row[0].list.length <= row[0].cols) {
+          appendAtomicBlock(renderAlignedRow(row), estimateZoneHeightMm(1));
+          continue;
+        }
+
+        const { sec, list, cols } = row[0];
+        const totalSectionCopies = list.reduce((s, e) => s + Number(e.qty || 1), 0);
+        const chunks = [];
+        let offset = 0;
+
+        while (offset < list.length) {
+          let page = pages[pages.length - 1];
+          let availMm = PAGE_USABLE_MM - page.usedMm - (page.blocks.length ? BLOCK_GAP_MM : 0);
+          let maxFitRows = Math.floor(
+            (availMm - ZONE_CHROME_MM + CARD_ROW_GAP_MM) / (CARD_ROW_MM + CARD_ROW_GAP_MM)
+          );
+
+          if (maxFitRows < 1 && page.blocks.length > 0) {
+            page = startNewPage();
+            availMm = PAGE_USABLE_MM - page.usedMm;
+            maxFitRows = Math.floor(
+              (availMm - ZONE_CHROME_MM + CARD_ROW_GAP_MM) / (CARD_ROW_MM + CARD_ROW_GAP_MM)
+            );
+          }
+
+          maxFitRows = Math.max(1, maxFitRows);
+          const remainingRows = Math.ceil((list.length - offset) / cols);
+          const takeRows = Math.min(remainingRows, maxFitRows);
+          const chunkList = list.slice(offset, offset + takeRows * cols);
+          const hadBlocks = page.blocks.length > 0;
+          const chunkBlock = {
+            sec,
+            list: chunkList,
+            cols,
+            totalSectionCopies,
+            partIndex: chunks.length + 1,
+            totalParts: 1,
+            html: "",
+          };
+          page.blocks.push(chunkBlock);
+          page.usedMm += (hadBlocks ? BLOCK_GAP_MM : 0) + estimateZoneHeightMm(takeRows);
+          chunks.push(chunkBlock);
+          offset += chunkList.length;
+        }
+
+        const totalParts = chunks.length;
+        for (const c of chunks) {
+          c.totalParts = totalParts;
+          c.html = `
+            <div class="wpdf-playmat-row" style="grid-template-columns:1fr">
+              ${renderZone(c.sec, c.list, c.cols, {
+                isContinuation: c.partIndex > 1,
+                totalSectionCopies: c.totalSectionCopies,
+                partIndex: c.partIndex,
+                totalParts: c.totalParts,
+              })}
+            </div>`;
+        }
+      }
+    };
+
+    const oshiList = secById.oshi.list;
+    const mainList = secById.main.list;
+    const cheerList = secById.cheer.list;
+    const sealedList = secById.sealed.list;
+
+    const splitMainCols = ROW_MAX_COLS - oshiList.length;
+    const useSplit =
+      oshiList.length >= 1 &&
+      oshiList.length <= 2 &&
+      mainList.length > splitMainCols &&
+      mainList.length <= splitMainCols * 2;
+
+    if (useSplit) {
+      const railCols = oshiList.length;
+      const mainCols = Math.min(mainList.length, ROW_MAX_COLS - railCols);
+      const cheerInRail = cheerList.length > 0 && cheerList.length === railCols;
+      const sealedInRail =
+        !cheerInRail && sealedList.length > 0 && sealedList.length === railCols && mainList.length >= ROW_MAX_COLS;
+
+      const railHtml = [
+        renderZone(secById.oshi.sec, oshiList, railCols),
+        cheerInRail ? renderZone(secById.cheer.sec, cheerList, railCols) : "",
+        sealedInRail ? renderZone(secById.sealed.sec, sealedList, railCols) : "",
+      ]
+        .filter(Boolean)
+        .join("");
+
+      const mainHtml = renderZone(secById.main.sec, mainList, mainCols);
+      const totalSplitCols = railCols + mainCols;
+      const splitTracks = [
+        buildRowTrackExpr(railCols, 2, totalSplitCols),
+        buildRowTrackExpr(mainCols, 2, totalSplitCols),
+      ].join(" ");
+
+      const railZonesCount = 1 + (cheerInRail ? 1 : 0) + (sealedInRail ? 1 : 0);
+      const splitClass = railZonesCount >= 2 ? "wpdf-playmat-split wpdf-split-stretch" : "wpdf-playmat-split";
+      const railHeightMm =
+        railZonesCount * estimateZoneHeightMm(1) + Math.max(0, railZonesCount - 1) * BLOCK_GAP_MM;
+      const mainRows = Math.ceil(mainList.length / mainCols);
+      const splitHeightMm = Math.max(railHeightMm, estimateZoneHeightMm(mainRows));
+
+      appendAtomicBlock(
+        `<div class="${splitClass}" style="grid-template-columns:${splitTracks}">
+          <div class="wpdf-playmat-rail">${railHtml}</div>
+          ${mainHtml}
+        </div>`,
+        splitHeightMm
+      );
+
+      const tailSpecs = [];
+      if (!cheerInRail && cheerList.length > 0) {
+        tailSpecs.push({ sec: secById.cheer.sec, list: cheerList });
+      }
+      if (!sealedInRail && sealedList.length > 0) {
+        tailSpecs.push({ sec: secById.sealed.sec, list: sealedList });
+      }
+      if (tailSpecs.length) appendFlowRows(tailSpecs);
+    } else {
+      const hasSecondary = oshiList.length > 0 || cheerList.length > 0 || sealedList.length > 0;
+      const flowSpecs = [];
+      if (mainList.length >= ROW_MAX_COLS && hasSecondary) {
+        if (oshiList.length) flowSpecs.push({ sec: secById.oshi.sec, list: oshiList });
+        if (cheerList.length) flowSpecs.push({ sec: secById.cheer.sec, list: cheerList });
+        if (sealedList.length) flowSpecs.push({ sec: secById.sealed.sec, list: sealedList });
+        flowSpecs.push({ sec: secById.main.sec, list: mainList });
+      } else {
+        for (const s of WPDF_SECTIONS) {
+          const list = secById[s.id].list;
+          if (list.length) flowSpecs.push({ sec: s, list });
+        }
+      }
+      appendFlowRows(flowSpecs);
+    }
+
+    const totalPages = pages.length;
+    const renderFirstHeader = () => `
       <header class="wpdf-sheet-header">
         <div>
           <h2 class="wpdf-sheet-title">${escapeHtml(title)}</h2>
           ${contact ? `<p class="wpdf-sheet-contact">${escapeHtml(contact)}</p>` : ""}
         </div>
         <div class="wpdf-sheet-meta">
-          <span class="wpdf-sheet-pill">${totalCopies} ${totalCopies === 1 ? "copia" : "copias"} · ${selectedEntries.length} ${selectedEntries.length === 1 ? "carta" : "cartas"}</span>
+          <div class="wpdf-sheet-meta-row">
+            <span class="wpdf-sheet-pill">${totalCopies} ${totalCopies === 1 ? "copia" : "copias"} · ${selectedEntries.length} ${selectedEntries.length === 1 ? "carta" : "cartas"}</span>
+            ${totalPages > 1 ? `<span class="wpdf-page-badge">Pág. 1 / ${totalPages}</span>` : ""}
+          </div>
           <span class="wpdf-sheet-date">${escapeHtml(today)}</span>
         </div>
-      </header>
-      <div class="wpdf-sheet-sections">${sectionsHtml}</div>`;
+      </header>`;
+
+    const renderContHeader = (pageNum) => `
+      <header class="wpdf-sheet-header wpdf-sheet-header-cont">
+        <h2 class="wpdf-sheet-title">${escapeHtml(title)}</h2>
+        <span class="wpdf-page-badge">Pág. ${pageNum} / ${totalPages}</span>
+      </header>`;
+
+    return `
+      <div class="wpdf-pages-stack">
+        ${pages
+          .map(
+            (p, idx) => `
+              <section class="wpdf-page wpdf-sheet" data-wpdf-page="${idx + 1}">
+                ${idx === 0 ? renderFirstHeader() : renderContHeader(idx + 1)}
+                <div class="wpdf-playmat-board">${p.blocks.map((b) => b.html).join("")}</div>
+              </section>`
+          )
+          .join("")}
+      </div>`;
   }
 
   function getSelectedWishlistEntries() {
@@ -2026,7 +2297,7 @@
       exportBtn.textContent = "Preparando imágenes...";
     }
 
-    printRoot.innerHTML = `<div class="wpdf-sheet wpdf-sheet-print">${buildWishlistPdfSheetHtml(entries, title, contact)}</div>`;
+    printRoot.innerHTML = buildWishlistPdfSheetHtml(entries, title, contact);
     await waitForContainerImages(printRoot, 4000);
 
     const prevTitle = document.title;
