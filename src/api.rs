@@ -464,6 +464,10 @@ async fn get_cards(
     State(state): State<AppState>,
     Query(params): Query<CardFilterParams>,
 ) -> Result<Json<CardsPageResponse>, ApiError> {
+    Ok(Json(query_cards(&state.db, &params)?))
+}
+
+pub fn query_cards(db: &Database, params: &CardFilterParams) -> Result<CardsPageResponse> {
     let mut clauses: Vec<String> = Vec::new();
     let mut bind_vals: Vec<SqlValue> = Vec::new();
     let mut next_param = |val: SqlValue| -> String {
@@ -515,8 +519,12 @@ async fn get_cards(
     }
 
     if let Some(ct) = params.card_type.as_deref().map(str::trim).filter(|s| !s.is_empty()) {
-        let p = next_param(SqlValue::from(ct));
-        clauses.push(format!("c.card_type = {p}"));
+        if ct.eq_ignore_ascii_case("Holomem") {
+            clauses.push("c.card_type IN ('Holomem', 'Buzz Holomem')".to_string());
+        } else {
+            let p = next_param(SqlValue::from(ct));
+            clauses.push(format!("c.card_type = {p}"));
+        }
     }
 
     if let Some(bl) = params.bloom_level.as_deref().map(str::trim).filter(|s| !s.is_empty()) {
@@ -591,8 +599,7 @@ async fn get_cards(
          LEFT JOIN collection col ON col.product_id = c.product_id
          {where_sql}"
     );
-    let total = state
-        .db
+    let total = db
         .query_row_opt(&count_sql, &bind_vals, |r| Ok(r.get_i64(0)))?
         .unwrap_or(0);
 
@@ -615,20 +622,19 @@ async fn get_cards(
          ORDER BY {order_sql}
          LIMIT {limit_ph} OFFSET {offset_ph}"
     );
-    let items = state
-        .db
+    let items = db
         .query_map(&items_sql, &page_binds, map_card_with_collection)?;
 
-    let facets = compute_facets(&state.db, item_cat, params.group_id)?;
+    let facets = compute_facets(db, item_cat, params.group_id)?;
 
-    Ok(Json(CardsPageResponse {
+    Ok(CardsPageResponse {
         items,
         total,
         page,
         per_page,
         total_pages,
         facets,
-    }))
+    })
 }
 
 fn compute_facets(

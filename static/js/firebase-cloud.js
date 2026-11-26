@@ -282,6 +282,228 @@
     };
   }
 
+  const ARTS_COLOR_PREFIX_MAP = {
+    W: "White",
+    G: "Green",
+    R: "Red",
+    B: "Blue",
+    P: "Purple",
+    Y: "Yellow",
+  };
+  const COLOR_ORDER = ["White", "Green", "Red", "Blue", "Purple", "Yellow"];
+  const COLOR_ORDER_INDEX = Object.fromEntries(COLOR_ORDER.map((c, i) => [c, i]));
+  const HBP06_BUZZ_CARD_NUMBERS = new Set([
+    "hBP06-013",
+    "hBP06-026",
+    "hBP06-052",
+    "hBP06-065",
+    "hBP06-076",
+  ]);
+  const CARD_NUMBER_COLOR_RANGES = [
+    ["hBP06-", 1, 2, "White"],
+    ["hBP06-", 3, 3, "Green"],
+    ["hBP06-", 4, 5, "Red"],
+    ["hBP06-", 6, 6, "Blue"],
+    ["hBP06-", 7, 7, "Purple"],
+    ["hBP06-", 8, 8, "Yellow"],
+    ["hBP06-", 9, 21, "White"],
+    ["hBP06-", 22, 33, "Green"],
+    ["hBP06-", 34, 47, "Red"],
+    ["hBP06-", 48, 60, "Blue"],
+    ["hBP06-", 61, 71, "Purple"],
+    ["hBP06-", 72, 83, "Yellow"],
+    ["hBP06-", 84, 84, "Colorless"],
+    ["hSD10-", 1, 6, "Green"],
+    ["hSD10-", 7, 9, "Purple"],
+    ["hSD10-", 10, 10, "Colorless"],
+    ["hSD11-", 1, 6, "Yellow"],
+    ["hSD11-", 7, 9, "Blue"],
+  ];
+
+  function lookupCardNumberColorOverride(cardNumber) {
+    const m = String(cardNumber || "").trim().match(/^(hBP06-|hSD10-|hSD11-)(\d+)$/);
+    if (!m) return null;
+    const prefix = m[1];
+    const num = Number(m[2]);
+    for (const [p, lo, hi, color] of CARD_NUMBER_COLOR_RANGES) {
+      if (p === prefix && num >= lo && num <= hi) return color;
+    }
+    return null;
+  }
+
+  function canonicalizeColorValue(raw) {
+    const tokens = [];
+    for (const part of String(raw || "").split(/[;/]/)) {
+      const t = part.trim();
+      if (!t) continue;
+      const low = t.toLowerCase();
+      const norm =
+        low === "neutral" || low === "colorless"
+          ? "Colorless"
+          : t.charAt(0).toUpperCase() + t.slice(1).toLowerCase();
+      if (!tokens.includes(norm)) tokens.push(norm);
+    }
+    if (!tokens.length) return "";
+    const filtered =
+      tokens.length > 1 ? tokens.filter((t) => t !== "Colorless") : tokens;
+    filtered.sort((a, b) => (COLOR_ORDER_INDEX[a] ?? 99) - (COLOR_ORDER_INDEX[b] ?? 99));
+    return filtered.join(" / ");
+  }
+
+  function extractArtsColors(arts1, arts2) {
+    const found = [];
+    const text = `${arts1 || ""} ${arts2 || ""}`;
+    for (const m of text.matchAll(/\[([WGRBPYN]+)\]/g)) {
+      for (const ch of m[1]) {
+        const col = ARTS_COLOR_PREFIX_MAP[ch];
+        if (col && !found.includes(col)) found.push(col);
+      }
+    }
+    found.sort((a, b) => (COLOR_ORDER_INDEX[a] ?? 99) - (COLOR_ORDER_INDEX[b] ?? 99));
+    return found;
+  }
+
+  function repairCatalogCardMetadata(cards) {
+    if (!Array.isArray(cards) || !cards.length) return;
+    const byCardNumber = new Map();
+
+    for (const c of cards) {
+      if (!c || c.itemCategory === "sealed") continue;
+      const cn = String(c.cardNumber || "").trim();
+      if (HBP06_BUZZ_CARD_NUMBERS.has(cn)) {
+        if (c.cardType !== "Buzz Holomem") {
+          c.cardType = "Buzz Holomem";
+          c.sanitizedFlag = true;
+        }
+        if (!String(c.bloomLevel || "").trim()) {
+          c.bloomLevel = "1st";
+          c.sanitizedFlag = true;
+        }
+      }
+      if (c.color) {
+        const canon = canonicalizeColorValue(c.color);
+        if (canon && canon !== c.color) {
+          c.color = canon;
+          c.sanitizedFlag = true;
+        }
+      }
+      if (c.cardType !== "Support" && cn) {
+        const ov = lookupCardNumberColorOverride(cn);
+        if (ov && c.color !== ov) {
+          c.color = ov;
+          c.sanitizedFlag = true;
+        }
+        if (!byCardNumber.has(cn)) byCardNumber.set(cn, []);
+        byCardNumber.get(cn).push(c);
+      }
+    }
+
+    for (const [cn, group] of byCardNumber.entries()) {
+      const isBuzz =
+        HBP06_BUZZ_CARD_NUMBERS.has(cn) || group.some((r) => r.cardType === "Buzz Holomem");
+      if (isBuzz) {
+        for (const r of group) {
+          if (r.cardType !== "Oshi Holomem" && r.cardType !== "Buzz Holomem") {
+            r.cardType = "Buzz Holomem";
+            r.sanitizedFlag = true;
+          }
+        }
+      }
+
+      const knownBloom = HBP06_BUZZ_CARD_NUMBERS.has(cn)
+        ? "1st"
+        : group.map((r) => String(r.bloomLevel || "").trim()).find(Boolean) || "";
+      if (knownBloom) {
+        for (const r of group) {
+          if (
+            (r.cardType === "Holomem" || r.cardType === "Buzz Holomem") &&
+            !String(r.bloomLevel || "").trim()
+          ) {
+            r.bloomLevel = knownBloom;
+            r.sanitizedFlag = true;
+          }
+        }
+      }
+
+      const ov = lookupCardNumberColorOverride(cn);
+      if (ov) {
+        for (const r of group) {
+          if (r.color !== ov) {
+            r.color = ov;
+            r.sanitizedFlag = true;
+          }
+        }
+        continue;
+      }
+
+      const counts = new Map();
+      let artsColors = [];
+      for (const r of group) {
+        const col = String(r.color || "").trim();
+        if (col && col !== "Colorless") {
+          counts.set(col, (counts.get(col) || 0) + 1);
+        }
+        if (!artsColors.length) {
+          artsColors = extractArtsColors(r.arts1 || r.effectText, r.arts2);
+        }
+      }
+
+      if (counts.size > 0) {
+        let winningColor = "";
+        let bestScore = [-1, -1, -1];
+        for (const [col, count] of counts.entries()) {
+          const score = [
+            count,
+            col.includes(" / ") ? 1 : 0,
+            artsColors.some((ac) => col.includes(ac)) ? 1 : 0,
+          ];
+          if (
+            score[0] > bestScore[0] ||
+            (score[0] === bestScore[0] &&
+              (score[1] > bestScore[1] ||
+                (score[1] === bestScore[1] && score[2] > bestScore[2])))
+          ) {
+            bestScore = score;
+            winningColor = col;
+          }
+        }
+        if (winningColor) {
+          for (const r of group) {
+            if (r.color !== winningColor) {
+              r.color = winningColor;
+              r.sanitizedFlag = true;
+            }
+          }
+        }
+      }
+    }
+
+    for (const c of cards) {
+      if (!c || c.itemCategory === "sealed" || c.cardType === "Support") continue;
+      if (lookupCardNumberColorOverride(c.cardNumber)) continue;
+      const curCol = String(c.color || "").trim();
+      if (curCol && curCol !== "Colorless") continue;
+      if (String(c.bloomLevel || "").trim() === "Spot") continue;
+
+      const artsCols = extractArtsColors(c.arts1 || c.effectText, c.arts2);
+      if (artsCols.length) {
+        c.color = artsCols.join(" / ");
+        c.sanitizedFlag = true;
+      } else if (c.cardType === "Cheer") {
+        const lowName = String(c.name || "").toLowerCase();
+        for (const colorName of COLOR_ORDER) {
+          if (new RegExp(`\\b${colorName.toLowerCase()}\\b`).test(lowName)) {
+            c.color = colorName;
+            c.sanitizedFlag = true;
+            break;
+          }
+        }
+      } else if (!curCol) {
+        c.color = "Colorless";
+      }
+    }
+  }
+
   function applyPricesOverlay(cards, pricesMap) {
     if (!pricesMap) return;
     for (const c of cards) {
@@ -482,6 +704,7 @@
 
     const loadedFromCloud = await tryLoadCatalogFromFirestore(forceRefresh);
     if (loadedFromCloud) {
+      repairCatalogCardMetadata(cardsList);
       catalogLoaded = true;
       return;
     }
@@ -498,6 +721,7 @@
     }
 
     cardsList = await cardsRes.json();
+    repairCatalogCardMetadata(cardsList);
     cardsById = new Map(cardsList.map((c) => [Number(c.productId), c]));
 
     const groupsJson = await groupsRes.json();
@@ -1492,7 +1716,13 @@
         }
       }
       if (rarity && c.rarity !== rarity) continue;
-      if (cardType && c.cardType !== cardType) continue;
+      if (cardType) {
+        if (cardType === "Holomem") {
+          if (c.cardType !== "Holomem" && c.cardType !== "Buzz Holomem") continue;
+        } else if (c.cardType !== cardType) {
+          continue;
+        }
+      }
       if (bloomLevel && c.bloomLevel !== bloomLevel) continue;
 
       const priceVal = effectivePrice(c) ?? 0;

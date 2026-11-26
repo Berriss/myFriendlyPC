@@ -220,6 +220,135 @@ fn rarity_to_code(raw: &str, name: &str) -> (String, String) {
     (String::new(), String::new())
 }
 
+const COLOR_ORDER: [&str; 6] = ["White", "Green", "Red", "Blue", "Purple", "Yellow"];
+
+const CARD_NUMBER_COLOR_RANGES: [(&str, u32, u32, &str); 18] = [
+    ("hBP06-", 1, 2, "White"),
+    ("hBP06-", 3, 3, "Green"),
+    ("hBP06-", 4, 5, "Red"),
+    ("hBP06-", 6, 6, "Blue"),
+    ("hBP06-", 7, 7, "Purple"),
+    ("hBP06-", 8, 8, "Yellow"),
+    ("hBP06-", 9, 21, "White"),
+    ("hBP06-", 22, 33, "Green"),
+    ("hBP06-", 34, 47, "Red"),
+    ("hBP06-", 48, 60, "Blue"),
+    ("hBP06-", 61, 71, "Purple"),
+    ("hBP06-", 72, 83, "Yellow"),
+    ("hBP06-", 84, 84, "Colorless"),
+    ("hSD10-", 1, 6, "Green"),
+    ("hSD10-", 7, 9, "Purple"),
+    ("hSD10-", 10, 10, "Colorless"),
+    ("hSD11-", 1, 6, "Yellow"),
+    ("hSD11-", 7, 9, "Blue"),
+];
+
+fn color_order_index(color: &str) -> usize {
+    COLOR_ORDER
+        .iter()
+        .position(|&c| c == color)
+        .unwrap_or(99)
+}
+
+fn is_hbp06_buzz_card_number(card_number: &str) -> bool {
+    matches!(
+        card_number.trim(),
+        "hBP06-013" | "hBP06-026" | "hBP06-052" | "hBP06-065" | "hBP06-076"
+    )
+}
+
+pub fn lookup_card_number_color_override(card_number: &str) -> Option<&'static str> {
+    let trimmed = card_number.trim();
+    for (prefix, lo, hi, color) in CARD_NUMBER_COLOR_RANGES {
+        if let Some(rest) = trimmed.strip_prefix(prefix) {
+            if !rest.is_empty() && rest.bytes().all(|b| b.is_ascii_digit()) {
+                if let Ok(num) = rest.parse::<u32>() {
+                    if (lo..=hi).contains(&num) {
+                        return Some(color);
+                    }
+                }
+            }
+        }
+    }
+    None
+}
+
+pub fn canonicalize_color_value(raw: &str) -> String {
+    let mut tokens: Vec<String> = Vec::new();
+    for part in raw.split([';', '/']) {
+        let trimmed = part.trim();
+        if trimmed.is_empty() {
+            continue;
+        }
+        let norm = if trimmed.eq_ignore_ascii_case("neutral")
+            || trimmed.eq_ignore_ascii_case("colorless")
+        {
+            "Colorless".to_string()
+        } else {
+            capitalize_first(trimmed)
+        };
+        if !tokens.contains(&norm) {
+            tokens.push(norm);
+        }
+    }
+    if tokens.is_empty() {
+        return String::new();
+    }
+    if tokens.len() > 1 {
+        tokens.retain(|t| t != "Colorless");
+    }
+    tokens.sort_by_key(|t| color_order_index(t));
+    tokens.join(" / ")
+}
+
+fn extract_arts_colors(arts1: &str, arts2: &str) -> Vec<&'static str> {
+    static RE_ARTS_BRACKET: OnceLock<Regex> = OnceLock::new();
+    let re = RE_ARTS_BRACKET.get_or_init(|| Regex::new(r"\[([WGRBPYN]+)\]").expect("valid regex"));
+    let combined = format!("{arts1} {arts2}");
+    let mut found: Vec<&'static str> = Vec::new();
+    for cap in re.captures_iter(&combined) {
+        for ch in cap[1].chars() {
+            let c = match ch {
+                'W' => Some("White"),
+                'G' => Some("Green"),
+                'R' => Some("Red"),
+                'B' => Some("Blue"),
+                'P' => Some("Purple"),
+                'Y' => Some("Yellow"),
+                _ => None,
+            };
+            if let Some(color_name) = c {
+                if !found.contains(&color_name) {
+                    found.push(color_name);
+                }
+            }
+        }
+    }
+    found.sort_by_key(|&c| color_order_index(c));
+    found
+}
+
+fn contains_word_ascii_ci(haystack: &str, word_lower: &str) -> bool {
+    let lower = haystack.to_lowercase();
+    for (idx, _) in lower.match_indices(word_lower) {
+        let before_ok = idx == 0
+            || !lower[..idx]
+                .chars()
+                .next_back()
+                .is_some_and(|c| c.is_ascii_alphanumeric());
+        let after_idx = idx + word_lower.len();
+        let after_ok = after_idx >= lower.len()
+            || !lower[after_idx..]
+                .chars()
+                .next()
+                .is_some_and(|c| c.is_ascii_alphanumeric());
+        if before_ok && after_ok {
+            return true;
+        }
+    }
+    false
+}
+
 fn normalize_card_type(
     raw: Option<&str>,
     rarity_name: &str,
@@ -231,7 +360,11 @@ fn normalize_card_type(
     if item_category == "sealed" {
         return ("Sealed".to_string(), false);
     }
-    if let Some(val) = raw.map(str::trim).filter(|s| !s.is_empty()) {
+    let val = raw.map(str::trim).unwrap_or("");
+    if is_hbp06_buzz_card_number(card_number) {
+        return ("Buzz Holomem".to_string(), val.is_empty());
+    }
+    if !val.is_empty() {
         let normalized = match val.to_lowercase().as_str() {
             "oshi holomem" => "Oshi Holomem",
             "buzz holomem" => "Buzz Holomem",
@@ -277,64 +410,123 @@ fn normalize_color(
     arts2: &str,
     name: &str,
     item_category: &str,
+    card_number: &str,
 ) -> (String, bool) {
     if item_category == "sealed" {
         return (String::new(), false);
     }
-    if let Some(val) = raw.map(str::trim).filter(|s| !s.is_empty()) {
-        if val.eq_ignore_ascii_case("neutral") {
-            return ("Colorless".to_string(), false);
+    let val = raw.map(str::trim).unwrap_or("");
+    if card_type != "Support" {
+        if let Some(override_color) = lookup_card_number_color_override(card_number) {
+            if val.is_empty() {
+                return (override_color.to_string(), true);
+            }
         }
-        if val.contains(';') {
-            let parts: Vec<String> = val
-                .split(';')
-                .map(str::trim)
-                .filter(|s| !s.is_empty())
-                .map(capitalize_first)
-                .collect();
-            return (parts.join(" / "), false);
-        }
-        return (val.to_string(), false);
+    }
+    if !val.is_empty() {
+        return (canonicalize_color_value(val), false);
     }
 
     if card_type == "Support" {
         return ("Colorless".to_string(), true);
     }
 
-    static RE_ARTS_BRACKET: OnceLock<Regex> = OnceLock::new();
-    let re = RE_ARTS_BRACKET.get_or_init(|| Regex::new(r"\[([WGRBPY]+)\]").expect("valid regex"));
-    let combined = format!("{arts1} {arts2}");
-    let mut found: Vec<&'static str> = Vec::new();
-    for cap in re.captures_iter(&combined) {
-        for ch in cap[1].chars() {
-            let c = match ch {
-                'W' => Some("White"),
-                'G' => Some("Green"),
-                'R' => Some("Red"),
-                'B' => Some("Blue"),
-                'P' => Some("Purple"),
-                'Y' => Some("Yellow"),
-                _ => None,
-            };
-            if let Some(color_name) = c {
-                if !found.contains(&color_name) {
-                    found.push(color_name);
-                }
-            }
-        }
-    }
+    let found = extract_arts_colors(arts1, arts2);
     if !found.is_empty() {
         return (found.join(" / "), true);
     }
 
-    let low_name = name.to_lowercase();
-    for color_name in ["White", "Green", "Red", "Blue", "Purple", "Yellow"] {
-        if low_name.contains(&color_name.to_lowercase()) {
-            return (color_name.to_string(), true);
+    if card_type == "Cheer" {
+        for color_name in COLOR_ORDER {
+            if contains_word_ascii_ci(name, &color_name.to_lowercase()) {
+                return (color_name.to_string(), true);
+            }
         }
     }
 
     ("Colorless".to_string(), true)
+}
+
+/// Second-pass reconciliation across sibling printings sharing `card_number`
+/// (fixes HBP06/hSD10/hSD11 overrides, Buzz reprints, and UR Color typos).
+pub fn reconcile_cards_by_number(cards: &mut [CardRecord]) {
+    let mut groups: HashMap<String, Vec<usize>> = HashMap::new();
+    for (idx, c) in cards.iter().enumerate() {
+        if c.item_category != "card" || c.card_type == "Support" {
+            continue;
+        }
+        let cn = c.card_number.trim();
+        if !cn.is_empty() {
+            groups.entry(cn.to_string()).or_default().push(idx);
+        }
+    }
+
+    for (cn, idxs) in groups {
+        let is_buzz = is_hbp06_buzz_card_number(&cn)
+            || idxs.iter().any(|&i| cards[i].card_type == "Buzz Holomem");
+        if is_buzz {
+            for &i in &idxs {
+                if cards[i].card_type != "Oshi Holomem" && cards[i].card_type != "Buzz Holomem" {
+                    cards[i].card_type = "Buzz Holomem".to_string();
+                    cards[i].sanitized_flag = true;
+                }
+            }
+        }
+
+        let known_bloom = if is_hbp06_buzz_card_number(&cn) {
+            Some("1st".to_string())
+        } else {
+            idxs.iter()
+                .map(|&i| cards[i].bloom_level.trim())
+                .find(|s| !s.is_empty())
+                .map(|s| s.to_string())
+        };
+        if let Some(bloom) = known_bloom {
+            for &i in &idxs {
+                if (cards[i].card_type == "Holomem" || cards[i].card_type == "Buzz Holomem")
+                    && cards[i].bloom_level.trim().is_empty()
+                {
+                    cards[i].bloom_level = bloom.clone();
+                    cards[i].sanitized_flag = true;
+                }
+            }
+        }
+
+        if let Some(override_color) = lookup_card_number_color_override(&cn) {
+            for &i in &idxs {
+                if cards[i].color != override_color {
+                    cards[i].color = override_color.to_string();
+                    cards[i].sanitized_flag = true;
+                }
+            }
+            continue;
+        }
+
+        let mut counts: HashMap<String, usize> = HashMap::new();
+        let mut arts_cols: Vec<&'static str> = Vec::new();
+        for &i in &idxs {
+            let col = cards[i].color.trim();
+            if !col.is_empty() && col != "Colorless" {
+                *counts.entry(col.to_string()).or_insert(0) += 1;
+            }
+            if arts_cols.is_empty() {
+                arts_cols = extract_arts_colors(&cards[i].arts1, &cards[i].arts2);
+            }
+        }
+
+        if let Some((winning_color, _)) = counts.into_iter().max_by_key(|(col, count)| {
+            let is_multi = usize::from(col.contains(" / "));
+            let arts_match = usize::from(arts_cols.iter().any(|ac| col.contains(ac)));
+            (*count, is_multi, arts_match)
+        }) {
+            for &i in &idxs {
+                if cards[i].color != winning_color {
+                    cards[i].color = winning_color.clone();
+                    cards[i].sanitized_flag = true;
+                }
+            }
+        }
+    }
 }
 
 fn capitalize_first(s: &str) -> String {
@@ -698,6 +890,7 @@ pub fn build_catalog_from_raw_resources(
                 &arts2,
                 &prod.name,
                 &item_category,
+                &card_number,
             );
             if color_inferred {
                 report.missing_color_inferred += 1;
@@ -849,6 +1042,7 @@ pub fn build_catalog_from_raw_resources(
         }
     }
 
+    reconcile_cards_by_number(&mut cards);
     report.discovered_extended_keys = discovered_keys.into_iter().collect();
     Ok((editions, cards, report))
 }
@@ -903,8 +1097,78 @@ mod tests {
         assert_eq!(ct, "Holomem");
         assert!(ct_inf);
 
-        let (color, color_inf) = normalize_color(None, &ct, "[R] Dead Beats (50)", "", "Mori Calliope (P)", "card");
-        assert_eq!(color, "Red");
+        // HBP06-060 is verified Blue despite [N] Arts costs
+        let (color, color_inf) = normalize_color(None, &ct, "[N] Bull's-Eye!!!! (60)", "", "Mori Calliope (P)", "card", "hBP06-060");
+        assert_eq!(color, "Blue");
         assert!(color_inf);
+
+        // Mixed [BN] / [PN] Arts brackets infer base colors when no cardNumber override applies
+        let (color_bn, _) = normalize_color(None, "Holomem", "[BN] Sweet Obsession (100)", "", "Mizumiya Su (RR)", "card", "hSD11-009");
+        assert_eq!(color_bn, "Blue");
+        let (color_pn, _) = normalize_color(None, "Holomem", "[PN] Vigilance Venus (80+)", "", "Kikirara Vivi (RR)", "card", "hBP99-001");
+        assert_eq!(color_pn, "Purple");
+
+        // hBP06-013 is classified as Buzz Holomem and White
+        let (buzz_ct, _) = normalize_card_type(None, "Rare", "hBP06-013", &ext, "Raora Panthera (R)", "card");
+        assert_eq!(buzz_ct, "Buzz Holomem");
+        assert_eq!(lookup_card_number_color_override("hBP06-055"), Some("Blue"));
+    }
+
+    #[test]
+    fn reconciles_sibling_colors_and_buzz_reprints_by_card_number() {
+        let make_card = |pid: i64, cn: &str, ct: &str, col: &str, bl: &str| CardRecord {
+            product_id: pid,
+            group_id: 1,
+            edition_name: "Test".into(),
+            edition_abbr: "TST".into(),
+            name: format!("Card {cn}"),
+            clean_name: format!("Card {cn}"),
+            image_url: String::new(),
+            url: String::new(),
+            item_category: "card".into(),
+            card_number: cn.into(),
+            rarity: "UR".into(),
+            rarity_name: "Ultra Rare".into(),
+            card_type: ct.into(),
+            subtype: String::new(),
+            color: col.into(),
+            bloom_level: bl.into(),
+            hp: Some(150),
+            life: None,
+            baton_pass: "1".into(),
+            tags: String::new(),
+            oshi_skill: String::new(),
+            sp_oshi_skill: String::new(),
+            keyword_text: String::new(),
+            arts1: "[WWN] Test (100)".into(),
+            arts2: String::new(),
+            special_rules: String::new(),
+            description_text: String::new(),
+            effect_text: String::new(),
+            raw_description: String::new(),
+            market_price: None,
+            low_price: None,
+            mid_price: None,
+            high_price: None,
+            direct_low_price: None,
+            foil_market_price: None,
+            foil_low_price: None,
+            price_subtype: "Normal".into(),
+            sanitized_flag: false,
+            had_comma_or_html: false,
+            modified_on: String::new(),
+        };
+
+        let mut list = vec![
+            make_card(1, "hBP03-014", "Holomem", "White", "2nd"),
+            make_card(2, "hBP03-014", "Holomem", "White", "2nd"),
+            make_card(3, "hBP03-014", "Holomem", "Yellow", "2nd"),
+            make_card(4, "hBP01-071", "Buzz Holomem", "Red", "1st"),
+            make_card(5, "hBP01-071", "Holomem", "Colorless", "1st"),
+        ];
+        reconcile_cards_by_number(&mut list);
+        assert_eq!(list[2].color, "White");
+        assert_eq!(list[4].card_type, "Buzz Holomem");
+        assert_eq!(list[4].color, "Red");
     }
 }

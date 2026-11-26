@@ -57,6 +57,39 @@ ARTS_COLOR_PREFIX_MAP = {
     "Y": "Yellow",
 }
 
+COLOR_ORDER = ("White", "Green", "Red", "Blue", "Purple", "Yellow")
+COLOR_ORDER_INDEX = {color: idx for idx, color in enumerate(COLOR_ORDER)}
+
+# Verified against hololive-official-cardgame.com where TCGCSV omitted Color / Buzz metadata.
+HBP06_BUZZ_CARD_NUMBERS = frozenset({
+    "hBP06-013",
+    "hBP06-026",
+    "hBP06-052",
+    "hBP06-065",
+    "hBP06-076",
+})
+
+CARD_NUMBER_COLOR_RANGES = (
+    ("hBP06-", 1, 2, "White"),
+    ("hBP06-", 3, 3, "Green"),
+    ("hBP06-", 4, 5, "Red"),
+    ("hBP06-", 6, 6, "Blue"),
+    ("hBP06-", 7, 7, "Purple"),
+    ("hBP06-", 8, 8, "Yellow"),
+    ("hBP06-", 9, 21, "White"),
+    ("hBP06-", 22, 33, "Green"),
+    ("hBP06-", 34, 47, "Red"),
+    ("hBP06-", 48, 60, "Blue"),
+    ("hBP06-", 61, 71, "Purple"),
+    ("hBP06-", 72, 83, "Yellow"),
+    ("hBP06-", 84, 84, "Colorless"),
+    ("hSD10-", 1, 6, "Green"),
+    ("hSD10-", 7, 9, "Purple"),
+    ("hSD10-", 10, 10, "Colorless"),
+    ("hSD11-", 1, 6, "Yellow"),
+    ("hSD11-", 7, 9, "Blue"),
+)
+
 
 def slugify(text: str, max_len: int = 48) -> str:
     slug = re.sub(r"[^a-zA-Z0-9]+", "_", text.strip().lower()).strip("_")
@@ -188,11 +221,58 @@ def normalize_rarity(raw: str | None, name: str) -> tuple[str, str]:
     return "", ""
 
 
+def canonicalize_color_value(val: str) -> str:
+    tokens: list[str] = []
+    for raw_part in re.split(r"[;/]", val or ""):
+        part = raw_part.strip()
+        if not part:
+            continue
+        low = part.lower()
+        if low in ("neutral", "colorless"):
+            norm = "Colorless"
+        else:
+            norm = part[:1].upper() + part[1:].lower()
+        if norm not in tokens:
+            tokens.append(norm)
+    if not tokens:
+        return ""
+    if "Colorless" in tokens and len(tokens) > 1:
+        tokens = [t for t in tokens if t != "Colorless"]
+    tokens.sort(key=lambda c: COLOR_ORDER_INDEX.get(c, 99))
+    return " / ".join(tokens)
+
+
+def lookup_card_number_color_override(card_number: str) -> str | None:
+    m = re.match(r"^(hBP06-|hSD10-|hSD11-)(\d+)$", (card_number or "").strip())
+    if not m:
+        return None
+    prefix, num = m.group(1), int(m.group(2))
+    for p, lo, hi, color in CARD_NUMBER_COLOR_RANGES:
+        if p == prefix and lo <= num <= hi:
+            return color
+    return None
+
+
+def extract_arts_colors(arts1: str, arts2: str) -> list[str]:
+    found_colors: list[str] = []
+    for bracket in re.findall(r"\[([WGRBPYN]+)\]", f"{arts1} {arts2}"):
+        for ch in bracket:
+            c = ARTS_COLOR_PREFIX_MAP.get(ch)
+            if c and c not in found_colors:
+                found_colors.append(c)
+    found_colors.sort(key=lambda c: COLOR_ORDER_INDEX.get(c, 99))
+    return found_colors
+
+
 def normalize_card_type(raw: str | None, rarity_name: str, card_number: str, ext_map: dict[str, str], name: str, item_category: str) -> tuple[str, bool]:
     if item_category == "sealed":
         return "Sealed", False
 
     val = (raw or "").strip()
+    cn = card_number.strip()
+    if cn in HBP06_BUZZ_CARD_NUMBERS:
+        return "Buzz Holomem", not bool(val)
+
     if val:
         low = val.lower()
         if low == "oshi holomem":
@@ -222,39 +302,100 @@ def normalize_card_type(raw: str | None, rarity_name: str, card_number: str, ext
     return "Support", True
 
 
-def normalize_color(raw: str | None, card_type: str, arts1: str, arts2: str, name: str, item_category: str) -> tuple[str, bool]:
+def normalize_color(raw: str | None, card_type: str, arts1: str, arts2: str, name: str, item_category: str, card_number: str = "") -> tuple[str, bool]:
     if item_category == "sealed":
         return "", False
 
     val = (raw or "").strip()
+    if card_type != "Support":
+        override = lookup_card_number_color_override(card_number)
+        if override and not val:
+            return override, True
+
     if val:
-        if val.lower() == "neutral":
-            return "Colorless", False
-        if ";" in val:
-            parts = [p.strip().capitalize() for p in val.split(";") if p.strip()]
-            return " / ".join(parts), False
-        return val, False
+        return canonicalize_color_value(val), False
 
     if card_type == "Support":
         return "Colorless", True
 
-    # Infer from Arts cost brackets like [W], [G], [R], [B], [P], [Y]
-    found_colors: list[str] = []
-    for bracket in re.findall(r"\[([WGRBPY]+)\]", f"{arts1} {arts2}"):
-        for ch in bracket:
-            c = ARTS_COLOR_PREFIX_MAP.get(ch)
-            if c and c not in found_colors:
-                found_colors.append(c)
+    # Infer from Arts cost brackets like [W], [G], [R], [B], [P], [Y], [BN], [GNN]
+    found_colors = extract_arts_colors(arts1, arts2)
     if found_colors:
         return " / ".join(found_colors), True
 
-    # Infer from Cheer name
-    low_name = name.lower()
-    for color_name in ("White", "Green", "Red", "Blue", "Purple", "Yellow"):
-        if color_name.lower() in low_name:
-            return color_name, True
+    # Restrict name-based color inference to Cheer cards (avoid matching e.g. Immergreen)
+    if card_type == "Cheer":
+        low_name = name.lower()
+        for color_name in COLOR_ORDER:
+            if re.search(rf"\b{color_name.lower()}\b", low_name):
+                return color_name, True
 
     return "Colorless", True
+
+
+def reconcile_catalog_records(cleaned_records: list[dict[str, Any]]) -> None:
+    """Propagate verified cardNumber overrides, Buzz classifications, and sibling majority colors."""
+    groups_by_cn: dict[str, list[dict[str, Any]]] = {}
+    for rec in cleaned_records:
+        if rec.get("itemCategory") != "card" or rec.get("cardType") == "Support":
+            continue
+        cn = str(rec.get("cardNumber") or "").strip()
+        if cn:
+            groups_by_cn.setdefault(cn, []).append(rec)
+
+    for cn, group in groups_by_cn.items():
+        # 1) CardType & BloomLevel consistency across reprints/promos
+        is_buzz = cn in HBP06_BUZZ_CARD_NUMBERS or any(r.get("cardType") == "Buzz Holomem" for r in group)
+        if is_buzz:
+            for r in group:
+                if r.get("cardType") not in ("Oshi Holomem", "Buzz Holomem"):
+                    r["cardType"] = "Buzz Holomem"
+                    r["sanitizedFlag"] = True
+
+        known_bloom = "1st" if cn in HBP06_BUZZ_CARD_NUMBERS else ""
+        if not known_bloom:
+            for r in group:
+                bl = str(r.get("bloomLevel") or "").strip()
+                if bl:
+                    known_bloom = bl
+                    break
+        if known_bloom:
+            for r in group:
+                if r.get("cardType") in ("Holomem", "Buzz Holomem") and not str(r.get("bloomLevel") or "").strip():
+                    r["bloomLevel"] = known_bloom
+                    r["sanitizedFlag"] = True
+
+        # 2) Color consistency across sets and UR printings
+        override = lookup_card_number_color_override(cn)
+        if override:
+            for r in group:
+                if r.get("color") != override:
+                    r["color"] = override
+                    r["sanitizedFlag"] = True
+            continue
+
+        color_counts: dict[str, int] = {}
+        arts_colors: list[str] = []
+        for r in group:
+            c = str(r.get("color") or "").strip()
+            if c and c != "Colorless":
+                color_counts[c] = color_counts.get(c, 0) + 1
+            if not arts_colors:
+                arts_colors = extract_arts_colors(r.get("arts1") or "", r.get("arts2") or "")
+
+        if color_counts:
+            winning_color = max(
+                color_counts.keys(),
+                key=lambda col: (
+                    color_counts[col],
+                    1 if " / " in col else 0,
+                    1 if (arts_colors and any(ac in col for ac in arts_colors)) else 0,
+                ),
+            )
+            for r in group:
+                if r.get("color") != winning_color:
+                    r["color"] = winning_color
+                    r["sanitizedFlag"] = True
 
 
 def normalize_bloom_level(raw: str | None, card_type: str) -> str:
@@ -498,6 +639,7 @@ def sanitize_all() -> None:
                 arts2,
                 name,
                 item_category,
+                card_number,
             )
             if color_inferred:
                 stats["missing_color_inferred"] += 1
@@ -613,6 +755,7 @@ def sanitize_all() -> None:
                     }
                 )
 
+    reconcile_catalog_records(cleaned_records)
     stats["discovered_extended_keys"] = sorted(stats["discovered_extended_keys"])
 
     (RESOURCES_DIR / "cards_cleaned.json").write_text(

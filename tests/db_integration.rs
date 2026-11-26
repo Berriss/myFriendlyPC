@@ -1,11 +1,11 @@
 use hololive_ocg_tracker::api::{
     classify_trade_verdict, compute_kpis, create_trade_record, delete_trade_record,
-    list_trades_response, read_exchange_rate_config, save_exchange_rate_config,
+    list_trades_response, query_cards, read_exchange_rate_config, save_exchange_rate_config,
 };
 use hololive_ocg_tracker::db;
 use hololive_ocg_tracker::db::sqlite::{Database, SqlValue};
 use hololive_ocg_tracker::importer;
-use hololive_ocg_tracker::models::{SaveTradeItemInput, SaveTradeRequest};
+use hololive_ocg_tracker::models::{CardFilterParams, SaveTradeItemInput, SaveTradeRequest};
 use std::path::Path;
 use tempfile::tempdir;
 
@@ -286,4 +286,140 @@ fn trades_sync_collection_wishlist_and_revert_work() {
         .expect("wishlist row restored");
     assert_eq!(restored_qty, 0);
     assert!(restored_wish);
+}
+
+#[test]
+fn catalog_colors_buzz_classifications_and_grouped_holomem_filter_work() {
+    let resources_dir = Path::new("resources");
+    let tmp = tempdir().expect("create tempdir");
+    let db_path = tmp.path().join("test_catalog_filters.db");
+    let database = Database::open(&db_path).expect("open sqlite db");
+    db::init_schema(&database).expect("init schema");
+    importer::sync_resources_to_db(&database, resources_dir, true).expect("sync resources");
+
+    // 1. All 6 Mizumiya Su cards must be Blue
+    let su_colors: Vec<String> = database
+        .query_map(
+            "SELECT color FROM cards WHERE name LIKE '%Mizumiya Su%'",
+            &[],
+            |r| Ok(r.get_string(0)),
+        )
+        .expect("query Mizumiya Su");
+    assert_eq!(su_colors.len(), 6);
+    assert!(su_colors.iter().all(|c| c == "Blue"));
+
+    // 2. Mori Calliope hBP06-057..060 -> Blue, hBP02-054 -> Purple, hBP01-100 Spot -> Colorless
+    let calli_blue: Vec<String> = database
+        .query_map(
+            "SELECT color FROM cards WHERE card_number IN ('hBP06-057','hBP06-058','hBP06-059','hBP06-060')",
+            &[],
+            |r| Ok(r.get_string(0)),
+        )
+        .expect("query Calliope Blue");
+    assert_eq!(calli_blue.len(), 11);
+    assert!(calli_blue.iter().all(|c| c == "Blue"));
+
+    let calli_purple: Vec<String> = database
+        .query_map(
+            "SELECT color FROM cards WHERE card_number = 'hBP02-054'",
+            &[],
+            |r| Ok(r.get_string(0)),
+        )
+        .expect("query Calliope Purple");
+    assert!(!calli_purple.is_empty());
+    assert!(calli_purple.iter().all(|c| c == "Purple"));
+
+    let calli_spot: Vec<String> = database
+        .query_map(
+            "SELECT color FROM cards WHERE card_number = 'hBP01-100'",
+            &[],
+            |r| Ok(r.get_string(0)),
+        )
+        .expect("query Calliope Spot");
+    assert_eq!(calli_spot.len(), 2);
+    assert!(calli_spot.iter().all(|c| c == "Colorless"));
+
+    // 3. Sakamata Chloe hBP06-055 -> Blue; Spot cards hBP06-084 & hSD10-010 -> Colorless
+    let chloe_colors: Vec<String> = database
+        .query_map(
+            "SELECT color FROM cards WHERE card_number = 'hBP06-055'",
+            &[],
+            |r| Ok(r.get_string(0)),
+        )
+        .expect("query Chloe");
+    assert!(!chloe_colors.is_empty());
+    assert!(chloe_colors.iter().all(|c| c == "Blue"));
+
+    for spot_cn in ["hBP06-084", "hSD10-010"] {
+        let cols: Vec<String> = database
+            .query_map(
+                "SELECT color FROM cards WHERE card_number = ?1",
+                &[SqlValue::from(spot_cn)],
+                |r| Ok(r.get_string(0)),
+            )
+            .expect("query Spot card");
+        assert!(!cols.is_empty());
+        assert!(cols.iter().all(|c| c == "Colorless"));
+    }
+
+    // 4. All 6 HBP03E UR cards with TCGCSV Yellow typos must reconcile to true colors
+    for (pid, expected_color) in [
+        (669035_i64, "White"),
+        (669038, "White"),
+        (669050, "Green"),
+        (669057, "Green"),
+        (669069, "Red"),
+        (669077, "Red"),
+    ] {
+        let actual = database
+            .query_row_opt(
+                "SELECT color FROM cards WHERE product_id = ?1",
+                &[SqlValue::from(pid)],
+                |r| Ok(r.get_string(0)),
+            )
+            .expect("query HBP03E UR")
+            .expect("UR card exists");
+        assert_eq!(actual, expected_color, "product_id {pid}");
+    }
+
+    // 5. All 5 HBP06 Buzz Holomems and Omaru Polka SR reprint 645712 must be Buzz Holomem
+    for cn in [
+        "hBP06-013",
+        "hBP06-026",
+        "hBP06-052",
+        "hBP06-065",
+        "hBP06-076",
+        "hBP01-071",
+    ] {
+        let types: Vec<String> = database
+            .query_map(
+                "SELECT card_type FROM cards WHERE card_number = ?1",
+                &[SqlValue::from(cn)],
+                |r| Ok(r.get_string(0)),
+            )
+            .expect("query Buzz cardType");
+        assert!(!types.is_empty());
+        assert!(types.iter().all(|t| t == "Buzz Holomem"), "card_number {cn}");
+    }
+
+    // 6. Filtering by card_type = "Holomem" returns BOTH Holomem and Buzz Holomem
+    let grouped = query_cards(
+        &database,
+        &CardFilterParams {
+            q: Some("Kazama Iroha".to_string()),
+            card_type: Some("Holomem".to_string()),
+            per_page: Some(250),
+            ..Default::default()
+        },
+    )
+    .expect("query grouped Holomem filter");
+    assert!(grouped.items.iter().any(|c| c.card.card_type == "Holomem"));
+    assert!(grouped
+        .items
+        .iter()
+        .any(|c| c.card.card_type == "Buzz Holomem"));
+    assert!(grouped
+        .items
+        .iter()
+        .all(|c| c.card.card_type == "Holomem" || c.card.card_type == "Buzz Holomem"));
 }
