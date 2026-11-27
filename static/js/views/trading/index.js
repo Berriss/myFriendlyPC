@@ -233,18 +233,48 @@ function renderTradeSideColumn(title, items, cashUsd, currencyInput, cashOrig, i
     </div>`;
 }
 
-function syncTradingListFilterClearBtn() {
+function syncTradingFilterControls() {
   const qInput = document.getElementById("trading-filter-q");
-  const clearBtn = document.getElementById("trading-filter-q-clear");
-  if (qInput && clearBtn) {
-    clearBtn.classList.toggle("hidden", !qInput.value.trim());
+  const clearSearchBtn = document.getElementById("trading-filter-q-clear");
+  const typeSel = document.getElementById("trading-filter-type");
+  const sortSel = document.getElementById("trading-filter-sort");
+  const clearAllBtn = document.getElementById("trading-clear-filters-btn");
+
+  const query = (qInput ? qInput.value : state.trading.q || "").trim();
+  clearSearchBtn?.classList.toggle("hidden", !query);
+
+  if (typeSel && typeSel.value !== state.trading.filterType) {
+    typeSel.value = state.trading.filterType || "all";
   }
+  if (sortSel && sortSel.value !== state.trading.sort) {
+    sortSel.value = state.trading.sort || "date_desc";
+  }
+
+  document.querySelectorAll("#trading-verdict-chips [data-trade-verdict]").forEach((btn) => {
+    btn.classList.toggle("active", btn.getAttribute("data-trade-verdict") === state.trading.filterVerdict);
+  });
+
+  const hasActiveFilter =
+    Boolean(query) ||
+    (state.trading.filterType && state.trading.filterType !== "all") ||
+    (state.trading.filterVerdict && state.trading.filterVerdict !== "all");
+  clearAllBtn?.classList.toggle("hidden", !hasActiveFilter);
+}
+
+function resetTradingListFilters() {
+  state.trading.filterType = "all";
+  state.trading.filterVerdict = "all";
+  state.trading.q = "";
+  const qInput = document.getElementById("trading-filter-q");
+  if (qInput) qInput.value = "";
+  syncTradingFilterControls();
+  renderTradesList();
 }
 
 export function renderTradesList() {
   const host = document.getElementById("trading-list-container");
   if (!host) return;
-  syncTradingListFilterClearBtn();
+  syncTradingFilterControls();
 
   const list = getFilteredTrades();
   if (!state.trading.items.length) {
@@ -270,20 +300,7 @@ export function renderTradesList() {
         <p class="muted-text" style="margin:0 0 12px;">No hay operaciones que coincidan con los filtros actuales.</p>
         <button id="reset-trade-filters-btn" class="tonal-btn" type="button">Limpiar filtros</button>
       </div>`;
-    document.getElementById("reset-trade-filters-btn")?.addEventListener("click", () => {
-      state.trading.filterType = "all";
-      state.trading.filterVerdict = "all";
-      state.trading.q = "";
-      const qInput = document.getElementById("trading-filter-q");
-      if (qInput) qInput.value = "";
-      document.querySelectorAll("#trading-type-chips [data-trade-type]").forEach((b) =>
-        b.classList.toggle("active", b.getAttribute("data-trade-type") === "all")
-      );
-      document.querySelectorAll("#trading-verdict-chips [data-trade-verdict]").forEach((b) =>
-        b.classList.toggle("active", b.getAttribute("data-trade-verdict") === "all")
-      );
-      renderTradesList();
-    });
+    document.getElementById("reset-trade-filters-btn")?.addEventListener("click", resetTradingListFilters);
     return;
   }
 
@@ -421,23 +438,20 @@ export function bindTradingEvents() {
     });
   });
 
-  document.querySelectorAll("#trading-type-chips [data-trade-type]").forEach((btn) => {
-    btn.addEventListener("click", () => {
-      document.querySelectorAll("#trading-type-chips .filter-chip").forEach((c) => c.classList.remove("active"));
-      btn.classList.add("active");
-      state.trading.filterType = btn.getAttribute("data-trade-type") || "all";
-      renderTradesList();
-    });
+  document.getElementById("trading-filter-type")?.addEventListener("change", (e) => {
+    state.trading.filterType = e.target.value || "all";
+    renderTradesList();
   });
 
   document.querySelectorAll("#trading-verdict-chips [data-trade-verdict]").forEach((btn) => {
     btn.addEventListener("click", () => {
-      document.querySelectorAll("#trading-verdict-chips .filter-chip").forEach((c) => c.classList.remove("active"));
-      btn.classList.add("active");
-      state.trading.filterVerdict = btn.getAttribute("data-trade-verdict") || "all";
+      const val = btn.getAttribute("data-trade-verdict") || "all";
+      state.trading.filterVerdict = state.trading.filterVerdict === val ? "all" : val;
       renderTradesList();
     });
   });
+
+  document.getElementById("trading-clear-filters-btn")?.addEventListener("click", resetTradingListFilters);
 
   document.getElementById("trading-filter-q")?.addEventListener("input", (e) => {
     state.trading.q = e.target.value;

@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
   <title>Hololive OCG Tracker — Colección &amp; Catálogo</title>
   <link rel="icon" type="image/svg+xml" href="/icon.svg" />
-  <link rel="stylesheet" href="/css/styles.css?v=20261127-4" />
+  <link rel="stylesheet" href="/css/styles.css?v=20261127-6" />
 </head>
 <body>
   <div class="app-shell">
@@ -705,35 +705,36 @@
         <section id="trading-summary-strip" class="trading-summary-strip" aria-label="Resumen de Trading"></section>
 
         <section class="toolbar-card trading-toolbar-card">
-          <div class="trading-filter-row">
-            <div class="chip-row" id="trading-type-chips">
-              <button class="filter-chip active" data-trade-type="all" type="button">Todos</button>
-              <button class="filter-chip" data-trade-type="buy" type="button">Compras</button>
-              <button class="filter-chip" data-trade-type="sell" type="button">Ventas</button>
-              <button class="filter-chip" data-trade-type="trade" type="button">Intercambios</button>
-            </div>
-            <div class="chip-row" id="trading-verdict-chips">
-              <button class="filter-chip active" data-trade-verdict="all" type="button">Todos</button>
-              <button class="filter-chip" data-trade-verdict="worth" type="button">WORTH ✓</button>
-              <button class="filter-chip" data-trade-verdict="fair" type="button">Parejo ≈</button>
-              <button class="filter-chip" data-trade-verdict="not_worth" type="button">No Worth ✕</button>
-            </div>
-          </div>
-
-          <div class="trading-search-sort-row">
+          <div class="trading-search-controls">
             <div class="search-field has-clear">
               <svg viewBox="0 0 24 24" class="search-icon"><path d="M15.5 14h-.79l-.28-.27A6.471 6.471 0 0 0 16 9.5 6.5 6.5 0 1 0 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/></svg>
               <input id="trading-filter-q" type="search" placeholder="Buscar carta, contraparte o nota..." autocomplete="off" />
               <button id="trading-filter-q-clear" class="search-clear-btn hidden" type="button" aria-label="Limpiar búsqueda">✕</button>
             </div>
-            <div class="field-group trading-sort-field">
-              <select id="trading-filter-sort" aria-label="Ordenar operaciones">
+            <div class="trading-selects-pair">
+              <select id="trading-filter-type" class="trading-compact-select" aria-label="Filtrar por tipo de movimiento">
+                <option value="all">Tipo: Todos</option>
+                <option value="buy">Compras</option>
+                <option value="sell">Ventas</option>
+                <option value="trade">Intercambios</option>
+              </select>
+              <select id="trading-filter-sort" class="trading-compact-select" aria-label="Ordenar operaciones">
                 <option value="date_desc">Más recientes</option>
-                <option value="balance_desc">Mayor ganancia (Worth)</option>
+                <option value="balance_desc">Mayor ganancia</option>
                 <option value="balance_asc">Mayor pérdida</option>
                 <option value="roi_desc">Mejor ROI %</option>
               </select>
             </div>
+          </div>
+
+          <div class="trading-verdict-bar">
+            <span class="trading-verdict-label">Resultado</span>
+            <div class="trading-verdict-pills" id="trading-verdict-chips" role="group" aria-label="Filtrar por resultado">
+              <button class="filter-chip verdict-chip is-worth" data-trade-verdict="worth" type="button">✓ Worth</button>
+              <button class="filter-chip verdict-chip is-fair" data-trade-verdict="fair" type="button">≈ Parejo</button>
+              <button class="filter-chip verdict-chip is-not-worth" data-trade-verdict="not_worth" type="button">✕ No Worth</button>
+            </div>
+            <button id="trading-clear-filters-btn" class="text-btn trading-clear-btn hidden" type="button">Limpiar</button>
           </div>
         </section>
 
@@ -1225,6 +1226,6 @@
 
   <script src="/js/firebase-config.js?v=20261121-2"></script>
   <script src="/js/firebase-cloud.js?v=20261127-1"></script>
-  <script type="module" src="/js/main.js?v=20261127-3"></script>
+  <script type="module" src="/js/main.js?v=20261127-5"></script>
 </body>
 </html>
