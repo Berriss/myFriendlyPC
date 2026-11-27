@@ -2,10 +2,10 @@
 <html lang="es" data-theme="light">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
   <title>Hololive OCG Tracker — Colección &amp; Catálogo</title>
   <link rel="icon" type="image/svg+xml" href="/icon.svg" />
-  <link rel="stylesheet" href="/css/styles.css?v=20261127-1" />
+  <link rel="stylesheet" href="/css/styles.css?v=20261127-4" />
 </head>
 <body>
   <div class="app-shell">
@@ -673,12 +673,12 @@
 
       <!-- VIEW 4: TRADING (BUY / SELL / SWAP & WORTH ANALYTICS) -->
       <main id="view-trading" class="view-section">
-        <div class="section-header-card">
+        <div class="section-header-card trading-header-card">
           <div>
             <h2>Trading — Compras, Ventas e Intercambios</h2>
             <p class="muted-text">Registra compras, ventas e intercambios, evalúa si cada trato fue <strong>WORTH ✓</strong> (al cierre o a precios actuales) y actualiza tu Colección y Wishlist.</p>
           </div>
-          <div class="action-row">
+          <div class="action-row trading-header-actions">
             <button id="new-trade-buy-btn" class="filled-btn" type="button">+ Compra</button>
             <button id="new-trade-sell-btn" class="tonal-btn" type="button">+ Venta</button>
             <button id="new-trade-swap-btn" class="tonal-btn" type="button">⇄ Intercambio</button>
@@ -697,14 +697,14 @@
             <span id="trading-basis-desc" class="muted-text">Comparando cartas según los precios de mercado diarios actuales.</span>
           </div>
           <div class="segmented-view" id="trading-basis-switch" role="group" aria-label="Modo de valoración Trading">
-            <button class="seg-btn active" data-trade-basis="now" type="button">Precios de HOY (Live)</button>
-            <button class="seg-btn" data-trade-basis="deal" type="button">Al cerrar cada trato</button>
+            <button class="seg-btn active" data-trade-basis="now" type="button">Precios de HOY</button>
+            <button class="seg-btn" data-trade-basis="deal" type="button">Al cerrar trato</button>
           </div>
         </div>
 
         <section id="trading-summary-strip" class="trading-summary-strip" aria-label="Resumen de Trading"></section>
 
-        <section class="toolbar-card">
+        <section class="toolbar-card trading-toolbar-card">
           <div class="trading-filter-row">
             <div class="chip-row" id="trading-type-chips">
               <button class="filter-chip active" data-trade-type="all" type="button">Todos</button>
@@ -720,12 +720,13 @@
             </div>
           </div>
 
-          <div class="collection-binder-inputs" style="margin-top:10px;">
-            <div class="search-field">
+          <div class="trading-search-sort-row">
+            <div class="search-field has-clear">
               <svg viewBox="0 0 24 24" class="search-icon"><path d="M15.5 14h-.79l-.28-.27A6.471 6.471 0 0 0 16 9.5 6.5 6.5 0 1 0 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/></svg>
               <input id="trading-filter-q" type="search" placeholder="Buscar carta, contraparte o nota..." autocomplete="off" />
+              <button id="trading-filter-q-clear" class="search-clear-btn hidden" type="button" aria-label="Limpiar búsqueda">✕</button>
             </div>
-            <div class="field-group">
+            <div class="field-group trading-sort-field">
               <select id="trading-filter-sort" aria-label="Ordenar operaciones">
                 <option value="date_desc">Más recientes</option>
                 <option value="balance_desc">Mayor ganancia (Worth)</option>
@@ -975,7 +976,7 @@
 
   <!-- Trade Register / Edit Modal -->
   <div id="trade-editor-modal" class="modal-backdrop hidden" role="dialog" aria-modal="true" aria-labelledby="trade-editor-title">
-    <div class="modal-sheet modal-sheet-wide">
+    <div id="trade-editor-sheet" class="modal-sheet modal-sheet-wide trade-editor-sheet">
       <div class="modal-header">
         <div>
           <span class="modal-kicker">Trading · Registro de Movimientos</span>
@@ -996,21 +997,32 @@
         </div>
 
         <div class="trade-meta-grid">
-          <div class="field-group">
+          <div class="field-group trade-meta-date">
             <label for="trade-date-input">Fecha</label>
             <input id="trade-date-input" type="date" required />
           </div>
-          <div class="field-group">
+          <div class="field-group trade-meta-counterparty">
             <label for="trade-counterparty-input">Persona / Tienda / Evento</label>
             <input id="trade-counterparty-input" type="text" maxlength="120" placeholder="Ej: Tienda Tokyo, Juan, Discord..." />
           </div>
-          <div class="field-group">
+          <div class="field-group trade-meta-currency">
             <label for="trade-currency-input">Moneda del efectivo</label>
             <select id="trade-currency-input">
               <option value="CLP">CLP ($ Pesos Chilenos)</option>
               <option value="USD">USD ($ Dólares)</option>
             </select>
           </div>
+        </div>
+
+        <div id="trade-mobile-side-tabs" class="trade-mobile-side-tabs hidden" role="tablist" aria-label="Lado del intercambio">
+          <button id="trade-tab-out" class="trade-mobile-tab active" data-trade-mobile-side="out" type="button">
+            <span>Entregas</span>
+            <span id="trade-tab-out-meta" class="trade-mobile-tab-meta">0 · $0.00</span>
+          </button>
+          <button id="trade-tab-in" class="trade-mobile-tab" data-trade-mobile-side="in" type="button">
+            <span>Recibes</span>
+            <span id="trade-tab-in-meta" class="trade-mobile-tab-meta">0 · $0.00</span>
+          </button>
         </div>
 
         <div class="trade-editor-sides" id="trade-editor-sides">
@@ -1025,11 +1037,12 @@
             </div>
 
             <div class="trade-picker-toolbar">
-              <div class="search-field">
+              <div class="search-field has-clear">
                 <svg viewBox="0 0 24 24" class="search-icon"><path d="M15.5 14h-.79l-.28-.27A6.471 6.471 0 0 0 16 9.5 6.5 6.5 0 1 0 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/></svg>
                 <input id="trade-out-search" type="search" placeholder="Buscar carta que entregas..." autocomplete="off" />
+                <button id="trade-out-search-clear" class="search-clear-btn hidden" type="button" aria-label="Limpiar búsqueda">✕</button>
               </div>
-              <label class="trade-inline-check">
+              <label class="trade-inline-check trade-owned-chip">
                 <input id="trade-out-owned-only" type="checkbox" checked />
                 <span>Solo mi colección</span>
               </label>
@@ -1049,12 +1062,14 @@
             </div>
 
             <div class="trade-picker-toolbar">
-              <div class="search-field">
+              <div class="search-field has-clear">
                 <svg viewBox="0 0 24 24" class="search-icon"><path d="M15.5 14h-.79l-.28-.27A6.471 6.471 0 0 0 16 9.5 6.5 6.5 0 1 0 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/></svg>
                 <input id="trade-in-search" type="search" placeholder="Buscar carta o sellado que recibes..." autocomplete="off" />
+                <button id="trade-in-search-clear" class="search-clear-btn hidden" type="button" aria-label="Limpiar búsqueda">✕</button>
               </div>
               <div class="chip-row" id="trade-in-scope-chips">
-                <button class="filter-chip active" data-trade-in-scope="all" type="button">Todos</button>
+                <button class="filter-chip active" data-trade-in-scope="all" type="button">Todo</button>
+                <button class="filter-chip" data-trade-in-scope="cards" type="button">Cartas</button>
                 <button class="filter-chip" data-trade-in-scope="wishlist" type="button">♥ Wishlist</button>
                 <button class="filter-chip" data-trade-in-scope="sealed" type="button">Sellados</button>
               </div>
@@ -1067,18 +1082,18 @@
         <div class="trade-cash-row">
           <div class="field-group" id="trade-cash-paid-wrap">
             <label for="trade-cash-paid-input" id="trade-cash-paid-label">Efectivo pagado / puesto</label>
-            <input id="trade-cash-paid-input" type="number" min="0" step="0.01" placeholder="0" />
+            <input id="trade-cash-paid-input" type="number" inputmode="decimal" min="0" step="0.01" placeholder="0" />
           </div>
           <div class="field-group" id="trade-cash-received-wrap">
             <label for="trade-cash-received-input" id="trade-cash-received-label">Efectivo recibido</label>
-            <input id="trade-cash-received-input" type="number" min="0" step="0.01" placeholder="0" />
+            <input id="trade-cash-received-input" type="number" inputmode="decimal" min="0" step="0.01" placeholder="0" />
           </div>
         </div>
 
         <div id="trade-live-verdict-box" class="trade-live-verdict-box"></div>
 
         <div class="trade-notes-sync-row">
-          <div class="field-group" style="flex:1 1 320px;">
+          <div class="field-group trade-notes-field">
             <label for="trade-notes-input">Notas del trato</label>
             <textarea id="trade-notes-input" rows="2" maxlength="1000" placeholder="Incluye detalles de envío, condición o extras..."></textarea>
           </div>
@@ -1210,6 +1225,6 @@
 
   <script src="/js/firebase-config.js?v=20261121-2"></script>
   <script src="/js/firebase-cloud.js?v=20261127-1"></script>
-  <script type="module" src="/js/main.js?v=20261127-2"></script>
+  <script type="module" src="/js/main.js?v=20261127-3"></script>
 </body>
 </html>

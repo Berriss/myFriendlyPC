@@ -49,7 +49,7 @@ import {
   updateDeckDirtyBadge,
 } from "./views/decks/studio.js";
 import { loadKpis, renderKpis } from "./views/kpis.js";
-import { bindTradingEvents, loadTrades, openTradeEditor, renderTradeEditorLiveVerdict, renderTradeEditorSideItems, renderTradesList, renderTradesSummary } from "./views/trading.js";
+import { bindTradingEvents, loadTrades, openTradeEditor, renderTradeEditorLiveVerdict, renderTradeEditorSideItems, renderTradesList, renderTradesSummary } from "./views/trading/index.js";
 import { bindWishlistPdfEvents, openWishlistPdfModal } from "./views/wishlist-pdf.js";
 
 function switchView(viewName) {
