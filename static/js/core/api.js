@@ -1,4 +1,5 @@
 import { actions } from "./actions.js";
+import { getRoleLabel, isAdmin, resolveUserRole, syncAuthState } from "./roles.js";
 
 let snackbarTimer = null;
 
@@ -43,23 +44,30 @@ export async function triggerGoogleSignIn() {
 }
 
 export function updateFirebaseAuthUI(user) {
+  const authState = syncAuthState(user);
   const authBtn = document.getElementById("firebase-auth-btn");
   const authLabel = document.getElementById("firebase-auth-label");
+  const roleBadge = document.getElementById("firebase-role-badge");
   const isCloud = Boolean(window.HololiveCloudBackend?.isCloudMode());
 
   if (authBtn && authLabel) {
     if (user) {
       const name = user.displayName || user.email || "Cuenta Google";
       authBtn.classList.add("is-signed-in");
+      authBtn.classList.toggle("is-admin", authState.isAdmin);
       authLabel.textContent = `☁ ${name}`;
       authBtn.title = `Conectado como ${name} (Click para ver cuenta o cerrar sesión)`;
     } else {
-      authBtn.classList.remove("is-signed-in");
+      authBtn.classList.remove("is-signed-in", "is-admin");
       authLabel.textContent = isCloud ? "Iniciar sesión con Google" : "☁ Sync Google";
       authBtn.title = isCloud
         ? "Inicia sesión con Google para guardar tu colección y mazos en Cloud Firestore"
         : "Conectar cuenta Google para respaldar colección y mazos en Cloud Firestore";
     }
+  }
+  if (roleBadge) {
+    roleBadge.textContent = getRoleLabel(authState.role);
+    roleBadge.classList.toggle("hidden", !Boolean(user && authState.isAdmin));
   }
 
   updateDecksAuthStatus(user, isCloud);
@@ -129,6 +137,7 @@ export function openSignOutModal(user) {
   const modal = document.getElementById("signout-modal");
   const nameEl = document.getElementById("signout-account-name");
   const emailEl = document.getElementById("signout-account-email");
+  const roleEl = document.getElementById("signout-account-role");
   const syncLocalBtn = document.getElementById("signout-sync-local-btn");
   const confirmBtn = document.getElementById("signout-confirm-btn");
 
@@ -142,6 +151,16 @@ export function openSignOutModal(user) {
       emailEl.textContent = "";
       emailEl.classList.add("hidden");
     }
+  }
+  if (roleEl) {
+    const role = resolveUserRole(user, {
+      isCloudMode: Boolean(window.HololiveCloudBackend?.isCloudMode()),
+    });
+    const modalIsAdmin = isAdmin(role);
+    roleEl.innerHTML = `<span class="role-badge ${modalIsAdmin ? "is-admin" : "is-user"}">${
+      modalIsAdmin ? "Administrador" : getRoleLabel(role)
+    }</span>`;
+    roleEl.classList.remove("hidden");
   }
   if (syncLocalBtn) {
     const isCloud = Boolean(window.HololiveCloudBackend?.isCloudMode());

@@ -7,6 +7,8 @@
     S: 7, SY: 8, HR: 9, R: 10, U: 11, C: 12, OC: 13, P: 14,
   };
 
+  const ADMIN_EMAILS = new Set(["sebastianberr@gmail.com"]);
+
   const LS_COLLECTION = "hocg-cloud-guest-collection";
   const LS_DECKS = "hocg-cloud-guest-decks";
   const LS_TRADES = "hocg-cloud-guest-trades";
@@ -162,6 +164,24 @@
       try { fn(); } catch (_) {}
     });
     unsubs = [];
+  }
+
+  function normalizeEmail(email) {
+    return String(email || "").trim().toLowerCase();
+  }
+
+  function getUserRole() {
+    if (currentUser) {
+      const isVerifiedAdmin =
+        currentUser.emailVerified === true &&
+        ADMIN_EMAILS.has(normalizeEmail(currentUser.email));
+      return isVerifiedAdmin ? "admin" : "user";
+    }
+    return useCloudBackend ? "guest" : "admin";
+  }
+
+  function isCurrentUserAdmin() {
+    return getUserRole() === "admin";
   }
 
   function isCardFoil(card) {
@@ -579,7 +599,6 @@
             cardsList = cached.cards;
             cardsById = new Map(cardsList.map((c) => [Number(c.productId), c]));
             editionsList = sortEditionsDesc(cached.editions || []);
-            auditReport = normalizeAuditReport(cached.auditReport || {});
             catalogSyncInfo = {
               source: "Cloud Firestore (Caché local al día)",
               catalogUpdatedAt,
@@ -600,14 +619,12 @@
             cardsList = cached.cards;
             cardsById = new Map(cardsList.map((c) => [Number(c.productId), c]));
             editionsList = sortEditionsDesc(cached.editions || []);
-            auditReport = normalizeAuditReport(cached.auditReport || {});
             await idbSet(IDB_BUNDLE_KEY, {
               catalogHash,
               catalogUpdatedAt,
               pricesUpdatedAt,
               cards: cardsList,
               editions: editionsList,
-              auditReport,
             });
             catalogSyncInfo = {
               source: "Cloud Firestore (Precios actualizados hoy)",
@@ -622,11 +639,10 @@
         }
       }
 
-      // Full sync from Firestore (editions + metadata/prices + metadata/audit)
-      const [editionsSnap, pricesSnap, auditSnap] = await Promise.all([
+      // Full sync from Firestore (editions + metadata/prices only; audit is lazy-loaded for admins)
+      const [editionsSnap, pricesSnap] = await Promise.all([
         getDocs(collection(mods.db, "editions")),
         getDoc(doc(mods.db, "metadata", "prices")),
-        getDoc(doc(mods.db, "metadata", "audit")).catch(() => null),
       ]);
 
       if (editionsSnap.empty || !pricesSnap.exists()) {
@@ -660,16 +676,9 @@
       if (!nextCards.length) return false;
       applyPricesOverlay(nextCards, pricesMap);
 
-      let parsedAudit = {};
-      if (auditSnap && auditSnap.exists()) {
-        const ad = auditSnap.data() || {};
-        parsedAudit = ad.reportJson ? JSON.parse(ad.reportJson) : ad.report || ad;
-      }
-
       cardsList = nextCards;
       cardsById = new Map(cardsList.map((c) => [Number(c.productId), c]));
       editionsList = sortEditionsDesc(nextEditions);
-      auditReport = normalizeAuditReport(parsedAudit);
 
       await idbSet(IDB_BUNDLE_KEY, {
         catalogHash,
@@ -677,7 +686,6 @@
         pricesUpdatedAt,
         cards: cardsList,
         editions: editionsList,
-        auditReport,
       });
 
       catalogSyncInfo = {
@@ -709,10 +717,9 @@
       return;
     }
 
-    const [cardsRes, groupsRes, auditRes, rateRes] = await Promise.all([
+    const [cardsRes, groupsRes, rateRes] = await Promise.all([
       fetch("/data/cards_cleaned.json"),
       fetch("/data/groups.json"),
-      fetch("/data/audit_report.json").catch(() => null),
       fetch("/data/exchange_rate.json").catch(() => null),
     ]);
 
@@ -727,10 +734,6 @@
     const groupsJson = await groupsRes.json();
     editionsList = sortEditionsDesc(groupsJson.results || []);
 
-    if (auditRes && auditRes.ok) {
-      const rawAudit = await auditRes.json();
-      auditReport = normalizeAuditReport(rawAudit);
-    }
     if (rateRes && rateRes.ok && !cloudAutoRate) {
       defaultRate = await rateRes.json();
       refreshActiveRate();
@@ -772,6 +775,39 @@
         cleanedSnippet: ex.cleanedSnippet ?? ex.cleaned_snippet ?? "",
       })),
     };
+  }
+
+  async function loadAuditReportForAdmin(forceRefresh = false) {
+    if (!isCurrentUserAdmin()) {
+      throw new Error("Acceso denegado: se requieren privilegios de administrador.");
+    }
+    if (!forceRefresh && auditReport && Number(auditReport.totalProducts || 0) > 0) {
+      return auditReport;
+    }
+
+    let loaded = null;
+    try {
+      const mods = await Promise.race([
+        ensureFirebaseModules(),
+        new Promise((resolve) => setTimeout(() => resolve(null), 4000)),
+      ]);
+      if (mods && mods.db && mods.fbFsMod) {
+        const { doc, getDoc } = mods.fbFsMod;
+        const auditSnap = await getDoc(doc(mods.db, "metadata", "audit"));
+        if (auditSnap && auditSnap.exists()) {
+          const ad = auditSnap.data() || {};
+          loaded = ad.reportJson ? JSON.parse(ad.reportJson) : ad.report || ad;
+        }
+      }
+    } catch (err) {
+      if (err?.code === "permission-denied") {
+        throw new Error("Acceso denegado por reglas de Firestore.");
+      }
+      console.warn("Admin Firestore audit read skipped:", err?.message || err);
+    }
+
+    auditReport = normalizeAuditReport(loaded || {});
+    return auditReport;
   }
 
   function toFirestoreCollectionDoc(entry) {
@@ -1488,6 +1524,9 @@
             if (useCloudBackend) loadGuestStateFromStorage();
             else refreshActiveRate();
           }
+          if (!isCurrentUserAdmin()) {
+            auditReport = {};
+          }
           window.onFirebaseAuthChanged?.(user);
           if (!settled) {
             settled = true;
@@ -1929,17 +1968,26 @@
       return joinCardWithCollection(card);
     }
     if (path === "/api/audit") {
+      if (!isCurrentUserAdmin()) {
+        throw new Error("Acceso denegado: solo el administrador puede consultar la auditoría.");
+      }
+      const report = await loadAuditReportForAdmin();
       return {
         syncedAt: catalogSyncInfo.pricesUpdatedAt || catalogSyncInfo.catalogUpdatedAt || new Date().toISOString(),
         source: catalogSyncInfo.source,
         catalogUpdatedAt: catalogSyncInfo.catalogUpdatedAt || "",
         pricesUpdatedAt: catalogSyncInfo.pricesUpdatedAt || "",
-        report: auditReport,
+        report,
       };
     }
     if (path === "/api/resync" && method === "POST") {
+      if (!isCurrentUserAdmin()) {
+        throw new Error("Acceso denegado: solo el administrador puede resincronizar el catálogo.");
+      }
       catalogLoaded = false;
+      auditReport = {};
       await ensureCatalogLoaded(true);
+      await loadAuditReportForAdmin(true);
       return {
         editionsSynced: editionsList.length,
         cardsSynced: cardsList.length,
@@ -2310,6 +2358,8 @@
     initPromise,
     isCloudMode: () => useCloudBackend,
     getCurrentUser: () => currentUser,
+    getUserRole,
+    isAdmin: isCurrentUserAdmin,
     getCatalogSyncInfo: () => ({ ...catalogSyncInfo }),
     signInWithGoogle,
     signOutUser,

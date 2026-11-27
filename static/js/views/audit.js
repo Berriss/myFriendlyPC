@@ -1,8 +1,25 @@
 import { actions } from "../core/actions.js";
 import { apiFetch, showSnackbar } from "../core/api.js";
 import { escapeHtml } from "../core/formatters.js";
+import { hasPermission } from "../core/roles.js";
+
+export function clearAuditView() {
+  const syncMetaEl = document.getElementById("audit-sync-meta");
+  if (syncMetaEl) {
+    syncMetaEl.textContent = "";
+    syncMetaEl.classList.add("hidden");
+  }
+  const grid = document.getElementById("audit-stats-grid");
+  if (grid) grid.innerHTML = "";
+  const exHost = document.getElementById("audit-examples-list");
+  if (exHost) exHost.innerHTML = "";
+}
 
 export async function loadAudit() {
+  if (!hasPermission("audit:access")) {
+    clearAuditView();
+    return;
+  }
   try {
     const data = await apiFetch("/api/audit");
     const r = data.report || {};
@@ -72,6 +89,10 @@ export async function loadAudit() {
 
 export function bindAuditEvents() {
   document.getElementById("resync-db-btn")?.addEventListener("click", async () => {
+    if (!hasPermission("audit:resync")) {
+      showSnackbar("Acceso denegado: se requieren privilegios de administrador.");
+      return;
+    }
     const isCloud = window.HololiveCloudBackend?.isCloudMode();
     try {
       showSnackbar(

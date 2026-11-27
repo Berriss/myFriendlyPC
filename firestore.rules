@@ -12,9 +12,13 @@ service cloud.firestore {
     //         (populated/updated exclusively via Admin SDK / CLI seeding).
     //
     // Collection: metadata
-    // Document ID: {docId} (e.g., audit report, catalog sync metadata)
-    // Access: Public read-only catalog metadata; writes disabled for clients
-    //         (populated/updated exclusively via Admin SDK / CLI seeding).
+    // Document ID: {docId} ('catalog', 'prices', 'exchangeRate', 'audit')
+    // Access:
+    //   - catalog, prices, exchangeRate: Public read-only sync metadata; writes
+    //     disabled for clients (populated/updated exclusively via Admin SDK / CLI).
+    //   - audit: Admin-only read (request.auth.token.email_verified == true &&
+    //     request.auth.token.email == 'sebastianberr@gmail.com'); writes disabled
+    //     for clients (populated/updated exclusively via Admin SDK / CLI).
     //
     // Collection: users/{userId}/collection
     // Document ID: {productId}
@@ -86,6 +90,12 @@ service cloud.firestore {
 
     function isOwner(userId) {
       return isAuthenticated() && request.auth.uid == userId;
+    }
+
+    function isAdmin() {
+      return isAuthenticated() &&
+        request.auth.token.email_verified == true &&
+        request.auth.token.email == 'sebastianberr@gmail.com';
     }
 
     function hasRequiredFields(fields) {
@@ -272,8 +282,13 @@ service cloud.firestore {
       allow write: if false;
     }
 
+    match /metadata/audit {
+      allow read: if isAdmin();
+      allow write: if false;
+    }
+
     match /metadata/{docId} {
-      allow read: if true;
+      allow read: if docId in ['catalog', 'prices', 'exchangeRate'];
       allow write: if false;
     }
 

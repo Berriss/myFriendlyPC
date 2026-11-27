@@ -1,4 +1,9 @@
 export const state = {
+  auth: {
+    user: null,
+    role: "guest",
+    isAdmin: false,
+  },
   activeView: "catalog",
   viewMode: "grid",
   scrollMode: localStorage.getItem("hocg-scroll-mode") || "paged",

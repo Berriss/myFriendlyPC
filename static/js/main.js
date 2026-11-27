@@ -3,13 +3,15 @@ import {
   apiFetch,
   bindAuthAndShutdownEvents,
   configureRuntimeEnvironmentUI,
+  showSnackbar,
   updateFirebaseAuthUI,
 } from "./core/api.js";
 import { bindCurrencyEvents, updateCurrencyUI } from "./core/currency.js";
+import { canAccessView } from "./core/roles.js";
 import { runtime, state } from "./core/state.js";
 import { bindThemeEvents, initTheme } from "./core/theme.js";
 import { bindCardModalEvents, openCardModal } from "./components/card-modal.js";
-import { loadAudit, bindAuditEvents } from "./views/audit.js";
+import { bindAuditEvents, clearAuditView, loadAudit } from "./views/audit.js";
 import {
   bindCatalogEvents,
   loadCards,
@@ -51,6 +53,13 @@ import { bindTradingEvents, loadTrades, openTradeEditor, renderTradeEditorLiveVe
 import { bindWishlistPdfEvents, openWishlistPdfModal } from "./views/wishlist-pdf.js";
 
 function switchView(viewName) {
+  if (!canAccessView(viewName)) {
+    showSnackbar("Acceso restringido: solo el administrador puede acceder a Auditoría.");
+    if (state.activeView !== "catalog") {
+      switchView("catalog");
+    }
+    return;
+  }
   state.activeView = viewName;
   document.querySelectorAll(".view-section").forEach((sec) => {
     sec.classList.toggle("active", sec.id === `view-${viewName}`);
@@ -121,6 +130,7 @@ registerActions({
   loadDecks,
   setDeckSubView,
   addMissingCardsToWishlistForDeck,
+  clearAuditView,
   switchView,
 });
 

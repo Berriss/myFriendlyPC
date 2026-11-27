@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Hololive OCG Tracker — Colección &amp; Catálogo</title>
   <link rel="icon" type="image/svg+xml" href="/icon.svg" />
-  <link rel="stylesheet" href="/css/styles.css?v=20261125-4" />
+  <link rel="stylesheet" href="/css/styles.css?v=20261126-2" />
 </head>
 <body>
   <div class="app-shell">
@@ -39,7 +39,7 @@
           </span>
           <span class="rail-label">Trading</span>
         </button>
-        <button class="rail-btn" data-view="audit" aria-label="Auditoría">
+        <button class="rail-btn hidden" data-view="audit" data-requires-permission="audit:access" aria-label="Auditoría">
           <span class="rail-pill">
             <svg viewBox="0 0 24 24" class="icon"><path d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4zm-2 16l-4-4 1.41-1.41L10 14.17l6.59-6.59L18 9l-8 8z"/></svg>
           </span>
@@ -79,6 +79,7 @@
           <button id="firebase-auth-btn" class="tonal-btn auth-chip-btn" type="button" title="Conectar cuenta de Google para sincronizar con Cloud Firestore">
             <svg viewBox="0 0 24 24" class="icon-sm"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 3c1.66 0 3 1.34 3 3s-1.34 3-3 3-3-1.34-3-3 1.34-3 3-3zm0 14.2c-2.5 0-4.71-1.28-6-3.22.03-1.99 4-3.08 6-3.08 1.99 0 5.97 1.09 6 3.08-1.29 1.94-3.5 3.22-6 3.22z"/></svg>
             <span id="firebase-auth-label">Iniciar sesión con Google</span>
+            <span id="firebase-role-badge" class="role-badge is-admin hidden">Admin</span>
           </button>
           <button id="exchange-rate-chip" class="tonal-btn rate-chip-btn" type="button" title="Ver o actualizar tasa de cambio USD → CLP">
             <span id="exchange-rate-label">1 USD = $1.008 CLP</span>
@@ -734,7 +735,7 @@
       </main>
 
       <!-- VIEW 5: TCGCSV DATA AUDIT & SANITIZATION -->
-      <main id="view-audit" class="view-section">
+      <main id="view-audit" class="view-section hidden" data-requires-permission="audit:access">
         <div class="section-header-card">
           <div>
             <h2>Auditoría de Datos TCGCSV &amp; Saneamiento</h2>
@@ -779,7 +780,7 @@
         </span>
         <span>Trading</span>
       </button>
-      <button class="bottom-nav-btn" data-view="audit" type="button">
+      <button class="bottom-nav-btn hidden" data-view="audit" data-requires-permission="audit:access" type="button">
         <span class="bottom-pill">
           <svg viewBox="0 0 24 24" class="icon"><path d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4zm-2 16l-4-4 1.41-1.41L10 14.17l6.59-6.59L18 9l-8 8z"/></svg>
         </span>
@@ -898,6 +899,7 @@
           <div class="kpi-label">Sesión actual</div>
           <div id="signout-account-name" style="font-weight:700;font-size:1rem;margin-top:4px;">Cuenta Google</div>
           <div id="signout-account-email" class="muted-text"></div>
+          <div id="signout-account-role" class="account-role-row hidden"></div>
         </div>
         <p class="muted-text" style="margin-top:12px;">
           ¿Estás seguro de que quieres desconectarte? Tu colección, mazos y wishlist sincronizados seguirán guardados de forma segura en la nube.
@@ -1202,7 +1204,7 @@
   <div id="wishlist-pdf-print-root" class="wpdf-print-root" aria-hidden="true"></div>
 
   <script src="/js/firebase-config.js?v=20261121-2"></script>
-  <script src="/js/firebase-cloud.js?v=20261125-5"></script>
-  <script type="module" src="/js/main.js?v=20261126-1"></script>
+  <script src="/js/firebase-cloud.js?v=20261126-2"></script>
+  <script type="module" src="/js/main.js?v=20261126-2"></script>
 </body>
 </html>
