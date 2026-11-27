@@ -1,16 +1,61 @@
 import { actions } from "../../core/actions.js";
 import { apiFetch, showSnackbar } from "../../core/api.js";
-import { HOLOLIVE_COLORS } from "../../core/constants.js";
 import { escapeHtml, fmtMoney } from "../../core/formatters.js";
 import { state } from "../../core/state.js";
+import {
+  renderCheerRatioChartHtml,
+  renderMainColorHorizontalCardHtml,
+  renderMiniCheerRatioHtml,
+} from "./charts.js";
 import {
   evaluateDeckRules,
   getDeckCardNumberCount,
   groupDeckCards,
+  isLimitedSupportCard,
   isUnlimitedCopyCard,
 } from "./rules.js";
 
 let deckBrowserSearchTimer = null;
+let deckStudioEventsBound = false;
+
+function countActiveAdvancedDeckFilters(f) {
+  let count = 0;
+  if (f.group_id) count += 1;
+  if (f.rarity) count += 1;
+  if (f.parallel && f.parallel !== "all") count += 1;
+  if (f.owned_only) count += 1;
+  if (f.sort && f.sort !== "number_asc") count += 1;
+  return count;
+}
+
+function syncDeckFilterVisibility() {
+  const f = state.deckBuilder.filters;
+  const isMain = f.zone === "main";
+  const isSupportFilter = isMain && (f.card_type === "Support" || f.limited_only);
+  const hideColorless = f.zone === "cheer" || f.zone === "oshi";
+
+  if (hideColorless && f.color === "Colorless") {
+    f.color = "";
+  }
+  if (isSupportFilter) {
+    f.color = "";
+    f.bloom_level = "";
+  }
+
+  const colorlessChip = document.querySelector('#deck-color-chips [data-deck-color="Colorless"]');
+  colorlessChip?.classList.toggle("hidden", hideColorless);
+  document.getElementById("deck-color-chips")?.classList.toggle("hidden", isSupportFilter);
+  document.getElementById("deck-main-subfilters")?.classList.toggle("hidden", !isMain);
+  document.getElementById("deck-bloom-chips")?.classList.toggle("hidden", !isMain || isSupportFilter);
+  document.getElementById("deck-support-filter-note")?.classList.toggle("hidden", !isSupportFilter);
+
+  const moreBtn = document.getElementById("deck-more-filters-toggle");
+  if (moreBtn) {
+    const activeAdv = countActiveAdvancedDeckFilters(f);
+    moreBtn.textContent = activeAdv > 0 ? `Más filtros (${activeAdv})` : "Más filtros";
+    moreBtn.classList.toggle("has-active-filters", activeAdv > 0);
+  }
+}
 
 export function setDeckSubView(mode) {
   document.getElementById("decks-gallery-view")?.classList.toggle("hidden", mode !== "gallery");
@@ -61,16 +106,19 @@ export function setDeckZoneTab(zone) {
     f.card_type = "";
     f.bloom_level = "";
     f.limited_only = false;
-    syncDeckChipStates();
+  }
+  if ((zone === "cheer" || zone === "oshi") && f.color === "Colorless") {
+    f.color = "";
   }
   document.querySelectorAll("#deck-zone-tabs .zone-tab-btn").forEach((btn) => {
     btn.classList.toggle("active", btn.getAttribute("data-zone") === zone);
   });
-  document.getElementById("deck-main-subfilters")?.classList.toggle("hidden", zone !== "main");
+  syncDeckChipStates();
   loadDeckBrowserCards();
 }
 
 export function syncDeckChipStates() {
+  syncDeckFilterVisibility();
   const f = state.deckBuilder.filters;
   document.querySelectorAll("#deck-color-chips [data-deck-color]").forEach((btn) => {
     btn.classList.toggle("active", btn.getAttribute("data-deck-color") === f.color);
@@ -85,7 +133,7 @@ export function syncDeckChipStates() {
   });
 }
 
-export function resetDeckBrowserFilters() {
+export function resetDeckBrowserFilters({ reload = true } = {}) {
   const zone = state.deckBuilder.filters.zone || "main";
   state.deckBuilder.filters = {
     zone,
@@ -115,7 +163,7 @@ export function resetDeckBrowserFilters() {
   const ownEl = document.getElementById("deck-filter-owned-only");
   if (ownEl) ownEl.checked = false;
   syncDeckChipStates();
-  loadDeckBrowserCards();
+  if (reload) loadDeckBrowserCards();
 }
 
 export async function openDeckEditor(deckId) {
@@ -143,7 +191,7 @@ export async function openDeckEditor(deckId) {
 
   setDeckSubView("studio");
   setDeckMobilePane("browser");
-  resetDeckBrowserFilters();
+  resetDeckBrowserFilters({ reload: false });
   const initialZone = detail.oshiProductId ? "main" : "oshi";
   setDeckZoneTab(initialZone);
   renderDeckPanel();
@@ -210,21 +258,39 @@ function renderDeckPickerActionHtml(card) {
   }
 
   const qty = getDeckQtyForBrowserCard(card);
-  if (qty <= 0) {
-    return `<button class="deck-add-btn" data-pick-delta="1" data-pick-pid="${card.productId}" type="button">+ Añadir</button>`;
-  }
-
   const zone = card.cardType === "Cheer" ? "cheer" : "main";
-  const unlimited = isUnlimitedCopyCard(card);
-  const numTotal = unlimited ? qty : getDeckCardNumberCount(state.editingDeck, card.cardNumber, card.productId, zone);
   const rules = evaluateDeckRules(state.editingDeck);
   const zoneFull = zone === "cheer" ? rules.cheerCount >= 20 : rules.mainCount >= 50;
+
+  if (qty <= 0) {
+    if (zone === "cheer") {
+      return `
+        <div class="deck-cheer-add-row">
+          <button class="deck-add-btn" data-pick-delta="1" data-pick-pid="${card.productId}" type="button" ${zoneFull ? "disabled" : ""}>+ Añadir</button>
+          <button class="deck-quick-cheer-btn" data-pick-delta="5" data-pick-pid="${card.productId}" type="button" title="Añadir hasta 5 copias de este Cheer" ${zoneFull ? "disabled" : ""}>+5</button>
+        </div>`;
+    }
+    return `<button class="deck-add-btn" data-pick-delta="1" data-pick-pid="${card.productId}" type="button" ${zoneFull ? "disabled" : ""}>+ Añadir</button>`;
+  }
+
+  const unlimited = isUnlimitedCopyCard(card);
+  const numTotal = unlimited ? qty : getDeckCardNumberCount(state.editingDeck, card.cardNumber, card.productId, zone);
   const atCap = (!unlimited && numTotal >= 4) || zoneFull;
   const capTitle = zoneFull
     ? "Límite de zona alcanzado"
     : !unlimited && numTotal >= 4
       ? `Máximo 4 copias de ${card.cardNumber || card.name}`
       : "Sumar copia";
+
+  if (zone === "cheer") {
+    return `
+      <div class="deck-inline-stepper is-cheer-stepper">
+        <button class="deck-inline-btn" data-pick-delta="-1" data-pick-pid="${card.productId}" type="button" aria-label="Quitar copia">−</button>
+        <span class="deck-inline-count">${qty}</span>
+        <button class="deck-inline-btn" data-pick-delta="1" data-pick-pid="${card.productId}" type="button" aria-label="Sumar copia" title="${escapeHtml(capTitle)}" ${atCap ? "disabled" : ""}>+</button>
+        <button class="deck-quick-cheer-btn is-inline" data-pick-delta="5" data-pick-pid="${card.productId}" type="button" aria-label="Sumar 5 copias" title="Añadir hasta 5 Cheers" ${zoneFull ? "disabled" : ""}>+5</button>
+      </div>`;
+  }
 
   return `
     <div class="deck-inline-stepper">
@@ -290,6 +356,7 @@ export function renderDeckBrowserGrid(pageData) {
       const price = card.marketPrice ?? card.foilMarketPrice;
       const inDeck = getDeckQtyForBrowserCard(card) > 0;
       const owned = Number(card.totalOwned || 0);
+      const isLimited = isLimitedSupportCard(card);
       return `
         <article class="deck-pick-card ${inDeck ? "in-deck" : ""}" data-browser-pid="${card.productId}">
           <div class="deck-pick-art" data-zoom-pid="${card.productId}">
@@ -299,6 +366,7 @@ export function renderDeckBrowserGrid(pageData) {
                 : `<div class="art-fallback">${escapeHtml(card.name)}</div>`
             }
             <span class="deck-owned-pill ${owned > 0 ? "has-owned" : ""}">Tienes: ${owned}</span>
+            ${isLimited ? `<span class="deck-limited-badge" title="Regla LIMITED: máximo 1 por turno">LIMITED</span>` : ""}
             <button class="deck-zoom-btn" data-zoom-pid="${card.productId}" type="button" title="Ver detalle y colección">🔍</button>
           </div>
           <div class="deck-pick-meta">
@@ -412,9 +480,12 @@ export function adjustCardInEditingDeck(cardOrItem, delta) {
 
   if (delta > 0) {
     const rules = evaluateDeckRules(deck);
-    if (zone === "cheer" && rules.cheerCount + delta > 20) {
-      showSnackbar("Cheer Deck completo (máximo 20 cartas).");
-      return;
+    if (zone === "cheer") {
+      if (rules.cheerCount >= 20) {
+        showSnackbar("Cheer Deck completo (máximo 20 cartas).");
+        return;
+      }
+      delta = Math.min(delta, 20 - rules.cheerCount);
     }
     if (zone === "main" && rules.mainCount + delta > 50) {
       showSnackbar("Main Deck completo (máximo 50 cartas).");
@@ -534,9 +605,8 @@ export function renderDeckPanel() {
       : "♥ Completo";
   }
 
-  // Oshi slot + Quick "match Oshi color" button
+  // Oshi slot
   const oshiSlot = document.getElementById("deck-oshi-slot");
-  const matchColorBtn = document.getElementById("deck-match-oshi-color-btn");
   const oshi = deck.oshiCard;
   if (oshiSlot) {
     if (deck.oshiProductId && oshi) {
@@ -579,17 +649,7 @@ export function renderDeckPanel() {
     }
   }
 
-  if (matchColorBtn) {
-    const oshiColor = String(oshi?.color || "").split("/")[0].trim();
-    const validQuickColor = oshiColor && oshiColor !== "Colorless";
-    matchColorBtn.classList.toggle("hidden", !validQuickColor);
-    if (validQuickColor) {
-      matchColorBtn.textContent = `Filtrar color ${oshiColor}`;
-      matchColorBtn.setAttribute("data-target-color", oshiColor);
-    }
-  }
-
-  // Mini curve pills
+  // Mini curve pills + Live Cheer Color Ratio strip
   const curveEl = document.getElementById("deck-mini-curve");
   if (curveEl) {
     const pills = [
@@ -602,6 +662,13 @@ export function renderDeckPanel() {
       `Cheer: ${rules.typeCounts.Cheer}`,
     ];
     curveEl.innerHTML = pills.map((p) => `<span class="mini-curve-pill">${escapeHtml(p)}</span>`).join("");
+  }
+
+  const miniCheerEl = document.getElementById("deck-mini-cheer-ratio");
+  if (miniCheerEl) {
+    const cheerHtml = renderMiniCheerRatioHtml(rules);
+    miniCheerEl.innerHTML = cheerHtml;
+    miniCheerEl.classList.toggle("hidden", !cheerHtml);
   }
 
   // Grouped Deck Cards
@@ -666,6 +733,7 @@ function renderDeckPanelListRow(deck, rules, item) {
   const disablePlus = (!unlimited && sameNumCount >= 4) || zoneFull;
   const owned = Number(item.ownedQuantity || 0);
   const ok = owned >= item.quantity;
+  const isLimited = isLimitedSupportCard(item);
   const itemKey = `${item.productId}:${zone}`;
 
   return `
@@ -679,6 +747,7 @@ function renderDeckPanelListRow(deck, rules, item) {
         <div class="deck-list-name" data-panel-zoom="${item.productId}" title="${escapeHtml(item.name)}">${escapeHtml(item.name)}</div>
         <div class="deck-list-meta">
           <span>${escapeHtml(item.cardNumber || "S/N")} · ${escapeHtml(item.rarity || "")}</span>
+          ${isLimited ? `<span class="deck-limited-inline">LIMITED</span>` : ""}
           <span class="owned-tag ${ok ? "owned-ok" : "owned-short"}">${owned}/${item.quantity}</span>
           ${item.marketPrice ? `<span>${fmtMoney(item.marketPrice * item.quantity)}</span>` : ""}
         </div>
@@ -687,6 +756,11 @@ function renderDeckPanelListRow(deck, rules, item) {
         <button class="step-btn" data-panel-key="${escapeHtml(itemKey)}" data-panel-qty="-1" type="button">−</button>
         <span class="step-qty">${unlimited ? item.quantity : `${item.quantity}/4`}</span>
         <button class="step-btn plus" data-panel-key="${escapeHtml(itemKey)}" data-panel-qty="1" type="button" ${disablePlus ? "disabled" : ""}>+</button>
+        ${
+          zone === "cheer"
+            ? `<button class="deck-quick-cheer-btn is-panel" data-panel-key="${escapeHtml(itemKey)}" data-panel-qty="5" type="button" title="Añadir hasta 5 Cheers" ${zoneFull ? "disabled" : ""}>+5</button>`
+            : ""
+        }
       </div>
     </div>`;
 }
@@ -729,19 +803,6 @@ export function renderDeckStatsModal() {
   ];
   const maxBloom = Math.max(1, ...bloomEntries.map(([, v]) => v));
 
-  const colorEntries = HOLOLIVE_COLORS.map((c) => [c, rules.colorCounts[c] || 0]).filter(([, v]) => v > 0);
-  const maxColor = Math.max(1, ...colorEntries.map(([, v]) => v));
-  const colorClassMap = {
-    White: "bar-fill-white",
-    Green: "bar-fill-green",
-    Red: "bar-fill-red",
-    Blue: "bar-fill-blue",
-    Purple: "bar-fill-purple",
-    Yellow: "bar-fill-yellow",
-    Colorless: "bar-fill-colorless",
-    "Multi-color": "bar-fill-purple",
-  };
-
   const allCards = [];
   if (deck.oshiProductId && deck.oshiCard) allCards.push(deck.oshiCard);
   for (const group of groupDeckCards(deck.cards)) {
@@ -761,7 +822,10 @@ export function renderDeckStatsModal() {
     }
     <div class="deck-stats-charts">
       <section class="deck-stats-card">
-        <h4 style="margin:0;">Curva de Bloom Level</h4>
+        <div class="deck-stats-card-head">
+          <h4 style="margin:0;">Curva de Bloom Level · Main</h4>
+          <span class="deck-stats-subbadge">${rules.typeCounts.Holomem + rules.typeCounts["Buzz Holomem"]} Holomem</span>
+        </div>
         ${bloomEntries
           .map(
             ([label, val]) => `
@@ -774,26 +838,15 @@ export function renderDeckStatsModal() {
           .join("")}
       </section>
 
-      <section class="deck-stats-card">
-        <h4 style="margin:0;">Distribución de Color</h4>
-        ${
-          colorEntries.length
-            ? colorEntries
-                .map(
-                  ([label, val]) => `
-                <div class="bar-chart-row">
-                  <span>${escapeHtml(label)}</span>
-                  <div class="bar-chart-track"><div class="bar-chart-fill ${colorClassMap[label] || ""}" style="width:${(val / maxColor) * 100}%"></div></div>
-                  <strong style="text-align:right;">${val}</strong>
-                </div>`
-                )
-                .join("")
-            : `<p class="muted-text" style="margin:0;">Agrega cartas para ver la distribución de colores.</p>`
-        }
-      </section>
+      ${renderMainColorHorizontalCardHtml(rules)}
+
+      ${renderCheerRatioChartHtml(rules, { variant: "modal" })}
 
       <section class="deck-stats-card">
-        <h4 style="margin:0;">Tipos &amp; Colección</h4>
+        <div class="deck-stats-card-head">
+          <h4 style="margin:0;">Tipos &amp; Colección</h4>
+          <span class="deck-stats-subbadge">${rules.totalCount}/71</span>
+        </div>
         <div class="card-sub-meta"><span>Holomem</span><strong>${rules.typeCounts.Holomem}</strong></div>
         <div class="card-sub-meta"><span>Buzz Holomem</span><strong>${rules.typeCounts["Buzz Holomem"]}</strong></div>
         <div class="card-sub-meta"><span>Support (LIMITED: ${rules.typeCounts.LIMITED})</span><strong>${rules.typeCounts.Support}</strong></div>
@@ -853,6 +906,9 @@ export function renderDeckStatsModal() {
 }
 
 export function bindDeckStudioEvents() {
+  if (deckStudioEventsBound) return;
+  deckStudioEventsBound = true;
+
   document.getElementById("clear-deck-btn")?.addEventListener("click", () => {
     if (!state.editingDeck) return;
     if (!state.editingDeck.cards.length && !state.editingDeck.oshiProductId) return;
@@ -888,7 +944,7 @@ export function bindDeckStudioEvents() {
   document.getElementById("deck-more-filters-toggle")?.addEventListener("click", () => {
     document.getElementById("deck-more-filters")?.classList.toggle("hidden");
   });
-  document.getElementById("deck-clear-filters-btn")?.addEventListener("click", resetDeckBrowserFilters);
+  document.getElementById("deck-clear-filters-btn")?.addEventListener("click", () => resetDeckBrowserFilters());
 
   document.querySelectorAll("#deck-color-chips [data-deck-color]").forEach((btn) => {
     btn.addEventListener("click", () => {
@@ -901,15 +957,24 @@ export function bindDeckStudioEvents() {
 
   document.querySelectorAll("#deck-type-chips [data-deck-type]").forEach((btn) => {
     btn.addEventListener("click", () => {
+      const f = state.deckBuilder.filters;
       const val = btn.getAttribute("data-deck-type");
       if (val === "LIMITED") {
-        state.deckBuilder.filters.limited_only = !state.deckBuilder.filters.limited_only;
-        state.deckBuilder.filters.card_type = "";
+        f.limited_only = !f.limited_only;
+        f.card_type = "";
+        if (f.limited_only) {
+          f.color = "";
+          f.bloom_level = "";
+        }
       } else {
-        state.deckBuilder.filters.limited_only = false;
-        state.deckBuilder.filters.card_type = val;
+        f.limited_only = false;
+        f.card_type = val;
+        if (val === "Support") {
+          f.color = "";
+          f.bloom_level = "";
+        }
       }
-      state.deckBuilder.filters.page = 1;
+      f.page = 1;
       syncDeckChipStates();
       loadDeckBrowserCards();
     });
@@ -917,8 +982,14 @@ export function bindDeckStudioEvents() {
 
   document.querySelectorAll("#deck-bloom-chips [data-deck-bloom]").forEach((btn) => {
     btn.addEventListener("click", () => {
-      state.deckBuilder.filters.bloom_level = btn.getAttribute("data-deck-bloom");
-      state.deckBuilder.filters.page = 1;
+      const f = state.deckBuilder.filters;
+      const bloomVal = btn.getAttribute("data-deck-bloom");
+      f.bloom_level = bloomVal;
+      if (bloomVal) {
+        f.limited_only = false;
+        if (f.card_type === "Support") f.card_type = "";
+      }
+      f.page = 1;
       syncDeckChipStates();
       loadDeckBrowserCards();
     });
@@ -927,38 +998,32 @@ export function bindDeckStudioEvents() {
   document.getElementById("deck-filter-edition")?.addEventListener("change", (e) => {
     state.deckBuilder.filters.group_id = e.target.value;
     state.deckBuilder.filters.page = 1;
+    syncDeckFilterVisibility();
     loadDeckBrowserCards();
   });
   document.getElementById("deck-filter-rarity")?.addEventListener("change", (e) => {
     state.deckBuilder.filters.rarity = e.target.value;
     state.deckBuilder.filters.page = 1;
+    syncDeckFilterVisibility();
     loadDeckBrowserCards();
   });
   document.getElementById("deck-filter-parallel")?.addEventListener("change", (e) => {
     state.deckBuilder.filters.parallel = e.target.value;
     state.deckBuilder.filters.page = 1;
+    syncDeckFilterVisibility();
     loadDeckBrowserCards();
   });
   document.getElementById("deck-filter-sort")?.addEventListener("change", (e) => {
     state.deckBuilder.filters.sort = e.target.value;
     state.deckBuilder.filters.page = 1;
+    syncDeckFilterVisibility();
     loadDeckBrowserCards();
   });
   document.getElementById("deck-filter-owned-only")?.addEventListener("change", (e) => {
     state.deckBuilder.filters.owned_only = e.target.checked;
     state.deckBuilder.filters.page = 1;
+    syncDeckFilterVisibility();
     loadDeckBrowserCards();
-  });
-
-  document.getElementById("deck-match-oshi-color-btn")?.addEventListener("click", (e) => {
-    const col = e.currentTarget.getAttribute("data-target-color") || "";
-    state.deckBuilder.filters.color = col;
-    state.deckBuilder.filters.page = 1;
-    if (state.deckBuilder.filters.zone === "oshi") setDeckZoneTab("main");
-    else {
-      syncDeckChipStates();
-      loadDeckBrowserCards();
-    }
   });
 
   document.getElementById("deck-view-list")?.addEventListener("click", () => {

@@ -552,7 +552,10 @@ pub fn query_cards(db: &Database, params: &CardFilterParams) -> Result<CardsPage
     }
 
     if params.limited_only == Some(true) {
-        clauses.push("(c.card_type = 'Support' AND c.effect_text LIKE '%LIMITED%')".to_string());
+        clauses.push(
+            "(c.card_type = 'Support' AND (UPPER(LTRIM(c.effect_text, ' ' || CHAR(9) || CHAR(10) || CHAR(13))) LIKE 'LIMITED:%' OR UPPER(c.effect_text) LIKE '%' || CHAR(10) || 'LIMITED:%'))"
+                .to_string(),
+        );
     }
 
     if let Some(min_p) = params.min_price {

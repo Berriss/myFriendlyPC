@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Hololive OCG Tracker — Colección &amp; Catálogo</title>
   <link rel="icon" type="image/svg+xml" href="/icon.svg" />
-  <link rel="stylesheet" href="/css/styles.css?v=20261126-3" />
+  <link rel="stylesheet" href="/css/styles.css?v=20261127-1" />
 </head>
 <body>
   <div class="app-shell">
@@ -521,7 +521,7 @@
                     <button class="filter-chip active" data-deck-type="" type="button">Todos los tipos</button>
                     <button class="filter-chip" data-deck-type="Holomem" type="button">Holomem / Buzz</button>
                     <button class="filter-chip" data-deck-type="Support" type="button">Support</button>
-                    <button class="filter-chip" data-deck-type="LIMITED" type="button">LIMITED</button>
+                    <button class="filter-chip" data-deck-type="LIMITED" type="button" title="Solo cartas Support con regla LIMITED (máx. 1 por turno)">★ LIMITED</button>
                   </div>
                   <div class="chip-row" id="deck-bloom-chips">
                     <button class="filter-chip active" data-deck-bloom="" type="button">Todo Bloom</button>
@@ -531,6 +531,7 @@
                     <button class="filter-chip" data-deck-bloom="Spot" type="button">Spot</button>
                   </div>
                 </div>
+                <div id="deck-support-filter-note" class="deck-filter-context-note hidden">Las cartas Support son siempre Colorless y no tienen Bloom Level; los filtros de color y Bloom se ocultan automáticamente.</div>
 
                 <div id="deck-more-filters" class="deck-more-filters hidden">
                   <div class="field-group">
@@ -586,7 +587,6 @@
 
               <div class="deck-browser-metabar">
                 <span id="deck-browser-meta" class="muted-text">Cargando cartas...</span>
-                <button id="deck-match-oshi-color-btn" class="tonal-btn hidden" type="button">Filtrar por color del Oshi</button>
               </div>
 
               <div id="deck-browser-grid" class="deck-browser-grid"></div>
@@ -642,6 +642,7 @@
               <div id="deck-oshi-slot" class="deck-oshi-slot"></div>
 
               <div id="deck-mini-curve" class="deck-mini-curve"></div>
+              <div id="deck-mini-cheer-ratio" class="deck-mini-cheer-ratio hidden"></div>
 
               <div class="deck-list-toolbar">
                 <span class="kpi-label" id="deck-cards-summary-label">Cartas en el mazo</span>
@@ -1208,7 +1209,7 @@
   <div id="wishlist-pdf-print-root" class="wpdf-print-root" aria-hidden="true"></div>
 
   <script src="/js/firebase-config.js?v=20261121-2"></script>
-  <script src="/js/firebase-cloud.js?v=20261126-4"></script>
-  <script type="module" src="/js/main.js?v=20261126-3"></script>
+  <script src="/js/firebase-cloud.js?v=20261127-1"></script>
+  <script type="module" src="/js/main.js?v=20261127-2"></script>
 </body>
 </html>

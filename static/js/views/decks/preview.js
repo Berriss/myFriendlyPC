@@ -3,6 +3,7 @@ import { apiFetch, showSnackbar } from "../../core/api.js";
 import { MAIN_GROUP_ORDER_RANK } from "../../core/constants.js";
 import { escapeHtml, fmtMoney, getDeckGroupCategory } from "../../core/formatters.js";
 import { state } from "../../core/state.js";
+import { renderCheerRatioChartHtml, renderMainColorVerticalChartHtml } from "./charts.js";
 import { evaluateDeckRules } from "./rules.js";
 
 export async function openDeckPreview(deckId) {
@@ -70,7 +71,7 @@ export function renderDeckPreview(deck) {
     notesEl.classList.toggle("hidden", !desc);
   }
 
-  // 3-Column Analytics Band (Bloom Level, Color, Types & Totals)
+  // 4-Card Analytics Band (Bloom Level, Color Main Deck, Cheer Ratio, Types & Totals)
   const analyticsHost = document.getElementById("preview-analytics-band");
   if (analyticsHost) {
     const bloomBars = [
@@ -81,17 +82,6 @@ export function renderDeckPreview(deck) {
     ];
     const maxBloom = Math.max(1, ...bloomBars.map((b) => b.count));
 
-    const colorBarMeta = [
-      { key: "White", label: "White", color: "#cbd5e1" },
-      { key: "Green", label: "Green", color: "#22c55e" },
-      { key: "Red", label: "Red", color: "#ef4444" },
-      { key: "Blue", label: "Blue", color: "#3b82f6" },
-      { key: "Purple", label: "Purple", color: "#a855f7" },
-      { key: "Yellow", label: "Yellow", color: "#eab308" },
-      { key: "Colorless", label: "Neutral", color: "#64748b" },
-    ];
-    const maxColor = Math.max(1, ...colorBarMeta.map((c) => rules.colorCounts[c.key] || 0));
-
     const holomemTotal = rules.typeCounts.Holomem + rules.typeCounts["Buzz Holomem"];
     const buzzTotal = rules.typeCounts["Buzz Holomem"];
     const supportTotal = rules.typeCounts.Support;
@@ -100,7 +90,10 @@ export function renderDeckPreview(deck) {
 
     analyticsHost.innerHTML = `
       <section class="vchart-box">
-        <h4 class="vchart-title">Bloom Level</h4>
+        <div class="vchart-head">
+          <h4 class="vchart-title">Bloom Level · Main</h4>
+          <span class="vchart-subbadge">${holomemTotal} Holomem</span>
+        </div>
         <div class="vchart-surface">
           <div class="vchart-cols">
             ${bloomBars
@@ -120,27 +113,9 @@ export function renderDeckPreview(deck) {
         </div>
       </section>
 
-      <section class="vchart-box">
-        <h4 class="vchart-title">Color</h4>
-        <div class="vchart-surface">
-          <div class="vchart-cols">
-            ${colorBarMeta
-              .map((c) => {
-                const val = rules.colorCounts[c.key] || 0;
-                const pct = val > 0 ? Math.max(8, Math.round((val / maxColor) * 100)) : 0;
-                return `
-                  <div class="vchart-col">
-                    <span class="vchart-pill ${val > 0 ? "has-val" : ""}">${val}</span>
-                    <div class="vchart-bar-wrap">
-                      <div class="vchart-bar" style="height:${pct}%;background:${c.color};"></div>
-                    </div>
-                    <span class="vchart-label">${escapeHtml(c.label)}</span>
-                  </div>`;
-              })
-              .join("")}
-          </div>
-        </div>
-      </section>
+      ${renderMainColorVerticalChartHtml(rules)}
+
+      ${renderCheerRatioChartHtml(rules, { variant: "preview" })}
 
       <section class="preview-type-panel">
         <div class="preview-type-band">

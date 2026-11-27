@@ -1753,6 +1753,11 @@
     }));
   }
 
+  function isLimitedSupportCard(card) {
+    if (!card || card.cardType !== "Support") return false;
+    return /(?:^|\r?\n)\s*LIMITED\s*:/i.test(String(card.effectText || ""));
+  }
+
   function queryCards(searchParams) {
     const q = (searchParams.get("q") || "").trim().toLowerCase();
     const groupId = searchParams.get("group_id");
@@ -1779,7 +1784,7 @@
       if (deckZone === "cheer" && c.cardType !== "Cheer") continue;
       if (parallel === "base" && PARALLEL_RARITIES.has(c.rarity)) continue;
       if (parallel === "only" && !PARALLEL_RARITIES.has(c.rarity)) continue;
-      if (limitedOnly && (c.cardType !== "Support" || !String(c.effectText || "").includes("LIMITED"))) continue;
+      if (limitedOnly && !isLimitedSupportCard(c)) continue;
       if (q) {
         const hay = `${c.name} ${c.cardNumber} ${c.effectText} ${c.tags} ${c.editionName}`.toLowerCase();
         if (!hay.includes(q)) continue;

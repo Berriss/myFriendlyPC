@@ -1,6 +1,12 @@
+import { CHEER_COLORS } from "../../core/constants.js";
 import { getDeckGroupCategory } from "../../core/formatters.js";
 
 export { getDeckGroupCategory };
+
+export function isLimitedSupportCard(card) {
+  if (!card || card.cardType !== "Support") return false;
+  return /(?:^|\r?\n)\s*LIMITED\s*:/i.test(String(card.effectText || ""));
+}
 
 export function isUnlimitedCopyCard(card) {
   if (!card) return false;
@@ -37,9 +43,10 @@ export function evaluateDeckRules(deck) {
 
   const bloomCounts = { Debut: 0, "1st": 0, Buzz: 0, "2nd": 0, Spot: 0, Otro: 0 };
   const typeCounts = { Holomem: 0, "Buzz Holomem": 0, Support: 0, LIMITED: 0, Cheer: 0 };
-  const colorCounts = {
+  const mainColorCounts = {
     White: 0, Green: 0, Red: 0, Blue: 0, Purple: 0, Yellow: 0, Colorless: 0, "Multi-color": 0,
   };
+  const cheerColorCounts = Object.fromEntries(CHEER_COLORS.map((c) => [c, 0]));
 
   let totalRequiredCopies = hasOshi ? 1 : 0;
   let ownedCopies = 0;
@@ -69,10 +76,14 @@ export function evaluateDeckRules(deck) {
     const zone = item.zone === "cheer" ? "cheer" : "main";
     const unlimited = isUnlimitedCopyCard(item);
     const key = String(item.cardNumber || "").trim() || `pid:${item.productId}`;
+    const rawColor = String(item.color || "").trim();
 
     if (zone === "cheer") {
       cheerCount += qty;
       typeCounts.Cheer += qty;
+      if (Object.prototype.hasOwnProperty.call(cheerColorCounts, rawColor)) {
+        cheerColorCounts[rawColor] += qty;
+      }
     } else {
       mainCount += qty;
       sameNumberMain.set(key, (sameNumberMain.get(key) || 0) + qty);
@@ -84,7 +95,7 @@ export function evaluateDeckRules(deck) {
         bloomCounts.Buzz += qty;
       } else if (item.cardType === "Support") {
         typeCounts.Support += qty;
-        if (String(item.effectText || "").includes("LIMITED")) {
+        if (isLimitedSupportCard(item)) {
           typeCounts.LIMITED += qty;
         }
       } else {
@@ -96,17 +107,16 @@ export function evaluateDeckRules(deck) {
           bloomCounts.Otro += qty;
         }
       }
-    }
 
-    const rawColor = String(item.color || "").trim();
-    if (!rawColor || rawColor === "Colorless") {
-      colorCounts.Colorless += qty;
-    } else if (rawColor.includes("/")) {
-      colorCounts["Multi-color"] += qty;
-    } else if (Object.prototype.hasOwnProperty.call(colorCounts, rawColor)) {
-      colorCounts[rawColor] += qty;
-    } else {
-      colorCounts.Colorless += qty;
+      if (!rawColor || rawColor === "Colorless") {
+        mainColorCounts.Colorless += qty;
+      } else if (rawColor.includes("/")) {
+        mainColorCounts["Multi-color"] += qty;
+      } else if (Object.prototype.hasOwnProperty.call(mainColorCounts, rawColor)) {
+        mainColorCounts[rawColor] += qty;
+      } else {
+        mainColorCounts.Colorless += qty;
+      }
     }
 
     const price = Number(item.marketPrice || 0);
@@ -124,6 +134,17 @@ export function evaluateDeckRules(deck) {
       });
     }
   }
+
+  const cheerColorRatios = CHEER_COLORS.map((color) => {
+    const count = cheerColorCounts[color] || 0;
+    const ratio = cheerCount > 0 ? count / cheerCount : 0;
+    return {
+      color,
+      count,
+      ratio,
+      pct: ratio * 100,
+    };
+  });
 
   const violations = [];
   const hints = [];
@@ -153,7 +174,10 @@ export function evaluateDeckRules(deck) {
     hints,
     bloomCounts,
     typeCounts,
-    colorCounts,
+    mainColorCounts,
+    colorCounts: mainColorCounts,
+    cheerColorCounts,
+    cheerColorRatios,
     totalRequiredCopies,
     ownedCopies,
     coveragePct,

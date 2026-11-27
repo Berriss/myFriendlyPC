@@ -488,4 +488,38 @@ fn catalog_colors_buzz_classifications_and_grouped_holomem_filter_work() {
         .expect("count empty bloom_level")
         .unwrap_or(-1);
     assert_eq!(missing_bloom_count, 0);
+
+    // 8. LIMITED Support filter matches true LIMITED cards (158) without false positives like Sub PC
+    let limited_supports = query_cards(
+        &database,
+        &CardFilterParams {
+            deck_zone: Some("main".to_string()),
+            limited_only: Some(true),
+            per_page: Some(250),
+            ..Default::default()
+        },
+    )
+    .expect("query LIMITED support cards");
+    assert_eq!(limited_supports.total, 158);
+    assert_eq!(limited_supports.items.len(), 158);
+    assert!(limited_supports
+        .items
+        .iter()
+        .all(|c| c.card.card_type == "Support"));
+    for cn_limited in ["hBP01-102", "hBP01-108", "hBP06-085"] {
+        assert!(
+            limited_supports
+                .items
+                .iter()
+                .any(|c| c.card.card_number == cn_limited),
+            "expected LIMITED card {cn_limited}"
+        );
+    }
+    assert!(
+        !limited_supports
+            .items
+            .iter()
+            .any(|c| c.card.card_number == "hSD01-018"),
+        "Sub PC (hSD01-018) must not be classified as LIMITED"
+    );
 }

@@ -42,7 +42,6 @@ import {
 } from "./views/decks/index.js";
 import { renderDeckPreview } from "./views/decks/preview.js";
 import {
-  bindDeckStudioEvents,
   renderDeckBrowserGrid,
   renderDeckPanel,
   renderDeckStatsModal,
@@ -153,7 +152,6 @@ function bindGlobalEvents() {
   bindCatalogEvents();
   bindCollectionEvents();
   bindWishlistPdfEvents();
-  bindDeckStudioEvents();
   bindDecksEvents();
   bindTradingEvents();
   bindAuditEvents();
