@@ -351,6 +351,36 @@
     return null;
   }
 
+  const CARD_NUMBER_BLOOM_OVERRIDES = Object.fromEntries([
+    ...[
+      "hBP06-009", "hBP06-010", "hBP06-015", "hBP06-016", "hBP06-022", "hBP06-023",
+      "hBP06-028", "hBP06-034", "hBP06-035", "hBP06-040", "hBP06-041", "hBP06-048",
+      "hBP06-049", "hBP06-057", "hBP06-061", "hBP06-062", "hBP06-067", "hBP06-072",
+      "hBP06-073", "hBP06-078", "hSD10-002", "hSD10-007", "hSD11-002", "hSD11-007",
+    ].map((cn) => [cn, "Debut"]),
+    ...[
+      "hBP06-011", "hBP06-012", "hBP06-013", "hBP06-017", "hBP06-018", "hBP06-019",
+      "hBP06-024", "hBP06-025", "hBP06-026", "hBP06-029", "hBP06-030", "hBP06-032",
+      "hBP06-033", "hBP06-036", "hBP06-037", "hBP06-038", "hBP06-042", "hBP06-043",
+      "hBP06-044", "hBP06-050", "hBP06-051", "hBP06-052", "hBP06-058", "hBP06-059",
+      "hBP06-063", "hBP06-064", "hBP06-065", "hBP06-068", "hBP06-069", "hBP06-074",
+      "hBP06-075", "hBP06-076", "hBP06-079", "hBP06-080", "hBP06-083", "hSD10-003",
+      "hSD10-004", "hSD10-005", "hSD10-008", "hSD11-003", "hSD11-004", "hSD11-005",
+      "hSD11-008",
+    ].map((cn) => [cn, "1st"]),
+    ...[
+      "hBP06-014", "hBP06-020", "hBP06-021", "hBP06-027", "hBP06-031", "hBP06-039",
+      "hBP06-045", "hBP06-046", "hBP06-047", "hBP06-053", "hBP06-054", "hBP06-055",
+      "hBP06-056", "hBP06-060", "hBP06-066", "hBP06-070", "hBP06-071", "hBP06-077",
+      "hBP06-081", "hBP06-082", "hSD10-006", "hSD10-009", "hSD11-006", "hSD11-009",
+    ].map((cn) => [cn, "2nd"]),
+    ...["hBP06-084", "hSD10-010"].map((cn) => [cn, "Spot"]),
+  ]);
+
+  function lookupCardNumberBloomOverride(cardNumber) {
+    return CARD_NUMBER_BLOOM_OVERRIDES[String(cardNumber || "").trim()] || null;
+  }
+
   function canonicalizeColorValue(raw) {
     const tokens = [];
     for (const part of String(raw || "").split(/[;/]/)) {
@@ -395,10 +425,15 @@
           c.cardType = "Buzz Holomem";
           c.sanitizedFlag = true;
         }
-        if (!String(c.bloomLevel || "").trim()) {
-          c.bloomLevel = "1st";
-          c.sanitizedFlag = true;
-        }
+      }
+      const bloomOv = lookupCardNumberBloomOverride(cn);
+      if (
+        bloomOv &&
+        (c.cardType === "Holomem" || c.cardType === "Buzz Holomem") &&
+        c.bloomLevel !== bloomOv
+      ) {
+        c.bloomLevel = bloomOv;
+        c.sanitizedFlag = true;
       }
       if (c.color) {
         const canon = canonicalizeColorValue(c.color);
@@ -430,15 +465,17 @@
         }
       }
 
-      const knownBloom = HBP06_BUZZ_CARD_NUMBERS.has(cn)
-        ? "1st"
-        : group.map((r) => String(r.bloomLevel || "").trim()).find(Boolean) || "";
+      const bloomOverride = lookupCardNumberBloomOverride(cn);
+      const knownBloom =
+        bloomOverride ||
+        (HBP06_BUZZ_CARD_NUMBERS.has(cn)
+          ? "1st"
+          : group.map((r) => String(r.bloomLevel || "").trim()).find(Boolean) || "");
       if (knownBloom) {
         for (const r of group) {
-          if (
-            (r.cardType === "Holomem" || r.cardType === "Buzz Holomem") &&
-            !String(r.bloomLevel || "").trim()
-          ) {
+          const isHolomem = r.cardType === "Holomem" || r.cardType === "Buzz Holomem";
+          const curBloom = String(r.bloomLevel || "").trim();
+          if (isHolomem && ((bloomOverride && curBloom !== knownBloom) || !curBloom)) {
             r.bloomLevel = knownBloom;
             r.sanitizedFlag = true;
           }

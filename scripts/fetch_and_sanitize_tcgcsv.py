@@ -90,6 +90,40 @@ CARD_NUMBER_COLOR_RANGES = (
     ("hSD11-", 7, 9, "Blue"),
 )
 
+BLOOM_OVERRIDE_GROUPS: dict[str, tuple[str, ...]] = {
+    "Debut": (
+        "hBP06-009", "hBP06-010", "hBP06-015", "hBP06-016", "hBP06-022", "hBP06-023",
+        "hBP06-028", "hBP06-034", "hBP06-035", "hBP06-040", "hBP06-041", "hBP06-048",
+        "hBP06-049", "hBP06-057", "hBP06-061", "hBP06-062", "hBP06-067", "hBP06-072",
+        "hBP06-073", "hBP06-078", "hSD10-002", "hSD10-007", "hSD11-002", "hSD11-007",
+    ),
+    "1st": (
+        "hBP06-011", "hBP06-012", "hBP06-013", "hBP06-017", "hBP06-018", "hBP06-019",
+        "hBP06-024", "hBP06-025", "hBP06-026", "hBP06-029", "hBP06-030", "hBP06-032",
+        "hBP06-033", "hBP06-036", "hBP06-037", "hBP06-038", "hBP06-042", "hBP06-043",
+        "hBP06-044", "hBP06-050", "hBP06-051", "hBP06-052", "hBP06-058", "hBP06-059",
+        "hBP06-063", "hBP06-064", "hBP06-065", "hBP06-068", "hBP06-069", "hBP06-074",
+        "hBP06-075", "hBP06-076", "hBP06-079", "hBP06-080", "hBP06-083", "hSD10-003",
+        "hSD10-004", "hSD10-005", "hSD10-008", "hSD11-003", "hSD11-004", "hSD11-005",
+        "hSD11-008",
+    ),
+    "2nd": (
+        "hBP06-014", "hBP06-020", "hBP06-021", "hBP06-027", "hBP06-031", "hBP06-039",
+        "hBP06-045", "hBP06-046", "hBP06-047", "hBP06-053", "hBP06-054", "hBP06-055",
+        "hBP06-056", "hBP06-060", "hBP06-066", "hBP06-070", "hBP06-071", "hBP06-077",
+        "hBP06-081", "hBP06-082", "hSD10-006", "hSD10-009", "hSD11-006", "hSD11-009",
+    ),
+    "Spot": (
+        "hBP06-084", "hSD10-010",
+    ),
+}
+
+CARD_NUMBER_BLOOM_OVERRIDES: dict[str, str] = {
+    cn: level
+    for level, numbers in BLOOM_OVERRIDE_GROUPS.items()
+    for cn in numbers
+}
+
 
 def slugify(text: str, max_len: int = 48) -> str:
     slug = re.sub(r"[^a-zA-Z0-9]+", "_", text.strip().lower()).strip("_")
@@ -352,7 +386,8 @@ def reconcile_catalog_records(cleaned_records: list[dict[str, Any]]) -> None:
                     r["cardType"] = "Buzz Holomem"
                     r["sanitizedFlag"] = True
 
-        known_bloom = "1st" if cn in HBP06_BUZZ_CARD_NUMBERS else ""
+        override_bloom = CARD_NUMBER_BLOOM_OVERRIDES.get(cn, "")
+        known_bloom = override_bloom or ("1st" if cn in HBP06_BUZZ_CARD_NUMBERS else "")
         if not known_bloom:
             for r in group:
                 bl = str(r.get("bloomLevel") or "").strip()
@@ -361,9 +396,11 @@ def reconcile_catalog_records(cleaned_records: list[dict[str, Any]]) -> None:
                     break
         if known_bloom:
             for r in group:
-                if r.get("cardType") in ("Holomem", "Buzz Holomem") and not str(r.get("bloomLevel") or "").strip():
-                    r["bloomLevel"] = known_bloom
-                    r["sanitizedFlag"] = True
+                if r.get("cardType") in ("Holomem", "Buzz Holomem"):
+                    cur_bl = str(r.get("bloomLevel") or "").strip()
+                    if (override_bloom and cur_bl != known_bloom) or not cur_bl:
+                        r["bloomLevel"] = known_bloom
+                        r["sanitizedFlag"] = True
 
         # 2) Color consistency across sets and UR printings
         override = lookup_card_number_color_override(cn)

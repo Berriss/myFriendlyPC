@@ -422,4 +422,70 @@ fn catalog_colors_buzz_classifications_and_grouped_holomem_filter_work() {
         .items
         .iter()
         .all(|c| c.card.card_type == "Holomem" || c.card.card_type == "Buzz Holomem"));
+
+    // 7. Missing hBP06/hSD10/hSD11 Bloom Levels (including hBP06-027 Kazama Iroha 2nd) must be repaired
+    let iroha_2nd = query_cards(
+        &database,
+        &CardFilterParams {
+            q: Some("hBP06-027".to_string()),
+            bloom_level: Some("2nd".to_string()),
+            per_page: Some(20),
+            ..Default::default()
+        },
+    )
+    .expect("query hBP06-027 under 2nd filter");
+    assert_eq!(iroha_2nd.items.len(), 3);
+    assert!(iroha_2nd
+        .items
+        .iter()
+        .all(|c| c.card.bloom_level == "2nd" && c.card.card_number == "hBP06-027"));
+
+    for cn_2nd in [
+        "hBP06-014", "hBP06-020", "hBP06-021", "hBP06-027", "hBP06-031", "hBP06-039",
+        "hBP06-045", "hBP06-046", "hBP06-047", "hBP06-053", "hBP06-054", "hBP06-055",
+        "hBP06-056", "hBP06-060", "hBP06-066", "hBP06-070", "hBP06-071", "hBP06-077",
+        "hBP06-081", "hBP06-082", "hSD10-006", "hSD10-009", "hSD11-006", "hSD11-009",
+    ] {
+        let levels: Vec<String> = database
+            .query_map(
+                "SELECT bloom_level FROM cards WHERE card_number = ?1",
+                &[SqlValue::from(cn_2nd)],
+                |r| Ok(r.get_string(0)),
+            )
+            .expect("query 2nd bloom level");
+        assert!(!levels.is_empty(), "{cn_2nd} missing");
+        assert!(levels.iter().all(|b| b == "2nd"), "{cn_2nd}: {levels:?}");
+    }
+
+    for cn_spot in ["hBP06-084", "hSD10-010"] {
+        let levels: Vec<String> = database
+            .query_map(
+                "SELECT bloom_level FROM cards WHERE card_number = ?1",
+                &[SqlValue::from(cn_spot)],
+                |r| Ok(r.get_string(0)),
+            )
+            .expect("query Spot bloom level");
+        assert!(!levels.is_empty());
+        assert!(levels.iter().all(|b| b == "Spot"), "{cn_spot}: {levels:?}");
+    }
+
+    let second_count: i64 = database
+        .query_row_opt(
+            "SELECT COUNT(*) FROM cards WHERE item_category = 'card' AND bloom_level = '2nd'",
+            &[],
+            |r| Ok(r.get_i64(0)),
+        )
+        .expect("count 2nd cards")
+        .unwrap_or(0);
+    assert_eq!(second_count, 396);
+
+    let missing_bloom_count: i64 = database
+        .query_row_opt(
+            "SELECT COUNT(*) FROM cards WHERE item_category = 'card' AND card_type IN ('Holomem', 'Buzz Holomem') AND TRIM(bloom_level) = ''",
+            &[],
+            |r| Ok(r.get_i64(0)),
+        )
+        .expect("count empty bloom_level")
+        .unwrap_or(-1);
+    assert_eq!(missing_bloom_count, 0);
 }

@@ -273,6 +273,35 @@ pub fn lookup_card_number_color_override(card_number: &str) -> Option<&'static s
     None
 }
 
+/// Verified Bloom Level lookup for Ayakashi Vermilion (`hBP06`, `hSD10`, `hSD11`)
+/// cards where TCGCSV omitted the `BloomLevel` field.
+pub fn lookup_card_number_bloom_override(card_number: &str) -> Option<&'static str> {
+    match card_number.trim() {
+        "hBP06-009" | "hBP06-010" | "hBP06-015" | "hBP06-016" | "hBP06-022" | "hBP06-023"
+        | "hBP06-028" | "hBP06-034" | "hBP06-035" | "hBP06-040" | "hBP06-041" | "hBP06-048"
+        | "hBP06-049" | "hBP06-057" | "hBP06-061" | "hBP06-062" | "hBP06-067" | "hBP06-072"
+        | "hBP06-073" | "hBP06-078" | "hSD10-002" | "hSD10-007" | "hSD11-002" | "hSD11-007" => {
+            Some("Debut")
+        }
+        "hBP06-011" | "hBP06-012" | "hBP06-013" | "hBP06-017" | "hBP06-018" | "hBP06-019"
+        | "hBP06-024" | "hBP06-025" | "hBP06-026" | "hBP06-029" | "hBP06-030" | "hBP06-032"
+        | "hBP06-033" | "hBP06-036" | "hBP06-037" | "hBP06-038" | "hBP06-042" | "hBP06-043"
+        | "hBP06-044" | "hBP06-050" | "hBP06-051" | "hBP06-052" | "hBP06-058" | "hBP06-059"
+        | "hBP06-063" | "hBP06-064" | "hBP06-065" | "hBP06-068" | "hBP06-069" | "hBP06-074"
+        | "hBP06-075" | "hBP06-076" | "hBP06-079" | "hBP06-080" | "hBP06-083" | "hSD10-003"
+        | "hSD10-004" | "hSD10-005" | "hSD10-008" | "hSD11-003" | "hSD11-004" | "hSD11-005"
+        | "hSD11-008" => Some("1st"),
+        "hBP06-014" | "hBP06-020" | "hBP06-021" | "hBP06-027" | "hBP06-031" | "hBP06-039"
+        | "hBP06-045" | "hBP06-046" | "hBP06-047" | "hBP06-053" | "hBP06-054" | "hBP06-055"
+        | "hBP06-056" | "hBP06-060" | "hBP06-066" | "hBP06-070" | "hBP06-071" | "hBP06-077"
+        | "hBP06-081" | "hBP06-082" | "hSD10-006" | "hSD10-009" | "hSD11-006" | "hSD11-009" => {
+            Some("2nd")
+        }
+        "hBP06-084" | "hSD10-010" => Some("Spot"),
+        _ => None,
+    }
+}
+
 pub fn canonicalize_color_value(raw: &str) -> String {
     let mut tokens: Vec<String> = Vec::new();
     for part in raw.split([';', '/']) {
@@ -473,19 +502,28 @@ pub fn reconcile_cards_by_number(cards: &mut [CardRecord]) {
             }
         }
 
-        let known_bloom = if is_hbp06_buzz_card_number(&cn) {
-            Some("1st".to_string())
-        } else {
-            idxs.iter()
-                .map(|&i| cards[i].bloom_level.trim())
-                .find(|s| !s.is_empty())
-                .map(|s| s.to_string())
-        };
+        let override_bloom = lookup_card_number_bloom_override(&cn).map(str::to_string);
+        let has_override_bloom = override_bloom.is_some();
+        let known_bloom = override_bloom.or_else(|| {
+            if is_hbp06_buzz_card_number(&cn) {
+                Some("1st".to_string())
+            } else {
+                idxs.iter()
+                    .map(|&i| cards[i].bloom_level.trim())
+                    .find(|s| !s.is_empty())
+                    .map(|s| s.to_string())
+            }
+        });
         if let Some(bloom) = known_bloom {
             for &i in &idxs {
-                if (cards[i].card_type == "Holomem" || cards[i].card_type == "Buzz Holomem")
-                    && cards[i].bloom_level.trim().is_empty()
-                {
+                let is_holomem =
+                    cards[i].card_type == "Holomem" || cards[i].card_type == "Buzz Holomem";
+                let needs_update = if has_override_bloom {
+                    cards[i].bloom_level != bloom
+                } else {
+                    cards[i].bloom_level.trim().is_empty()
+                };
+                if is_holomem && needs_update {
                     cards[i].bloom_level = bloom.clone();
                     cards[i].sanitized_flag = true;
                 }
@@ -1165,10 +1203,18 @@ mod tests {
             make_card(3, "hBP03-014", "Holomem", "Yellow", "2nd"),
             make_card(4, "hBP01-071", "Buzz Holomem", "Red", "1st"),
             make_card(5, "hBP01-071", "Holomem", "Colorless", "1st"),
+            make_card(6, "hBP06-027", "Holomem", "Green", ""),
+            make_card(7, "hBP06-084", "Holomem", "Colorless", ""),
+            make_card(8, "hSD11-007", "Holomem", "Blue", ""),
+            make_card(9, "hSD11-009", "Holomem", "Blue", ""),
         ];
         reconcile_cards_by_number(&mut list);
         assert_eq!(list[2].color, "White");
         assert_eq!(list[4].card_type, "Buzz Holomem");
         assert_eq!(list[4].color, "Red");
+        assert_eq!(list[5].bloom_level, "2nd");
+        assert_eq!(list[6].bloom_level, "Spot");
+        assert_eq!(list[7].bloom_level, "Debut");
+        assert_eq!(list[8].bloom_level, "2nd");
     }
 }
