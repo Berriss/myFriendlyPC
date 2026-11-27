@@ -8,6 +8,7 @@ export const state = {
   viewMode: "grid",
   scrollMode: localStorage.getItem("hocg-scroll-mode") || "paged",
   currency: localStorage.getItem("hocg-currency") || "USD",
+  hideCollectionValue: localStorage.getItem("hocg-hide-collection-value") === "true",
   exchangeRate: {
     rateClpPerUsd: 1007.79,
     source: "Referencia local",

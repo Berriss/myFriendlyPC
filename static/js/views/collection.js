@@ -6,6 +6,11 @@ import {
 import { actions } from "../core/actions.js";
 import { apiFetch, showSnackbar } from "../core/api.js";
 import { downloadJsonFile, escapeHtml, fmtClp, fmtMoney, fmtUsd } from "../core/formatters.js";
+import {
+  isCollectionValueHidden,
+  MASKED_AMOUNT,
+  MASKED_AMOUNT_SHORT,
+} from "../core/privacy.js";
 import { state } from "../core/state.js";
 
 let colSearchTimer = null;
@@ -94,6 +99,7 @@ export function renderCollectionBalance(kpis, editions) {
   const k = kpis || {};
   const eds = Array.isArray(editions) ? editions : [];
   const isClp = state.currency === "CLP";
+  const hideValue = isCollectionValueHidden();
   const mkt = Number(k.collectionMarketValueUsd || 0);
   const cost = Number(k.collectionCostBasisUsd || 0);
   const net = Number(k.netGainUsd || 0);
@@ -103,16 +109,25 @@ export function renderCollectionBalance(kpis, editions) {
   const balEquiv = document.getElementById("col-balance-equiv");
   const balNet = document.getElementById("col-balance-net");
   if (balTitle) balTitle.textContent = isClp ? "Total a Favor (CLP)" : "Total a Favor (USD)";
-  if (balMain) balMain.textContent = fmtMoney(mkt);
+  if (balMain) {
+    balMain.textContent = hideValue ? MASKED_AMOUNT : fmtMoney(mkt);
+    balMain.classList.toggle("value-masked", hideValue);
+  }
   if (balEquiv) {
-    balEquiv.textContent = isClp
-      ? `≈ ${fmtUsd(mkt)} USD (Tasa $${Math.round(state.exchangeRate.rateClpPerUsd).toLocaleString("es-CL")})`
-      : `≈ ${fmtClp(mkt)}`;
+    balEquiv.textContent = hideValue
+      ? isClp
+        ? `≈ ${MASKED_AMOUNT} USD`
+        : `≈ ${MASKED_AMOUNT} CLP`
+      : isClp
+        ? `≈ ${fmtUsd(mkt)} USD (Tasa $${Math.round(state.exchangeRate.rateClpPerUsd).toLocaleString("es-CL")})`
+        : `≈ ${fmtClp(mkt)}`;
   }
   if (balNet) {
     if (cost > 0) {
       const netSign = net >= 0 ? "+" : "-";
-      balNet.textContent = `Costo registrado: ${fmtMoney(cost)} · Neto: ${netSign}${fmtMoney(Math.abs(net))}`;
+      balNet.textContent = hideValue
+        ? `Costo registrado: ${MASKED_AMOUNT_SHORT} · Neto: ${MASKED_AMOUNT_SHORT}`
+        : `Costo registrado: ${fmtMoney(cost)} · Neto: ${netSign}${fmtMoney(Math.abs(net))}`;
       balNet.classList.remove("hidden");
     } else {
       balNet.classList.add("hidden");
@@ -261,6 +276,7 @@ export function jumpToCatalogForAdding(groupId) {
 export function renderEditionsGrid(editions) {
   const host = document.getElementById("editions-progress-grid");
   if (!host) return;
+  const hideValue = isCollectionValueHidden();
   const onlyOwned = state.collectionView.setsFilter === "owned";
   const list = onlyOwned ? editions.filter((ed) => ed.ownedTotalCopies > 0) : editions;
 
@@ -289,7 +305,7 @@ export function renderEditionsGrid(editions) {
           <div class="set-status-row">
             ${
               hasCards
-                ? `<span class="set-owned-pill">✓ ${ed.ownedTotalCopies} ${ed.ownedTotalCopies === 1 ? "copia" : "copias"} · ${fmtMoney(ed.collectionValueUsd)}</span>`
+                ? `<span class="set-owned-pill">✓ ${ed.ownedTotalCopies} ${ed.ownedTotalCopies === 1 ? "copia" : "copias"} · ${hideValue ? MASKED_AMOUNT_SHORT : fmtMoney(ed.collectionValueUsd)}</span>`
                 : `<span class="set-empty-label">Sin cartas registradas</span>`
             }
             <button class="set-catalog-link" data-jump-catalog-set="${ed.groupId}" type="button">Catálogo ↗</button>

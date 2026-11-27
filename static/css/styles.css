@@ -175,6 +175,14 @@ textarea {
   display: none;
 }
 
+:root:not([data-hide-collection-value="true"]) .privacy-icon-hidden {
+  display: none;
+}
+
+[data-hide-collection-value="true"] .privacy-icon-visible {
+  display: none;
+}
+
 /* App Shell Layout */
 .app-shell {
   display: flex;
@@ -454,6 +462,22 @@ textarea {
 
 .icon-btn:hover {
   background: var(--md-sys-color-surface-container-high);
+}
+
+.privacy-toggle-btn {
+  width: 40px;
+  height: 40px;
+}
+
+.privacy-toggle-btn.is-active {
+  background: var(--md-sys-color-primary-container);
+  color: var(--md-sys-color-on-primary-container);
+  border-color: var(--md-sys-color-primary);
+}
+
+.value-masked {
+  letter-spacing: 0.12em;
+  user-select: none;
 }
 
 .filled-btn,

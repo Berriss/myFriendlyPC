@@ -7,6 +7,7 @@ import {
   updateFirebaseAuthUI,
 } from "./core/api.js";
 import { bindCurrencyEvents, updateCurrencyUI } from "./core/currency.js";
+import { bindPrivacyEvents, initPrivacy } from "./core/privacy.js";
 import { canAccessView } from "./core/roles.js";
 import { runtime, state } from "./core/state.js";
 import { bindThemeEvents, initTheme } from "./core/theme.js";
@@ -109,9 +110,18 @@ function rerenderCurrencyViews({ skipKpis = false } = {}) {
   if (state.cardsPage) renderCards(state.cardsPage);
 }
 
+function rerenderPrivacyViews() {
+  if (state.kpis) renderKpis(state.kpis);
+  if (state.activeView === "collection") {
+    renderCollectionBalance(state.kpis, state.editions);
+    renderEditionsGrid(state.editions);
+  }
+}
+
 registerActions({
   updateDeckDirtyBadge,
   onCurrencyUpdated: rerenderCurrencyViews,
+  onPrivacyUpdated: rerenderPrivacyViews,
   loadKpis,
   loadCards,
   renderCards,
@@ -136,6 +146,7 @@ registerActions({
 
 function bindGlobalEvents() {
   bindThemeEvents();
+  bindPrivacyEvents();
   bindCurrencyEvents();
   bindAuthAndShutdownEvents();
   bindCardModalEvents();
@@ -189,6 +200,7 @@ let cloudRefreshTimer = null;
 
 async function init() {
   initTheme();
+  initPrivacy();
   if (window.HololiveCloudBackend) {
     await window.HololiveCloudBackend.initPromise;
   }

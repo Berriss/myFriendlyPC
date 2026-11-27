@@ -2,6 +2,11 @@ import { actions } from "../core/actions.js";
 import { apiFetch } from "../core/api.js";
 import { updateCurrencyUI } from "../core/currency.js";
 import { fmtClp, fmtMoney, fmtUsd } from "../core/formatters.js";
+import {
+  isCollectionValueHidden,
+  MASKED_AMOUNT,
+  MASKED_AMOUNT_SHORT,
+} from "../core/privacy.js";
 import { state } from "../core/state.js";
 
 export async function loadKpis() {
@@ -24,19 +29,30 @@ export function renderKpis(k) {
   }
 
   const isClp = state.currency === "CLP";
+  const hideValue = isCollectionValueHidden();
   document.getElementById("kpi-value-title").textContent =
     isClp ? "Valor de Colección (CLP)" : "Valor de Colección (USD)";
   document.getElementById("kpi-value-badge").textContent = isClp ? "CLP" : "Market";
 
-  document.getElementById("kpi-market-value").textContent = fmtMoney(k.collectionMarketValueUsd);
-  document.getElementById("kpi-value-equiv").textContent = isClp
-    ? `≈ ${fmtUsd(k.collectionMarketValueUsd)} USD (Tasa $${Math.round(state.exchangeRate.rateClpPerUsd).toLocaleString("es-CL")})`
-    : `≈ ${fmtClp(k.collectionMarketValueUsd)}`;
+  const marketValueEl = document.getElementById("kpi-market-value");
+  marketValueEl.textContent = hideValue
+    ? MASKED_AMOUNT
+    : fmtMoney(k.collectionMarketValueUsd);
+  marketValueEl.classList.toggle("value-masked", hideValue);
+
+  document.getElementById("kpi-value-equiv").textContent = hideValue
+    ? isClp
+      ? `≈ ${MASKED_AMOUNT} USD`
+      : `≈ ${MASKED_AMOUNT} CLP`
+    : isClp
+      ? `≈ ${fmtUsd(k.collectionMarketValueUsd)} USD (Tasa $${Math.round(state.exchangeRate.rateClpPerUsd).toLocaleString("es-CL")})`
+      : `≈ ${fmtClp(k.collectionMarketValueUsd)}`;
 
   const netSign = k.netGainUsd >= 0 ? "+" : "-";
   const netAbs = Math.abs(k.netGainUsd);
-  document.getElementById("kpi-value-sub").textContent =
-    `Costo: ${fmtMoney(k.collectionCostBasisUsd)} · Neto: ${netSign}${fmtMoney(netAbs)}`;
+  document.getElementById("kpi-value-sub").textContent = hideValue
+    ? `Costo: ${MASKED_AMOUNT_SHORT} · Neto: ${MASKED_AMOUNT_SHORT}`
+    : `Costo: ${fmtMoney(k.collectionCostBasisUsd)} · Neto: ${netSign}${fmtMoney(netAbs)}`;
 
   const uniqueEl = document.getElementById("kpi-unique-owned");
   if (uniqueEl) uniqueEl.textContent = k.ownedUniqueCards.toLocaleString();
